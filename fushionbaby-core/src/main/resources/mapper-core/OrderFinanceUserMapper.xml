@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fushionbaby.core.dao.OrderFinanceUserDao">
+  <resultMap id="BaseResultMap" type="OrderFinanceUser" >
+    <id column="id" property="id" />
+    <result column="order_code" property="orderCode" />
+    <result column="member_id" property="memberId" />
+    <result column="finance_status" property="financeStatus" />
+    <result column="payment_type" property="paymentType" />
+    <result column="payment_complete_time" property="paymentCompleteTime" />
+    <result column="create_time" property="createTime" />
+    <result column="update_time" property="updateTime" />
+    <result column="is_invoice" property="isInvoice" />
+    <result column="invoice_type" property="invoiceType" />
+    <result column="invoice_title" property="invoiceTitle" />
+    <!-- 门店编号 -->
+    <result column="store_code" property="storeCode" />
+    
+  </resultMap>
+  <sql id="finance_Column_List" >
+  	select
+	    id, order_code, member_id, finance_status, payment_type, payment_complete_time, 
+	    create_time, update_time, is_invoice, invoice_type,invoice_title,store_code
+	from t_order_finance
+  </sql>
+  <insert id="addOrderFinanceUser" parameterType="OrderFinanceUser">
+    insert into t_order_finance (id, order_code, member_id, 
+      finance_status, payment_type,
+      payment_complete_time, create_time, update_time, 
+      is_invoice, invoice_type, invoice_title,store_code)
+    values (#{id}, #{orderCode}, #{memberId}, 
+      #{financeStatus}, #{paymentType},
+      #{paymentCompleteTime}, now(), #{updateTime}, 
+      #{isInvoice}, #{invoiceType}, #{invoiceTitle},#{storeCode})
+  </insert>
+  
+  <select id="findByParam" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	<include refid="finance_Column_List"></include>
+  	<where>
+  		<if test="orderCode != null and orderCode !='' ">
+  			and order_code = #{orderCode}
+  		</if>
+  		<if test="memberId != null and memberId !='' ">
+  			and member_id = #{memberId}
+  		</if>
+  	</where>
+  </select>
+  
+  <select id="findByMemberIdAndOrderCode" resultMap="BaseResultMap">
+  	<include refid="finance_Column_List" />
+  	where 
+  		member_id = #{memberId} and order_code = #{orderCode}
+  </select>
+  
+  <select id="findByMIdAndStatus" resultMap="BaseResultMap">
+  	<include refid="finance_Column_List" />
+  	where 
+  		member_id = #{memberId} and finance_status = #{financeStatus}
+  </select>
+  
+  <update id="updateByMemberIdAndOrderCode">
+  	update t_order_finance
+		set update_time = now()
+		<if test="financeStatus!=null and financeStatus!=''">
+			, finance_status = #{financeStatus}
+		</if>
+		<if test="paymentType!=null and paymentType!=''">
+			, payment_type = #{paymentType}
+		</if>
+		<if test="paymentCompleteTime!=null and paymentCompleteTime!=''">
+			, payment_complete_time = #{paymentCompleteTime}
+		</if>
+		<where>
+			order_code = #{orderCode}
+			and member_id = #{memberId}
+		</where>
+  </update>
+</mapper>

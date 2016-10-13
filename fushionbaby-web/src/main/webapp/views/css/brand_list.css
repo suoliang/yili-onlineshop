@@ -1,0 +1,32 @@
+@charset "UTF-8";
+/**
+*
+* @authors Your Name (you@example.org)
+* @date    2015-03-18 14:29:52
+* @version $Id$
+*/
+#brand_list, #brand_list * { -webkit-box-sizing: border-box; -ms-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; box-sizing: border-box; }
+.brand_left { width: 820px; position: relative; }
+.brand_left .brand_wrap { width: 100%; float: left; margin-top: 20px; }
+.h3_wrap {height: 25px;position: relative;margin-bottom: 10px;}
+.brand_wrap h3 { width: 820px;+width:790px; float: left; background-color: #c39085;  padding: 0px 15px;height: 25px;line-height: 25px; color: #fff; position: absolute;left: 0;top: 0;z-index: 999;}
+.h3_fixed {position: fixed !important;}
+.brand_wrap ul { width: 100%; float: left; }
+.brand_wrap ul li { width: 18.4%; margin-right: 2%; float: left; margin-bottom: 1%; }
+.brand_wrap ul li:hover a { border-color: #c39085; }
+.brand_wrap ul li:hover p { color: #c39085; }
+.brand_wrap ul li:hover img { -webkit-transform: scale(1.2); -moz-transform: scale(1.2); -o-transform: scale(1.2); -ms-transform: scale(1.2); transform: scale(1.2); }
+.brand_wrap ul li a { width: 100%; float: left; border: 1px solid #e4e4e4; line-height: 0; border-radius: 2px; overflow: hidden; -webkit-transition: all 0.2s ease-out 0s; transition: all 0.2s ease-out 0s; }
+.brand_wrap .verticalAlign_brand { display: table-cell; height: 50px; text-align: center; vertical-align: middle; width: 166px; }
+.verticalAlign_brand img { max-width: 166px; max-height: 50px; display: inline; -webkit-transition: all 0.2s ease-out 0s; transition: all 0.2s ease-out 0s; }
+.brand_wrap ul li p { width: 100%; float: left; text-align: center; margin-top: 2px; -webkit-transition: all 0.2s ease-out 0s; transition: all 0.2s ease-out 0s; text-overflow: ellipsis;white-space: nowrap;overflow: hidden;}
+.brand_right { width: 285px; margin-top: 20px; }
+.hot-title { height: 78px; }
+.hot-title h3 {+padding-bottom: 28px;}
+.hot-list { padding: 6px 6px 6px 29px; height: 84px;+height:72px; }
+.hot-list .item-info { width: 130px; +width:83px;}
+.item-num { width: 18px; }
+.brand_left_nav { position: absolute; top: 100px; left: 822px; width: 30px; z-index: 999; }
+.brand_left_nav li { cursor: pointer; text-align: center; width: 100%; }
+.index_on { color: #6ae0ff; }
+.brand_right .newpro-bd-r {height: auto !important;}

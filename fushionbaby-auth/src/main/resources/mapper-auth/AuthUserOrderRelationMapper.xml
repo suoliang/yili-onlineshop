@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.auth.dao.AuthUserOrderRelationDao" >
+  <resultMap id="AuthUserOrderRelationResultMap" type="AuthUserOrderRelation" >
+    <id column="id" property="id"  />
+    <result column="user_id" property="userId"/> 
+    <result column="user_name" property="userName"  />
+    <result column="member_id" property="memberId" />
+    <result column="order_code" property="orderCode"  />
+    <result column="create_time" property="createTime"  />
+    <result column="update_time" property="updateTime"/>
+    <result column="update_id" property="updateId" />
+    
+  </resultMap>
+
+<!-- 状态默认启用的 -->
+  <insert id="add" parameterType="AuthUserOrderRelation" >
+   	<!-- 获取数据库自动生成的主键 -->
+	<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+		SELECT LAST_INSERT_ID() AS ID    
+    </selectKey>
+    insert into      t_auth_user_order_relation 
+        (id,user_id,user_name,member_id,order_code,create_time, update_time, update_id)
+    values  
+    (#{id}, #{userId},#{userName},#{memberId},#{orderCode}, now(),now(), #{updateId})
+  </insert>
+  <delete id="deleteById" parameterType="long">
+    delete from t_auth_user_order_relation
+    where id = #{id}
+  </delete> 
+  <!-- 删除已撤回的关联记录 -->
+  <delete id="deleteByOrderCodeAndUserId" parameterType="Map">
+    delete from 
+          t_auth_user_order_relation
+    where user_id = #{userId} and order_code=#{orderCode}
+  </delete> 
+  
+  <update id="update" parameterType="AuthUserOrderRelation" >
+    update 
+    	t_auth_user_order_relation 
+    set
+       <if test="userId!=null and userId!=''">
+        user_id = #{userId},
+       </if>
+        <if test="userName!=null and userName!=''">
+         user_name = #{userName},
+       </if>
+       <if test="memberId!=null and memberId!=''">
+         member_id = #{memberId},
+       </if>
+       <if test="orderCode!=null and orderCode!=''">
+        order_code = #{orderCode},
+       </if>
+       <if test="updateId!=null and updateId!=''">
+        update_id = #{updateId},
+       </if>
+         update_time= now()
+    where 
+        id = #{id}
+  </update> 
+
+
+<sql id="base_select_sql">
+   		select 
+			id,user_id,user_name,member_id,order_code,create_time, update_time, update_id
+      from t_auth_user_order_relation
+</sql>
+  
+<select id="findById" resultMap="AuthUserOrderRelationResultMap" parameterType="long"  >
+   <include refid="base_select_sql"/>
+   <![CDATA[
+		 where id=#{id}
+		 ]]>
+  </select> 
+  <select id="findAll" resultMap="AuthUserOrderRelationResultMap" parameterType="list"  >
+     <include refid="base_select_sql"/>
+  </select> 
+  
+  <!--查询后台登陆用户的可操作订单  -->
+  <select id="findByUserIdAndUserName" resultMap="AuthUserOrderRelationResultMap" parameterType="list"  >
+     <include refid="base_select_sql"/>
+     <where>
+        <if test="userId!=null and userId!=''">
+          and user_id = #{userId}
+       </if>
+        <if test="userName!=null and userName!=''">
+          and user_name = #{userName}
+       </if>
+        
+     </where>
+     order by user_id asc
+  </select> 
+
+
+  <!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="AuthUserOrderRelationResultMap" parameterType="Map" >
+	     <include refid="base_select_sql"/>
+		<where>
+			<if test="userName !=null and userName !=''">
+	    	   AND  user_name LIKE "%"#{userName}"%"  
+	        </if>
+	        <if test="orderCode !=null and orderCode !=''">
+	    	   AND  order_code =#{orderCode}  
+	        </if>
+	        <if test="userId !=null and userId !=''">
+	    	   AND  user_id =#{userId}  
+	        </if>
+		</where>
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select 
+			count(id)
+		from t_auth_user_order_relation 
+		<where>
+				<if test="userName !=null and userName !=''">
+	    	   AND  user_name LIKE "%"#{userName}"%"  
+	        </if>
+	        <if test="orderCode !=null and orderCode !=''">
+	    	   AND  order_code =#{orderCode}  
+	        </if>
+	        <if test="userId !=null and userId !=''">
+	    	   AND  user_id =#{userId}  
+	        </if>
+		</where>
+	</select>
+	
+  
+</mapper>

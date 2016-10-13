@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="{dede:global.cfg_soft_lang/}">
+        <title>阿拉丁玛特 - 联系我们</title>
+        <meta name="description" content="{dede:global.cfg_description/}" />
+        <meta name="keywords" content="{dede:global.cfg_keywords/}" />
+        <meta name="renderer" content="webkit">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <link rel="shortcut icon" href="{dede:global.cfg_templets_skin/}/company/images/favicon.ico" />
+        <link rel="stylesheet" href="{dede:global.cfg_templets_skin/}/company/farmework/materialize/css/materialize.min.css">
+        <link rel="stylesheet" href="{dede:global.cfg_templets_skin/}/company/css/style.min.css">
+        <!--[if lt IE 9 ]><html class="ltie9"><![endif]-->
+    </head>
+    <body id="introduce" class="contact">
+        {dede:include filename="head.htm"/}
+        <div class="row container">
+            <div class="col s12">
+                <div id="contact" class="section scrollspy">
+                    <h5 class="title-1"><i></i>联系我们</h5>
+                    <div class="divider"></div>
+                    <h5 class="title"><i></i>“阿拉丁玛特”网络便利店欢迎有志人士的加入！</h5>
+                    <p class="textI">公司邮箱：<a class="a-hover" href="mailto:hr@liyicloud.com">hr@liyicloud.com</a></p>
+                    <p class="textI">项目部：“阿拉丁玛特”网络便利店</p>
+                    <p class="textI">咨询热线：400-8778-391</p>
+                    <p class="textI">地址：北京市西城区广安门外 168 号朗琴国际大厦 B 座 1512A</p>
+                    <p class="textI">北京一里网络科技有限公司</p>
+                    <h5 class="title"><i></i>公司地图</h5>
+                    <div id="map" style="width:100%;height:413px"></div>
+                </div>
+            </div>
+        </div>
+        <div class="ie9-box-wrap">
+            <div class="ie9-box">检测到您正在使用IE浏览器版本过低！请升级或使用 <a href="http://se.360.cn/" target="_blank">360</a>，<a href="http://www.google.cn/chrome/browser/desktop/index.html" target="_blank">谷歌</a>，<a href="http://www.firefox.com.cn/" target="_blank">火狐</a> 等现代浏览器，体验更优质！
+                <a href="javascript:void(0);" class="ie9-close red-text">X</a>
+            </div>
+        </div>
+        {dede:include filename="footer.htm"/}
+        <script src="{dede:global.cfg_templets_skin/}/company/farmework/jquery/jquery.min.js"></script>
+        <script src="{dede:global.cfg_templets_skin/}/company/farmework/materialize/js/materialize.min.js"></script>
+        <script src="{dede:global.cfg_templets_skin/}/company/js/min/public.min.js"></script>
+        <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=rRgz4GzqVeilDLspw6k7xaIr"></script>
+        <script type="text/javascript" src="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.js"></script>
+        <script>
+        $(function(){
+            //百度地图API功能
+            var map = new BMap.Map("map");                   // 创建Map实例
+            var point = new BMap.Point(116.34772,39.89464);     // 创建点坐标
+            map.centerAndZoom(point,20);
+            //******************************//
+            var content = ''+
+            '<div style="margin:0;line-height:20px;padding:2px;">' +
+            '北京市西城区广安门外 168 号朗琴国际大厦 B 座 1512A' +
+                '</div>';
+            //创建检索信息窗口对象
+            var searchInfoWindow = null;
+            searchInfoWindow = new BMapLib.SearchInfoWindow(map, content, {
+            title  : "北京一里网络科技有限公司",      //标题
+            width  : 290,             //宽度
+            height : 'auto',          //高度
+            panel  : "panel",         //检索结果面板
+            enableAutoPan : true,     //自动平移
+            searchTypes   :[
+                BMAPLIB_TAB_SEARCH,   //周边检索
+                BMAPLIB_TAB_TO_HERE,  //到这里去
+                BMAPLIB_TAB_FROM_HERE //从这里出发
+                ]
+              });
+            var marker = new BMap.Marker(point); //创建marker对象
+            marker.addEventListener("click", function(e){
+            searchInfoWindow.open(marker);
+              })
+            map.addOverlay(marker);               // 将标注添加到地图中
+            var label = new BMap.Label("北京一里网络科技有限公司",{offset:new BMap.Size(30,2)});
+            marker.setLabel(label);
+            marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+            //******************************//
+            map.enableScrollWheelZoom();                     //启用滚轮放大缩小
+            map.addControl(new BMap.NavigationControl());    //地图平移缩放控件
+            var ScaleOpts = {offset: new BMap.Size(4, 40)}
+            map.addControl(new BMap.ScaleControl(ScaleOpts));//比例尺控件
+            map.addControl(new BMap.OverviewMapControl());   //缩略地图控件
+            map.addControl(new BMap.MapTypeControl());       //地图类型控件
+            map.disableDragging();     //禁止拖拽
+            setTimeout(function(){
+            map.enableDragging();   //两秒后开启拖拽
+              }, 2000);
+        })
+        </script>
+    </body>
+</html>

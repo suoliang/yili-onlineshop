@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>登录 - Fushionbaby</title>
+		<script src="ftl/publicHeadTags.js"></script><!-- 公共<head>标签 -->
+		<link rel="stylesheet"  href="css/login.css">
+	</head>
+	<body>
+		<!-- header -->
+		<div class="header container">
+			<div class="logo">
+				<h1>
+				<a href="index.html">
+					<img src="images/logo.jpg" alt="fushion baby" title="function baby">
+					<span class="logo-txt">fushion baby</span>
+				</a>
+				</h1>
+			</div>
+		</div>
+		<!-- main -->
+		<div class="main container clearfix">
+			<div class="main-l">
+				<img src="images/main-l.png" alt="">
+			</div>
+			<div class="main-r">
+				<div class="main-r-hd">
+					登录FUSHION BABY
+				</div>
+				<div class="main-r-bd">
+					<form action="">
+						<div class="textbox_ui user">
+							<div class="clearfix">
+								<i></i>
+								<input type="text" name="email" placeholder="用户名">
+							</div>
+							<div class="error" id="show_login_name"><em>*</em><span id="check_login_name"></span></div>
+						</div>
+						<div class="textbox_ui pass">
+							<div class="clearfix">
+								<i></i>
+								<input type="password" name="password" placeholder="密码">
+							</div>
+							<div class="error" id="show_login_password"><em>*</em><span id="check_login_password"></span></div>
+						</div>
+						<p>
+						<a class="fn" style="cursor:pointer;">忘记密码？</a>
+						</p>
+						<div class="btn-wrap">
+							<div class="login-btn">
+								<a style="cursor:pointer;" id="login">立即登录</a>
+							</div>
+							<div class="register-btn">
+								<a style="cursor:pointer;" id="register">立即注册</a>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="main-r-fd">
+					<p class="main-r-fd-tit">您还可以用以下方式登录FUSHION BABY</p>
+					<ul>
+						<li>
+							<a href="javascript:" class="link-hd"></a>
+							<a href="javascript:" class="link-bd">QQ</a>
+						</li>
+						<li class="middle-li">
+							<a href="javascript:" class="link-hd weixin"></a>
+							<a href="javascript:" class="link-bd">微信</a>
+						</li>
+						<li>
+							<a href="javascript:" class="link-hd sina"></a>
+							<a href="javascript:" class="link-bd">新浪微博</a>
+						</li>
+						<li>
+							<a href="javascript:" class="link-hd alipay"></a>
+							<a href="javascript:" class="link-bd">支付宝</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="footer">
+			<div class="footer-b">沪ICP备14049824号</div>
+		</div>
+		<script>
+		$(window).load(function(){
+			/*登录页调节底部位置*/
+			if ($(window).height() > $('body').outerHeight()) {
+				$('body').css({'height':$(window).height()});
+				$('.footer').css({
+					'position':'absolute',
+					'bottom':'0'
+				})
+			};
+		})
+		</script>
+		<script type="text/javascript" src="js/login.js"></script>
+		<script type="text/javascript" src="../web-js/login.js"></script>
+	</body>
+</html>

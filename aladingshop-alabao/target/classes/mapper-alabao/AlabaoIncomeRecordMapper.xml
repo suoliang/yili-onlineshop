@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.alabao.dao.AlabaoIncomeRecordDao" >
+  <resultMap id="AlabaoIncomeRecordResultMap" type="AlabaoIncomeRecord" >
+    <id column="id" property="id" />
+    <result column="member_id" property="memberId" />
+    <result column="account" property="account" />
+    <result column="income_money" property="incomeMoney" />
+    <result column="create_time" property="createTime" />
+  </resultMap>
+  <sql id="AlabaoIncomeRecord_Column_List" >
+    	id, member_id, account, income_money, create_time
+  </sql>
+  <insert id="add" parameterType="AlabaoIncomeRecord" >
+    insert into t_alabao_income_record 
+    	(id, member_id, account, income_money, create_time)
+    values 
+    	(#{id}, #{memberId}, #{account}, #{incomeMoney}, now())
+  </insert>
+	
+	<select id="findAllByMemberId" resultMap="AlabaoIncomeRecordResultMap" parameterType="java.lang.Long">
+		select  <include refid="AlabaoIncomeRecord_Column_List"/> from t_alabao_income_record where member_id = #{memberId}
+	</select>
+	
+	<select id="findAllByAccount" resultMap="AlabaoIncomeRecordResultMap" parameterType="java.lang.String">
+		select  <include refid="AlabaoIncomeRecord_Column_List"/> from t_alabao_income_record where  account = #{account}
+	</select>
+  
+  
+</mapper>

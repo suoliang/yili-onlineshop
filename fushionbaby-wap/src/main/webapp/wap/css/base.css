@@ -1,0 +1,187 @@
+﻿@charset "utf-8";
+/*
+* @名称：base.css
+* @时间:2014.6.4
+* @功能：1、重设浏览器默认样式
+*        2、设置通用原子类
+*/
+/* 防止用户自定义背景颜色对网页的影响，添加让用户可以自定义字体 */
+a { color: #666; }
+html { font-family: "微软雅黑"; background: #fff; color: #666; /* 1rem=10px */
+font-size: 62.5% !important; /* 10 ÷ 16 × 100% = 62.5% */ }
+body { font-family: 'helvetica neue', arial, 'hiragino sans gb', stheiti, 'microsoft yahei', 'wenquanyi micro hei', sans-serif; }
+html { -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+html { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+*, *:before, *:after { -webkit-box-sizing: inherit; -moz-box-sizing: inherit; box-sizing: inherit; }
+/* 去除ie下图片默认边框 */
+img { border: none; }
+/* 要注意表单元素并不继承父级 font 的问题 */
+body, button, input, select, textarea { font: 12px \5b8b\4f53, arial, sans-serif; border: none; }
+input, select, textarea { font-size: 100%; }
+/* 去掉 table cell 的边距并让其边重合 */
+table { border-collapse: collapse; border-spacing: 0; }
+/* ie bug：th 不继承 text-align */
+th { text-align: inherit; }
+/* 去除默认边框 */
+fieldset, img { border: none; }
+/* ie6 7 8(q) bug 显示为行内表现 */
+iframe { display: block; }
+/* 去掉 firefox 下此元素的边框 */
+abbr, acronym { border: none; font-variant: normal; }
+/* 一致的 del 样式 */
+del { text-decoration: line-through; }
+address, caption, cite, code, dfn, em, th, var { font-style: normal; font-weight: 500; }
+/* 去掉列表前的标识 */
+ol, ul, li { list-style: none; }
+/* 对齐是排版最重要的因素，别让什么都居中 */
+caption, th { text-align: left; }
+q:before, q:after { content: ''; }
+/* 统一上标和下标 */
+sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+/* 让链接在 hover 状态下不显示下划线 */
+a:hover { text-decoration: none; }
+/* 默认不显示下划线，保持页面简洁 */
+ins, a { text-decoration: none; }
+/* 去除 ie6 & ie7 焦点点状线 */
+a:focus, *:focus { outline: none; }
+/* 清除浮动 */
+.clearfix:before, .clearfix:after { content: ""; display: table; }
+.clearfix:after { clear: both; overflow: hidden; }
+.clearfix { zoom: 1; /* for ie6 & ie7 */ }
+.clear { clear: both; display: block; font-size: 0; height: 0; line-height: 0; overflow: hidden; }
+/* 设置浮动，减少浮动带来的 bug */
+.fl, .fr { display: inline; }
+.fl { float: left; }
+.fr { float: right; }
+/* ------------------------------------------------------------------------------------- */
+/* 颜 色 */
+/* ------------------------------------------------------------------------------------- */
+/* 灰色 */
+.light-grey { color: #F6F7FB; }
+.grey { color: #AAB2BD; }
+.dark-grey { color: #AAB3BC; }
+/* 蓝色 */
+.blue { color: #169fe6; }
+/* 红色 */
+.pink { color: #fa7fb6; }
+.lighter-red { color: #EA5862; }
+.light-red { color: #ED6990; }
+.red { color: #E43B5A; }
+.dark-red { color: #f00; }
+/* 黑色 */
+.black { color: #434A54; }
+.dark-black { color: #000; }
+/* 黄色 */
+.light-yellow { color: #ffb81d; }
+.yellow { color: #ffae00; }
+/* 绿色 */
+.green { color: #00bd71; }
+.dark-green { color: #035d67; }
+/* 橙色 */
+.orange { color: #E02F2F; }
+.dark-orange { color: #C81C1C; }
+/* 紫色 */
+.purple { color: #714584; }
+/* ------------------------------------------------------------------------------------- */
+/* font-size */
+/* ------------------------------------------------------------------------------------- */
+.size10 { font-size: 10px; font-size: 1rem; }
+.size11 { font-size: 11px; font-size: 1.1rem; }
+.size12 { font-size: 12px; font-size: 1.2rem; }
+.size13 { font-size: 13px; font-size: 1.3rem; }
+.size14 { font-size: 14px; font-size: 1.4rem; }
+.size15 { font-size: 15px; font-size: 1.5rem; }
+.size16 { font-size: 16px; font-size: 1.6rem; }
+.size18 { font-size: 18px; font-size: 1.8rem; }
+/* ------------------------------------------------------------------------------------- */
+/* margin */
+/* ------------------------------------------------------------------------------------- */
+.margin-auto { margin: 0 auto; }
+.margin0 { margin: 0px;}
+.margin5 { margin: 5px; }
+.margin10 { margin: 10px; }
+.margin15 { margin: 15px; }
+.margin20 { margin: 20px; }
+.margin25 { margin: 25px; }
+.margin30 { margin: 30px; }
+
+.marginL0 { margin-left: 0px; }
+.marginL5 { margin-left: 5px; }
+.marginL10 { margin-left: 10px; }
+.marginL15 { margin-left: 15px; }
+.marginL20 { margin-left: 20px; }
+
+.marginR0 { margin-right: 0px; }
+.marginR5 { margin-right: 5px; }
+.marginR10 { margin-right: 10px; }
+.marginR15 { margin-right: 15px; }
+.marginR20 { margin-right: 20px; }
+
+.marginT0 { margin-top: 0px; }
+.marginT5 { margin-top: 5px; }
+.marginT10 { margin-top: 10px; }
+.marginT15 { margin-top: 15px; }
+.marginT20 { margin-top: 20px; }
+
+.marginB0 { margin-bottom: 0px; }
+.marginB5 { margin-bottom: 5px; }
+.marginB10 { margin-bottom: 10px; }
+.marginB15 { margin-bottom: 15px; }
+.marginB20 { margin-bottom: 20px }
+/* ------------------------------------------------------------------------------------- */
+/* padding */
+/* ------------------------------------------------------------------------------------- */
+.padding0 { padding: 0px; }
+.padding5 { padding: 5px; }
+.padding10 { padding: 10px; }
+.padding15 { padding: 15px; }
+.padding20 { padding: 20px; }
+
+.paddingL0 { padding-left: 0px; }
+.paddingL5 { padding-left: 5px; }
+.paddingL10 { padding-left: 10px; }
+.paddingL15 { padding-left: 15px; }
+.paddingL20 { padding-left: 20px; }
+
+.paddingR0 { padding-right: 0px; }
+.paddingR5 { padding-right: 5px; }
+.paddingR10 { padding-right: 10px; }
+.paddingR15 { padding-right: 15px; }
+.paddingR20 { padding-right: 20px; }
+
+.paddingT0 { padding-top: 0px; }
+.paddingT5 { padding-top: 5px; }
+.paddingT10 { padding-top: 10px; }
+.paddingT15 { padding-top: 15px; }
+.paddingT20 { padding-top: 20px; }
+
+.paddingB0 { padding-bottom: 0px; }
+.paddingB5 { padding-bottom: 5px; }
+.paddingB10 { padding-bottom: 10px; }
+.paddingB15 { padding-bottom: 15px; }
+.paddingB20 { padding-bottom: 20px; }
+/* ------------------------------------------------------------------------------------- */
+/* border-radius */
+/* ------------------------------------------------------------------------------------- */
+.radius2 { -webkit-border-radius: 2px; -moz-border-radius: 2px; -o-border-radius: 2px; border-radius: 2px; }
+.radius4 { -webkit-border-radius: 4px; -moz-border-radius: 4px; -o-border-radius: 4px; border-radius: 4px; }
+.radius6 { -webkit-border-radius: 6px; -moz-border-radius: 6px; -o-border-radius: 6px; border-radius: 6px; }
+.radius100 { -webkit-border-radius: 100%; -moz-border-radius: 100%; -o-border-radius: 100%; border-radius: 100%; }
+/* ------------------------------------------------------------------------------------- */
+/* other */
+/* ------------------------------------------------------------------------------------- */
+i { font-style: normal; }
+.widthP100 { width: 100%; }
+.OH { overflow: hidden; }
+.nowrap { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 98%; display: inline-block; }
+.verticalAlign { display: table-cell; text-align: center; vertical-align: middle; width:100px ;height:100px ;}
+.verticalAlign img {max-width: 100px;max-height: 100px;}
+.height-auto { height: auto !important; }
+.textC { text-align: center; }
+.width100 { width: 100%; }
+.textI {text-indent: 2rem;}
+textarea { resize: vertical; }
+small { font-size: 85.7%; /* 12/14=0.8571428571 */ }
+label { cursor: pointer; }

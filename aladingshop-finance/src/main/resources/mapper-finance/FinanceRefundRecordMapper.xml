@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.finance.dao.FinanceRefundRecordDao" >
+  <resultMap id="FinanceRefundRecordResultMap" type="FinanceRefundRecord" >
+    <id column="id" property="id" />
+    <result column="member_id" property="memberId"/>
+    <result column="order_code" property="orderCode" />
+    <result column="order_amount" property="orderAmount" />
+    <result column="order_pay_type" property="orderPayType" />
+    <result column="order_source" property="orderSource" />
+    <result column="complete_time" property="completeTime" />
+    
+  </resultMap>
+  <insert id="add" parameterType="FinanceRefundRecord"> 
+    insert into t_finance_refund_record (id, member_id, order_code, order_amount, order_pay_type, order_source, complete_time)
+    values (#{id}, #{memberId}, #{orderCode},  #{orderAmount}, #{orderPayType},  #{orderSource},now())
+  </insert>
+  <delete id="deleteById"  parameterType="java.lang.Long">
+    delete from t_finance_refund_record where id = #{id}
+  </delete>
+  
+<!--   <update id="update" parameterType="FinanceRefundRecord">
+    update t_finance_refund_record
+    <set>
+    	<if test="orderSource!=null and orderSource!=''">
+    		order_source = #{orderSource},
+    	</if>
+    	update_time = now(),
+    	update_id = #{updateId}
+    </set>
+    <where>
+    	id = #{id}
+    </where> 
+  </update>-->
+  <sql id="Base_Column_List" >
+  	select id, member_id, order_code,order_amount, order_pay_type,order_source,complete_time
+		 from t_finance_refund_record
+  </sql>
+  <select id="findAll" resultMap="FinanceRefundRecordResultMap" resultType="list">
+  	<include refid="Base_Column_List" /> 
+  </select> 
+   <select id="findById" resultMap="FinanceRefundRecordResultMap" parameterType="java.lang.Long" >
+	   <include refid="Base_Column_List" />
+	   <where>
+	   		id=#{id}
+	   </where>
+  </select>
+  
+  	  <!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="FinanceRefundRecordResultMap" parameterType="Map" >
+	    <include refid="Base_Column_List" />
+		<where>
+			<if test="orderCode!=null and orderCode!=''">
+	    	   AND  order_code =#{orderCode}  
+	        </if>
+			<if test="orderSource!=null and orderSource!=''">
+	    	   AND  order_source=#{orderSource}  
+	        </if>
+			<if test="orderAmount!=null and orderAmount!=''">
+	    	   AND  order_amount =#{orderAmount}  
+	        </if>
+			<if test="orderPayType!=null and orderPayType!=''">
+	    	   AND  order_pay_type=#{orderPayType}  
+	        </if>
+	        <if test="completeTimeFrom!= null and completeTimeFrom!=''">
+	    	<![CDATA[
+				and DATE_FORMAT(complete_time,'%Y-%m-%d') >= DATE_FORMAT(#{completeTimeFrom}, '%Y-%m-%d')
+			]]>
+		    </if>
+			<if test="completeTimeTo!= null and completeTimeTo!= ''">
+		    	<![CDATA[
+					and DATE_FORMAT(complete_time,'%Y-%m-%d') <= DATE_FORMAT(#{completeTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+	        
+	        
+		</where>
+		<if test="start!=null and limit!=null">
+			limit #{start},#{limit}
+		</if>
+	</select>
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select  count(id) from t_finance_refund_record
+		<where>
+		    <if test="orderCode!=null and orderCode!=''">
+	    	   AND  order_code =#{orderCode} 
+	        </if>
+	        <if test="orderSource!=null and orderSource!=''">
+	    	   AND  order_source=#{orderSource}  
+	        </if>
+			<if test="orderAmount!=null and orderAmount!=''">
+	    	   AND  order_amount =#{orderAmount}  
+	        </if>
+			<if test="orderPayType!=null and orderPayType!=''">
+	    	   AND  order_pay_type=#{orderPayType}  
+	        </if>
+	        <if test="completeTimeFrom!= null and completeTimeFrom!=''">
+	    	<![CDATA[
+				and DATE_FORMAT(complete_time,'%Y-%m-%d') >= DATE_FORMAT(#{completeTimeFrom}, '%Y-%m-%d')
+			]]>
+		    </if>
+			<if test="completeTimeTo!= null and completeTimeTo!= ''">
+		    	<![CDATA[
+					and DATE_FORMAT(complete_time,'%Y-%m-%d') <= DATE_FORMAT(#{completeTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+		</where>
+	</select>
+</mapper>

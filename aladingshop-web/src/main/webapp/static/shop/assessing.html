@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8" />
+        <title>商品评价</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="renderer" content="webkit">
+        <meta name="description" content="阿拉丁玛特商城">
+        <meta name="keywords" content="阿拉丁玛特商城">
+        <link rel="shortcut icon" href="images/favicon.ico" />
+        <!-- styles -->
+        <link rel="stylesheet" href="css/style.min.css">
+        <!--[if IE 9 ]><html class="ie9"><![endif]-->
+        <!--[if IE 8 ]><html class="ie8"><![endif]-->
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+    </head>
+    <body>
+
+        <!-- 顶部导航 开始 -->
+        <script src="public/topbar.js"></script>
+        <!-- 顶部导航 结束 -->
+
+        <div class="order-tetail-tit container">
+            <div class="detail-status">
+                <p>&nbsp;</p>
+                <ul>
+                    <i></i>
+                    <li class="active">
+                        <span></span>
+                        <p>提交订单</p>
+                    </li>
+                    <li class="active">
+                        <span></span>
+                        <p>付款</p>
+                    </li>
+                    <li class="active">
+                        <span></span>
+                        <p>卖家发货</p>
+                    </li>
+                    <li class="active">
+                        <span></span>
+                        <p>确认收货</p>
+                    </li>
+                    <li class="active">
+                        <span></span>
+                        <p>评价</p>
+                    </li>
+                </ul>
+                <div class="tit-btn">
+                    <p>您的订单已经完成啦，去给个好评吧！</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="assessing-wrap container oh">
+            <div class="assessing-tit">
+                <p>商品</p>
+                <span>评论</span>
+            </div>
+            <div class="product fl">
+                <a href=""><img src="images/example.jpg" height="183" width="183" alt=""></a>
+                <div class="product-r">
+                    <p>宝洁海飞丝去屑清爽去油洗发750m宝洁海飞丝去屑清爽去油洗发750m</p>
+                    <span>品牌：潘婷</span>
+                    <span>类型：柔顺</span>
+                    <i>好评率：98%</i>
+                </div>
+            </div>
+            <div class="assessing">
+                <span>评分：</span>
+                <ul class="ranking">
+                    <input id="rankNum" type="hidden">
+                    <li>
+                        <span>太失望了，差评！差评！</span>
+                    </li>
+                    <li>
+                        <span>此次购物体验很失望！</span>
+                    </li>
+                    <li>
+                        <span>还不错，中评吧！</span>
+                    </li>
+                    <li>
+                        <span>很满意，好评！</span>
+                    </li>
+                    <li>
+                        <span>超级满意，五星好评！</span>
+                    </li>
+                </ul>
+                <span class="mT10">评论：</span>
+                <textarea placeholder="我还有更多的评论"></textarea>
+            </div>
+            <div class="assessing-btn">
+                <a id="assessingBtn" href="javascript:void(0)">发表评论</a>
+                <div class="check-box fr">
+                    <i></i>
+                    <input name="" class="" type="checkbox">
+                    <span>匿名评价</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部 开始 -->
+        <script src="public/footer.js"></script>
+        <!-- 底部 结束 -->
+
+        <!-- js -->
+        <script src="js/public.js"></script>
+        <script>
+        $(function(){
+            /*匿名*/
+            var hideNameCheck = $('.assessing-btn').find('input[type=checkbox]');
+            hideNameCheck.click(function(event) {
+                if (this.checked) {
+                    $(this).attr('checked', 'checked').parents('.check-box').addClass('checked');
+                } else {
+                    $(this).removeAttr('checked').parents('.check-box').removeClass('checked');
+                }
+            });
+
+            /*评星*/
+            $('.ranking').find('li').click(function(event) {
+                $(this).addClass('ranked').siblings().removeClass('ranked');
+                $('#rankNum').val($(this).index());
+                var words = $(this).find('span').text();
+                var textarea = $('.assessing').find('textarea');
+                textarea.html(words);
+            });
+
+            $('.ranking').find('li').hover(function() {
+                $(this).addClass('active').prevAll('li').addClass('active');
+                $(this).nextAll('li').removeClass('active');
+            }, function() {
+                if ($('.ranked').length!==0) {
+                    $('.ranked').addClass('active').prevAll('li').addClass('active');
+                    $('.ranked').nextAll('li').removeClass('active');
+                } else {
+                    $('.ranking').find('li').removeClass('active');
+                }
+            });
+
+            /*未评论提示框*/
+            $('#assessingBtn').click(function(event) {
+                if ($('#rankNum').val()=="") {
+                    openAddCartModal(0,'请对商品做出评分！');
+                } else {
+                    openAddCartModal(1,'评论完成，即将返回');
+                    setTimeout(function(){
+                        window.location.href=('assess.html');
+                    },2300);
+                }
+            });
+
+        })
+        </script>
+    </body>
+</html>

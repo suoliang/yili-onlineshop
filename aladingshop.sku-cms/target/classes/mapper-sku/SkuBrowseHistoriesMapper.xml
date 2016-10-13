@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.sku.cms.dao.SkuBrowseHistoriesDao">
+	<resultMap id="SkuBrowseHistoriesResultMap" type="SkuBrowseHistories">
+		<id column="id" property="id" />
+		<result column="member_id" property="memberId" />
+		<result column="sku_code" property="skuCode" />
+		<result column="browse_counts" property="browseCounts" />
+		<result column="browseTime" property="browseTime" />
+	</resultMap>
+	<!-- 自动生成id策略 -->
+	<insert id="add" 
+		parameterType="SkuBrowseHistories">
+		insert into
+		t_sku_browse_histories(id,member_id,sku_code,
+		browse_counts,browseTime)
+		values(#{id},#{memberId},#{skuCode},
+		1,now())
+	</insert>
+	
+	<update id="updateBrowseCounts" parameterType="SkuBrowseHistories">
+		update 
+			t_sku_browse_histories 
+		set
+			browse_counts = browse_counts +1,
+			browseTime = now()
+		where 
+			member_id = #{memberId}
+		and sku_code=#{skuCode}
+	</update>
+	
+	<select id="findByMemberIdAndSkuCode" resultMap="SkuBrowseHistoriesResultMap" parameterType="SkuBrowseHistories">
+		<![CDATA[
+			select  
+				id,member_id,sku_code,
+				browse_counts,browseTime
+			from 
+				t_sku_browse_histories 
+			where 
+				member_id = #{memberId}
+				and sku_code=#{skuCode}
+			
+        ]]>
+	</select>
+	<!-- 查询 -->
+	<select id="findTopNByMemberId" resultMap="SkuBrowseHistoriesResultMap">
+		<![CDATA[
+			select 
+				id,member_id,sku_code,
+				browse_counts,browseTime
+			from 
+				t_sku_browse_histories 
+			where 
+				member_id=#{memberId}
+			order by 
+				browseTime desc
+			limit 0 , #{browseHistoriesShowCount} 
+        ]]>
+	</select>
+	
+</mapper>

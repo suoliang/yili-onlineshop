@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.member.dao.MemberGradeConfigDao">
+	<resultMap id="MemberGradeConfigResultMap" type="memberGradeConfig">
+		<id column="id" property="id" />
+		<result column="grade_value" property="gradeValue" />
+		<result column="grade_name" property="gradeName" />
+		<result column="grade_code" property="gradeCode" />
+		<result column="grade_icon" property="gradeIcon" />
+		<result column="remark" property="remark" />
+	</resultMap>
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_member_grade_config
+		where id = #{id}
+	</delete>
+	<insert id="add" parameterType="memberGradeConfig">
+		insert into t_member_grade_config (id,grade_value,grade_name,grade_code,grade_icon,remark)
+		values (#{id},#{gradeValue},#{gradeName},#{gradeCode},#{gradeIcon},#{remark})
+	</insert>
+	<update id="update" parameterType="memberGradeConfig">
+		update t_member_grade_config
+		set
+		grade_value = #{gradeValue},
+		grade_name = #{gradeName},
+		grade_code = #{gradeCode},
+		grade_icon = #{gradeIcon},
+		remark = #{remark}
+		where id = #{id}
+	</update>
+	<select id="findById" resultMap="MemberGradeConfigResultMap" parameterType="java.lang.Long">
+		<![CDATA[
+			select
+			id,grade_value,grade_name,grade_code,grade_icon,remark
+			from t_member_grade_config
+			where id = #{id}
+		]]>
+	</select>
+	
+	<select id="findByGradeCode" resultMap="MemberGradeConfigResultMap" parameterType="java.lang.String">
+		<![CDATA[
+			select
+			id,grade_value,grade_name,grade_code,grade_icon,remark
+			from t_member_grade_config
+			where grade_code = #{gradeCode}
+		]]>
+	</select>
+	<select id="findAll" resultType="list" resultMap="MemberGradeConfigResultMap">
+		<![CDATA[
+			select
+			id,grade_value,grade_name,grade_code,grade_icon,remark
+			from t_member_grade_config
+		]]>
+	</select>
+</mapper>

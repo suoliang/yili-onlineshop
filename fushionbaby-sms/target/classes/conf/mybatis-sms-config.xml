@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration 
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 命名空间 -->
+	<typeAliases>
+		 
+		<!-- 短信管理 -->
+		<typeAlias alias="Sms" type="com.fushionbaby.sms.model.Sms" />   
+		<!-- 短信模板管理 -->
+		<typeAlias alias="SmsTypeConfig" type="com.fushionbaby.sms.model.SmsTypeConfig" />  
+		<!-- 邮件通知 -->
+		<typeAlias alias="Email" type="com.fushionbaby.sms.model.Email" />  
+		<!-- 邮件操作
+		<typeAlias alias="EmailOperate" type="com.fushionbaby.sms.model.EmailOperate"/>
+		 -->
+	</typeAliases>
+
+	<!-- 注册SQL映射文件 -->
+	<mappers>
+	</mappers>
+</configuration>

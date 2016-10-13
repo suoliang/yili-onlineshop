@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.alabao.dao.AlabaoRollOffRecordDao">
+	<resultMap id="AlabaoRollOffRecordResultMap" type="AlabaoRollOffRecord">
+			<id column="id" property="id" />
+			<result column="transfer_money" property="transferMoney" />
+			<result column="member_id" property="memberId" />
+			<result column="roll_off_account_type" property="rollOffAccountType" />
+			<result column="account" property="account" />
+			<result column="create_time" property="createTime" />
+			<result column="is_success" property="isSuccess" />
+	</resultMap>
+	<!-- 定义宏转换为 -->
+	<sql id="AlabaoRollOffRecord_column">
+		id,member_id,account,transfer_money,roll_off_account_type,is_success,create_time
+	</sql>
+	<insert id="add" parameterType="AlabaoRollOffRecord">
+		insert into 
+			baby_member.t_alabao_roll_off_record
+		(
+					transfer_money,
+					member_id,
+					roll_off_account_type,
+					id,
+					account,
+					create_time,
+					is_success
+		)
+	    values 
+	    (
+				#{transferMoney},
+				#{memberId},
+				#{rollOffAccountType},
+				#{id},
+				#{account},
+				now(),
+				#{isSuccess}
+		)
+	</insert>
+	<delete id="deleteById" parameterType="java.lang.Long">
+	
+		delete from baby_member.t_alabao_roll_off_record where id = #{id}  
+	</delete>
+	
+	<update id="update"  parameterType="AlabaoRollOffRecord">
+		update baby_member.t_alabao_roll_off_record
+			set
+				<if test="transferMoney !=null and transferMoney !=''">
+					transfer_money=#{transferMoney},
+				</if>
+				<if test="rollOffAccountType !=null and rollOffAccountType !=''">
+					roll_off_account_type=#{rollOffAccountType},
+				</if>
+				<if test="isSuccess !=null and isSuccess !=''">
+					is_success=#{isSuccess}
+				</if>
+		<where>
+			id = #{id} 
+		</where>
+	</update>
+	
+	<select id="findById" resultMap="AlabaoRollOffRecordResultMap" parameterType="java.lang.Long">
+		select  <include refid="AlabaoRollOffRecord_column"/> from baby_member.t_alabao_roll_off_record where id = #{id} 
+	</select>
+	
+	<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="AlabaoRollOffRecordResultMap" parameterType="Map" >
+		select <include refid="AlabaoRollOffRecord_column"/>
+		from baby_member.t_alabao_roll_off_record 
+		where 1=1
+				<if test="transferMoney !=null and transferMoney !=''">
+					 and transfer_money=#{transferMoney}
+				</if>
+				<if test="memberId !=null and memberId !=''">
+					 and member_id=#{memberId}
+				</if>
+				<if test="rollOffAccountType !=null and rollOffAccountType !=''">
+					 and roll_off_account_type=#{rollOffAccountType}
+				</if>
+				<if test="id !=null and id !=''">
+					 and id=#{id}
+				</if>
+				<if test="account !=null and account !=''">
+					 and account=#{account}
+				</if>
+				<if test="createTime !=null and createTime !=''">
+					 and create_time=#{createTime}
+				</if>
+				<if test="isSuccess !=null and isSuccess !=''">
+					 and is_success=#{isSuccess}
+				</if>
+		<if test="start!=null and limit!=null ">
+			limit #{start},#{limit}
+		</if>
+		 
+	</select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) from baby_member.t_alabao_roll_off_record
+	</select>
+	
+	
+	<select id="findByMemberIdTime" resultType="list" resultMap="AlabaoRollOffRecordResultMap" parameterType="Map">
+		select  <include refid="AlabaoRollOffRecord_column"/> from baby_member.t_alabao_roll_off_record where member_id=#{memberId}  
+		<![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTime}, '%Y-%m-%d')
+			]]>
+	</select>
+	
+	<select id="findAllByMemberId" resultMap="AlabaoRollOffRecordResultMap" parameterType="java.lang.Long">
+		select  <include refid="AlabaoRollOffRecord_column"/> from baby_member.t_alabao_roll_off_record where member_id = #{memberId} 
+	</select>
+	
+	<select id="findAllByAccount" resultMap="AlabaoRollOffRecordResultMap" parameterType="java.lang.String">
+		select  <include refid="AlabaoRollOffRecord_column"/> from baby_member.t_alabao_roll_off_record where account=#{account}
+	</select>
+	
+</mapper>

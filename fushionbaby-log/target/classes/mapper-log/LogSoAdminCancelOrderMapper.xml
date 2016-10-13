@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.log.dao.LogSoAdminCancelOrderDao" >
+  <resultMap id="logSoAdminCancelOrderResultMap" type="logSoAdminCancelOrder" >
+    <id column="id" property="id" />
+    <result column="member_id" property="memberId" />
+    <result column="cancel_time" property="cancelTime" />
+    <result column="order_code" property="orderCode" />
+    <result column="sys_cancel_reason" property="sysCancelReason" />
+  </resultMap>
+  
+  <insert id="add" parameterType="logSoAdminCancelOrder" >
+    insert into  t_log_so_admin_cancel_order
+    	 (order_code, cancel_time, member_id,sys_cancel_reason)
+    values 
+    	( #{orderCode}, now(), #{memberId}, #{sysCancelReason})
+  </insert>
+ 
+ </mapper>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.card.dao.MemberCardConfigDao" >
+  <resultMap id="MemberCardConfigResultMap" type="MemberCardConfig" >
+    <id column="id" property="id" />
+    <result column="type" property="type"/>
+    <result column="discount" property="discount"/>
+    <result column="rate" property="rate" />
+    <result column="rebate" property="rebate"/>
+    <result column="face_value" property="faceValue" />
+    <result column="lowest_money" property="lowestMoney"/>
+    <result column="timeline" property="timeline"/>
+    <result column="is_disabled" property="isDisabled"/>
+    <result column="img_url" property="imgUrl"/>
+    <result column="detail_url" property="detailUrl"/>
+    <result column="create_time" property="createTime"/>
+    <result column="create_id" property="createId"/>
+    <result column="update_time" property="updateTime"/>
+    <result column="update_id" property="updateId"/>
+  </resultMap>
+  
+   <insert id="add" parameterType="MemberCardConfig"> 
+   	<!-- 获取数据库自动生成的主键 -->
+	 <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+		SELECT LAST_INSERT_ID() AS ID    
+     </selectKey>
+    insert into t_member_card_config (id, type,rate,rebate,discount,face_value, lowest_money, timeline, is_disabled,img_url,detail_url,create_time,create_id, update_time, update_id)
+    values (#{id},#{type},#{rate},#{discount},#{rebate},#{faceValue},#{lowestMoney},#{timeline},#{isDisabled},#{imgUrl},#{detailUrl},now(),#{createId},now(),#{updateId})
+  </insert>
+  <delete id="deleteById"  parameterType="java.lang.Long">
+    delete from t_member_card_config where id = #{id}
+  </delete>
+  
+  <update id="update" parameterType="MemberCardConfig" >
+    update t_member_card_config
+    <set>
+    	<if test="type !=null and type !=''">
+    		type = #{type},
+    	</if>
+    	<if test="discount !=null and discount !=''">
+    		discount = #{discount},
+    	</if>
+    	<if test="rate !=null and rate !=''">
+    		rate = #{rate},
+    	</if>
+    	<if test="rebate !=null and rebate !=''">
+    		rebate=#{rebate},
+    	</if>
+    	<if test="faceValue !=null and faceValue !=''">
+    		face_value=#{faceValue},
+    	</if>
+    	<if test="lowestMoney !=null and lowestMoney !=''">
+    		lowest_money = #{lowestMoney},
+    	</if>
+    	<if test="imgUrl !=null and imgUrl !=''">
+    		img_url=#{imgUrl},
+    	</if>
+    	<if test="detailUrl !=null and detailUrl !=''">
+    		detail_url=#{detailUrl},
+    	</if>
+    	<if test="timeline !=null and timeline !=''">
+    		timeline = #{timeline},
+    	</if>
+    	 update_time = now(),
+    	 update_id = #{updateId}
+    </set>    
+    <where>
+    	id = #{id}
+    </where>      
+  </update>
+  <sql id="Base_Column_List" >
+  	select id, type, rate,discount,rebate,face_value, lowest_money, timeline, is_disabled,img_url,detail_url,create_time,create_id, update_time, update_id
+			 from t_member_card_config
+  </sql>
+  <select id="findAll" resultMap="MemberCardConfigResultMap" resultType="list">
+ 	<include refid="Base_Column_List" /> order by type DESC
+  </select> 
+  
+   <select id="findById" resultMap="MemberCardConfigResultMap" parameterType="java.lang.Long" >
+	   <include refid="Base_Column_List" />
+	   <where>
+	   		id=#{id}
+	   </where>
+  </select>
+   <select id="findByType" resultMap="MemberCardConfigResultMap" parameterType="java.lang.String" >
+   		<include refid="Base_Column_List" />
+   		<where>
+   			type = #{type} and is_disabled='n' 
+   		</where>
+   		GROUP BY face_value
+  </select>
+	  <!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="MemberCardConfigResultMap" parameterType="Map" >
+    	<include refid="Base_Column_List" />
+		<where>
+			<if test="type !=null and type !=''">
+	    	   AND  type = #{type,}  
+	        </if>
+			<if test="createTimeFrom != null and createTimeFrom !=''">
+	    	<![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+			]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+		</where>
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select 
+			count(1)
+		from t_member_card_config
+		<where>
+			<if test="type !=null and type !=''">
+	    	   AND  type = #{type}  
+	        </if>
+			<if test="createTimeFrom != null and createTimeFrom !=''">
+	    	<![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+			]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+		</where>
+	</select>	
+	
+  <!-- 修改储值卡的状态 -->
+  <update id="updateIsDisabled" parameterType="MemberCardConfig" >
+    update 
+    	t_member_card_config 
+    set 
+      	is_disabled=#{isDisabled}
+    where 
+      	id = #{id}
+  </update> 
+</mapper>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.alabao.dao.AlabaoIncomeRecordDao" >
+  <resultMap id="AlabaoIncomeRecordResultMap" type="AlabaoIncomeRecord" >
+    <id column="id" property="id" />
+    <result column="member_id" property="memberId" />
+    <result column="account" property="account" />
+    <result column="bf_income_money" property="bfIncomeMoney" />
+    <result column="income_money" property="incomeMoney" />
+    <result column="af_income_money" property="afIncomeMoney" />
+    <result column="create_time" property="createTime" />
+  </resultMap>
+  <sql id="AlabaoIncomeRecord_Column_List" >
+    	id, member_id, account, bf_income_money, income_money, af_income_money, create_time
+  </sql>
+  <insert id="add" parameterType="AlabaoIncomeRecord" >
+    insert into t_alabao_income_record 
+    	(id, member_id, account, bf_income_money, income_money, af_income_money, create_time)
+    values 
+    	(#{id}, #{memberId}, #{account}, #{bfIncomeMoney}, #{incomeMoney}, #{afIncomeMoney}, now())
+  </insert>
+	
+	<select id="findAllByMemberId" resultMap="AlabaoIncomeRecordResultMap" parameterType="java.lang.Long">
+		select  <include refid="AlabaoIncomeRecord_Column_List"/> from t_alabao_income_record where member_id = #{memberId} ORDER BY create_time DESC
+	</select>
+	
+	<select id="findAllByAccount" resultMap="AlabaoIncomeRecordResultMap" parameterType="java.lang.String">
+		select  <include refid="AlabaoIncomeRecord_Column_List"/> from t_alabao_income_record where  account = #{account} ORDER BY create_time DESC
+	</select>
+  
+  	<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="AlabaoIncomeRecordResultMap" parameterType="Map" >
+		select <include refid="AlabaoIncomeRecord_Column_List"/> 
+		from t_alabao_income_record 
+		<where>
+			<if test="account !=null and account !=''">
+			    account = #{account} and 
+			</if>
+			<if test="memberId!=null and memberId!=''">
+			    member_id = #{memberId} and 
+			</if>
+			<if test="createTimeFrom != null and createTimeFrom !=''">
+		    	<![CDATA[
+					DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d') and 
+				]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d') and 
+				]]>
+		    </if>
+			1=1 
+		</where>
+		 order by create_time desc
+		<if test="start!=null and limit!=null ">
+			limit #{start},#{limit}
+		</if>
+		 
+	</select>
+	
+	
+  	<!-- 分页条件查询统计 -->
+	<select id="getListPageMoney" resultType="java.util.HashMap"  parameterType="Map" >
+		select  sum(income_money) as total_income_money
+		from t_alabao_income_record 
+		<where>
+			<if test="account !=null and account !=''">
+			    account = #{account} and 
+			</if>
+			
+			<if test="createTimeFrom != null and createTimeFrom !=''">
+		    	<![CDATA[
+					DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d') and 
+				]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d') and 
+				]]>
+		    </if>
+			1=1 
+		</where>
+		 
+	</select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) from t_alabao_income_record 
+		<where>
+			<if test="account !=null and account !=''">
+			    account = #{account} and 
+			</if>
+			<if test="memberId!=null and memberId!=''">
+			    member_id = #{memberId} and 
+			</if>
+			<if test="createTimeFrom != null and createTimeFrom !=''">
+		    	<![CDATA[
+					DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d') and 
+				]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d') and 
+				]]>
+		    </if>
+			1=1 
+		</where>
+	</select>
+	
+	<select id="findBillRecordByTime" resultMap="AlabaoIncomeRecordResultMap" >
+		select  <include refid="AlabaoIncomeRecord_Column_List"/> from t_alabao_income_record 
+		where account = #{account} AND
+			DATE_FORMAT(create_time,'%Y-%m') > DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 4 MONTH),'%Y-%m')
+			ORDER BY create_time DESC
+	</select>
+	
+</mapper>

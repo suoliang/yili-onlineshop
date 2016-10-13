@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.periodactivity.dao.ActivityRedEnvlopeUseRecordDao">
+	<resultMap id="ActivityRedEnvlopeUseRecordMap" type="ActivityRedEnvlopeUseRecord">
+		<id column="id" property="id" />
+		<result column="member_id" property="memberId" />
+		<result column="order_code" property="orderCode" />
+		<result column="red_envelope_amount" property="redEnvelopeAmount" />
+		<result column="create_time" property="createTime" />
+
+	</resultMap>
+	<sql id="select_column">
+		select 
+			id, member_id, order_code ,red_envelope_amount,create_time 
+		from t_activity_red_envelope_use_record
+	   
+	</sql>
+	<insert id="add" parameterType="ActivityRedEnvlopeUseRecord">
+		insert into 
+			t_activity_red_envelope_use_record
+		(id, member_id, order_code ,red_envelope_amount,create_time  )
+	    values 
+	    (#{id},#{memberId},#{orderCode},#{red_envelope_amount},now())
+	</insert>
+
+	
+	
+	<select id="findByMemberId" resultType="list" resultMap="ActivityRedEnvlopeUseRecordMap" parameterType="java.lang.Long">
+		 <include refid="select_column"/>  
+		 <where>member_id = #{memberId}</where> 
+	</select>
+	
+	<select id="findByOrderCode" resultMap="ActivityRedEnvlopeUseRecordMap" parameterType="java.lang.String">
+		 <include refid="select_column"/>  
+		 <where>order_code = #{orderCode}</where> 
+	</select>
+	
+</mapper>

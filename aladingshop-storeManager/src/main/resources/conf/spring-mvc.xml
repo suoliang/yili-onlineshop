@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:p="http://www.springframework.org/schema/p"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:mvc="http://www.springframework.org/schema/mvc"
+  xsi:schemaLocation="
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.2.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
+   
+   <!-- 扫描controller（controller层注入） -->
+   <context:component-scan base-package="com.aladingshop.store.controller"/>
+    <!-- 扫描opdic（自定义层注入） -->
+   <context:component-scan base-package="com.aladingshop.store.opdic"/>
+   <!-- 初始化转换器 -->
+   <!-- <mvc:annotation-driven /> -->
+   <mvc:annotation-driven conversion-service="conversionService"/>
+	<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<property name="registerDefaultFormatters" value="false"/>
+		<property name="formatterRegistrars">
+			<set>
+				<bean class="org.springframework.format.datetime.DateFormatterRegistrar">
+					<property name="formatter" ref="dateFormatter"></property>
+				</bean>
+			</set>
+		</property>
+	</bean>
+	
+	<!-- 默认接收表单提交的日期格式,需要时分秒请在model类中对日期属性增加注解 -->
+	<bean id="dateFormatter" class="org.springframework.format.datetime.DateFormatter">
+		<property name="pattern" value="yyyy-MM-dd"></property>
+	</bean>
+	
+	 <!-- 支持上传文件 -->   
+   <!-- <bean id="multipartResolver" 
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>   -->
+   
+   <!-- 对模型视图添加前后缀 -->
+   <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	<!-- 	<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" /> -->
+		<property name="prefix" value="/WEB-INF/" />
+		
+		<property name="suffix" value=".jsp" />
+	</bean>
+	<!-- 对静态资源文件的访问，将无法mapping到controller的path交给default servlet hander 处理 -->
+	<mvc:default-servlet-handler/>
+	
+	<!-- 定义无controller的path <-> view直接映射 -->
+	<mvc:view-controller path="/" view-name="redirect:" />
+	
+	<!-- 内容协商管理器  -->
+    <!--1、首先检查路径扩展名（如my.pdf）；2、其次检查Parameter（如my?format=pdf）；3、检查Accept Header-->
+    <!-- REST中根据URL后缀自动判定Content-Type及相应的View -->
+	<bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+		<!-- 扩展名至mimeType的映射,即 /user.json => application/json -->
+        <property name="favorPathExtension" value="true"/>
+        <!-- 用于开启 /userinfo/123?format=json 的支持 -->
+        <property name="favorParameter" value="true"/>
+        <property name="parameterName" value="format"/>
+        <!-- 是否忽略Accept Header -->
+        <property name="ignoreAcceptHeader" value="false"/>
+	    <property name="mediaTypes" >
+	        <map> 
+                <entry key="xml" value="application/xml"/> 
+                <entry key="json" value="application/json"/> 
+                <entry key="html" value="text/html"/>
+            </map>
+	    </property>
+	</bean>
+	
+	 <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">  
+         <!-- 设置字符编码 -->   
+        <property name="messageConverters">
+            <list>
+                <!-- 设置返回字符串编码 -->
+                <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                    <property name = "supportedMediaTypes">
+                        <list>
+                            <value>text/html;charset=UTF-8</value>
+                        </list>
+                    </property>
+                </bean>
+                <!-- json转换器 -->
+                <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" >
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>text/html;charset=UTF-8</value>
+                        </list>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean> 
+    
+    
+    <!--  uploadify 文件图片上传-->
+     <bean id="multipartResolver"  
+            class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
+            <!-- set the max upload size100MB -->  
+            <property name="maxUploadSize">  
+                <value>104857600</value>  
+            </property>  
+            <property name="maxInMemorySize">  
+                <value>4096</value>  
+            </property>  
+            <property name="defaultEncoding" value="utf-8"/>
+        </bean>  
+	
+
+    <mvc:interceptors>
+     	<mvc:interceptor>
+     	    <mvc:mapping path="/*/*"/>
+			<mvc:exclude-mapping path="/login/*"/>
+			<mvc:exclude-mapping path="/cmsRefund/notify"/>
+			<bean class="com.aladingshop.store.interceptor.SecurityInterceptor"/>
+		</mvc:interceptor>
+    </mvc:interceptors>
+    
+    
+    
+</beans>

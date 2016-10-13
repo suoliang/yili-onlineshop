@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fushionbaby.core.dao.OrderFeeUserDao">
+  <resultMap id="BaseResultMap" type="OrderFeeUser" >
+    <id column="id" property="id" />
+    <result column="order_code" property="orderCode" />
+    <result column="member_id" property="memberId" />
+    <result column="cardno" property="cardno" />
+    <result column="card_amount" property="cardAmount" />
+    <result column="total_actual" property="totalActual" />
+    <result column="total_af_discount" property="totalAfDiscount" />
+    <result column="epoints_redeem_money" property="epointsRedeemMoney" />
+    <result column="red_envelope_amount" property="redEnvelopeAmount" />
+    <result column="alabao_cheap_amount" property="alabaoCheapAmount" />
+    <result column="use_wallet_money" property="useWalletMoney" />
+    <result column="payable_transfer_fee" property="payableTransferFee" />
+    <result column="actual_transfer_fee" property="actualTransferFee" />
+    <result column="create_time" property="createTime" />
+    <!-- 门店编号 -->
+    <result column="store_code" property="storeCode" />
+    
+  </resultMap>
+  <sql id="Fee_Column_List" >
+  	select
+	    id, order_code, member_id, cardno, card_amount, total_actual, total_af_discount, 
+	    epoints_redeem_money, red_envelope_amount, alabao_cheap_amount,
+	    use_wallet_money,payable_transfer_fee,
+	    actual_transfer_fee,create_time,store_code
+	from t_order_fee
+  </sql>
+  
+  <insert id="addOrderFeeUser" parameterType="OrderFeeUser">
+    insert into t_order_fee (id, order_code, member_id, 
+      cardno, card_amount, total_actual, 
+      total_af_discount, epoints_redeem_money, 
+      red_envelope_amount, alabao_cheap_amount,
+      use_wallet_money, payable_transfer_fee,
+      actual_transfer_fee, create_time,store_code)
+    values (#{id}, #{orderCode}, #{memberId}, 
+      #{cardno}, #{cardAmount},#{totalActual},
+      #{totalAfDiscount}, #{epointsRedeemMoney}, 
+      #{redEnvelopeAmount}, #{alabaoCheapAmount}, 
+      #{useWalletMoney}, #{payableTransferFee}, 
+      #{actualTransferFee},now(),#{storeCode})
+  </insert>
+  
+  <select id="findByParam" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	<include refid="Fee_Column_List"></include>
+  	<where>
+  		<if test="orderCode != null and orderCode !='' ">
+  			and order_code = #{orderCode}
+  		</if>
+  		<if test="memberId != null and memberId !='' ">
+  			and member_id = #{memberId}
+  		</if>
+  	</where>
+  </select>
+  
+  <update id="updateMIdAndOrdCode">
+  	update t_order_fee
+		set member_id = #{memberId}
+		<if test="alabaoCheapAmount !=null and alabaoCheapAmount !=''">
+			, alabao_cheap_amount = #{alabaoCheapAmount}
+		</if>
+		<if test="totalActual !=null and totalActual !=''">
+			, total_actual = #{totalActual}
+		</if>
+		
+		<where>
+			member_id = #{memberId} and order_code = #{orderCode}
+		</where>
+  </update>
+  
+</mapper>

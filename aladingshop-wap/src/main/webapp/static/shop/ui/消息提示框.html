@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>消息提示框</title>
+        <!-- 通用部分 开始 -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0,user-scalable=no">
+        <link rel="shortcut icon" href="images/favicon.ico" />
+        <link rel="stylesheet" href="../css/style.min.css"><!-- 通用 CSS -->
+        <script src="../farmwork/jquery/jquery-2.1.3.min.js"></script><!-- 通用jQuery JS -->
+        <script src="../farmwork/velocity/velocity.min.js"></script><!-- velocity JS -->
+        <script src="../farmwork/velocity/velocity.ui.min.js"></script><!-- velocity JS -->
+        <script src="../js/min/public.min.js"></script><!-- 通用 public JS -->
+        <!-- 通用部分 结束 -->
+    </head>
+    <body>
+
+        <!-- openModal(状态<0|1>,信息文字,延迟<默认800ms>) -->
+
+        <div class="container">
+            <div class="btn-wrap">
+                <button onclick="openModal()">openModal()</button>
+            </div>
+            <div class="btn-wrap">
+                <button onclick="openModal(1,'添加成功',1000)">openModal(1,'添加成功',1000)</button>
+            </div>
+            <div class="btn-wrap">
+                <button onclick="openModal(0,'购物车添加失败，请重新添加！',2000)">openModal(0,'添加失败',2000)</button>
+            </div>
+        </div>
+
+    </body>
+</html>

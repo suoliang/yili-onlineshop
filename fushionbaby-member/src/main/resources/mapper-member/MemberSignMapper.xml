@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.member.dao.MemberSignDao">
+	<resultMap id="MemberSignResultMap" type="MemberSign">
+		<id column="id" property="id" />
+		<result column="member_id" property="memberId" />
+		<result column="sign_time" property="signTime" />
+		<result column="get_epoint" property="getEpoint" />
+	</resultMap>
+	<sql id="MemberSign_column">
+		select 
+	      id,member_id,sign_time,get_epoint
+	   from t_member_sign
+	</sql>
+	<insert id="add" parameterType="MemberSign">
+		insert into 
+			t_member_sign
+		(id,member_id,sign_time,get_epoint)
+	    values 
+	    (#{id},#{memberId},now(),#{getEpoint})
+	</insert>
+	
+	<delete id="deleteById">
+		delete from t_member_sign where id=#{id}
+	</delete>
+	
+	<!-- 分页条件查询 -->
+	<select id="findByMemberId" resultType="list" resultMap="MemberSignResultMap" >
+		<include refid="MemberSign_column"/> where member_id=#{memberId}
+	</select>
+	
+	
+</mapper>

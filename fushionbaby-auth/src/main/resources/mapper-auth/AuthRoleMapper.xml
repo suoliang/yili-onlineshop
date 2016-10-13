@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.auth.dao.AuthRoleDao" >
+
+  <resultMap id="AuthRoleResultMap" type="AuthRole" >
+    <id column="id" property="id"  />
+    <result column="description" property="description"  />
+    <result column="name" property="name"  />
+  </resultMap> 
+   <insert id="add" parameterType="AuthRole"> 
+    	<!-- 获取数据库自动生成的主键 -->
+	   <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+		SELECT LAST_INSERT_ID() AS ID    
+        </selectKey>
+       insert into 
+           t_auth_role (id,description, name)
+           
+              values (#{id},#{description},  #{name})
+  </insert>
+  <delete id="deleteById" parameterType="java.lang.Long">
+    delete from t_auth_role where id = #{id}
+  </delete>
+  <update id="update"  parameterType="AuthRole">
+    update t_auth_role    
+      set
+         <if test="description!=null and description!=''">
+           description = #{description},
+         </if>
+         <if test="name!=null and name!=''">
+           name = #{name}
+         </if>
+      where id = #{id}
+  </update>
+  <select id="findAll" resultMap="AuthRoleResultMap" resultType="list">
+  <![CDATA[
+			select id, description, name from t_auth_role
+		 ]]>
+  </select> 
+   <select id="findById" resultMap="AuthRoleResultMap" parameterType="java.lang.Long" >
+  <![CDATA[
+			select id, description, name from t_auth_role where id=#{id}
+		 ]]>
+  </select>
+    <select id="findByName" resultMap="AuthRoleResultMap" parameterType="string">
+  <![CDATA[
+			select id, description, name from t_auth_role where name=#{name}
+		 ]]>
+  </select> 
+
+  
+</mapper>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8" />
+        <base target="_blank">
+        <title>阿拉丁玛特 - 手机APP下载</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="renderer" content="webkit">
+        <meta name="description" content="阿拉丁玛特商城">
+        <meta name="keywords" content="阿拉丁玛特商城">
+        <link rel="shortcut icon" href="images/favicon.ico" />
+        <!-- styles -->
+        <link rel="stylesheet" href="css/style.min.css">
+        <!--[if IE 8 ]><html class="ie8"><![endif]-->
+        <!--[if IE 9 ]><html class="ie9"><![endif]-->
+    </head>
+    <body>
+
+        <div class="app-header-wrap">
+            <div class="app-header">
+                <a href="index.html"><span></span></a>
+                <a class="app-android-btn" href="http://filepic.aladingshop.com/app/aladingshop_android_new.apk"></a>
+                <a class="app-ios-btn" href="https://itunes.apple.com/us/app/a-la-ding-ma-te/id1022751544?l=zh&ls=1&mt=8"></a>
+            </div>
+        </div>
+
+        <div class="section1 app-container">
+            <!-- <img class="img0" src="images/app/0.jpg" alt=""> -->
+            <img class="posa img1" src="images/app/1.png" height="" width="" alt="">
+            <img class="posa img2" src="images/app/2.png" height="" width="" alt="">
+            <img class="posa img3" src="images/app/3.png" height="" width="" alt="">
+            <div class="app-btn-wrap">
+                <span></span>
+                <img id="appCodeImgBtn" src="images/code.jpg" height="40" width="40" alt="">
+                <a class="app-ios-btn" href="https://itunes.apple.com/us/app/a-la-ding-ma-te/id1022751544?l=zh&ls=1&mt=8"></a>
+                <a class="app-android-btn" href="http://filepic.aladingshop.com/app/aladingshop_android_new.apk"></a>
+            </div>
+        </div>
+
+        <div class="section2 app-container">
+            <img class="img5 posa" src="images/app/5.png" alt="">
+            <img class="img4 posa" src="images/app/4.png" alt="">
+            <img class="img6 posa scale" src="images/app/6.png" alt="">
+            <img class="img7 posa scale" src="images/app/7.png" alt="">
+            <img class="img8 posa scale" src="images/app/8.png" alt="">
+            <img class="img10 posa scale" src="images/app/10.png" alt="">
+            <img class="img9 posa scale" src="images/app/9.png" alt="">
+            <div class="app-tit posa">
+                <h3>居家达人带你发现好货</h3>
+                <p>直击最新流行现场</p>
+            </div>
+        </div>
+
+        <div class="section3 app-container">
+            <div class="app-tit posa">
+                <h3>神奇阿拉丁到底有哪些功能</h3>
+                <p>让我们来一探究竟</p>
+            </div>
+            <div class="img15 posa">
+                <img class="img-15" src="images/app/15.png" height="" width="" alt="">
+                <img class="posa img11" src="images/app/11.png" height="" width="" alt="">
+                <img class="posa img12" src="images/app/12.png" height="" width="" alt="">
+                <img class="posa img13" src="images/app/13.png" height="" width="" alt="">
+                <img class="posa img14" src="images/app/14.png" height="" width="" alt="">
+            </div>
+        </div>
+
+        <div class="section4 app-container">
+            <img class="posa img17" src="images/app/17.png" alt="">
+            <img class="posa img16" src="images/app/16.png" alt="">
+            <div class="app-tit posa">
+                <h3>阿拉丁卖场，万种精品由你挑</h3>
+                <p>谁说便宜没好货</p>
+            </div>
+        </div>
+
+        <div class="section5 app-container">
+            <img class="posa img18" src="images/app/18.png" alt="">
+            <div class="app-tit posa">
+                <h3>无需繁琐，一拍即买</h3>
+                <p>最简单有效的购物流程</p>
+            </div>
+        </div>
+
+        <div class="section6 app-container">
+            <img class="posa img19" src="images/app/19.png" alt="">
+            <img class="posa img20" src="images/app/20.png" alt="">
+            <div class="app-tit posa">
+                <h3>分享就是美好，尽情的分享吧</h3>
+                <p>最简单直接的分享方式</p>
+            </div>
+        </div>
+
+        <div class="section7 app-container">
+            <img class="posa img21" src="images/code.jpg" height="" width="" alt="">
+            <div class="app-tit posa">
+                <h3>下载去吧，我要扫啊扫！</h3>
+                <p>手机APP，购物更便捷</p>
+            </div>
+        </div>
+
+        <!-- 底部 开始 -->
+        <script src="public/footer.js"></script>
+        <!-- 底部 结束 -->
+
+        <!-- javascript -->
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/jquery.easings.min.js"></script>
+
+        <script>
+            $(function(){
+                $('.img2').animate({"top":"20%"},1200,'easeInOutElastic');
+                $('.img3').animate({"top":"10%"},1500,'easeInOutElastic');
+
+                $(window).scroll(function(event) {
+                    var H = $(window).scrollTop();
+                    console.log(H);
+
+                    if (H>200) {
+                        $('.app-header-wrap').stop().animate({'top':'0'}, 300);
+                    } else {
+                        $('.app-header-wrap').stop().animate({'top':'-72px'}, 300);
+                    };
+
+                    if (H>200) {
+                        $('.img6, .img9').fadeIn().removeClass('scale');
+                        setTimeout(function(){
+                            $('.img7').fadeIn().removeClass('scale');
+                        },400);
+                        setTimeout(function(){
+                            $('.img8').fadeIn().removeClass('scale');
+                        },600);
+                        setTimeout(function(){
+                            $('.img10').fadeIn().removeClass('scale');
+                        },800);
+                    };
+
+                    if (H>800) {
+                        $('.img11').fadeIn();
+                        setTimeout(function(){
+                            $('.img12').fadeIn();
+                        },300);
+                        setTimeout(function(){
+                            $('.img13').fadeIn();
+                        },600);
+                        setTimeout(function(){
+                            $('.img14').fadeIn();
+                        },900);
+                    };
+
+                    if (H>1200) {
+                        $('.img17').stop().fadeIn();
+                        setTimeout(function(){
+                            $('.img16').stop().fadeIn();
+                        },500);
+                    };
+
+                    if (H>2000) {
+                        $('.img18').stop().fadeIn();
+                    };
+
+                    if (H>2800) {
+                        $('.img19').stop().fadeIn();
+                        setTimeout(function(){
+                            $('.img20').stop().fadeIn();
+                        },400);
+                    }
+
+                });
+
+                $('#appCodeImgBtn').hover(function() {
+                    $('.app-btn-wrap').find('span').stop().show();
+                }, function() {
+                    $('.app-btn-wrap').find('span').stop().hide();
+                });
+            })
+        </script>
+    </body>
+</html>

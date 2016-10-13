@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration 
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 命名空间 -->
+	<typeAliases>
+		<!-- 益多宝储值卡 -->
+		<typeAlias alias="MemberCard" type="com.aladingshop.card.model.MemberCard" />
+		<!-- 益多宝储值卡的配置 -->
+		<typeAlias alias="MemberCardConfig" type="com.aladingshop.card.model.MemberCardConfig" />
+		<!-- 益多宝储值卡的支出记录 -->
+		<typeAlias alias="MemberCardCostRecord" type="com.aladingshop.card.model.MemberCardCostRecord" />
+		<!-- 益多宝储值卡的入账记录 -->
+		<typeAlias alias="MemberCardIncomeRecord" type="com.aladingshop.card.model.MemberCardIncomeRecord" />
+		<!-- 益多宝储值卡的锁卡记录 -->
+		<typeAlias alias="MemberCardLocked" type="com.aladingshop.card.model.MemberCardLocked" />
+	</typeAliases>
+	<!-- 注册SQL映射文件 -->
+	<mappers>
+	</mappers>
+</configuration>

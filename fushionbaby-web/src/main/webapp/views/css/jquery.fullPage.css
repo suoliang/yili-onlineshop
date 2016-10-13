@@ -1,0 +1,38 @@
+/**
+ * fullPage 1.4.5
+ * https://github.com/alvarotrigo/fullPage.js
+ * MIT licensed
+ *
+ * Copyright (C) 2013 alvarotrigo.com - A project by Alvaro Trigo
+ */
+body, html {
+    margin:0;
+    padding:0;
+}
+#superContainer {
+    height:100%;
+    position:relative;
+	
+}
+.section{
+    overflow-x: hidden; 
+    position: relative;
+	-webkit-box-sizing: border-box; 
+    -moz-box-sizing: border-box; 
+    -ms-box-sizing: border-box; 
+         box-sizing: border-box;
+		 
+}
+
+.section2 .live_box { position: relative; left: -120%;}
+.section2 .video img{ position: relative; right: -120%;}
+.section3 .left{ position: relative; left: -150%;}
+.section3 .right{ position: relative; right: -150%;}
+.section4 .infomain2{ position: relative; right: -150%;opacity:0;}
+.section4 .line{ display:none;}
+.section4 .shine{ display:none;}
+.section4 .left{ position: relative; left: -150%;}
+.section5 .position{ position: relative; right: -150%;}
+.section5 .line{ display:none;}
+.section5 iframe{ display:none;}
+.section5 .arrive_way{ position: relative; bottom: -150%;}

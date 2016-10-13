@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>阿拉丁玛特 触屏版</title>
+
+        <!-- 通用部分 开始 -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0,user-scalable=no">
+        <link rel="shortcut icon" href="images/favicon.ico" />
+        <link rel="stylesheet" href="css/style.min.css"><!-- 通用 CSS -->
+        <script src="farmwork/jquery/jquery-2.1.3.min.js"></script><!-- 通用jQuery JS -->
+        <script src="farmwork/velocity/velocity.min.js"></script><!-- velocity JS -->
+        <script src="farmwork/velocity/velocity.ui.min.js"></script><!-- velocity JS -->
+        <script src="js/min/public.min.js"></script><!-- 通用 public JS -->
+        <!-- 通用部分 结束 -->
+
+        <link rel="stylesheet" href="farmwork/swiper/swiper.min.css"><!-- swiper CSS-->
+        <script src="farmwork/jquery/jquery.cookie.js"></script>
+        <script type="text/javascript">
+        $(function(){
+            // $.cookie('first_view');
+            if ($.cookie('first_view')=="yes") {
+                $('#indexBack').hide();
+            } else {
+                $.cookie('first_view', 'yes', { expires: 7 });
+            }
+            // $.cookie('the_cookie', '', { expires: -1 });
+        });
+        window.onload = function() {
+            var browser = navigator.userAgent;
+            if(browser.indexOf('iPhone') > -1){
+                // alert('iphone');
+            }else if(browser.indexOf('Android') > -1 || browser.indexOf('Linux') > -1){
+                // alert('andriod');
+            }else{
+                // location.href = "http://www.aladingshop.com";
+            };
+         };
+        </script>
+    </head>
+    <body id="home">
+
+        <div class="container">
+
+            <div id="indexBack" class="wp100 modal-wrap">
+                <img src="images/index-back.png">
+            </div>
+
+            <div class="download-bar wp100">
+                <img class="wp100" src="images/download-bar.png" alt="">
+                <a class="close" href="javascript:void(0)">关闭</a>
+                <a class="download" href="http://app.aladingshop.com/app-download/index.html">下载</a>
+            </div>
+
+            <div class="header">
+                <span class="logo"></span>
+                <a href="search.html" class="header-input-wrap">
+                    <span class="search"></span>
+                    <p>搜索您想要的产品</p>
+                </a>
+                <a href="login.html" class="a-right">登录</a>
+            </div>
+
+            <!-- banner -->
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img data-src="picture/banner0.jpg" alt="" class="swiper-lazy">
+                        <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
+                    </div>
+                    <div class="swiper-slide">
+                        <img data-src="picture/banner1.jpg" alt="" class="swiper-lazy">
+                        <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
+                    </div>
+                    <div class="swiper-slide">
+                        <img data-src="picture/banner2.jpg" alt="" class="swiper-lazy">
+                        <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div><!-- /.swiper-container -->
+
+            <div class="menuA">
+                <a href="order.html">
+                    <span class="menuA-1"></span>
+                    <p>订单查询</p>
+                </a>
+                <a href="location.html">
+                    <span class="menuA-2"></span>
+                    <p>身边阿拉丁</p>
+                </a>
+                <a href="list.html">
+                    <span class="menuA-3"></span>
+                    <p>促销专区</p>
+                </a>
+                <a href="spe-card.html">
+                    <span class="menuA-4"></span>
+                    <p>阿拉丁卡</p>
+                </a>
+                <a href="collection.html">
+                    <span class="menuA-5"></span>
+                    <p>我的关注</p>
+                </a>
+                <a href="spe-ruyi.html">
+                    <span class="menuA-6"></span>
+                    <p>如意宝</p>
+                </a>
+                <a href="spe-bonus-earn.html">
+                    <span class="menuA-9"></span>
+                    <p>赚红包</p>
+                </a>
+                <a href="vip.html">
+                    <span class="menuA-8"></span>
+                    <p>会员专区</p>
+                </a>
+            </div>
+
+            <div class="menuB">
+                <a href="list.html">
+                    <h4>洗涤用品</h4>
+                    <p>方便快捷就是好</p>
+                    <img src="picture/washing_pic.png">
+                </a>
+                <a href="list.html">
+                    <h4>家庭日用品</h4>
+                    <p>环保卫生人人爱</p>
+                    <img src="picture/household_pic.png">
+                </a>
+                <a href="list.html">
+                    <h4>小食品</h4>
+                    <p>健康美味我最爱</p>
+                    <img src="picture/pot_foods_pic.png">
+                </a>
+                <a href="list.html">
+                    <h4>粮油调味</h4>
+                    <p>清爽美味好家居</p>
+                    <img src="picture/taste_pic.png">
+                </a>
+                <a href="list.html">
+                    <h4>酒水饮料</h4>
+                    <p>高雅值得品味</p>
+                    <img src="picture/drinks_pic.png">
+                </a>
+                <a href="list.html">
+                    <h4>速食品</h4>
+                    <p>快速鲜美可口</p>
+                    <img src="picture/instant_pic.png">
+                </a>
+            </div>
+
+            <div class="banner-wrap">
+                <a href="">
+                    <img src="picture/daily-banner.jpg">
+                </a>
+                <a href="">
+                    <img src="picture/recommendation-banner.jpg">
+                </a>
+                <a href="">
+                    <img src="picture/like-banner.jpg">
+                </a>
+            </div>
+
+            <div class="discount">
+                <div class="title">
+                    <h4>特惠街</h4>
+                    <a href="">更多<span></span></a>
+                </div>
+
+                <div class="discount-wrap">
+                    <ul>
+                        <!-- 循环若干li,滚动加载更多 -->
+                        <li>
+                            <a href="detail.html">
+                                <img src="picture/1.jpg">
+                                <p>舒肤佳金银花/菊花沐浴露400毫升</p>
+                                <span>&yen; 29.9</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="detail.html">
+                                <img src="picture/222.jpg">
+                                <p>舒肤佳金银花/菊花沐浴露400毫升</p>
+                                <span>&yen; 29.9</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="detail.html">
+                                <img src="picture/3.jpg">
+                                <p>舒肤佳金银花/菊花沐浴露400毫升</p>
+                                <span>&yen; 29.9</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="detail.html">
+                                <img src="picture/4.jpg">
+                                <p>舒肤佳金银花/菊花沐浴露400毫升</p>
+                                <span>&yen; 29.9</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="detail.html">
+                                <img src="picture/5.jpg">
+                                <p>舒肤佳金银花/菊花沐浴露400毫升</p>
+                                <span>&yen; 29.9</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="detail.html">
+                                <img src="picture/example.jpg">
+                                <p>舒肤佳金银花/菊花沐浴露400毫升</p>
+                                <span>&yen; 29.9</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="detail.html">
+                                <img src="picture/6.jpg">
+                                <p>舒肤佳金银花/菊花沐浴露400毫升</p>
+                                <span>&yen; 29.9</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="detail.html">
+                                <img src="picture/7.jpg">
+                                <p>舒肤佳金银花/菊花沐浴露400毫升</p>
+                                <span>&yen; 29.9</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="load-more textC">
+                        <p>正在加载</p>
+                    </div>
+                    <div class="load-none textC">
+                        <p>哎哟，没有数据了</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="foot fl wp100">
+                <div class="foot-t fl wp100">
+                    <a class="fl" href="login.html">登录</a>
+                    <a class="fl" href="registering-phone.html">注册</a>
+                    <a class="fr" href="suggest.html">反馈</a>
+                </div>
+            </div>
+            <div class="foot fl wp100">
+                <div class="foot-m fl wp100">
+                    <a href="http://app2.aladingshop.com/app-download/index.html">客户端</a>
+                    <a class="red" href="javascript:void(0)">触屏版</a>
+                </div>
+                <p class="foot-b">阿拉丁玛特 m.aladingshop.com</p>
+            </div>
+
+        </div><!-- /.container -->
+
+        <div class="modal-wrap" id="iconDisabled">
+            <div class="modal">
+                <p>此功能需要在APP端使用，点击下载进入APP下载页！</p>
+                <div class="btn-wrap">
+                    <a class="cancel" href="javascript:void(0)">取消</a>
+                    <a class="comfirm" href="http://app.aladingshop.com/app-download/index.html">下载</a>
+                </div>
+            </div>
+        </div>
+
+        <script src="js/menu_local.js"></script><!-- 公共底部菜单 -->
+
+        <script src="farmwork/swiper/swiper.jquery.min.js"></script><!-- swiper JS -->
+        <script type="text/javascript">
+        $(document).ready(function() {
+            /*banner*/
+            var swiper = new Swiper('.swiper-container',{
+                autoplay:3000,
+                speed:600,
+                autoplayDisableOnInteraction : false,/*用户操作swiper之后，是否禁止autoplay。默认为true：停止。*/
+                loop:true,
+                pagination:'.swiper-pagination',
+                setWrapperSize :true,
+                roundLengths : true,/*设定为true将slide的宽和高取整(四舍五入)以防止某些分辨率的屏幕上文字模糊。*/
+                iOSEdgeSwipeDetection : true,/*设置为true开启IOS的UIWebView环境下的边缘探测。如果拖动是从屏幕边缘开始则不触发swiper。*/
+                lazyLoading : true,
+                lazyLoadingInPrevNext : true,
+                lazyLoadingOnTransitionStart : true,
+                observer:true,
+                observeParents:true,
+            });
+
+            /*加载更多*/
+            $(window).scroll(function(event) {
+                if ($('body').height()-$(window).scrollTop()-$(this).height()<1) {
+                    $(".discount-wrap").find('.load-more').show();
+                    // 加载更多数据,之后隐藏load
+                };
+            });
+
+            $('.download-bar').find('.close').click(function(event) {
+                $('.download-bar').fadeOut();
+            });
+
+        });
+        </script>
+
+    </body>
+</html>

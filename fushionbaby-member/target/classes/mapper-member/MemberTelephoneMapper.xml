@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.member.dao.MemberTelephoneDao">
+	<resultMap id="MemberTelephoneResultMap" type="memberTelephone">
+		<id column="id" property="id" />
+		<result column="member_id" property="memberId" />
+		<result column="telephone" property="telephone" />
+		<result column="create_time" property="createTime" />
+	</resultMap>
+	
+	<sql id="telephone_column">
+		select 
+		    id, member_id, telephone, create_time
+		from 
+			t_member_telephone
+	</sql>
+	<sql id="telephone_where">
+		<where>
+			<if test="telephone != null and telephone != ''">
+				telephone LIKE "%"#{telephone}"%"
+			</if>
+			<if test="createTimeFrom != null and createTimeFrom != ''">
+				<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom},'%Y-%m-%d')
+				]]>
+			</if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+				<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo},'%Y-%m-%d')
+				]]>
+			</if>
+		</where>
+	</sql>
+	
+	<insert id="add" parameterType="memberTelephone">
+		insert into t_member_telephone
+		(id, member_id, telephone,
+		create_time)
+		values (#{id},
+		#{memberId}, #{telephone},
+		now())
+	</insert>
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from
+		t_member_telephone
+		where id = #{id}
+	</delete>
+	<update id="update" parameterType="memberTelephone">
+		update t_member_telephone
+		set member_id = #{memberId},
+		telephone = #{telephone},
+		create_time = #{createTime}
+		where id = #{id}
+	</update>
+	<select id="findById" resultMap="MemberTelephoneResultMap" parameterType="java.lang.Long">
+		<include refid="telephone_column"/> where id = #{id}
+	</select>
+	
+	<select id="findAll" resultType="list" resultMap="MemberTelephoneResultMap">
+	  	<include refid="telephone_column"/>
+	</select>
+	<!-- 条件查询出结果集 -->
+	<select id="findByCondition" resultMap="MemberTelephoneResultMap">
+		<include refid="telephone_column"/>
+		<include refid="telephone_where"/>
+		order by create_time desc
+	</select>
+	<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="MemberTelephoneResultMap" parameterType="Map" >
+		<include refid="telephone_column"/>
+		<include refid="telephone_where"/>
+		<if test="start!=null and limit!=null">
+			order by create_time desc
+			limit #{start},#{limit}
+		</if>
+	</select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) from t_member_telephone
+		<include refid="telephone_where"/>	
+	</select>
+	<delete id="deleteByMemberId" parameterType="java.lang.Long">
+		delete from
+		t_member_telephone
+		where member_id = #{memberId}
+	</delete>
+</mapper>

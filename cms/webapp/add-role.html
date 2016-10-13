@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8" />
+        <title>新增角色 - CMS</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="renderer" content="webkit">
+        <meta name="description" content="阿拉丁后台管理系统">
+        <meta name="keywords" content="阿拉丁后台管理系统">
+        <link rel="shortcut icon" href="images/favicon.ico" />
+        <!-- styles -->
+        <link rel="stylesheet" href="css/bootstrap.min.css" />
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/font-awesome.min.css" />
+        <link rel="stylesheet" href="css/style.min.css">
+    </head>
+    <body id="" class="Cog">
+        <script src="js/nav.js"></script><!-- 公共顶部导航 -->
+        <div class="container-fluid">
+            <div class="row">
+
+                <div class="col-md-12 content">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-cog"></i> 新增角色</h3>
+                        </div>
+                        <div class="panel-body">
+                            <form class="form-horizontal" id="addRoleForm">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">角色名称：</label>
+                                    <div class="col-sm-5">
+                                        <input name="addRoleName" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">角色描述：</label>
+                                    <div class="col-sm-5">
+                                        <input name="roleDescribe" type="text" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">赋予权限：</label>
+                                    <div class="col-sm-7">
+                                        <div class="col-md-3">
+                                            <div class="checkbox-inline">
+                                                <label>
+                                                    <input name="access" type="checkbox" value="1">系统管理
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="checkbox-inline">
+                                                <label>
+                                                    <input name="access" type="checkbox" value="2">会员管理
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="checkbox-inline">
+                                                <label>
+                                                    <input name="access" type="checkbox" value="3">商品管理
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="checkbox-inline">
+                                                <label>
+                                                    <input name="access" type="checkbox" value="4">订单管理
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="checkbox-inline">
+                                                <label>
+                                                    <input name="access" type="checkbox" value="5">活动管理
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="checkbox-inline">
+                                                <label>
+                                                    <input name="access" type="checkbox" value="6">品牌管理
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="checkbox-inline">
+                                                <label>
+                                                    <input name="access" type="checkbox" value="7">广告管理
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="checkbox-inline">
+                                                <label>
+                                                    <input name="access" type="checkbox" value="8">短信管理
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div id="addRoleAlert"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">新增选项：</label>
+                                    <div class="col-sm-5">
+                                        <button type="button" class="btn btn-success">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- table -->
+                                <div class="table-responsive col-sm-7 col-sm-offset-2">
+                                    <table class="table table-bordered table-hover" id="">
+                                        <thead>
+                                            <tr>
+                                                <th>角色名称</th>
+                                                <th>角色描述</th>
+                                                <th>操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <input name="" type="text" class="form-control">
+                                                </td>
+                                                <td>
+                                                    <input name="" type="text" class="form-control">
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-default btn-sm edit-role">修改</button>
+                                                    <button type="button" class="btn btn-danger btn-sm delete-role">删除</button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input name="" type="text" class="form-control">
+                                                </td>
+                                                <td>
+                                                    <input name="" type="text" class="form-control">
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-default btn-sm edit-role">修改</button>
+                                                    <button type="button" class="btn btn-danger btn-sm delete-role">删除</button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input name="" type="text" class="form-control">
+                                                </td>
+                                                <td>
+                                                    <input name="" type="text" class="form-control">
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-default btn-sm edit-role">修改</button>
+                                                    <button type="button" class="btn btn-danger btn-sm delete-role">删除</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="submit" class="btn btn-info">确认新建角色</button>
+                                        <button type="button" class="btn btn-default" onclick="history.go(-1);">取消</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.content -->
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+        <!-- javascript -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery.validate.min.js"></script><!-- 表单验证 -->
+        <script src="js/public.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                /*表单验证*/
+                var validator = $('#addRoleForm').validate({
+                    debug:true,
+                    rules: {
+                        addRoleName: {
+                            required: true,
+                            rangelength: [2, 10],
+                        },
+                        access: {
+                            required: true
+                        }
+                    },
+                    messages: {
+                        addRoleName: {
+                            required: "请填写角色名！",
+                            rangelength: "角色名长度应该为2-10位"
+                        },
+                        access: {
+                            required: "请至少分配一项权限！"
+                        }
+                    },
+                    errorPlacement: function(error, element) {
+                        if ( element.is(":checkbox") ){
+                            error.appendTo($("#addRoleAlert") );
+                        } else {
+                            error.appendTo(element.parent());
+                        }
+                    },
+                    submitHandler: function(form) {
+                        // 验证成功后操作
+                        console.log($(form).serialize());
+                        form.submit();
+                    }
+                });
+
+            });
+        </script>
+    </body>
+</html>

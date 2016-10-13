@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.sysactivity.dao.LotteryConfigDao">
+	<resultMap id="LotteryConfigMap" type="LotteryConfig">
+		<id column="id" property="id" />
+		<result column="lottery_code" property="lotteryCode" />
+		<result column="start_time" property="startTime" />
+		<result column="end_time" property="endTime" />
+		<result column="order_stint" property="orderStint" />
+		<result column="disable" property="disable" />
+	</resultMap>
+	<sql id="Base_Column_List" >
+		id,lottery_code,start_time,end_time,order_stint,disable
+	</sql>
+	<insert id="add" parameterType="LotteryConfig">
+		insert into t_lottery_config (id,
+		lottery_code, start_time,
+		end_time,order_stint,disable)
+		values (#{id},
+		#{lotteryCode}, #{startTime},
+		#{endTime},#{orderStint},#{disable})
+	</insert>
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from
+		t_lottery_config
+		where id = #{id}
+	</delete>
+	<update id="update" parameterType="LotteryConfig">
+		update t_lottery_config
+		set
+		lottery_code = #{lotteryCode},
+		start_time = #{startTime},
+		end_time = #{endTime},
+		order_stint = #{orderStint},
+		disable = #{disable}
+		where id = #{id}
+	</update>
+
+	<select id="findById" parameterType="long" resultMap="LotteryConfigMap">
+		select 
+		<include refid="Base_Column_List" />
+		from t_lottery_config 
+		where id = #{id}
+	</select>
+	<select id="findByLotteryCode" parameterType="string" resultMap="LotteryConfigMap">
+		select 
+		<include refid="Base_Column_List" />
+		from t_lottery_config 
+		where lottery_code = #{lotteryCode} and disable = 'n'
+	</select>
+	<select id="findAll" resultMap="LotteryConfigMap" resultType="list">
+		select 
+		<include refid="Base_Column_List" />
+		from t_lottery_config 
+	</select>
+
+</mapper>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.log.dao.LogSoCanelOrderDao" >
+  <resultMap id="logSoCancelOrderResultMap" type="logSoCancelOrder" >
+    <id column="id" property="id" />
+    <result column="cancelreason" property="cancelReason" />
+    <result column="canceltime" property="cancelTime" />
+    <result column="email" property="email" />
+    <result column="member_name" property="memberName" />
+    <result column="payment_type" property="paymentType" />
+    <result column="remark" property="remark" />
+    <result column="reveiver" property="reveiver" />
+    <result column="reveivermobile" property="reveiverMobile" />
+    <result column="sendstatus" property="sendStatus" />
+    <result column="sendtime" property="sendTime" />
+    <result column="so_code" property="soCode" />
+  </resultMap>
+
+  <insert id="add" parameterType="logSoCancelOrder" >
+    insert into  t_log_so_cancel_order
+    	 (id, cancelreason, canceltime, email, member_name, payment_type,
+    	 remark,reveiver,reveivermobile,sendstatus,sendtime,so_code)
+    values 
+    	(#{id}, #{cancelReason},now(), #{email}, #{memberName}, #{paymentType},
+    	#{remark},#{reveiver},#{reveiverMobile},#{sendStatus},#{sendTime},#{soCode}
+    	)
+  </insert>
+  
+  <delete id="deleteById" parameterType="java.lang.Long" >
+    delete from t_log_so_cancel_order  where id = #{id}
+  </delete>
+</mapper>

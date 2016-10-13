@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.periodactivity.dao.ActivityRedEnvlopeUseRecordDao">
+	<resultMap id="ActivityRedEnvlopeUseRecordMap" type="ActivityRedEnvlopeUseRecord">
+		<id column="id" property="id" />
+		<result column="member_id" property="memberId" />
+		<result column="order_code" property="orderCode" />
+		<result column="red_envelope_amount" property="redEnvelopeAmount" />
+		<result column="use_status" property="useStatus" />
+		<result column="type" property="type" />
+		<result column="create_time" property="createTime" />
+
+	</resultMap>
+	<sql id="select_column">
+		select 
+			id, member_id, order_code ,red_envelope_amount,use_status,type,create_time 
+		from t_activity_red_envlope_use_record
+	   
+	</sql>
+	<insert id="add" parameterType="ActivityRedEnvlopeUseRecord">
+		insert into 
+			t_activity_red_envlope_use_record
+		(id, member_id, order_code ,red_envelope_amount,use_status,type,create_time  )
+	    values 
+	    (#{id},#{memberId},#{orderCode},#{redEnvelopeAmount},#{useStatus},#{type},now())
+	</insert>
+
+	
+	
+	<select id="findByMemberId" resultType="list" resultMap="ActivityRedEnvlopeUseRecordMap" parameterType="java.lang.Long">
+		 <include refid="select_column"/>  
+		 <where>member_id = #{memberId}</where> 
+		 order by create_time desc
+	</select>
+	
+	<select id="findByOrderCode" resultMap="ActivityRedEnvlopeUseRecordMap" parameterType="java.lang.String">
+		 <include refid="select_column"/>  
+		 <where>order_code = #{orderCode}</where> 
+		 
+	</select>
+	
+	
+	<update id="updateUseStatus">
+		update t_activity_red_envlope_use_record 
+		<set>use_status =#{useStatus}</set>
+		<where>order_code = #{orderCode}</where> 
+	</update>
+
+	<select id="getListPage" resultMap="ActivityRedEnvlopeUseRecordMap" resultType="list" parameterType="Map">
+	 	 <include refid="select_column"/>  
+	 	 <where>
+	 	 	<if test="memberId!=null and memberId!=''">
+	 	 		and member_id = #{memberId}
+	 	 	</if>
+	 	 	<if test="orderCode!=null and orderCode!=''">
+	 	 		and order_code = #{orderCode}
+	 	 	</if>
+	 	 	<if test="useStatus!=null">
+	 	 		and use_status = #{useStatus}
+	 	 	</if>
+	 	 	<if test="type!=null">
+	 	 		and type = #{type}
+	 	 	</if>
+	 	 	
+	 	 	<if test="createStartTime != null and createStartTime !=''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d %H:%i:%s') >= DATE_FORMAT(#{createStartTime}, '%Y-%m-%d %H:%i:%s')
+				]]>
+		    </if>
+			<if test="createEndTime != null and createEndTime != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d %H:%i:%s') <= DATE_FORMAT(#{createEndTime}, '%Y-%m-%d %H:%i:%s')
+				]]>
+		    </if>
+	 	 </where>
+	 	 
+	 	  <if test="sortAttr!=null and sortAttr!=''">
+		  order by 
+		 	<if test="sortAttr=='1'.toString()">red_envelope_amount</if>
+		 	<if test="sortAttr=='2'.toString()">create_time</if>
+		 	<if test="sortType!=null and sortType!='' and sortType=='desc'.toString()">
+		 		   desc
+		 	</if>
+		 </if>
+	 	 
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]> 
+	</select> 	
+	
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select 
+			count(id)
+		from 
+			t_activity_red_envlope_use_record
+			
+		 <where>
+	 	 	<if test="memberId!=null and memberId!=''">
+	 	 		and member_id = #{memberId}
+	 	 	</if>
+	 	 	<if test="orderCode!=null and orderCode!=''">
+	 	 		and order_code = #{orderCode}
+	 	 	</if>
+	 	 	<if test="useStatus!=null">
+	 	 		and use_status = #{useStatus}
+	 	 	</if>
+	 	 	<if test="type!=null">
+	 	 		and type = #{type}
+	 	 	</if>
+	 	 	<if test="createStartTime != null and createStartTime !=''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d %H:%i:%s') >= DATE_FORMAT(#{createStartTime}, '%Y-%m-%d %H:%i:%s')
+				]]>
+		    </if>
+			<if test="createEndTime != null and createEndTime != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d %H:%i:%s') <= DATE_FORMAT(#{createEndTime}, '%Y-%m-%d %H:%i:%s')
+				]]>
+		    </if>
+	 	 </where>
+			
+	</select>
+
+	
+</mapper>

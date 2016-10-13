@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fushionbaby.core.dao.OrderTransUserDao">
+  <resultMap id="BaseResultMap" type="OrderTransUser" >
+    <id column="id" property="id" />
+    <result column="order_code" property="orderCode" />
+    <result column="member_id" property="memberId" />
+    <result column="trans_status" property="transStatus" />
+    <result column="trans_code" property="transCode" />
+    <result column="trans_name" property="transName" />
+    <result column="delivery_time" property="deliveryTime" />
+    <result column="send_date" property="sendDate" />
+    <result column="update_time" property="updateTime" />
+    <result column="update_id" property="updateId" />
+    <result column="create_time" property="createTime" />
+  </resultMap>
+  <sql id="Trans_Column_List">
+  	select id, order_code, member_id, trans_status, trans_code, trans_name, delivery_time, 
+  			send_date, update_time, update_id, create_time
+  	from t_order_trans
+  </sql>
+  <insert id="addOrderTransUser" parameterType="OrderTransUser">
+    insert into t_order_trans (id, order_code, member_id, 
+      trans_status, trans_code, trans_name, delivery_time,
+      send_date, update_time, update_id, 
+      create_time)
+    values (#{id}, #{orderCode}, #{memberId}, 
+      #{transStatus}, #{transCode},#{transName},#{deliveryTime},
+      #{sendDate}, #{updateTime}, #{updateId}
+      ,now())
+  </insert>
+  
+  <select id="findByParam" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	<include refid="Trans_Column_List" />
+  	<where>
+  		<if test="orderCode != null and orderCode !='' ">
+  			and order_code = #{orderCode}
+  		</if>
+  		<if test="memberId != null and memberId !='' ">
+  			and member_id = #{memberId}
+  		</if>
+  	</where>
+  </select>
+</mapper>

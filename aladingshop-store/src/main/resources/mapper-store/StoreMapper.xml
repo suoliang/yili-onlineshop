@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.store.dao.StoreDao">
+	<resultMap id="StoreResultMap" type="Store">
+		<id column="id" property="id" />
+		<result column="number" property="number" />
+		<result column="code" property="code" />
+		<result column="name" property="name" />
+		<result column="province_code" property="provinceCode" />
+		<result column="city_code" property="cityCode" />
+		<result column="country_code" property="countryCode" />
+		<result column="cell_code" property="cellCode" />
+		
+		<result column="province_name" property="provinceName" />
+		<result column="city_name" property="cityName" />
+		<result column="country_name" property="countryName" />
+		<result column="cell_name" property="cellName" />
+		
+		<result column="status" property="status" />
+		<result column="latitude" property="latitude" />
+		<result column="longitude" property="longitude" />
+		<result column="is_deleted" property="isDeleted" />
+		<result column="create_time" property="createTime" />
+		<result column="create_id" property="createId" />
+		<result column="update_time" property="updateTime" />
+		<result column="update_id" property="updateId" />
+	</resultMap>
+	<sql id="Store_column">
+		id, number, code ,name,province_code,city_code,country_code,cell_code,status,province_name,city_name,country_name,cell_name,
+		latitude,longitude,is_deleted,create_time,create_id,update_time,update_id 
+	   
+	</sql>
+	<insert id="add" parameterType="Store">
+		insert into 
+			t_store
+		(id, number, code ,name,province_code,city_code,country_code,cell_code,status,province_name,city_name,country_name,cell_name,
+		latitude,longitude,is_deleted,create_time,create_id )
+	    values 
+	    (#{id},#{number},#{code},#{name},#{provinceCode},#{cityCode},#{countryCode},#{cellCode},#{status},#{provinceName},
+	    #{cityName},#{countryName},#{cellName},#{latitude},#{longitude},'n',now(),#{createId})
+	</insert>
+	
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_store where id = #{id}
+	</delete>
+	
+	<update id="update" parameterType="Store">
+		update t_store
+			set
+		    number = #{number}, 
+		    name = #{name}, 
+		    
+		    province_code = #{provinceCode}, 
+		    city_code = #{cityCode}, 
+		    country_code = #{countryCode}, 
+		    cell_code = #{cellCode},  
+		    
+		    province_name = #{provinceName},
+		    city_name = #{cityName}, 
+		    country_name = #{countryName}, 
+		    cell_name = #{cellName},  
+		    
+		    status = #{status}, 
+		    latitude = #{latitude}, 
+		    longitude = #{longitude}, 
+		    is_deleted = #{isDeleted}, 
+			update_id = #{updateId}, 
+			update_time = now()
+		<where>
+			id = #{id}
+		</where>
+	</update>
+	
+	<select id="findById" resultMap="StoreResultMap" parameterType="java.lang.Long">
+		select  <include refid="Store_column"/> from t_store where id = #{id}
+	</select>
+	
+	<select id="findAll" resultType="list" resultMap="StoreResultMap" >
+		select  <include refid="Store_column"/> from t_store
+	</select>
+	
+	<select id="findByNumber" resultMap="StoreResultMap" parameterType="java.lang.String">
+		select  <include refid="Store_column"/> from t_store  where number = #{number}
+	</select>
+	<select id="findByCode" resultMap="StoreResultMap" parameterType="java.lang.String">
+		select  <include refid="Store_column"/> from t_store where code = #{code}
+	</select>
+	<select id="findLastOne" resultMap="StoreResultMap" >
+		select  <include refid="Store_column"/> from t_store order by create_time desc limit 1
+	</select>
+	
+	<!-- 分页条件查询 -->
+	<select id="getList" resultType="list" resultMap="StoreResultMap" parameterType="Map" >
+		select <include refid="Store_column"/>
+		from t_store 
+		<where>
+			<if test="number!=null and number!=''">
+			    and number = #{number}
+			</if>
+			<if test="code!=null and code!=''">
+			    and code = #{code} 
+			</if>
+			<if test="name!=null and name!=''">
+			    and name like "%"#{name}"%" 
+			</if>
+			<if test="provinceCode!=null and provinceCode!=''">
+			     and province_code = #{provinceCode}   
+			</if>
+			<if test="cellCode!=null and cellCode!=''">
+			    and  cell_code = #{cellCode}  
+			</if>
+			<if test="cityCode!=null and cityCode!=''">
+			    and  city_code = #{cityCode}  
+			</if>
+			<if test="countryCode!=null and countryCode!=''">
+			    and country_code = #{countryCode}  
+			</if>
+		<!-- 	<if test="cellName!=null and cellName!=''">
+			    and cell_name = #{cellName}  
+			</if> -->
+			<if test="status!=null and status!=''">
+			      and status = #{status} 
+			</if>
+			<if test="latitude!=null and latitude!=''">
+			      and latitude = #{latitude}  
+			</if>
+			<if test="longitude!=null and longitude!=''">
+			      and longitude = #{longitude}   
+			</if>
+			<if test="isDeleted!=null and isDeleted!=''">
+			      and is_deleted = #{isDeleted}  
+			</if>
+			<if test="updateTime!=null and updateTime!=''">
+			      and update_time = #{updateTime} 
+			</if>
+			<if test="updateId!=null and updateId!=''">
+			      and update_id = #{updateId} 
+			</if>
+			<if test="cellName!=null and cellName!=''">
+				and cell_name like "%"#{cellName}"%"
+			</if>
+			<if test="cityName!=null and cityName!=''">
+				and city_name like "%"#{cityName}"%"
+			</if>
+			<if test="countryName!=null and countryName!=''">
+				and country_name like "%"#{countryName}"%"
+			</if>
+			
+			
+		</where>
+		 order by create_time desc
+		LIMIT #{start},#{limit}
+		 
+	</select>
+	
+	<select id="queryByCondition" parameterType="StoreQueryCondition" resultType="list" resultMap="StoreResultMap">
+		select <include refid="Store_column"/>
+		from t_store 
+		<where>
+			<if test="number!=null and number!=''">
+			    and number = #{number}
+			</if>
+			<if test="code!=null and code!=''">
+			     and code = #{code} 
+			</if>
+			<if test="name!=null and name!=''">
+			     and name like "%"#{name}"%" 
+			</if>
+			<if test="provinceCode!=null and provinceCode!=''">
+			     and province_code = #{provinceCode}   
+			</if>
+			<if test="cellCode!=null and cellCode!=''">
+			    and  cell_code = #{cellCode}  
+			</if>
+			<if test="cityCode!=null and cityCode!=''">
+			    and  city_code = #{cityCode}  
+			</if>
+			<if test="countryCode!=null and countryCode!=''">
+			    and country_code = #{countryCode}  
+			</if>
+ 		<!-- 	<if test="cellName!=null and cellName!=''"> 
+			    and cell_name = #{cellName}  
+			</if> -->
+			<if test="status!=null">
+			     and status = #{status} 
+			</if>
+			<if test="isDeleted!=null and isDeleted!=''">
+			     and is_deleted = #{isDeleted}  
+			</if>
+			<if test="cellName!=null and cellName!=''">
+				and cell_name like "%"#{cellName}"%"
+			</if>
+			order by create_time desc
+			<if test="start !=null and start>-1">
+				LIMIT #{start}
+			</if>
+			<if test="start !=null and start>-1 and limit !=null and limit !=''">
+				,#{limit}
+			</if>
+	</where>
+	</select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) from t_store 
+		<where>
+			<if test="number!=null and number!=''">
+			     and number = #{number}
+			</if>
+			<if test="code!=null and code!=''">
+			      and code = #{code} 
+			</if>
+			<if test="name!=null and name!=''">
+			      and name like "%"#{name}"%" 
+			</if>
+			<if test="provinceCode!=null and provinceCode!=''">
+			     and province_code = #{provinceCode}   
+			</if>
+			<if test="cellCode!=null and cellCode!=''">
+			    and  cell_code = #{cellCode}  
+			</if>
+			<if test="cityCode!=null and cityCode!=''">
+			    and  city_code = #{cityCode}  
+			</if>
+			<if test="countryCode!=null and countryCode!=''">
+			    and country_code = #{countryCode}  
+			</if>
+		<!-- 	<if test="cellName!=null and cellName!=''">
+			    and cell_name = #{cellName}  
+			</if> -->
+			<if test="status!=null and status!=''">
+			      and status = #{status} 
+			</if>
+			<if test="latitude!=null and latitude!=''">
+			      and latitude = #{latitude}  
+			</if>
+			<if test="longitude!=null and longitude!=''">
+			      and longitude = #{longitude}   
+			</if>
+			<if test="isDeleted!=null and isDeleted!=''">
+			      and is_deleted = #{isDeleted}  
+			</if>
+			
+		    <if test="cellName!=null and cellName!=''">
+				and cell_name like "%"#{cellName}"%"
+			</if>
+			<if test="cityName!=null and cityName!=''">
+				and city_name like "%"#{cityName}"%"
+			</if>
+			<if test="countryName!=null and countryName!=''">
+				and country_name like "%"#{countryName}"%"
+			</if>
+			
+		</where>
+	</select>
+</mapper>

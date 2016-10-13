@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration 
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 命名空间 -->
+	<typeAliases>
+	
+		<typeAlias alias="ActCardType" type="com.fushionbaby.act.activity.model.ActCardType" />  
+		
+		<typeAlias alias="ActCard" type="com.fushionbaby.act.activity.model.ActCard" />  
+		
+		<typeAlias alias="ActEntityCard" type="com.fushionbaby.act.activity.model.ActEntityCard" />  
+		
+		<typeAlias alias="ActEntityCardConfig" type="com.fushionbaby.act.activity.model.ActEntityCardConfig" />  
+		
+		<typeAlias alias="ActEntityCardUseRecord" type="com.fushionbaby.act.activity.model.ActEntityCardUseRecord" />  
+		
+			
+		
+	</typeAliases>
+
+	<!-- 注册SQL映射文件 -->
+	<mappers>
+	</mappers>
+</configuration>

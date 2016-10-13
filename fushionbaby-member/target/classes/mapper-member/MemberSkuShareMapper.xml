@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.member.dao.MemberSkuShareDao" >
+  <resultMap id="memberSkuShareMap" type="MemberSkuShare" >
+    <id column="id" property="id"  />
+    <id column="member_id" property="memberId"  />
+    <result column="share_type_id" property="shareTypeId"  />
+    <result column="sku_id" property="skuId"  />
+    <result column="source" property="source" />
+    <result column="create_time" property="createTime"  />
+  </resultMap>
+  
+  <insert id="add"  
+	parameterType="MemberSkuShare">
+		insert into 
+			t_member_sku_share(id,member_id,share_type_id,sku_id,source,create_time)
+		values
+			(#{id},#{memberId},#{shareTypeId},#{skuId},#{source},now())
+  </insert>
+  
+  <delete id="deleteById" parameterType="java.lang.Long">
+  	delete from t_member_sku_share where id = #{id}
+  </delete>
+  
+  <select id="findById" resultMap="memberSkuShareMap" parameterType="long">
+  	select 
+  		id,member_id,share_type_id,sku_id,source,create_time
+  	from 
+  		t_member_sku_share
+  	where 
+  		id = #{id}
+  </select>
+  
+  <select id="findAll" resultMap="memberSkuShareMap" resultType="list">
+  	select 
+  		id,member_id,share_type_id,sku_id,source,create_time
+  	from 
+  		t_member_sku_share
+  </select>
+</mapper>

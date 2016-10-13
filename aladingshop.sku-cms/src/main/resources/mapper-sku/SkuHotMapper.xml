@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.sku.cms.dao.SkuHotDao">
+	<resultMap id="skuHotMap" type="SkuHot">
+		<id column="id" property="id" />
+		<result column="sku_code" property="skuCode" />
+		<result column="sku_name" property="skuName" />
+		<result column="count" property="count" />
+		<result column="addtime" property="addTime" />
+	</resultMap>
+	
+	<insert id="add" 
+		parameterType="SkuHot">
+		insert into
+			t_sku_hot(id,sku_code,sku_name,count,addtime)
+		values
+			(#{id},#{skuCode},#{skuName},#{count},now())
+	</insert>
+	
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_sku_hot where id = #{id}
+	</delete>
+	
+	<update id="updateCount" parameterType="Map">
+	update 
+	       t_sku_hot
+	 set 
+	       count=#{count}
+    where
+           id=#{id}
+	
+	</update>
+	
+	
+	
+	<select id="findById" resultMap="skuHotMap" parameterType="long">
+		select 
+			id,sku_code,sku_name,count,addtime 
+		from 
+			t_sku_hot
+		where 
+			id = #{id}
+	</select>
+	
+	<select id="findAll" resultMap="skuHotMap" resultType="list">
+			select 
+			     id,sku_code,sku_name,count,addtime 
+		     from 
+			     t_sku_hot order by count desc
+			</select>
+	<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="skuHotMap" parameterType="Map" >
+		select 
+			id,sku_code,sku_name,count,addtime 
+		from 
+			t_sku_hot 
+		<where>
+			<if test="skuName !=null and skuName !=''">
+	    	   AND  sku_name LIKE "%"#{skuName}"%"  
+	        </if>
+	        <if test="skuCode !=null and skuCode !=''">
+	    	   AND  sku_code =#{skuCode} 
+	        </if>
+		</where>
+		<![CDATA[
+			order by count desc
+		]]>
+		<![CDATA[
+			LIMIT #{start},#{limit}  
+		]]>
+	</select>
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select 
+			count(id)
+		from 
+			t_sku_hot
+		<where>
+			<if test="skuName !=null and skuName !=''">
+	    	   AND  sku_name LIKE "%"#{skuName}"%"  
+	        </if>
+	         <if test="skuCode !=null and skuCode !=''">
+	    	   AND  sku_code =#{skuCode} 
+	        </if>
+	     
+		</where>
+	</select>
+	<!-- 查询前几个热销商品-->
+	<select id="getHotTop"  resultType="list" resultMap="skuHotMap" parameterType="java.lang.Integer">
+	
+		select 
+			a.id,a.sku_code,a.sku_name,a.count,a.addtime 
+		from 
+			t_sku_hot AS a
+		inner join 
+			t_sku AS b
+		on 
+			a.sku_code = b.code
+		inner join 
+			t_sku_inventory c
+		on 
+			b.code = c.sku_code
+		where 
+			b.status = '2' and c.available_qty > 0
+		<![CDATA[
+			order by count desc
+		]]>
+		<![CDATA[
+			LIMIT #{size}  
+		]]>
+	
+	</select>
+	
+	
+	
+	
+</mapper>

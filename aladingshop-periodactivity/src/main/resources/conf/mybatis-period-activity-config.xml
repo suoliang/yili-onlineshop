@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration 
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 命名空间 -->
+	<typeAliases>
+		<!-- 分享送红包 -->
+		<typeAlias alias="ActivityShareMember" type="com.aladingshop.periodactivity.model.ActivityShareMember" />
+		
+		<typeAlias alias="ActivityShareRegisterRecord" type="com.aladingshop.periodactivity.model.ActivityShareRegisterRecord" />
+		
+		<typeAlias alias="ActivityRedEnvlopeUseRecord" type="com.aladingshop.periodactivity.model.ActivityRedEnvlopeUseRecord" />
+	</typeAliases>
+
+	<!-- 注册SQL映射文件 -->
+	<mappers>
+	</mappers>
+</configuration>

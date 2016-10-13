@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>订单详情</title>
+        <!-- 通用部分 开始 -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0,user-scalable=no">
+        <link rel="shortcut icon" href="images/favicon.ico" />
+        <link rel="stylesheet" href="css/style.min.css"><!-- 通用 CSS -->
+        <script src="farmwork/jquery/jquery-2.1.3.min.js"></script><!-- 通用jQuery JS -->
+        <script src="farmwork/velocity/velocity.min.js"></script><!-- velocity JS -->
+        <script src="farmwork/velocity/velocity.ui.min.js"></script><!-- velocity JS -->
+        <script src="js/min/public.min.js"></script><!-- 通用 public JS -->
+        <!-- 通用部分 结束 -->
+    </head>
+    <body id="orderDetail">
+
+        <div class="container">
+
+            <div class="head mB10">
+                <a href="javascript:history.go(-1)" class="a-left">
+                    <span class="back"></span>
+                </a>
+                <p>订单详情</p>
+                <a href="javascript:void(0)" class="a-right cancel-order">
+                    <span>取消订单</span>
+                </a>
+            </div>
+
+            <div class="address mB10">
+                <div class="address-box">
+                    <div class="address-detail fl">
+                        <span class="name">收件人：揭志勇</span>
+                        <span class="phone">电话：18116407567</span>
+                        <p>地址：上海市闵行区浦江镇 恒西路189号901室</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="order-detail-a fl wp100 mB10">
+                <ul class="list mB0">
+                    <li><p>订单状态：审核不通过</p></li>
+                    <li><p>订单编号：20151226</p></li>
+                    <li><p>支付方式：支付宝支付</p></li>
+                    <li><p>下单时间：2015-12-12 12:00:00</p></li>
+                    <li><p>支付时间：2015-12-12 12:00:00</p></li>
+                    <li><p>买家留言：发货发货！赶紧的！</p></li>
+                    <li><p>审查不同原因：要有脾气，不卖给你！</p></li>
+                </ul>
+            </div>
+
+            <div class="cart-confirm-a fl wp100">
+                <span class="icon-house"></span>
+                <h4>阿拉丁商品</h4>
+                <p>共计 <i class="count-num">1</i> 件</p>
+            </div>
+
+            <div class="cart-confirm-b-wrap fl wp100">
+                <div class="cart-confirm-b fl wp100">
+                    <a href="detail.html"><img src="picture/1.jpg"></a>
+                    <p>舒肤佳金银花/菊花沐浴露400毫升</p>
+                    <span>参数：属性</span>
+                    <span>参数：属性</span>
+                    <i>&yen; 29.9</i>
+                    <div class="modal-c fl wp100">数量 1</div>
+                </div>
+                <div class="cart-confirm-b fl wp100">
+                    <a href="detail.html"><img src="picture/2.jpg"></a>
+                    <p>舒肤佳金银花/菊花沐浴露400毫升</p>
+                    <span>参数：属性</span>
+                    <span>参数：属性</span>
+                    <i>&yen; 29.9</i>
+                    <div class="modal-c fl wp100">数量 1</div>
+                </div>
+                <div class="cart-confirm-b fl wp100">
+                    <a href="detail.html"><img src="picture/3.jpg"></a>
+                    <p>舒肤佳金银花/菊花沐浴露400毫升</p>
+                    <span>参数：属性</span>
+                    <span>参数：属性</span>
+                    <i>&yen; 29.9</i>
+                    <div class="modal-c fl wp100">数量 1</div>
+                </div>
+                <div class="cart-confirm-b fl wp100">
+                    <a href="detail.html"><img src="picture/5.jpg"></a>
+                    <p>舒肤佳金银花/菊花沐浴露400毫升</p>
+                    <span>参数：属性</span>
+                    <span>参数：属性</span>
+                    <i>&yen; 29.9</i>
+                    <div class="modal-c fl wp100">数量 1</div>
+                </div>
+            </div>
+            <ul class="list" id="openList">
+                <li><p><b>展开全部</b><span></span><i></i></p></li>
+            </ul>
+
+            <ul class="list mB0 mT10">
+                <li><p class="size16 color-black">价格清单</p></li>
+                <li>
+                    <p>商品总额</p>
+                    <span class="red">&yen; 700.00</span>
+                </li>
+                <li>
+                    <p>运费</p>
+                    <span class="red">&yen; 0.00</span>
+                </li>
+                <li>
+                    <p>优惠券</p>
+                    <span class="color-green">- &yen; 10.00</span>
+                </li>
+                <li>
+                    <p>如意消费卡折扣</p>
+                    <span class="color-green">- &yen; 10.00</span>
+                </li>
+                <li>
+                    <p>红包</p>
+                    <span class="color-green">- &yen; 10.00</span>
+                </li>
+                <li>
+                    <p>积分</p>
+                    <span class="color-green">- &yen; 10.00</span>
+                </li>
+            </ul>
+
+            <div class="cart-confirm-e fl wp100">
+                <p class="size16 color-black">合计：<i class="red">&yen; 699</i></p>
+                <a href="ranking.html">
+                    <button>去评价</button>
+                </a>
+                <a href="logistics.html">
+                    <button>查看物流</button>
+                </a>
+            </div>
+
+        </div><!-- /.container -->
+
+        <div class="modal-wrap" id="cancelOrderModal">
+            <div class="modal">
+                <p>确定取消该订单吗？</p>
+                <div class="btn-wrap">
+                    <a class="cancel" href="javascript:void(0)">取消</a>
+                    <a class="confirm" href="javascript:void(0)">确定</a>
+                </div>
+            </div>
+        </div>
+
+        <script>
+        $(function(){
+            /*取消订单按钮*/
+            var cancelOrderModal = $('#cancelOrderModal');
+            var confirmBtn = $('#cancelOrderModal').find('.confirm');
+            $('.cancel-order').click(function() {
+                cancelOrderModal.fadeIn();
+            });
+
+            confirmBtn.click(function() {
+                cancelOrderModal.fadeOut();
+                alert('订单已取消！');
+            });
+
+            /*展开商品列表*/
+            $('#openList').click(function() {
+                if ($(this).hasClass('active')) {
+                    $(this).removeClass('active').find('b').html("展开全部");
+                    $('.cart-confirm-b-wrap').css('height', '');
+                } else {
+                    $(this).addClass('active').find('b').html("收起部分");
+                    $('.cart-confirm-b-wrap').css('height', 'auto');
+                }
+            });
+        })
+        </script>
+
+    </body>
+</html>

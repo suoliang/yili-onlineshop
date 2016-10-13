@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration 
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 命名空间 -->
+	<typeAliases>
+		<!-- 订单基本表 -->
+		<typeAlias alias="OrderBase" type="com.fushionbaby.order.model.OrderBase" />
+		
+		<!-- 销售订单收货地址记录,与订单一对一关系 -->
+		<typeAlias alias="OrderMemberAddress" type="com.fushionbaby.order.model.OrderMemberAddress" />
+		
+		<!-- 销售订单行记录 -->
+		<typeAlias alias="SoSoLine" type="com.fushionbaby.order.model.OrderLine" />
+		
+		<!-- order跟用户Card的关联表 -->
+		<typeAlias alias="soOrderCardRelation" type="com.fushionbaby.order.model.OrderCardRelation" />
+		
+		<!-- order财务表 -->
+		<typeAlias alias="OrderTrace" type="com.fushionbaby.order.model.OrderTrace" />
+		
+		<!-- order费用表 -->
+		<typeAlias alias="OrderFee" type="com.fushionbaby.order.model.OrderFee" />
+		
+		<!-- order费用表 -->
+		<typeAlias alias="OrderTrans" type="com.fushionbaby.order.model.OrderTrans" />
+		
+		<!-- order财务表 -->
+		<typeAlias alias="OrderFinance" type="com.fushionbaby.order.model.OrderFinance" />
+		
+		<!-- order发货提醒表 -->
+		<typeAlias alias="OrderRemindDelivery" type="com.fushionbaby.order.model.OrderRemindDelivery" />
+		
+		<typeAlias alias="OrderEpoint" type="com.fushionbaby.order.model.OrderEpoint"/>
+	</typeAliases>
+
+	<!-- 注册SQL映射文件 -->
+	<mappers>
+	</mappers>
+</configuration>

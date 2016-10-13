@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8" />
+        <title>CMS</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="renderer" content="webkit">
+        <meta name="description" content="阿拉丁后台管理系统">
+        <meta name="keywords" content="阿拉丁后台管理系统">
+        <link rel="shortcut icon" href="images/favicon.ico" />
+        <!-- styles -->
+        <link rel="stylesheet" href="css/jquery-ui.min.css">
+        <link rel="stylesheet" href="css/bootstrap.min.css" />
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/font-awesome.min.css" /><!-- 字体图标css -->
+        <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css"><!-- 时间选择器css -->
+        <link rel="stylesheet" href="css/style.min.css"><!-- 自定义css -->
+    </head>
+    <body id="index" class="Cog">
+
+        <div class="container-fluid">
+            <div class="row">
+
+                <div class="col-md-12 content">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-cog"></i> 标签-商品关系</h3>
+                        </div>
+                        <div class="panel-body">
+                            <form class="form-inline">
+                                <div class="form-group col-md-4 mB15">
+                                    <label for="a">标签名：</label>
+                                    <input type="text" class="form-control" id="a">
+                                </div>
+                                <div class="form-group col-md-4 mB15">
+                                    <label for="c">商品编码：</label>
+                                    <input type="text" class="form-control" id="c">
+                                    <button type="submit" class="btn btn-success speBtn">查询</button>
+                                </div>
+                                <div class="clearfix"></div>
+                            </form>
+                            <!-- table -->
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover" id="">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>标签名</th>
+                                            <th>商品编码</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>A</td>
+                                            <td>823425525</td>
+                                            <td>
+                                                <a href="tags-products-search.html" class="btn btn-success btn-xs edit-role">查询</a>
+                                                <button type="button" class="btn btn-default btn-xs edit-role">修改</button>
+                                                <button type="button" class="btn btn-warning btn-xs edit-role">禁用</button>
+                                                <button type="button" class="btn btn-danger btn-xs delete-role">删除</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- 分页 -->
+                            <form class="form-horizontal page-nav form-inline">
+                                <div class="form-group mL0">
+                                    <label class="control-label pT0">共 15 条，每页显示条数：</label>
+                                    <select name="" class="form-control">
+                                        <option value="">10</option>
+                                        <option value="">25</option>
+                                        <option value="">50</option>
+                                        <option value="">100</option>
+                                    </select>
+                                </div>
+                                <div class="input-group pull-right">
+                                    <a href="#" class="input-group-addon" title="首页"><i class="fa fa-angle-double-left"></i></a>
+                                    <a href="#" class="input-group-addon" title="上一页"><i class="fa fa-angle-left"></i></a>
+                                    <input type="text" class="form-control pageInput" value="1">
+                                    <a href="#" class="input-group-addon" title="下一页"><i class="fa fa-angle-right"></i></a>
+                                    <a href="#" class="input-group-addon" title="末页"><i class="fa fa-angle-double-right"></i></a>
+                                </div>
+                            </form>
+                            <!-- 分页 end -->
+                        </div>
+                        <!-- /.panel-body -->
+
+                    </div>
+                </div>
+                <!-- /.content -->
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+
+        <!-- 删除角色提示框 -->
+        <div class="modal fade" id="modalDeleteRole">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title"><i class="fa fa-info-circle"></i> 确认操作</h4>
+                    </div>
+                    <div class="modal-body text-danger">
+                        是否确认删除此角色？
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-danger">确认删除</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.modal -->
+
+        <!-- javascript -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery.validate.min.js"></script><!-- 表单验证 -->
+        <script src="js/bootstrap-datetimepicker.min.js"></script><!-- 时间选择器js -->
+        <script src="js/bootstrap-datetimepicker.zh-CN.js"></script><!-- 时间选择器中文js -->
+        <script src="js/jquery-ui.min.js"></script>
+        <script src="js/public.js"></script>
+
+        <script>
+            $(function(){
+
+                /*点击删除角色按钮，显示确认框*/
+                $('.delete-role').click(function(){
+                    $('#modalDeleteRole').modal('show');
+                })
+
+                /*自动补全*/
+                var availableTags = [
+                    "奥特曼",
+                    "比特币",
+                    "陈冠希",
+                    "滴滴打车",
+                    "C",
+                    "C++",
+                    "Clojure",
+                    "COBOL",
+                    "ColdFusion",
+                    "Erlang",
+                    "Fortran",
+                    "Groovy",
+                    "Haskell",
+                    "Java",
+                    "JavaScript",
+                    "Lisp",
+                    "Perl",
+                    "PHP",
+                    "Python",
+                    "Ruby",
+                    "Scala",
+                    "Scheme"
+                ];
+                $("#autocomplete").autocomplete({
+                    source: availableTags,
+                    autoFocus: true,
+                    minLength: 0
+                });
+
+            })
+        </script>
+    </body>
+</html>

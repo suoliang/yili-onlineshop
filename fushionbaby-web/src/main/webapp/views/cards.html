@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>礼品卡 - Fushionbaby</title>
+		<script src="ftl/publicHeadTags.js"></script><!-- 公共<head>标签 -->
+		<link rel="stylesheet"  href="css/public.css">
+		<link rel="stylesheet"  href="css/style.css">
+		<link rel="stylesheet" href="css/toy-product-list.css">
+		<style>
+		.cards_wrap,.cards_wrap * {-webkit-box-sizing:border-box;-ms-box-sizing:border-box;-moz-box-sizing:border-box;-o-box-sizing:border-box;box-sizing:border-box;}
+		.cards_wrap ul {width: 100%;float: left;overflow: hidden;}
+		.cards_wrap ul li {width: 24%;float: left;margin-right: 1.333%;margin-bottom: 20px;margin-top: 20px;}
+		.cards_wrap ul li:hover p {color: #35a6cd;}
+		.cards_wrap ul li:hover span {color: #35a6cd;}
+		.cards_wrap ul li:hover img {-webkit-transform:scale(1.05);-ms-transform:scale(1.05);-moz-transform:scale(1.05);-o-transform:scale(1.05);transform:scale(1.05);}
+		.cards_wrap ul li:hover a {border-color:#35a6cd;}
+		.cards_wrap ul li a {width: 100%;float: left;padding: 5px 20px; border: 1px dashed #ccc;-webkit-transition:all 0.25s ease-out 0s;-moz-transition:all 0.25s ease-out 0s;-o-transition:all 0.25s ease-out 0s;-ms-transition:all 0.25s ease-out 0s;transition:all 0.25s ease-out 0s;}
+		.cards_wrap ul li a p {width: 100%;float: left;font-size: 16px;color: #333;text-align: center;line-height: 28px;-webkit-transition:all 0.25s ease-out 0s;-moz-transition:all 0.25s ease-out 0s;-o-transition:all 0.25s ease-out 0s;-ms-transition:all 0.25s ease-out 0s;transition:all 0.25s ease-out 0s;}
+		.cards_wrap ul li a img {width: 95%;margin:0 auto;-webkit-transition:all 0.25s ease-out 0s;-moz-transition:all 0.25s ease-out 0s;-o-transition:all 0.25s ease-out 0s;-ms-transition:all 0.25s ease-out 0s;transition:all 0.25s ease-out 0s;}
+		.cards_wrap ul li a span {width: 100%;float: left;font-size: 16px;color: #333;text-align: center;-webkit-transition:all 0.25s ease-out 0s;-moz-transition:all 0.25s ease-out 0s;-o-transition:all 0.25s ease-out 0s;-ms-transition:all 0.25s ease-out 0s;transition:all 0.25s ease-out 0s;}
+		</style>
+		<script>
+			;(function($){
+				$(window).load(function(){
+					$('.cards_wrap ul li:nth-child(4n)').css({'margin-right':'0'});
+				})
+			})(jQuery);
+		</script>
+		<!-- 新增 结束 -->
+	</head>
+	<body>
+		<script type="text/javascript" src="ftl/topbar.js"></script><!-- 公共顶部JS -->
+		<script type="text/javascript" src="ftl/header.js"></script><!-- 公共头部JS -->
+		<!-- 列表  开始 -->
+		<div class="toy container">
+			<div class="toy-nav">
+				<div class="toy-nav-l">
+					<span style="margin-top:8px;"><img src="images/credit-card.png" alt=""></span>
+					<span>礼品卡</span>
+				</div>
+				<ul class="toy-nav-r">
+					<li>
+						<span>排列顺序：</span>
+						<!-- <img src="images/dot.png" alt="">
+						<a href="#">最新</a> -->
+					</li>
+					<!-- <li>
+						<img src="images/sale.png" alt="">
+						<a href="#">销量</a>
+					</li> -->
+					<li>
+						<img src="images/price.png" alt="">
+						<a href="#">价格</a>
+						<a href="#" class="tip">
+							<img src="images/top.png" alt="">
+							<div class="tip-arrow">
+								<span>从高到低</span>
+								<img src="images/tip-arrow.png" alt="" class="arrow">
+							</div>
+						</a>
+						<a href="#" class="tip">
+							<img src="images/down.png" alt="">
+							<div class="tip-arrow">
+								<span>从低到高</span>
+								<img src="images/tip-arrow.png" alt="" class="arrow">
+							</div>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="toy-bd container cards_wrap">
+				<ul>
+					<li>
+						<a href="cards_detail.html">
+							<p>兜世宝 100元礼品卡</p>
+							<img src="images/card_100.png" alt="">
+							<span>100.00元</span>
+						</a>
+					</li>
+					<li>
+						<a href="cards_detail.html">
+							<p>兜世宝 200元礼品卡</p>
+							<img src="images/card_200.png" alt="">
+							<span>200元</span>
+						</a>
+					</li>
+					<li>
+						<a href="cards_detail.html">
+							<p>兜世宝 100元礼品卡</p>
+							<img src="images/card_100.png" alt="">
+							<span>100.00元</span>
+						</a>
+					</li>
+					<li>
+						<a href="cards_detail.html">
+							<p>兜世宝 200元礼品卡</p>
+							<img src="images/card_200.png" alt="">
+							<span>200元</span>
+						</a>
+					</li>
+					<li>
+						<a href="cards_detail.html">
+							<p>兜世宝 100元礼品卡</p>
+							<img src="images/card_100.png" alt="">
+							<span>100.00元</span>
+						</a>
+					</li>
+					<li>
+						<a href="cards_detail.html">
+							<p>兜世宝 200元礼品卡</p>
+							<img src="images/card_200.png" alt="">
+							<span>200元</span>
+						</a>
+					</li>
+				</ul>
+				<!-- 分页 开始 -->
+				<!-- <div class="collect-page-wrap clearfix">
+						<div class="collect-page">
+								<span class="page-num">共<span id="page_count"> <b>1</b> </span>页</span>
+								<a href="javascript:void(0);" class="page-arrow iconfont page_prev"></a>
+								<a href="javascript:void(0);" class="page-list page-list-current">1</a>
+								<a href="javascript:void(0);" class="page-list">2</a>
+								<a href="javascript:void(0);" class="page-list">3</a>
+								<a href="javascript:void(0);" class="page-arrow iconfont page_next">&#xe604;</a>
+						</div>
+				</div> -->
+				<!-- 分页  结束 -->
+			</div>
+		</div>
+		<!-- 列表  结束 -->
+		<script type="text/javascript" src="ftl/footer.js"></script><!-- 公共底部JS -->
+		<script type="text/javascript" src="ftl/nav.js"></script><!-- 公共导航JS -->
+
+		<script type="text/javascript" src="js/base.js"></script>
+	</body>
+</html>

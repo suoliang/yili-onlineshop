@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.sku.cms.dao.SkuProductImageDao">
+	<resultMap id="skuProductImageMap" type="skuProductImage">
+		<id column="id" property="id" />
+		<result column="product_code" property="productCode" />
+		<result column="img_path" property="imgPath" />
+		<result column="sort_order" property="sortOrder" />
+		<result column="version" property="version" />
+		<result column="is_disable" property="isDisable" />
+		<result column="create_time" property="createTime" />
+		<result column="create_id" property="createId" />
+		<result column="update_time" property="updateTime" />
+		<result column="update_id" property="updateId" />
+	</resultMap>
+	
+	
+	<select id="findBySkuProductCode" resultMap="skuProductImageMap" parameterType="String">
+		select 
+			id,product_code,img_path,sort_order,version,is_disable,create_time,create_id,update_time,update_id
+		from 
+			t_sku_product_image
+		where 
+			product_code = #{productCode} and is_disable = 'y'
+		order by sort_order asc
+	</select>
+	
+	<select id="getListPage" resultType="list" resultMap="skuProductImageMap" parameterType="Map" >
+			select 
+				id,product_code,img_path,sort_order,version,is_disable,create_time,create_id,update_time,update_id 
+			from 
+				t_sku_product_image 
+		<where>
+			<if test="productCode !=null and productCode !=''">
+	    	   and product_code = #{productCode} 
+	        </if>
+		</where>
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+	
+	<select id="findAllBySkuProductCode" resultMap="skuProductImageMap" parameterType="String">
+	select 
+			id,product_code,img_path,sort_order,version,is_disable,create_time,create_id,update_time,update_id
+		from 
+			t_sku_product_image
+		where 
+			product_code = #{productCode} 
+		order by sort_order asc
+	</select>
+	
+	<select id="getTotal" resultType="java.lang.Integer" parameterType="String">
+		select 
+			count(1)
+		from 
+			t_sku_product_image 
+		where 
+			1 = 1
+			<if test="productCode !=null and productCode !=''">
+				and product_code = #{productCode} 
+			</if>
+		
+	</select>
+	
+	<insert id="add" parameterType="skuProductImage">
+		insert into t_sku_product_image
+			(id,product_code,img_path,sort_order,version,is_disable,create_time,create_id,update_time,update_id)
+		values(#{id},#{productCode},#{imgPath},#{sortOrder},now(),#{isDisable},#{createTime},#{createId},#{updateTime},#{updateId})
+	</insert>
+	<update id="update" parameterType="skuProductImage">
+		update 
+			t_sku_product_image
+		set 
+			version = now()
+			<if test="productCode !=null and productCode !=''">
+				,product_code = #{productCode}
+			</if>
+			<if test="imgPath !=null and imgPath !=''">
+				,img_path = #{imgPath}
+			</if>
+			<if test="isDisable !=null and isDisable !=''">
+				,is_disable = #{isDisable}
+			</if>
+			<if test="sortOrder !=null and sortOrder !=''">
+				,sort_order = #{sortOrder}
+			</if>
+			
+		where id = #{id}
+			
+	</update>
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_sku_product_image where  id = #{id}
+	</delete>
+	<select id="findById" parameterType="java.lang.Long" resultMap="skuProductImageMap">
+		select 
+			id,product_code,img_path,sort_order,version,is_disable,create_time,create_id,update_time,update_id
+		from 
+			t_sku_product_image
+		where 
+			id = #{id}
+	
+	</select>
+	<delete id="deleteByProductCode" parameterType="java.lang.String">
+		delete from t_sku_product_image where product_code = #{productCode}
+	</delete>
+	
+	<select id="getListPageByProductCodeAndProductName" resultType="list" resultMap="skuProductImageMap" parameterType="Map" >
+			select a.create_id,a.create_time,a.id,a.img_path,a.is_disable,a.product_code,a.sort_order,
+			a.update_id,a.update_time,a.version 
+			from 
+				t_sku_product_image a inner join t_sku_product b on a.product_code=b.code
+		<where>
+			
+			<if test="productCode !=null and productCode !=''">
+	    	   and product_code = #{productCode} 
+	        </if>
+	        <if test="productName !=null and productName !=''">
+	    	   and b.name like  "%"#{productName}"%"  
+	        </if>
+		</where>
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+	<select id="getTotalByProductCodeAndProductName" resultType="java.lang.Integer" parameterType="String">
+		select 
+			count(1)
+		from 
+			t_sku_product_image a inner join t_sku_product b on a.product_code=b.code
+		<where>
+			
+			<if test="productCode !=null and productCode !=''">
+	    	   and product_code = #{productCode} 
+	        </if>
+	        <if test="productName !=null and productName !=''">
+	    	   and b.name like  "%"#{productName}"%" 
+	        </if>
+		</where>
+		
+	</select>
+</mapper>

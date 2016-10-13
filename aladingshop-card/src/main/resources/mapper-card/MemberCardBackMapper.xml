@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.card.dao.MemberCardBackDao" >
+  <resultMap id="MemberCardBackResultMap" type="MemberCardBack" >
+    <id column="id" property="id" />
+    <result column="member_id" property="memberId"/>
+    <result column="card_no" property="cardNo" />
+    <result column="acount" property="acount" />
+    <result column="money" property="money" />
+    <result column="bank_card_no" property="bankCardNo" />
+    <result column="bank_card_holder" property="bankCardHolder" />
+    <result column="back_status" property="backStatus" />
+    <result column="create_time" property="createTime" />
+    <result column="update_time" property="updateTime" />
+    <result column="update_id" property="updateId" />
+    <result column="bank_name" property="bankName" />
+    <result column="bank_branch_name" property="bankBranchName" />
+    <result column="card_type" property="cardType" />
+  </resultMap>
+  <insert id="add" parameterType="MemberCardBack"> 
+    insert into t_member_card_back (id, member_id, card_no,acount, money, bank_card_no, bank_card_holder, 
+      back_status, create_time,update_time,update_id,bank_name,bank_branch_name,card_type)
+    values (#{id}, #{memberId}, #{cardNo}, #{acount}, #{money}, #{bankCardNo}, #{bankCardHolder}, 
+      #{backStatus},now(),now(),#{updateId},#{bankName},#{bankBranchName},#{cardType})
+  </insert>
+  <delete id="deleteById"  parameterType="java.lang.Long">
+    delete from t_member_card_back where id = #{id}
+  </delete>
+  
+  <update id="update" parameterType="MemberCardBack">
+    update t_member_card_back
+    <set>
+    	<if test="backStatus!=null and backStatus!=''">
+    		back_status = #{backStatus},
+    	</if>
+    	<if test="cardType!=null and cardType!=''">
+    		card_type = #{cardType},
+    	</if>
+    	update_time = now(),
+    	update_id = #{updateId}
+    </set>
+    <where>
+    	id = #{id}
+    </where>
+  </update>
+  <sql id="Base_Column_List" >
+  	select id, member_id, card_no, acount, money, bank_card_no, bank_card_holder,back_status,create_time, update_time, update_id,bank_name,bank_branch_name,card_type   
+		 from t_member_card_back
+  </sql>
+  <select id="findAll" resultMap="MemberCardBackResultMap" resultType="list">
+  	<include refid="Base_Column_List" /> ORDER BY update_time DESC
+  </select> 
+   <select id="findById" resultMap="MemberCardBackResultMap" parameterType="java.lang.Long" >
+	   <include refid="Base_Column_List" />
+	   <where>
+	   		id=#{id}
+	   </where>
+  </select>
+  <select id="findByCardNo" resultMap="MemberCardBackResultMap" >
+	   <include refid="Base_Column_List" />
+	   <where>
+	   		card_no=#{cardNo}
+	   </where>
+  </select>
+  	  <!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="MemberCardBackResultMap" parameterType="Map" >
+	    <include refid="Base_Column_List" />
+		<where>
+			<if test="cardNo!=null and cardNo!=''">
+	    	   AND  card_no LIKE "%"#{cardNo}"%"  
+	        </if>
+			<if test="acount!=null and acount!=''">
+	    	   AND  acount=#{acount}  
+	        </if>
+			<if test="backStatus!=null and backStatus!=''">
+	    	   AND  back_status=#{backStatus}  
+	        </if>
+			<if test="bankCardNo!=null and bankCardNo!=''">
+	    	   AND  bank_card_no like "%"#{bankCardNo}"%"  
+	        </if>
+			<if test="bankCardHolder!=null and bankCardHolder!=''">
+	    	   AND  bank_card_holder=#{bankCardHolder}  
+	        </if>
+			<if test="bankName!=null and bankName!=''">
+	    	   AND  bank_name=#{bankName}  
+	        </if>
+			<if test="bankBranchName !=null and bankBranchName !=''">
+	    	   AND  bank_branch_name=#{bankBranchName}  
+	        </if>
+	        <if test="cardType !=null and cardType !=''">
+	    	   AND  card_type=#{cardType}  
+	        </if>
+	        <if test="createTimeFrom!= null and createTimeFrom!=''">
+	    	<![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+			]]>
+		    </if>
+			<if test="createTimeTo!= null and createTimeTo!= ''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+	        
+	        
+		</where>
+		ORDER BY create_time DESC
+		<if test="start!=null and limit!=null and isExportUse!='y'.toString()">
+			limit #{start},#{limit}
+		</if>
+	</select>
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select  count(id) from t_member_card_back
+		<where>
+		    <if test="cardNo!=null and cardNo!=''">
+	    	   AND  card_no LIKE "%"#{cardNo}"%"  
+	        </if>
+	        <if test="backStatus!=null and backStatus!=''">
+	    	   AND  back_status=#{backStatus}  
+	        </if>
+			<if test="acount!=null and acount!=''">
+	    	   AND  acount=#{acount}  
+	        </if>
+			<if test="bankCardNo!=null and bankCardNo!=''">
+	    	   AND  bank_card_no like "%"#{bankCardNo}"%"  
+	        </if>
+			<if test="bankCardHolder!=null and bankCardHolder!=''">
+	    	   AND  bank_card_holder=#{bankCardHolder}  
+	        </if>
+			<if test="bankName!=null and bankName!=''">
+	    	   AND  bank_name=#{bankName}  
+	        </if>
+	        <if test="bankBranchName !=null and bankBranchName !=''">
+	    	   AND  bank_branch_name=#{bankBranchName}  
+	        </if>
+	        <if test="cardType !=null and cardType !=''">
+	    	   AND  card_type=#{cardType}  
+	        </if>
+	        <if test="createTimeFrom!= null and createTimeFrom!=''">
+	    	<![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+			]]>
+		    </if>
+			<if test="createTimeTo!= null and createTimeTo!= ''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+		</where>
+	</select>
+</mapper>

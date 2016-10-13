@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.alabao.dao.AlabaoOrderDao" >
+  <resultMap id="AlabaoOrderResultMap" type="AlabaoOrder" >
+    <id column="id" property="id" />
+    <result column="order_code" property="orderCode" />
+    <result column="member_id" property="memberId" />
+    <result column="member_name" property="memberName" />
+    <result column="account" property="account" />
+    <result column="total_actual" property="totalActual" />
+    <result column="alabao_status" property="alabaoStatus" />
+    <result column="payment_type" property="paymentType" />
+    <result column="source_code" property="sourceCode" />
+    <result column="create_time" property="createTime" />
+    <result column="update_time" property="updateTime" />
+    <result column="update_id" property="updateId" />
+  </resultMap>
+  <sql id="AlabaoConfig_column" >
+    id, order_code, member_id, member_name, account, total_actual, alabao_status, payment_type, 
+    source_code, create_time, update_time, update_id
+  </sql>
+  
+  
+  
+	<insert id="add" parameterType="AlabaoOrder">
+		insert into 
+			t_alabao_order
+		(id, order_code, member_id, member_name, account, total_actual, alabao_status, payment_type, 
+    		source_code, create_time, update_time, update_id)
+	    values 
+		    (#{id}, #{orderCode}, #{memberId},#{memberName}, #{account}, #{totalActual}, #{alabaoStatus}, #{paymentType},
+		     #{sourceCode}, now(), #{updateTime}, #{updateId})
+	</insert>
+	
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_alabao_order where id = #{id}
+	</delete>
+	
+	<update id="updateById" parameterType="AlabaoOrder">
+		update t_alabao_order
+    set 
+    	<if test="alabaoStatus !=null and alabaoStatus !=''">
+			alabao_status = #{alabaoStatus}, 
+		</if>
+    	<if test="paymentType !=null and paymentType !=''">
+			payment_type = #{paymentType}, 
+		</if>
+    	<if test="sourceCode !=null and sourceCode !=''">
+			source_code = #{sourceCode}, 
+		</if>
+    	<if test="updateId !=null and updateId !=''">
+			update_id = #{updateId}, 
+		</if>
+     	update_time = now()
+    where id = #{id}
+	</update>
+	
+	<select id="findById" resultMap="AlabaoOrderResultMap" parameterType="java.lang.Long">
+		select  <include refid="AlabaoConfig_column"/> from t_alabao_order where id = #{id}
+	</select>
+	
+	
+	<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="AlabaoOrderResultMap" parameterType="Map" >
+		select <include refid="AlabaoConfig_column"/>
+		from t_alabao_order 
+		<where>
+			
+	    	<if test="memberName !=null and memberName !=''">
+				member_name = #{memberName} 
+			</if>
+	    	<if test="orderCode !=null and orderCode !=''">
+				and order_code = #{orderCode}
+			</if>
+			<if test="createTimeFrom != null and createTimeFrom !=''">
+	    	<![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+			]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+		   </where>
+		<if test="start!=null and limit!=null ">
+			limit #{start},#{limit}
+		</if>
+		 
+	</select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) from t_alabao_order 
+		<where>
+			<if test="memberName !=null and memberName !=''">
+				member_name = #{memberName} 
+			</if>
+	    	<if test="orderCode !=null and orderCode !=''">
+				and order_code = #{orderCode}
+			</if>
+			<if test="createTimeFrom != null and createTimeFrom !=''">
+	    	<![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+			]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+		   </where>
+	</select>
+	
+	
+	
+	<select id="findByMemberIdOrderCode" parameterType="Map" resultMap="AlabaoOrderResultMap">
+		select <include refid="AlabaoConfig_column"/>
+		 from t_alabao_order 
+		 where member_id = #{memberId} and order_code = #{orderCode}
+	</select>
+	
+	
+	<update id="updateByMemberIdOrderCode" parameterType="AlabaoOrder">
+		update t_alabao_order
+    set 
+    	<if test="alabaoStatus !=null and alabaoStatus !=''">
+			alabao_status = #{alabaoStatus}, 
+		</if>
+    	<if test="paymentType !=null and paymentType !=''">
+			payment_type = #{paymentType}, 
+		</if>
+    	<if test="sourceCode !=null and sourceCode !=''">
+			source_code = #{sourceCode}, 
+		</if>
+    	<if test="updateId !=null and updateId !=''">
+			update_id = #{updateId}, 
+		</if>
+     	update_time = now()
+    where member_id = #{memberId} and order_code = #{orderCode}
+	</update>
+	
+	
+</mapper>

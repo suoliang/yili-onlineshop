@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.sysmgr.dao.SysmgrStoreApplyDao" >
+  <resultMap id="SAResultMap" type="sysmgrStoreApply" >
+    <id column="id" property="id" />
+    <result column="name" property="name" />
+    <result column="phone" property="phone" />
+    <result column="city" property="city" />
+    <result column="address" property="address" />
+    <result column="apply_time" property="applyTime" />
+    <result column="source_code" property="sourceCode" />
+    <result column="is_deal" property="isDeal" />
+    <result column="deal_time" property="dealTime" />
+    <result column="deal_name" property="dealName" />
+    <result column="memo" property="memo"/>
+    <result column="intention" property="intention"/>
+  </resultMap>
+  
+  <insert id="add" parameterType="sysmgrStoreApply" >
+    insert into t_sysmgr_store_apply
+    (id, name, phone,city, address, apply_time, source_code,is_deal, deal_time,deal_name,memo,intention)
+    values 
+    (#{id}, #{name}, #{phone},#{city}, #{address}, now(), #{sourceCode}, #{isDeal}, #{dealTime},#{dealName},#{memo},#{intention})
+  </insert>
+  
+  <delete id="deleteById" parameterType="java.lang.Long" >
+    delete from t_sysmgr_store_apply
+    where id = #{id}
+  </delete>
+  
+  <update id="update" parameterType="sysmgrStoreApply" >
+    update 
+          t_sysmgr_store_apply
+    set 
+    
+   		 name = #{name},
+   		 phone = #{phone},
+   		 city = #{city},
+   		 address = #{address},
+   		 is_deal = #{isDeal},
+   		 deal_name=#{dealName},
+   		 memo=#{memo},
+   		 intention=#{intention},
+   		 deal_time=now()
+   where id = #{id}
+  </update>
+  
+   <select id="findById" resultMap="SAResultMap" parameterType="java.lang.Long" >
+    select 
+    id, name, phone, city, address,apply_time,source_code,is_deal,deal_time,deal_name,memo,intention
+    from t_sysmgr_store_apply
+    where id = #{id}
+  </select>
+  
+  <select id="findAll" resultMap="SAResultMap" resultType="list" >
+    select 
+    id, name, phone, city, address,apply_time,source_code,is_deal,deal_time,deal_name,memo,intention
+    from t_sysmgr_store_apply
+  </select>
+  
+     <!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="SAResultMap" parameterType="Map" >
+	   	select 
+    	id, name, phone, city, address,apply_time,source_code,is_deal,deal_time,deal_name,memo,intention
+    	from t_sysmgr_store_apply
+		<where>
+			<if test="name !=null and name !=''">
+	    	   and  name LIKE "%"#{name}"%"
+	        </if>
+	        <if test="phone !=null and phone !=''">
+	        	and  phone = #{phone}
+	        </if>
+	        <if test="city != null and city != ''">
+	        	and city = #{city}
+	        </if>
+	        <if test="sourceCode != null and sourceCode != ''">
+	        	and source_code = #{sourceCode}
+	        </if>
+	        <if test="isDeal != null and isDeal != ''">
+	        	and is_deal = #{isDeal}
+	        </if>
+	        <if test="intention != null and intention != ''">
+	        	and intention = #{intention}
+	        </if>
+	        <if test="createTimeFrom != null and createTimeFrom !=''">
+		    	<![CDATA[
+				and	DATE_FORMAT(apply_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d') 
+				]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+				and DATE_FORMAT(apply_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+		    </where>      
+		 	order by apply_time desc
+		<if test="start!=null and limit!=null ">
+			limit #{start},#{limit}
+		</if>
+		</select>
+	
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select 
+			count(1)
+		from 
+			t_sysmgr_store_apply
+		<where>
+	        <if test="city != null and city != ''">
+	        	and city = #{city}
+	        </if>
+	        <if test="sourceCode != null and sourceCode != ''">
+	        	and source_code = #{sourceCode}
+	        </if>
+	        <if test="isDeal != null and isDeal != ''">
+	        	and is_deal = #{isDeal}
+	        </if>
+	        <if test="intention != null and intention != ''">
+	        	and intention = #{intention}
+	        </if>
+	        <if test="createTimeFrom != null and createTimeFrom !=''">
+		    	<![CDATA[
+				and	DATE_FORMAT(apply_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d') 
+				]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+				and DATE_FORMAT(apply_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+		   </where> 
+  </select>
+    
+
+</mapper>

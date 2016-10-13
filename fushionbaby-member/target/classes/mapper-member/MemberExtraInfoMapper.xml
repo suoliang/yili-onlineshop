@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.member.dao.MemberExtraInfoDao">
+	<resultMap id="MemberInfoResultMap" type="memberExtraInfo">
+		<id column="id" property="id" />
+		<result column="member_id" property="memberId" />
+		<result column="nickname" property="nickname" />
+		<result column="baby_fm" property="babyFm" />
+		<result column="baby_gender" property="babyGender" />
+		<result column="baby_birthday" property="babyBirthday" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="weixin_no" property="weixinNo" />
+		<result column="login_days" property="loginDays" />
+		<result column="grade_code" property="gradeCode" />
+	</resultMap>
+	<insert id="add" parameterType="memberExtraInfo">
+		insert into t_member_extra_info (id, member_id, nickname,
+		baby_fm, baby_gender,baby_birthday,weixin_no,create_time,login_days,grade_code)
+		values (
+			#{id}, 
+			#{memberId}, 
+			#{nickname},
+			#{babyFm}, 
+			#{babyGender},
+			#{babyBirthday},
+			#{weixinNo},
+			now(),
+			#{loginDays},
+			#{gradeCode}
+		)
+	</insert>
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_member_extra_info
+		where id = #{id}
+	</delete>
+	<update id="update" parameterType="memberExtraInfo">
+		update t_member_extra_info
+		set 
+			update_time = now(),
+			nickname = #{nickname},
+			baby_fm = #{babyFm},
+			baby_gender = #{babyGender},
+			baby_birthday = #{babyBirthday},
+			weixin_no = #{weixinNo},
+			login_days = #{loginDays},
+			grade_code = #{gradeCode}
+		where id = #{id}
+	</update>
+	<!-- 通过会员Id修改额外信息 -->
+	<update id="updateByMemberId" parameterType="memberExtraInfo">
+		update t_member_extra_info
+		set 
+			update_time = now()
+			<if test="nickname!=null and nickname!=''">
+			   ,nickname = #{nickname}
+			</if>
+			<if test="babyFm!=null and babyFm!=''">
+				,baby_fm = #{babyFm}
+			</if>
+			<if test="babyGender!=null and babyGender!=''">
+				,baby_gender = #{babyGender}
+			</if>
+			<if test="babyBirthday!=null and babyBirthday!=''">
+				,baby_birthday = #{babyBirthday}
+			</if>
+			<if test="weixinNo!=null and weixinNo!=''">
+				,weixin_no = #{weixinNo}
+			</if>
+			<if test="loginDays!=null and loginDays!=''">
+				,login_days = #{loginDays}
+			</if>
+			<if test="gradeCode!=null and gradeCode!=''">
+				,grade_code = #{gradeCode}
+			</if>
+		where member_id = #{memberId}
+	</update>
+	<select id="findById" resultMap="MemberInfoResultMap" parameterType="java.lang.Long">
+		<![CDATA[
+			select
+			id, member_id, nickname, baby_fm, baby_gender, baby_birthday,create_time,update_time,weixin_no,login_days,grade_code
+			from t_member_extra_info
+			where id = #{id}
+		]]>
+	</select>
+	<!-- 通过会员id拿到用户额外信息 -->
+	<select id="findByMemberId" resultMap="MemberInfoResultMap" parameterType="java.lang.Long">
+		<![CDATA[
+			select
+			id, member_id, nickname, baby_fm, baby_gender, baby_birthday,create_time,update_time,weixin_no,login_days,grade_code
+			from t_member_extra_info
+			where member_id = #{memberId}
+		]]>
+	</select>
+	<select id="findAll" resultType="list" resultMap="MemberInfoResultMap">
+		<![CDATA[
+			select
+			id, member_id, nickname, baby_fm, baby_gender, baby_birthday,create_time,update_time,weixin_no,login_days,grade_code
+			from t_member_extra_info
+		]]>
+	</select>
+	<delete id="deleteByMemberId" parameterType="java.lang.Long">
+		delete from t_member_extra_info
+		where member_id = #{memberId}
+	</delete>
+</mapper>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.member.dao.VerificationRecordDao">
+
+	<resultMap id="VerificationRecordResultMap" type="VerificationRecord">
+		<id column="id" property="id" />
+		<result column="true_name" property="trueName" />
+		<result column="identity_card_no" property="identityCardNo" />
+		<result column="bank_card_no" property="bankCardNo" />
+		<result column="verification_type" property="verificationType" />
+		<result column="verification_status" property="verificationStatus" />
+		<result column="response_status" property="responseStatus" />
+		<result column="source_code" property="sourceCode" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+	</resultMap>
+	
+	<update id="update" parameterType="VerificationRecord">
+		update t_verification_record
+		set 
+		update_time = now()
+		<if test="trueName!=null and trueName!=''">
+		   ,true_name = #{trueName}
+		</if>
+		<if test="identityCardNo!=null and identityCardNo!=''">
+		   ,identity_card_no = #{identityCardNo}
+		</if>
+		<if test="bankCardNo!=null and bankCardNo!=''">
+		   ,bank_card_no = #{bankCardNo}
+		</if>
+		<if test="sourceCode!=null and sourceCode!=''">
+		   ,source_code = #{sourceCode}
+		</if>
+		<if test="verificationType!=null and verificationType!=''">
+		   ,verification_type = #{verificationType}
+		</if>
+		<if test="verificationStatus !=null and verificationStatus !=''">
+		   ,verification_status = #{verificationStatus}
+		</if>
+		<if test="responseStatus !=null and responseStatus !=''">
+		   ,response_status = #{responseStatus}
+		</if>
+		where id = #{id}
+	</update>
+	
+	<insert id="add" parameterType="VerificationRecord">
+		<!-- 获取添加进数据库的id值 -->
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+		SELECT LAST_INSERT_ID() AS ID    
+		</selectKey>
+		insert  into
+		      t_verification_record (id, true_name,create_time,identity_card_no,bank_card_no,source_code,verification_type,response_status,verification_status)
+		values (#{id}, #{trueName},now(), #{identityCardNo},#{bankCardNo},#{sourceCode},#{verificationType},#{responseStatus},#{verificationStatus})
+	</insert>
+	
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_verification_record where id = #{id}		
+	</delete>
+	
+
+	<sql id="base_verification_record_sql">
+	    select 
+	       id, true_name,  create_time,update_time, identity_card_no, bank_card_no,verification_type,   response_status,verification_status
+	    from t_verification_record
+	</sql>
+	
+
+	<select id="findById" resultMap="VerificationRecordResultMap" parameterType="java.lang.Long">
+	   <include refid="base_verification_record_sql"/>  where id = #{id}	   
+	</select>
+	  
+	<select id="findAll" resultType="list" resultMap="VerificationRecordResultMap">
+	    <include refid="base_verification_record_sql"/>
+	</select>
+	
+	<select id="findByBankCardNoAndID" resultType="list" resultMap="VerificationRecordResultMap" parameterType="Map">
+	    <include refid="base_verification_record_sql"/>
+	    <where>
+	      	<if test="trueName!=null and trueName!=''">
+			   and true_name = #{trueName}
+			</if>
+			<if test="identityCardNo!=null and identityCardNo!=''">
+			   and identity_card_no = #{identityCardNo}
+			</if>
+			<if test="bankCardNo!=null and bankCardNo!=''">
+			   and bank_card_no = #{bankCardNo}
+			</if>
+			   and  date(create_time) = curdate()
+	    </where>
+	         order by create_time desc  
+	</select>
+	
+	
+	<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="VerificationRecordResultMap" parameterType="Map" >
+		<include refid="base_verification_record_sql"/>
+		 <where>
+		    <if test="trueName !=null and trueName !=''">
+		    	AND true_name = #{trueName}
+		    </if>
+		    <if test="responseStatus !=null and responseStatus !=''">
+		    	AND response_status = #{responseStatus}
+		    </if>
+		    <if test="verificationStatus !=null and verificationStatus !=''">
+		    	AND verification_status = #{verificationStatus}
+		    </if>
+		   </where>
+		<if test="start!=null and limit!=null">
+			order by create_time desc
+			limit #{start},#{limit}
+		</if>
+	</select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) from t_verification_record
+		<where>
+		    <if test="trueName !=null and trueName !=''">
+		    	AND true_name = #{trueName}
+		    </if>
+		    <if test="responseStatus !=null and responseStatus !=''">
+		    	AND response_status = #{responseStatus}
+		    </if>
+		    <if test="verificationStatus !=null and verificationStatus !=''">
+		    	AND verification_status = #{verificationStatus}
+		    </if>
+		   </where>
+	</select>
+	
+</mapper>

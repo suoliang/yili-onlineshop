@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration 
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 命名空间 -->
+	<typeAliases>
+		 
+		<!-- 会员管理 -->
+		<typeAlias alias="Member" type="com.fushionbaby.member.model.Member" />  
+		<!-- 会员地址管理 -->
+		<typeAlias alias="MemberAddress" type="com.fushionbaby.member.model.MemberAddress" />  
+		<!-- 会员注册Email管理 -->
+		<typeAlias alias="MemberEmail" type="com.fushionbaby.member.model.MemberEmail" />  
+		<!-- 会员额外信息管理 -->
+		<typeAlias alias="MemberExtraInfo" type="com.fushionbaby.member.model.MemberExtraInfo" />  
+		<!-- 会员注册电话管理 -->
+		<typeAlias alias="MemberTelephone" type="com.fushionbaby.member.model.MemberTelephone" /> 
+		<!-- 会员区域管理 -->
+		<typeAlias alias="MemberAreaConfig" type="com.fushionbaby.member.model.MemberAreaConfig" /> 
+		
+		<typeAlias alias="areaDto" type="com.fushionbaby.common.dto.areaconfig.AreaDto" />
+		 
+		<!-- 意见反馈表 -->
+		<typeAlias alias="MemberFeedbackInfo" type="com.fushionbaby.member.model.MemberFeedbackInfo" /> 
+		<!-- 会员等级表 -->
+		<typeAlias alias="memberGradeConfig" type="com.fushionbaby.member.model.MemberGradeConfig" /> 
+
+		<!-- 评价回复-->
+		<typeAlias alias="memberSkuCommentReply" type="com.fushionbaby.member.model.MemberSkuCommentReply" /> 
+		<!-- 评价图片-->
+		<typeAlias alias="memberSkuCommentImage" type="com.fushionbaby.member.model.MemberSkuCommentImage" />
+
+		<!-- 会员评论表 -->
+		<typeAlias alias="MemberSkuComment" type="com.fushionbaby.member.model.MemberSkuComment" /> 
+       <!--查询会员评论的条件-->
+        <typeAlias alias="MemberCommentQueryCondition" type="com.fushionbaby.common.condition.member.MemberCommentQueryCondition"/>
+        <!-- 会员收藏表-->
+		<typeAlias alias="MemberSkuCollect" type="com.fushionbaby.member.model.MemberSkuCollect"/>
+        <typeAlias alias="skuCollectQueryCondition" type="com.fushionbaby.common.condition.sku.SkuCollectQueryCondition"/>
+       <!-- 会员查看商品表 -->
+        <typeAlias alias="MemberSkuView" type="com.fushionbaby.member.model.MemberSkuView" />
+		<!-- 分享内容 -->
+		<typeAlias alias="MemberSkuShareContent" type="com.fushionbaby.member.model.MemberSkuShareContent"/>
+		
+		<typeAlias alias="MemberSign" type="com.fushionbaby.member.model.MemberSign" />
+		<!-- 信息验证的记录 -->
+		<typeAlias alias="VerificationRecord" type="com.fushionbaby.member.model.VerificationRecord" />
+		<!-- 会员浏览门店的记录 -->
+		<typeAlias alias="MemberBrowesStoreHistory" type="com.fushionbaby.member.model.MemberBrowesStoreHistory" />
+		<!-- 会员设备记录表 -->
+		<typeAlias alias="MemberDevice" type="com.fushionbaby.member.model.MemberDevice" />
+	</typeAliases>
+
+
+	<!-- 注册SQL映射文件 -->
+	<mappers>
+	</mappers>
+</configuration>

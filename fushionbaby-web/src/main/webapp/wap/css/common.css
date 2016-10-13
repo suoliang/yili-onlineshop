@@ -1,0 +1,8 @@
+#foot{ width: 100%; height: 100px; background: #e4e4e4; box-sizing: border-box; position: absolute; bottom: -100px; left: 0;}
+#foot ul li{ float: left; width: 25%;}
+#foot ul li a{ color: #666666; text-decoration: none; border-left: 1px solid #999999; float: left; width: 99%; line-height: 20px;}
+#foot .footwenzi{ width: 100%; text-align: center; float: left; margin: 20px 0 20px 0;}
+#foot .shouye{ text-align: center; border: 0;}
+#foot p{ width: 100%; text-align: center;}
+#foot p a{ color: #999999; text-decoration: none;}
+

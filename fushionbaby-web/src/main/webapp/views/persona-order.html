@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>个人中心 - Fushionbaby</title>
+		<script src="ftl/publicHeadTags.js"></script><!-- 公共<head>标签 -->
+		<link rel="stylesheet"  href="css/public.css">
+		<link rel="stylesheet"  href="css/persona-order.css">
+	</head>
+	<body>
+		<script type="text/javascript" src="ftl/topbar.js"></script><!-- 公共顶部JS -->
+		<script type="text/javascript" src="ftl/header.js"></script><!-- 公共头部JS -->
+		<div class="main container clearfix">
+			<div class="main-l">
+				<dl>
+					<dt>个人中心</dt>
+					<dd>
+					<a class="if1 list-current" href="person.html" target="iframepage">我的个人中心</a>
+					<span class="subnav-arrow">
+					<span class="arrow">
+					<em class="front front-current"></em>
+					<s class="behind"></s>
+					</span>
+					</span>
+					</dd>
+					<dd>
+					<a class="if2" href="order.html" target="iframepage">我的订单</a>
+					<span class="subnav-arrow">
+					<span class="arrow">
+					<em class="front"></em>
+					<s class="behind"></s>
+					</span>
+					</span>
+					</dd>
+					<dd>
+					<a class="if3" href="collect.html" target="iframepage">我的收藏</a>
+					<span class="subnav-arrow">
+					<span class="arrow">
+					<em class="front"></em>
+					<s class="behind"></s>
+					</span>
+					</span>
+					</dd>
+				</dl>
+				<dl>
+					<dt>个人设置</dt>
+					<dd>
+					<a class="if7" href="user-cards.html" target="iframepage">礼品卡/余额</a>
+					<span class="subnav-arrow">
+					<span class="arrow">
+					<em class="front"></em>
+					<s class="behind"></s>
+					</span>
+					</span>
+					</dd>
+					<dd>
+					<a class="if4" href="user-info.html" target="iframepage">用户信息修改</a>
+					<span class="subnav-arrow">
+					<span class="arrow">
+					<em class="front"></em>
+					<s class="behind"></s>
+					</span>
+					</span>
+					</dd>
+					<dd>
+					<a class="if5" href="add-ages.html" target="iframepage">收货地址管理</a>
+					<span class="subnav-arrow">
+					<span class="arrow">
+					<em class="front"></em>
+					<s class="behind"></s>
+					</span>
+					</span>
+					</dd>
+					<dd>
+					<a class="if6" href="pass-mod.html" target="iframepage">修改密码</a>
+					<span class="subnav-arrow">
+					<span class="arrow">
+					<em class="front"></em>
+					<s class="behind"></s>
+					</span>
+					</span>
+					</dd>
+				</dl>
+			</div>
+			<div class="main-r">
+				<iframe src="person.html" marginheight="0" marginwidth="0" width="918" frameborder="0" scrolling="no"  name="iframepage"  height=100% id="iframepage"  onLoad="iFrameHeight()"></iframe>
+				<script type="text/javascript" language="javascript">
+				function iFrameHeight() {
+				var ifm= document.getElementById("iframepage");
+				var subWeb = document.frames ? document.frames["iframepage"].document :ifm.contentDocument;
+				if(ifm != null && subWeb != null) {
+				ifm.height = subWeb.body.scrollHeight;
+				}
+				}
+				function jump() {
+				if (location.search == "?true")
+				document.getElementById("iframepage").src = "collect.html";
+				}
+				jump();
+				</script>
+			</div>
+		</div>
+		<!-- 取消订单弹出窗 -->
+		<div class="pop-up-black">
+			<div class="pop-up">
+				<p class="desc-info">确定要取消此订单？</p>
+				<p class="desc-info-btn">
+					<input type="button" value="确定" class="pay-btn">
+					<input type="button" value="取消" class="pay-btn pop-up-cancel">
+				</p>
+			</div>
+		</div>
+		<script type="text/javascript" src="ftl/footer.js"></script><!-- 公共底部JS -->
+		<script type="text/javascript" src="ftl/nav.js"></script><!-- 公共右侧导航JS -->
+
+		<script type="text/javascript" src="js/base.js"></script>
+		<script type="text/javascript" src="js/persona-order.js"></script>
+	</body>
+</html>

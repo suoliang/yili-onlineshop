@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.periodactivity.dao.ActivityShareMemberDao">
+	<resultMap id="ActivityShareMemberMap" type="ActivityShareMember">
+		<id column="id" property="id" />
+		<result column="member_id" property="memberId" />
+		<result column="invite_code" property="inviteCode" />
+		<result column="grand_gain_red_envelope" property="grandGainRedEnvelope" />
+		<result column="existing_red_envelope" property="existingRedEnvelope" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+
+	</resultMap>
+	<sql id="select_column">
+		select 
+			id, member_id, invite_code ,grand_gain_red_envelope,existing_red_envelope,create_time 
+		from t_activity_share_member
+	   
+	</sql>
+	<insert id="add" parameterType="ActivityShareMember">
+		insert into 
+			t_activity_share_member
+		(id, member_id, invite_code ,grand_gain_red_envelope,existing_red_envelope,create_time )
+	    values 
+	    (#{id},#{memberId},#{inviteCode},#{grandGainRedEnvelope},#{existingRedEnvelope},now())
+	</insert>
+
+	
+	<update id="update">
+		update t_activity_share_member
+			set
+			<if test="memberId!=null and memberId!=''">
+			    member_id = #{memberId}, 
+			</if>
+			<if test="inviteCode!=null and inviteCode!=''">
+				invite_code = #{inviteCode},
+			</if>	
+			<if test="grandGainRedEnvelope!=null and grandGainRedEnvelope!=''">
+				grand_gain_red_envelope=#{grandGainRedEnvelope},
+			</if>	
+			<if test="existingRedEnvelope!=null and existingRedEnvelope!=''">
+				existing_red_envelope=#{existingRedEnvelope},
+			</if>
+			update_time=now()
+	
+	</update>
+	
+	<select id="findByMemberId" resultMap="ActivityShareMemberMap" parameterType="java.lang.Long">
+		 <include refid="select_column"/>  
+		 <where>member_id = #{memberId}</where> 
+	</select>
+	
+	<select id="findByInviteCode" resultMap="ActivityShareMemberMap" parameterType="java.lang.String">
+		 <include refid="select_column"/>  
+		 <where>invite_code = #{inviteCode}</where> 
+	</select>
+	
+</mapper>

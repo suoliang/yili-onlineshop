@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>下载阿拉丁玛特APP 注册立得红包</title>
+    <meta name="description" content="阿拉丁玛特商城">
+    <meta name="keywords" content="阿拉丁玛特商城">
+    <link rel="shortcut icon" href="images/favicon.ico" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <style>
+        * {margin: 0;padding: 0;font-family:'Microsoft YaHei';}
+        .container {width:100%;max-width:640px;margin:0 auto;}
+        .container a {height:50%;float: left;}
+        .container img {max-width:100%;float: left;}
+        #shadow {width:100%;position: fixed;top: 0;left: 0;height: 100%;background:rgba(0,0,0,0.6);text-align:center;display:none;z-index:999;}
+        #shadow img {max-width:90%;margin-top: 5%;}
+        #codeWrap {position: relative;}
+        #code {position: absolute;bottom: -8%;left: 0;width: 100%;text-align:center;color:#fff;font-size:16px;}
+    </style>
+    <script type="text/javascript">
+
+        window.onload = function() {
+            var browser = navigator.userAgent;
+            if(browser.indexOf('iPhone') > -1){
+                // alert('iphone');
+            }else if(browser.indexOf('Android') > -1 || browser.indexOf('Linux') > -1){
+                // alert('andriod');
+            }else{
+                // window.open("http://www.aladingshop.com");
+            };
+
+            if(isWeiXin()){
+                // var p = document.getElementsByTagName('p');
+                // p[0].innerHTML = window.navigator.userAgent;
+                var shadow = document.getElementById('shadow');
+                shadow.style.display="block";
+            };
+
+            var download = document.getElementById('download');
+            download.onclick = function() {
+                var browser = navigator.userAgent;
+                if(browser.indexOf('iPhone') > -1){
+                    window.open("https://itunes.apple.com/us/app/a-la-ding-ma-te/id1022751544?l=zh&ls=1&mt=8");
+                }else if(browser.indexOf('Android') > -1 || browser.indexOf('Linux') > -1){
+                    window.open("http://filepic.aladingshop.com/app/aladingshop_android_new.apk");
+                } else {
+                    window.open("https://itunes.apple.com/us/app/a-la-ding-ma-te/id1022751544?l=zh&ls=1&mt=8");
+                }
+             };
+
+            var inviteCode=GetQueryString("inviteCode");
+            if(inviteCode !=null && inviteCode.toString().length>1) {
+                var code = document.getElementById('code')
+                code.innerHTML = "下载APP，注册输入邀请码：" + GetQueryString("inviteCode") + "，<br>立得8元红包哦！" ;
+            }
+         };
+
+         function isWeiXin(){
+            var ua = window.navigator.userAgent.toLowerCase();
+            if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        function GetQueryString(name){
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if(r!=null)return  unescape(r[2]); return null;
+        }
+    </script>
+</head>
+<body>
+    <div id="shadow">
+        <img src="images/hide.PNG" alt="">
+    </div>
+    <div class="container">
+        <a href="javascript:void(0)" id="codeWrap">
+            <img src="images/1.jpg" alt="">
+            <p id="code"></p>
+        </a>
+        <a id="download" href="javascript:void(0)"><img src="images/2.png" alt=""></a>
+        <img src="images/3.png" alt="">
+        <img src="images/4.png" alt="">
+        <img src="images/5.png" alt="">
+        <img src="images/6.png" alt="">
+    </div>
+</body>
+</html>

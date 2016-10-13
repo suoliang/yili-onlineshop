@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.log.dao.LogSendGoodsConfirmDao">
+	<resultMap id="logSendGoodsConfirmMap" type="logSendGoodsConfirm">
+		<id column="id" property="id" />
+		<result column="out_order_no" property="outOrderNo" />
+		<result column="trade_no" property="tradeNo" />
+		<result column="buyer_login_email" property="buyerLoginEmail" />
+		<result column="seller_user_id" property="sellerUserId" />
+		<result column="seller_login_email" property="sellerLoginEmail" />
+		<result column="seller_account" property="sellerAccount" />
+		<result column="seller_type" property="sellerType" />
+		<result column="seller_action" property="sellerAction" />
+		<result column="buyer_user_id" property="buyerUserId" />
+		<result column="buyer_account" property="buyerAccount" />
+		<result column="buyer_type" property="buyerType" />
+		<result column="buyer_action" property="buyerAction" />
+		<result column="total_fee" property="totalFee" />
+		<result column="trade_status" property="tradeStatus" />
+		<result column="trade_type" property="tradeType" />
+		<result column="operator_role" property="operatorRole" />
+		<result column="partner_id" property="partnerId" />
+		<result column="create_time" property="createTime" />
+		<result column="channel" property="channel" />
+		<result column="currency" property="currency" />
+		<result column="gathering_type" property="gatheringType" />
+		<result column="last_modified_time" property="lastModifiedTime" />
+		<result column="service_fee" property="serviceFee" />
+		<result column="service_fee_ratio" property="serviceFeeRatio" />
+		<result column="stop_timeout" property="stopTimeout" />
+		<result column="trade_from" property="tradeFrom" />
+	</resultMap>
+	
+	<insert id="add" parameterType="logSendGoodsConfirm">
+		 insert into t_log_send_goods_confirm
+		 	 	(id,out_order_no,trade_no,buyer_login_email,seller_user_id,
+		 	 	seller_login_email,seller_account,seller_type,
+		 	 	seller_action,buyer_user_id,buyer_account,buyer_type,
+		 	 	buyer_action,total_fee,trade_status,trade_type,operator_role,partner_id,
+		 	 	create_time,channel,currency,gathering_type,last_modified_time,service_fee,
+		 	 	service_fee_ratio,stop_timeout,trade_from) 
+		 values(#{id},#{outOrderNo},#{tradeNo},#{buyerLoginEmail},#{sellerUserId},
+				#{sellerLoginEmail},#{sellerAccount},#{sellerType},
+				#{sellerAction},#{buyerUserId},#{buyerAccount},#{buyerType},
+				#{buyerAction},#{totalFee},#{tradeStatus},#{tradeType},#{operatorRole},#{partnerId},
+				#{createTime},#{channel},#{currency},#{gatheringType},#{lastModifiedTime},#{serviceFee},
+				#{serviceFeeRatio},#{stopTimeout},#{tradeFrom});
+	</insert>
+
+</mapper>

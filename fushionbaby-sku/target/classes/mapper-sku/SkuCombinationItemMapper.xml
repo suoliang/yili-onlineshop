@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.sku.dao.SkuCombinationItemDao">
+
+	<resultMap id="SkuCombinationItemMap" type="skuCombinationItem">
+		<id column="id" property="id" />
+		<result column="combination_id" property="combinationId" />
+		<result column="sku_id" property="skuId" />
+		<result column="sku_price" property="skuPrice" />
+		<result column="sort_order" property="sortOrder" />
+		<result column="status" property="status" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+	</resultMap>
+	
+	<insert id="add" parameterType="skuCombinationItem">
+		insert into t_sku_combination_item(id, combination_id, sku_id, sku_price,sort_order, status,  create_time,update_time)
+		values(#{id},#{combinationId},#{skuId},#{skuPrice},#{sortOrder},#{status},now(),now());
+	</insert>
+	
+	
+	<select id="queryById" resultMap="SkuCombinationItemMap" parameterType="java.lang.Long">
+		select
+			id, combination_id, sku_id, sku_price,sort_order, status,  create_time,update_time
+		from 
+			t_sku_combination_item
+		where 
+			id = #{id}
+	</select>
+	
+	
+	<delete id="deleteByCombinationId" parameterType="java.lang.Long">
+		delete from t_sku_combination_item where combination_id = #{combinationId}
+	</delete>
+	<delete id="deleteBySkuId" parameterType="java.lang.Long">
+		delete from t_sku_combination_item where sku_id = #{skuId}
+	</delete>
+	
+	<select id="queryListBySkuId" resultMap="SkuCombinationItemMap" parameterType="java.lang.Long">
+		select
+			id, combination_id, sku_id, sku_price,sort_order, status,  create_time,update_time
+		from 
+			t_sku_combination_item
+		<where>
+			sku_id = #{skuId} AND status = 'y'
+		</where>
+		ORDER BY sort_order ASC
+	</select>
+	
+	<select id="queryListByCombinationId" resultType="java.util.List" resultMap="SkuCombinationItemMap" parameterType="java.lang.Long">
+		select
+			id, combination_id, sku_id, sku_price,sort_order, status,  create_time,update_time
+		from 
+			t_sku_combination_item
+		<where>
+			combination_id = #{combinationId}
+		</where>
+		ORDER BY sort_order ASC
+	</select>
+	
+</mapper>

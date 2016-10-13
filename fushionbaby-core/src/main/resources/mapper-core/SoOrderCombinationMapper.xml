@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fushionbaby.core.dao.SoOrderCombinationDao">
+	<resultMap id="SoOrderConbinationMap" type="soOrderCombination">
+		<id column="id" property="id" />
+		<result column="order_Code" property="orderCode" />
+		<result column="combination_id" property="combinationId" />
+		<result column="amount" property="amount" />
+		<result column="total_price" property="totalPrice" />
+		<result column="create_time" property="createTime" />
+	</resultMap>
+	<insert id="add" parameterType="soOrderCombination">
+		insert into t_so_order_combination (id,order_code, combination_id,amount, total_price, create_time)
+		values (#{id},#{orderCode}, #{combinationId}, #{amount}, #{totalPrice} ,now())
+	</insert>
+
+
+</mapper>

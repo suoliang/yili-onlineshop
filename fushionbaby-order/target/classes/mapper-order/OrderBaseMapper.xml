@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fushionbaby.order.dao.OrderBaseDao" >
+  <resultMap id="BaseResultMap" type="OrderBase" >
+    <id column="id" property="id" />
+    <result column="order_code" property="orderCode" />
+    <result column="member_id" property="memberId" />
+    <result column="member_name" property="memberName" />
+    <result column="order_status" property="orderStatus" />
+    <result column="is_refused" property="isRefused" />
+    <result column="last_receive_time" property="lastReceiveTime" />
+    <result column="cancel_time" property="cancelTime" />
+    <result column="sys_cancel_time" property="sysCancelTime" />
+    <result column="sys_cancel_reason" property="sysCancelReason" />
+    <result column="is_delete" property="isDelete" />
+    <result column="source_code" property="sourceCode" />
+    <result column="total_point_used" property="totalPointUsed" />
+    <result column="order_point_gained" property="orderPointGained" />
+    <result column="is_handle_point" property="isHandlePoint" />
+    <result column="memo" property="memo" />
+    <result column="audit_fail_reason" property="auditFailReason" />
+    <result column="create_time" property="createTime" />
+    <result column="update_time" property="updateTime" />
+    <result column="update_id" property="updateId" />
+    <result column="is_group_buy" property="isGroupBuy" />
+    <!-- 额外显示字段 -->
+    <result column="receiver" property="receiver" />
+    <result column="receiver_mobile" property="receiverMobile" />
+    <result column="finance_status" property="financeStatus" />
+    <result column="payment_type" property="paymentType" />
+    <result column="payment_total_actual" property="paymentTotalActual" />
+    <result column="is_invoice" property="isInvoice" />
+    <result column="trans_status" property="transStatus" />
+    
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+  	select 
+	    id, order_code, member_id, member_name, order_status, is_refused, last_receive_time, 
+	    cancel_time, sys_cancel_time, sys_cancel_reason, is_delete, source_code, total_point_used,order_point_gained, 
+	    is_handle_point, memo, audit_fail_reason, create_time, update_time, update_id,is_group_buy
+	from t_order_base
+  </sql>
+  
+  <update id="update" parameterType="OrderBase">
+  	update t_order_base
+	<set>
+		<if test="orderStatus != null and orderStatus != ''">
+       		order_status = #{orderStatus},
+  		</if>
+		<if test="isRefused != null and isRefused != ''">
+       		is_refused = #{isRefused},
+  		</if>
+		<if test="lastReceiveTime != null and lastReceiveTime != ''">
+       		last_receive_time = #{lastReceiveTime},
+  		</if>
+		<if test="auditFailReason != null and auditFailReason != ''">
+       		audit_fail_reason = #{auditFailReason},
+  		</if>
+		<if test="updateId != null and updateId != ''">
+       		update_id = #{updateId},
+  		</if>
+  		<if test="memo != null and memo != ''">
+       		memo = #{memo},
+  		</if>
+		<if test="auditFailReason != null and auditFailReason != ''">
+       		audit_fail_reason = #{auditFailReason},
+  		</if>
+		<if test="sysCancelTime != null and sysCancelTime != ''">
+       		sys_cancel_time = #{sysCancelTime},
+  		</if>
+		<if test="sysCancelReason != null and sysCancelReason != ''">
+       		sys_cancel_reason = #{sysCancelReason},
+  		</if>
+		<if test="isHandlePoint != null and isHandlePoint != ''">
+       		is_handle_point = #{isHandlePoint},
+  		</if>
+  		update_time = now()
+	</set>
+	where order_code = #{orderCode} 
+    	and member_id= #{memberId}
+  </update>
+  
+  <select id="findByMemberIdAndOrderCode" resultMap="BaseResultMap">
+  	<include refid="Base_Column_List" />
+  	where member_id = #{memberId} 
+    		and order_code=#{orderCode}
+  </select>
+  
+  <select id="findListByOrderStatus" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	<include refid="Base_Column_List" />
+  	where order_status = #{orderStatus}
+  </select>
+  
+  <select id="findListByStatusAndIsHandlePoint" resultMap="BaseResultMap">
+  	<include refid="Base_Column_List" />
+  	where order_status = #{orderStatus}
+       	and is_handle_point = #{isHandlePoint}
+  </select>
+  
+  <select id="findByOrderCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	<include refid="Base_Column_List" />
+  	where order_code = #{orderCode}
+  </select>
+  
+  <sql id="orderBase_where">
+  	<where>
+  		<if test="orderCode!=null and orderCode!=''">
+	    	<![CDATA[
+				and order_code = #{orderCode}
+			]]>
+	    </if>
+	    <if test="memberName!=null and memberName!=''">
+			<![CDATA[	and member_name like "%"#{memberName}"%"]]>
+	    </if>
+		<if test="orderStatus != null and orderStatus != ''">
+	    	<![CDATA[
+				and order_status = #{orderStatus}
+			]]>
+	    </if>
+		<if test="createTimeFrom != null and createTimeFrom !=''">
+	    	<![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d %T') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d %T')
+			]]>
+	    </if>
+		<if test="createTimeTo != null and createTimeTo != ''">
+	    	<![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d %T') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d %T')
+			]]>
+	    </if>
+  	</where>
+  </sql>
+  
+	<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="BaseResultMap" parameterType="Map" >
+		<include refid="Base_Column_List"/>
+		<include refid="orderBase_where"/>
+		 order by create_time DESC
+		<if test="start!=null and limit!=null">
+			limit #{start},#{limit}
+		</if>
+	</select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) from t_order_base
+		<include refid="orderBase_where"/>	
+	</select>
+  
+</mapper>

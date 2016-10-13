@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.store.dao.StoreSponsorsApplySettleDao">
+	<resultMap id="StoreSponsorsApplySettleMap" type="StoreSponsorsApplySettle">
+		<id column="id" property="id" />
+		<result column="store_code" property="storeCode" />
+		<result column="apply_number" property="applyNumber" />
+		<result column="apply_time" property="applyTime" />
+		<result column="apply_total_amount" property="applyTotalAmount" />
+		<result column="settle_method" property="settleMethod" />
+		<result column="settlement_status" property="settlementStatus" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="update_id" property="updateId" />
+		
+		<result column="settlement_time" property="settlementTime" />
+		<result column="remark" property="remark" />
+	
+	</resultMap>
+	<sql id="StoreSponsorsApplySettle_column">
+		id, store_code, apply_number,apply_time,apply_total_amount,settle_method,settlement_status,create_time,
+		update_time,update_id,settlement_time,remark
+	   
+	</sql>
+	<insert id="add" parameterType="StoreSponsorsApplySettle">
+		insert into 
+			t_store_sponsors_apply_settle
+			(id, store_code, apply_number,apply_time,apply_total_amount,settle_method,settlement_status,create_time,
+			update_time,update_id,settlement_time,remark)
+	    	values 
+		    (#{id},#{storeCode},#{applyNumber},now(),#{applyTotalAmount},#{settleMethod},#{settlementStatus},now(),
+		    #{updateTime},#{updateId},#{settlementTime},#{remark})
+	</insert>
+	
+	
+	<update id="update">
+		update t_store_sponsors_apply_settle
+			set
+			<if test="storeCode !=null and storeCode !=''">
+			    store_code = #{storeCode}, 
+			</if>
+			<if test="applyNumber !=null and applyNumber !=''">
+			    apply_number = #{applyNumber}, 
+			</if>
+			<if test="applyTime !=null and applyTime !=''">
+			    apply_time = #{applyTime}, 
+			</if>
+			<if test="applyTotalAmount !=null and applyTotalAmount !=''">
+			    apply_total_amount = #{applyTotalAmount}, 
+			</if>
+			<if test="settleMethod !=null and settleMethod !=''">
+			    settle_method = #{settleMethod}, 
+			</if>
+			<if test="settlementStatus !=null and settlementStatus !=''">
+			    settlement_status = #{settlementStatus}, 
+			</if>
+			<if test="updateId !=null and updateId !=''">
+			    update_id = #{updateId}, 
+			</if>
+			<if test="settlementTime !=null and settlementTime !=''">
+			    settlement_time = #{settlementTime},
+			</if>
+			<if test="remark !=null and remark !=''">
+			    remark = #{remark},
+			</if>
+			update_time = now()
+		    
+		<where>
+			id = #{id}
+		</where>
+	</update>
+	
+	<select id="findById" resultMap="StoreSponsorsApplySettleMap" parameterType="java.lang.String">
+		select <include refid="StoreSponsorsApplySettle_column"/> from t_store_sponsors_apply_settle where id = #{id}
+	</select>
+	<select id="findByStoreCode" resultMap="StoreSponsorsApplySettleMap" parameterType="java.lang.String">
+		select <include refid="StoreSponsorsApplySettle_column"/> from t_store_sponsors_apply_settle where store_code = #{storeCode}
+	</select>
+	<select id="findByApplyNumber" resultMap="StoreSponsorsApplySettleMap" parameterType="java.lang.String">
+		select <include refid="StoreSponsorsApplySettle_column"/> from t_store_sponsors_apply_settle where apply_number = #{applyNumber}
+	</select>
+	
+	<select id="getListPage" parameterType="Map" resultType="list" resultMap="StoreSponsorsApplySettleMap">
+		select 
+         	<include refid="StoreSponsorsApplySettle_column"/>  from 
+    	t_store_sponsors_apply_settle
+    	<where>
+	    	<if test="storeCode !=null and storeCode !=''">
+	    		AND store_code = #{storeCode} 
+	    	</if>
+	    	<if test="settlementStatus !=null and settlementStatus!=''">
+	    		AND settlement_status = #{settlementStatus}
+	    	</if>
+	    	<if test="applyTime !=null and applyTime !=''">
+	    		AND apply_time = #{applyTime}
+	    	</if>
+	    	
+	    	<if test="createTimeFrom != null and createTimeFrom !=''">
+		    	<![CDATA[
+					and DATE_FORMAT(apply_time,'%Y-%m-%d %H:%i:%s') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d %H:%i:%s')
+				]]>
+	    	</if>
+	    
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(apply_time,'%Y-%m-%d %H:%i:%s') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d %H:%i:%s')
+				]]>
+	    	</if>
+    	</where>
+    		LIMIT #{start},#{limit}
+	</select>
+	
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1)  from t_store_sponsors_apply_settle
+    	<where>
+	    	<if test="storeCode !=null and storeCode !=''">
+	    		AND store_code = #{storeCode} 
+	    	</if>
+	    	<if test="settlementStatus !=null and settlementStatus!=''">
+	    		AND settlement_status = #{settlementStatus}
+	    	</if>
+	    	<if test="applyTime !=null and applyTime !=''">
+	    		AND apply_time = #{applyTime}
+	    	</if>
+	    	
+	    	<if test="createTimeFrom != null and createTimeFrom !=''">
+		    	<![CDATA[
+					and DATE_FORMAT(apply_time,'%Y-%m-%d %H:%i:%s') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d %H:%i:%s')
+				]]>
+	    	</if>
+	    
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(apply_time,'%Y-%m-%d %H:%i:%s') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d %H:%i:%s')
+				]]>
+	    	</if>
+    	</where>
+	</select>
+	
+</mapper>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.payment.dao.PaymentWebZfbJsdzDao">
+	<resultMap id="PaymentWebZfbJsdzResultMap" type="PaymentWebZfbJsdz">
+		<id column="id" property="id" />
+		<result column="order_number" property="orderNumber" />
+		<result column="order_code" property="orderCode" />
+		<result column="member_id" property="memberId" />
+		<result column="settle_amount" property="settleAmount" />
+		<result column="trade_time" property="tradeTime" />
+		<result column="order_des" property="orderDes" />
+		<result column="zfb_status" property="zfbStatus" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="zfb_trade_no" property="zfbTradeNo" />
+		<result column="remote_addr" property="remoteAddr" />
+	</resultMap>
+	<sql id="PaymentWebZfbJsdz_column">
+		select 
+	      id,order_number,order_code,member_id,settle_amount,trade_time,order_des,zfb_status,
+	      create_time,update_time,zfb_trade_no,remote_addr
+	   from t_payment_web_zfb_jsdz
+	</sql>
+	<insert id="add" parameterType="PaymentWebZfbJsdz">
+		insert into 
+			t_payment_web_zfb_jsdz
+		( id,order_number,order_code,member_id,settle_amount,trade_time,order_des,zfb_status,
+	      create_time,update_time,zfb_trade_no,remote_addr)
+	    values 
+	    (#{id},#{orderNumber},#{orderCode},#{memberId},#{settleAmount},#{tradeTime},#{orderDes},
+	    #{zfbStatus},now(),#{updateTime},#{zfbTradeNo},#{remoteAddr})
+	</insert>
+
+	<update id="updateByMemberIdAndOrderCode">
+		update t_payment_web_zfb_jsdz
+			set update_time = now()
+			<if test="orderNumber!=null and orderNumber!=''">
+			   , order_number = #{orderNumber}
+			</if>
+			<if test="settleAmount!=null and settleAmount!=''">
+			   , settle_amount = #{settleAmount}
+			</if>
+			<if test="tradeTime!=null and tradeTime!=''">
+			   , trade_time = #{tradeTime}
+			</if>
+			<if test="orderDes!=null and orderDes!=''">
+			   , order_des = #{orderDes}
+			</if>
+			<if test="zfbStatus!=null and zfbStatus!=''">
+			   , zfb_status = #{zfbStatus}
+			</if>
+			<if test="zfbTradeNo!=null and zfbTradeNo!=''">
+			   , zfb_trade_no = #{zfbTradeNo}
+			</if>
+			<if test="remoteAddr!=null and remoteAddr!=''">
+			   , remote_addr = #{remoteAddr}
+			</if>
+		<where>
+			member_id = #{memberId} and order_code = #{orderCode}
+		</where>
+	</update>
+	
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_payment_web_zfb_jsdz where id = #{id}
+	</delete>
+	<select id="queryByMemberIdAndOrderCode" resultMap="PaymentWebZfbJsdzResultMap" >
+		<include refid="PaymentWebZfbJsdz_column"/> 
+		where member_id = #{memberId} and order_code = #{orderCode}
+	</select>
+	<select id="queryByOrderNumber" resultMap="PaymentWebZfbJsdzResultMap" parameterType="java.lang.String">
+		<include refid="PaymentWebZfbJsdz_column"/> where order_number = #{orderNumber}
+	</select>
+	<select id="queryByOrderCode" resultMap="PaymentWebZfbJsdzResultMap" parameterType="java.lang.String">
+		<include refid="PaymentWebZfbJsdz_column"/> where order_code = #{orderCode}
+	</select>
+	<delete id="deleteByOrderCodeAndMemberId">
+		delete from t_payment_web_zfb_jsdz where member_id = #{memberId} and order_code = #{orderCode}
+	</delete>
+</mapper>

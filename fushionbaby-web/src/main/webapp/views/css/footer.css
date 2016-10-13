@@ -1,0 +1,32 @@
+@charset "UTF-8";
+/**
+* footer.css(公共底部 应用于footer.ftl)
+* @authors Your Name (you@example.org)
+* @date    2015-01-09 10:13:51
+* @version $Id$
+*/
+/* Footer */
+.gap { height: 40px; border-bottom: 1px solid #D1D1D1; }
+.footer { background-color: #EEEEEE; border-top: 1px solid #FFFFFF; }
+.footer .footer-t { border-bottom: 1px solid #D1D1D1; padding-top: 20px; padding-bottom: 15px; }
+.footer .footer-t ul { width: 638px; margin: 0 auto; overflow: hidden; }
+.footer .footer-t ul li { width: 122px; text-align: center; float: left; margin-right: 50px }
+.footer .footer-t ul li img { margin: 0 auto; height: 49px; }
+.footer .footer-t ul li a { margin-top: 12px; display: block; font-size: 14px; line-height: 25px }
+.footer .footer-m { border-top: 1px solid #FEFEFE; border-bottom: 1px solid #D1D1D1; padding-bottom: 20px; }
+.footer .footer-b { border-top: 1px solid #FEFEFE; text-align: center; color: #EDFFFF }
+.footer .footer-m .container { padding: 26px 0 0 55px; width: 880px; position: relative; }
+.footer .footer-m .footer-links { width: 121px; float: left; margin-right: 55px }
+.footer .footer-m .footer-links dt { height: 26px; line-height: 26px; border-bottom: 1px dashed #777; padding-bottom: 5px; }
+.footer .footer-m .footer-links dt img { float: left; margin-top: 3px; }
+.footer .footer-m .footer-links dt span { float: left; margin-left: 3px; font-size: 14px; font-weight: normal; }
+.footer .footer-m .footer-links dd { position: relative; margin-bottom: 2px }
+.footer .footer-m .footer-links dd em { width: 0; height: 0; border-width: 4px; border-style: dashed dashed dashed solid; border-color: transparent transparent transparent #777; overflow: hidden; display: block; position: absolute; left: 4px; top: 6px }
+.footer .footer-m .footer-links dd a { color: #777; line-height: 21px; display: block; padding-left: 24px; white-space: nowrap; }
+.footer .footer-m .erweima { position: absolute; right: 21px; top: 35px; display:none;}
+.footer .footer-m .erweima a { font-size: 16px; text-align: center; color: #020000; display: block; width: 120px; }
+.footer .footer-link-icon a { float: left; margin: 0 10px; }
+.footer .footer-link-icon a img { height: 38px; }
+.footer .footer-b .footer-link-icon { margin: 0 auto; overflow: hidden; padding: 25px 0; width: 642px; }
+.footer .footer-b p { color: #777; line-height: 48px; }
+/* Footer end */

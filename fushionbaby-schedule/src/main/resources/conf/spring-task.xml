@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:p="http://www.springframework.org/schema/p"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:task="http://www.springframework.org/schema/task" 
+  xsi:schemaLocation="
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.2.xsd
+    http://www.springframework.org/schema/task 
+    http://www.springframework.org/schema/task/spring-task-3.2.xsd"
+    default-lazy-init="false">  
+    
+    <!-- 开启这个配置，spring才能识别@Scheduled注解  -->
+    <context:annotation-config/>  
+    <task:annotation-driven scheduler="qbScheduler" mode="proxy"/>  
+    <task:scheduler id="qbScheduler" pool-size="15"/>
+    
+    <!-- spring扫描注解的配置 -->
+    <context:component-scan base-package="com.fushionbaby.schedule"/>
+    
+    <task:scheduled-tasks>   
+        <!-- spring任务demo配置(配置文件方式) -->
+        <task:scheduled ref="taskDemo" method="excute" cron="0/30 * * * * ?"/>   
+        <task:scheduled ref="taskScoreByCount" method="excute" cron="0 0/5 * * * ?"/>
+        <task:scheduled ref="taskCancelOrder" method="excute" cron="0 0/5 * * * ?"/>  
+        <!-- 每天 0点和12点删除一次静态化首页页面-->
+        <task:scheduled ref="taskRemoveStaticize" method="excute" cron="0 0 0,12 * * ?"/>
+<!-- 		<task:scheduled ref="taskRemoveStaticize" method="excute" cron="0/60 * * * * ?"/> -->
+
+<!-- 		<task:scheduled ref="taskRemoveStaticize" method="excute" cron="0 0/1 * * * ?"/> -->
+        <!-- 限时抢购:每天 0点和12点执行一次 -->
+		<!-- <task:scheduled ref="taskSkuTimelimit" method="excute" cron="0 0 0,12 * * ?"/> -->
+        <!-- 每天 早上6点执行一次-->    
+        <task:scheduled ref="taskStatisticsSms" method="excute" cron="0 0 6 * * ?"/>      
+        <!-- 每小时执行一次-->    
+        <task:scheduled ref="taskConfirmReceipt" method="excute" cron="0 0/60 * * * ?"/> 
+        <!-- 每天 早上1点执行一次-->    
+        <task:scheduled ref="taskSponsorsSettleDetails" method="excute" cron="0 0 1 * * ?"/>
+        <!-- 每天 早上2点执行一次 计算如意宝收益 -->    
+        <task:scheduled ref="taskCountIncome" method="excute" cron="0 0 2 * * ?"/>   
+        <!-- 每天 早上3点执行一次-->    
+        <task:scheduled ref="taskStatisticsMember" method="excute" cron="0 0 3 * * ?"/>   
+        <!-- 每天 早上4点执行一次-->    
+        <task:scheduled ref="taskStatisticsOrder" method="excute" cron="0 0 4 * * ?"/>    
+        <!-- 每天 0点和12点更新索引库-->
+        <task:scheduled ref="taskSkuBuffer" method="excute" cron="0 0 0,12 * * ?"/> 
+<!-- 	<task:scheduled ref="taskSkuBuffer" method="excute" cron="0 0/2 * * * ?"/> -->
+        <!--计算会员益多宝的 利息和赠券每天都 9点 -->    
+         <task:scheduled ref="taskMemberCardRollingBearing" method="excute" cron="0 0 9 * * *"/> 
+        <!--将到期的益多宝账户余额转入 如意宝 每天的八点-->
+        <task:scheduled ref="taskMemberCardExpire" method="excute" cron="0 0 8 * * *"/> 
+         <!--计算订单满 100元赠送30，满50赠送10元代金券 每天的十二点钟执行 -->
+         <task:scheduled ref="taskFullCutCoupon" method="excute" cron="0 0 12 * * *"/>  
+         <!--定时删除有新评论的商品详情静态页 -->
+         <task:scheduled ref="taskDelSkuDetailHtmlByComment" method="excute" cron="0 0 12 * * *"/> 
+
+    </task:scheduled-tasks> 
+	
+	 <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">  
+         <!-- 设置字符编码 -->   
+        <property name="messageConverters">
+            <list>
+                <!-- 设置返回字符串编码 -->
+                <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                    <property name = "supportedMediaTypes">
+                        <list>
+                            <value>text/html;charset=UTF-8</value>
+                        </list>
+                    </property>
+                </bean>
+                <!-- json转换器 -->
+                <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" >
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>text/html;charset=UTF-8</value>
+                        </list>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean> 
+</beans>

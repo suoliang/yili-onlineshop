@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.alabao.dao.AlabaoRolloffConfigDao">
+	<resultMap id="AlabaoRolloffConfigResultMap" type="AlabaoRolloffConfig">
+			<id column="id" property="id" />
+			<result column="max_money_limit" property="maxMoneyLimit" />
+			<result column="update_id" property="updateId" />
+			<result column="roll_off_code" property="rollOffCode" />
+			<result column="update_time" property="updateTime" />
+			<result column="max_number_limit" property="maxNumberLimit" />
+			<result column="create_time" property="createTime" />
+	</resultMap>
+	<!-- 定义宏转换为 -->
+	<sql id="AlabaoRolloffConfig_column">
+		id,max_money_limit,max_number_limit,roll_off_code,create_time,update_time,update_id
+	</sql>
+	<insert id="add" parameterType="AlabaoRolloffConfig">
+		insert into 
+			t_alabao_rolloff_config
+		(
+					max_money_limit,
+					update_id,
+					roll_off_code,
+					id,
+					update_time,
+					max_number_limit,
+					create_time
+		)
+	    values 
+	    (
+				#{maxMoneyLimit},
+				#{updateId},
+				#{rollOffCode},
+				#{id},
+				#{updateTime},
+				#{maxNumberLimit},
+				now()
+		)
+	</insert>
+	<delete id="deleteById" parameterType="java.lang.Long">
+	
+		delete from t_alabao_rolloff_config where id = #{id}  
+	</delete>
+	
+	<update id="update"  parameterType="AlabaoRolloffConfig">
+		update t_alabao_rolloff_config
+			set
+				<if test="maxMoneyLimit !=null and maxMoneyLimit !=''">
+					max_money_limit=#{maxMoneyLimit},
+				</if>
+				<if test="updateId !=null and updateId !=''">
+					update_id=#{updateId},
+				</if>
+				<if test="rollOffCode !=null and rollOffCode !=''">
+					roll_off_code=#{rollOffCode},
+				</if>
+				<if test="maxNumberLimit !=null and maxNumberLimit !=''">
+					max_number_limit=#{maxNumberLimit},
+				</if>
+				update_time=now()
+		<where>
+			id = #{id} 
+		</where>
+	</update>
+	
+	<select id="findById" resultMap="AlabaoRolloffConfigResultMap" parameterType="java.lang.Long">
+		select  <include refid="AlabaoRolloffConfig_column"/> from t_alabao_rolloff_config where id = #{id} 
+	</select>
+	
+	
+	
+	<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="AlabaoRolloffConfigResultMap" parameterType="Map" >
+		select <include refid="AlabaoRolloffConfig_column"/>
+		from t_alabao_rolloff_config 
+		where 1=1
+				<if test="maxMoneyLimit !=null and maxMoneyLimit !=''">
+					 and max_money_limit=#{maxMoneyLimit}
+				</if>
+				<if test="updateId !=null and updateId !=''">
+					 and update_id=#{updateId}
+				</if>
+				<if test="rollOffCode !=null and rollOffCode !=''">
+					 and roll_off_code=#{rollOffCode}
+				</if>
+				<if test="id !=null and id !=''">
+					 and id=#{id}
+				</if>
+				<if test="updateTime !=null and updateTime !=''">
+					 and update_time=#{updateTime}
+				</if>
+				<if test="maxNumberLimit !=null and maxNumberLimit !=''">
+					 and max_number_limit=#{maxNumberLimit}
+				</if>
+				<if test="createTime !=null and createTime !=''">
+					 and create_time=#{createTime}
+				</if>
+			ORDER BY create_time DESC
+		<if test="start!=null and limit!=null ">
+			limit #{start},#{limit}
+		</if>
+		 
+	</select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) from t_alabao_rolloff_config 
+	</select>
+	
+	<select id="findByRollOffCode" resultMap="AlabaoRolloffConfigResultMap" parameterType="java.lang.String">
+		select  <include refid="AlabaoRolloffConfig_column"/> from t_alabao_rolloff_config where roll_off_code=#{rollOffCode} ORDER BY create_time DESC 
+	</select>
+</mapper>

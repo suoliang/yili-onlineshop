@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <title>DouYing - about</title>
+    <script type="text/javascript" src="js/public_head_tags.js"></script>
+    <script>
+    $(function(){
+      $.fn.fullpage({
+        verticalCentered: false,
+        loopBottom: true,//滚动到最底部后滚回顶部
+        anchors: ['page1', 'page2', 'page3','page4'],
+        navigation: true,
+        navigationTooltips: ['公司简介', '联系我们', '办公环境', '联系我们']
+      });
+    })
+    </script>
+  </head>
+  <body id="about">
+    <div id="fullPage">
+      <div class="section section1">
+        <div class="nav">
+          <ul>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="platform.html">自有平台</a></li>
+            <li><a href="news.html">公司新闻</a></li>
+            <li><a href="team.html">团队介绍</a></li>
+            <li><a href="http://www.fushionbaby.com/product/brand-more-list.do">代理品牌</a></li>
+            <li><a href="about.html">关于我们</a></li>
+          </ul>
+        </div>
+        <div class="fadeIn"><img src="images/about/banner_1_words_1.png" alt="公司简介"></div>
+        <a class="scroll_btn" onclick="$.fn.fullpage.moveSectionDown();" href="javascript:void(0);"><img src="images/bottom_arrow.png"></a>
+      </div>
+      <div class="section section2">
+        <div class="fadeIn open_map"><img src="images/about/banner_2_words_1.png" title="点击查看公司地图" alt="联系我们"></div>
+        <a class="scroll_btn" onclick="$.fn.fullpage.moveSectionDown();" href="javascript:void(0);"><img src="images/bottom_arrow.png"></a>
+      </div>
+      <div class="section section3">
+        <div class="fadeIn"><img src="images/about/banner_3_words_1.png" alt="办公环境"></div>
+        <a class="scroll_btn" onclick="$.fn.fullpage.moveSectionDown();" href="javascript:void(0);"><img src="images/bottom_arrow.png"></a>
+      </div>
+      <div class="section section7">
+        <div class="fromLeft fromLeft_1"><img src="images/banner_7_words_1.png" alt="我们期待每一次与您交流的机会"></div>
+        <div class="fromLeft fromLeft_2"><img src="images/banner_7_img_1.jpg" alt=""></div>
+        <div class="fromRight">
+          <form action="">
+            <h1><img src="images/banner_7_words_2.png" alt="发封邮件给过我们"></h1>
+            <div class="input_wrap">
+              <div class="fl width100">
+                <label for="您的姓名">您的姓名</label>
+                <input class="required name" type="text">
+              </div>
+              <p>请输入您的姓名！(2个字符以上)</p>
+            </div>
+            <div class="input_wrap">
+              <div class="fl width100">
+                <label for="您的电子邮箱">您的电子邮箱</label>
+                <input class="required email" type="text">
+              </div>
+              <p>请输入正确的电子邮箱！(eg: 123456@qq.com)</p>
+            </div>
+            <div class="input_wrap">
+              <div class="fl width100">
+                <label for="您的留言">您的留言</label>
+                <textarea class="required message" type="text"></textarea>
+              </div>
+              <p>请输入您的留言！(4个字符以上)</p>
+            </div>
+            <a id="index_submit" class="public_btn" href="javascript:void(0);">提交</a>
+          </form>
+        </div>
+        <div class="fromBottom copyright">沪ICP备14049824号</div>
+        <!-- 对话框 开始 -->
+        <div id="Modal_index" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-show="false">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">提交成功</h3>
+          </div>
+          <div class="modal-body">
+            <p>我们已经收到您的留言，感谢您的反馈！</p>
+          </div>
+          <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+            <!-- <button class="btn btn-primary">Save changes</button> -->
+          </div>
+        </div>
+        <!-- 对话框 结束 -->
+      </div>
+    </div>
+
+    <div class="map_wrap_backup">
+      <div class="map_wrap">
+        <div class="news_close"></div>
+        <img src="images/about/map.jpg" alt="公司地图">
+      </div>
+    </div>
+
+  </body>
+</html>

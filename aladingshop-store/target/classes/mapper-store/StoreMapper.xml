@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.store.dao.StoreDao">
+	<resultMap id="StoreResultMap" type="Store">
+		<id column="id" property="id" />
+		<result column="number" property="number" />
+		<result column="code" property="code" />
+		<result column="name" property="name" />
+		<result column="province_id" property="provinceId" />
+		<result column="city_id" property="cityId" />
+		<result column="country_id" property="countryId" />
+		<result column="status" property="status" />
+		<result column="latitude" property="latitude" />
+		<result column="longitude" property="longitude" />
+		<result column="is_deleted" property="isDeleted" />
+		<result column="create_time" property="createTime" />
+		<result column="create_id" property="createId" />
+		<result column="update_time" property="updateTime" />
+		<result column="update_id" property="updateId" />
+	</resultMap>
+	<sql id="Store_column">
+		id, number, code ,name,province_id,city_id,country_id,status,
+		latitude,longitude,is_deleted,create_time,create_id,update_time,update_id 
+	   
+	</sql>
+	<insert id="add" parameterType="Store">
+		insert into 
+			t_store
+		(id, number, code ,name,province_id,city_id,country_id,status,
+		latitude,longitude,is_deleted,create_time,create_id )
+	    values 
+	    (#{id},#{number},#{code},#{name},#{provinceId},#{cityId},#{countryId},#{status},
+	    #{latitude},#{longitude},'n',now(),#{createId})
+	</insert>
+	
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_store where id = #{id}
+	</delete>
+	<delete id="deleteByNumber" parameterType="java.lang.String">
+		delete from t_store where number = #{number}
+	</delete>
+	<delete id="deleteByCode" parameterType="java.lang.String">
+		delete from t_store where code = #{code}
+	</delete>
+	
+	<update id="updateByNumber">
+		update t_store
+			set
+			
+			<if test="name!=null and name!=''">
+			    name = #{name}, 
+			</if>
+			<if test="provinceId!=null and provinceId!=''">
+			    province_id = #{provinceId}, 
+			</if>
+			<if test="cityId!=null and cityId!=''">
+			    city_id = #{cityId}, 
+			</if>
+			<if test="countryId!=null and countryId!=''">
+			    country_id = #{countryId}, 
+			</if>
+			<if test="status!=null and status!=''">
+			    status = #{status}, 
+			</if>
+			<if test="latitude!=null and latitude!=''">
+			    latitude = #{latitude}, 
+			</if>
+			<if test="longitude!=null and longitude!=''">
+			    longitude = #{longitude}, 
+			</if>
+			<if test="isDeleted!=null and isDeleted!=''">
+			    is_deleted = #{isDeleted}, 
+			</if>
+			    update_id = #{updateId}, 
+			    update_time = now()
+		<where>
+			number = #{number}
+		</where>
+	</update>
+	<update id="updateByCode">
+		update t_store
+			set
+			<if test="number!=null and number!=''">
+			    number = #{number}, 
+			</if>
+			<if test="name!=null and name!=''">
+			    name = #{name}, 
+			</if>
+			<if test="provinceId!=null and provinceId!=''">
+			    province_id = #{provinceId}, 
+			</if>
+			<if test="cityId!=null and cityId!=''">
+			    city_id = #{cityId}, 
+			</if>
+			<if test="countryId!=null and countryId!=''">
+			    country_id = #{countryId}, 
+			</if>
+			<if test="status!=null and status!=''">
+			    status = #{status}, 
+			</if>
+			<if test="latitude!=null and latitude!=''">
+			    latitude = #{latitude}, 
+			</if>
+			<if test="longitude!=null and longitude!=''">
+			    longitude = #{longitude}, 
+			</if>
+			<if test="isDeleted!=null and isDeleted!=''">
+			    is_deleted = #{isDeleted}, 
+			</if>
+			 update_id = #{updateId}, 
+			 update_time = now()
+		<where>
+			code = #{code}
+		</where>
+	</update>
+	
+	<select id="findById" resultMap="StoreResultMap" parameterType="java.lang.Long">
+		select  <include refid="Store_column"/> from t_store where id = #{id}
+	</select>
+	<select id="findByNumber" resultMap="StoreResultMap" parameterType="java.lang.String">
+		select  <include refid="Store_column"/> from t_store  where number = #{number}
+	</select>
+	<select id="findByCode" resultMap="StoreResultMap" parameterType="java.lang.String">
+		select  <include refid="Store_column"/> from t_store where code = #{code}
+	</select>
+	
+	<!-- 分页条件查询 -->
+	<select id="getList" resultType="list" resultMap="StoreResultMap" parameterType="Map" >
+		select <include refid="Store_column"/>
+		from t_store 
+		<where>
+			<if test="number!=null and number!=''">
+			     and number = #{number}
+			</if>
+			<if test="code!=null and code!=''">
+			      and code = #{code} 
+			</if>
+			<if test="name!=null and name!=''">
+			      and name like "%"#{name}"%" 
+			</if>
+			<if test="provinceId!=null and provinceId!=''">
+			      and provinceId = #{provinceId}   
+			</if>
+			<if test="cityId!=null and cityId!=''">
+			     and  cityId = #{cityId}  
+			</if>
+			<if test="countryId!=null and countryId!=''">
+			      and countryId = #{countryId}  
+			</if>
+			<if test="status!=null and status!=''">
+			      and status = #{status} 
+			</if>
+			<if test="latitude!=null and latitude!=''">
+			      and latitude = #{latitude}  
+			</if>
+			<if test="longitude!=null and longitude!=''">
+			      and longitude = #{longitude}   
+			</if>
+			<if test="isDeleted!=null and isDeleted!=''">
+			      and is_deleted = #{isDeleted}  
+			</if>
+			<if test="updateTime!=null and updateTime!=''">
+			      and update_time = #{updateTime} 
+			</if>
+			<if test="updateId!=null and updateId!=''">
+			      and update_id = #{updateId} 
+			</if>
+		</where>
+		 order by create_time desc
+		<if test="start!=null and limit!=null ">
+			limit #{start},#{limit}
+		</if>
+		 
+	</select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) from t_store 
+		<where>
+			<if test="number!=null and number!=''">
+			     and number = #{number}
+			</if>
+			<if test="code!=null and code!=''">
+			      and code = #{code} 
+			</if>
+			<if test="name!=null and name!=''">
+			      and name like "%"#{name}"%" 
+			</if>
+			<if test="provinceId!=null and provinceId!=''">
+			      and provinceId = #{provinceId}   
+			</if>
+			<if test="cityId!=null and cityId!=''">
+			     and  cityId = #{cityId}  
+			</if>
+			<if test="countryId!=null and countryId!=''">
+			      and countryId = #{countryId}  
+			</if>
+			<if test="status!=null and status!=''">
+			      and status = #{status} 
+			</if>
+			<if test="latitude!=null and latitude!=''">
+			      and latitude = #{latitude}  
+			</if>
+			<if test="longitude!=null and longitude!=''">
+			      and longitude = #{longitude}   
+			</if>
+			<if test="isDeleted!=null and isDeleted!=''">
+			      and is_deleted = #{isDeleted}  
+			</if>
+			<if test="updateTime!=null and updateTime!=''">
+			      and update_time = #{updateTime} 
+			</if>
+			<if test="updateId!=null and updateId!=''">
+			      and update_id = #{updateId} 
+			</if>
+		</where>
+	</select>
+</mapper>

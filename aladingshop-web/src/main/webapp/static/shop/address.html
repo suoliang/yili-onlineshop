@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8" />
+        <title>我的订单 - 收货地址</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="renderer" content="webkit">
+        <meta name="description" content="阿拉丁玛特商城">
+        <meta name="keywords" content="阿拉丁玛特商城">
+        <link rel="shortcut icon" href="images/favicon.ico" />
+        <!-- styles -->
+        <link rel="stylesheet" href="css/style.min.css">
+        <!--[if IE 9 ]><html class="ie9"><![endif]-->
+        <!--[if IE 8 ]><html class="ie8"><![endif]-->
+    </head>
+    <body class="assess">
+
+        <!-- 顶部导航 开始 -->
+        <script src="public/topbar.js"></script>
+        <!-- 顶部导航 结束 -->
+
+        <!-- 头部搜索版块 开始 -->
+        <script src="public/header.js"></script>
+        <!-- 头部搜索版块 结束 -->
+
+        <!-- 菜单 开始 -->
+        <script src="public/topMenu.js"></script>
+
+        <div class="container oh">
+            <div class="mT20 order-wrap fl mB20">
+                <div class="order-l fl">
+                    <div class="order-user">
+                        <img src="picture/user.jpg" height="40" width="40" alt="">
+                        <p>账号：18116407567</p>
+                    </div>
+                    <ul class="order-l-list">
+                        <a class="prder-l-tit" href="javascript:void(0)">我的订单<span>-</span></a>
+                        <li><a href="order-all.html">全部订单</a></li>
+                        <li><a href="order-to-pay.html">代付款</a></li>
+                        <li><a href="order-to-deliver.html">代发货</a></li>
+                        <li><a href="order-to-assess.html">待评价</a></li>
+                    </ul>
+                    <ul class="order-l-list">
+                        <a class="prder-l-tit" href="collect.html">我的收藏</a>
+                    </ul>
+                    <ul class="order-l-list">
+                        <a class="prder-l-tit" href="assess.html">我的评论</a>
+                    </ul>
+                    <ul class="order-l-list active"><!-- active -->
+                        <a class="prder-l-tit" href="address.html">收货地址</a>
+                    </ul>
+                </div>
+
+                <div class="cart-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="fl w106 textL mL64">收货人</th>
+                                <th class="fl w380 textL">收货地址</th>
+                                <th class="fl w196 textL">联系电话</th>
+                                <th class="fl textL mL10">操作</th>
+                            </tr>
+                        </thead>
+                    </table>
+
+                    <div class="cart-confirm-top fl wp100">
+                        <ul>
+                            <li>
+                                <div class="address-box">
+                                    <div class="check-box fl checked">
+                                        <i></i>
+                                        <input name="chose-address" class="" type="radio" checked="checked">
+                                    </div>
+                                    <p><span class="name">揭志勇</span></p>
+                                    <p><span class="address">上海上海市闵行区浦江镇</span></p>
+                                    <p><span class="phone">18116407567</span></p>
+                                    <div class="action">
+                                        <a href="javascript:void(0)">设为默认地址</a>
+                                        <a class="edit-btn" href="javascript:void(0)">修改</a>
+                                        <a class="cancel" href="javascript:void(0)">删除</a>
+                                        <div class="confirm-box">
+                                            <p>确定删除该地址吗？</p>
+                                            <a class="confirm-no" href="javascript:void(0)">取消</a>
+                                            <a href="javascript:void(0)">确定</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="address-box">
+                                    <div class="check-box fl">
+                                        <i></i>
+                                        <input name="chose-address" class="" type="radio">
+                                    </div>
+                                    <p><span class="name">揭志勇</span></p>
+                                    <p><span class="address">上海上海市闵行区浦江镇</span></p>
+                                    <p><span class="phone">18116407567</span></p>
+                                    <div class="action">
+                                        <a href="javascript:void(0)">设为默认地址</a>
+                                        <a class="edit-btn" href="javascript:void(0)">修改</a>
+                                        <a class="cancel" href="javascript:void(0)">删除</a>
+                                        <div class="confirm-box">
+                                            <p>确定删除该地址吗？</p>
+                                            <a class="confirm-no" href="javascript:void(0)">取消</a>
+                                            <a href="javascript:void(0)">确定</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="address-add">
+                            <div class="address-add-btn">
+                                <div class="check-box fl">
+                                    <i></i>
+                                    <input name="chose-address" class="" type="radio">
+                                </div>
+                                <p>使用新地址</p>
+                            </div>
+                            <div class="add-box add-address-box">
+                                <p>
+                                    <label for=""><span class="red">*</span>&emsp;所在地：</label>
+                                    <select name="" id="">
+                                        <option value="">请选择</option>
+                                        <option value="1">上海</option>
+                                    </select>
+                                    <select name="" id="">
+                                        <option value="">请选择</option>
+                                        <option value="2">上海</option>
+                                    </select>
+                                    <select name="" id="">
+                                        <option value="">请选择</option>
+                                        <option value="3">闵行区</option>
+                                    </select>
+                                    <span class="error">* 请选择地址！</span>
+                                </p>
+                                <p>
+                                    <label for=""><span class="red">*</span>&emsp;详细地址：</label>
+                                    <input class="detail-address-input" type="text">
+                                    <span class="error">* 请填写详细地址！</span>
+                                </p>
+                                <p>
+                                    <label for=""><span class="red">*</span>&emsp;收件人：</label>
+                                    <input type="text">
+                                    <span class="error">* 请填写收件人！</span>
+                                </p>
+                                <p>
+                                    <label for=""><span class="red">*</span>&emsp;联系电话：</label>
+                                    <input type="text">
+                                    <span class="error">* 请填写联系电话！</span>
+                                </p>
+                                <p>
+                                    <a class="yes" href="javascript:void(0)">保存并使用</a>
+                                    <a class="no" href="javascript:void(0)">取消</a>
+                                    <a class="setDefault" href="javascript:void(0)">设为默认地址</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部 开始 -->
+        <script src="public/footer.js"></script>
+        <!-- 底部 结束 -->
+
+        <!-- 对话框修改地址 -->
+        <div class="modal_backup edit-address">
+            <div class="add-box">
+                <h3>修改收货地址</h3>
+                <p>
+                    <label for=""><span class="red">*</span>&emsp;所在地：</label>
+                    <select name="" id="">
+                        <option value="">请选择</option>
+                        <option value="1">上海</option>
+                    </select>
+                    <select name="" id="">
+                        <option value="">请选择</option>
+                        <option value="2">上海</option>
+                    </select>
+                    <select name="" id="">
+                        <option value="">请选择</option>
+                        <option value="3">闵行区</option>
+                    </select>
+                    <span class="error">* 请选择地址！</span>
+                </p>
+                <p>
+                    <label for=""><span class="red">*</span>&emsp;详细地址：</label>
+                    <input class="detail-address-input" type="text">
+                    <span class="error">* 请填写详细地址！</span>
+                </p>
+                <p>
+                    <label for=""><span class="red">*</span>&emsp;收件人：</label>
+                    <input type="text">
+                    <span class="error">* 请填写收件人！</span>
+                </p>
+                <p>
+                    <label for=""><span class="red">*</span>&emsp;联系电话：</label>
+                    <input type="text">
+                    <span class="error">* 请填写联系电话！</span>
+                </p>
+                <p>
+                    <a class="yes" href="javascript:void(0)">保存</a>
+                    <a class="no" href="javascript:void(0)">取消</a>
+                    <a class="setDefault" href="javascript:void(0)">设为默认地址</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- javascript -->
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script src="js/public.js"></script><!-- 公共JS -->
+        <script>
+            $(function(){
+                /*选择与新增地址*/
+                var address_check = $('.cart-confirm-top').find('input[type=radio]');
+                var add_new_address = $('.address-add-btn').find('input[type=radio]');
+                var old_address = $('.cart-confirm-top ul').find('input[type=radio]');
+                var toggle = $('.add-address-box');
+                var add_box = $('.add-box');
+                var edit_address = $('.edit-address');
+
+                address_check.click(function(event) {
+                    address_check.checked = false;
+                    address_check.removeAttr('checked').parents('.check-box').removeClass('checked');
+
+                    this.checked = true;
+                    $(this).attr('checked', 'checked').parents('.check-box').addClass('checked');
+                });
+
+                add_new_address.click(function(event) {
+                    toggle.slideDown();
+                });
+                old_address.click(function(event) {
+                    toggle.slideUp();
+                });
+
+                /*保存按钮*/
+                add_box.find('.yes').click(function(event) {
+                    var thisVal = add_box.find('select,input');
+                    thisVal.each(function(index, el) {
+                        if($(this).val()==""){
+                            $(this).addClass('thisError').siblings('.error').fadeIn();
+                        } else {
+                            $(this).removeClass('thisError').siblings('.error').fadeOut();
+                        }
+                    });
+                });
+
+                /*新增地址保存按钮*/
+                toggle.find('.yes').click(function(event) {
+                    var error_num = toggle.find('.thisError').length;
+                    if (error_num==0) {
+                        toggle.slideUp();
+                    };
+                });
+                /*新增地址取消按钮*/
+                toggle.find('.no').click(function(event) {
+                    toggle.slideUp();
+                    add_new_address.checked = false;
+                    $(add_new_address).removeAttr('checked').parents('.check-box').removeClass('checked');
+                });
+
+                /*修改地址按钮*/
+                $('.edit-btn').click(function(event) {
+                    edit_address.css('visibility', 'visible').stop().animate({'opacity':'1'}, 200);
+                    edit_address.find('.add-box').stop().animate({'top':'40%'}, 200);
+                });
+
+                /*修改地址保存按钮*/
+                edit_address.find('.yes').click(function(event) {
+                    var error_num = edit_address.find('.thisError').length;
+                    if (error_num==0) {
+                        // 修改成功后操作
+                        hide_edit_box();
+                    };
+                });
+                /*修改地址取消按钮*/
+                function hide_edit_box(){
+                    edit_address.find('.add-box').stop().animate({'top':'20%'}, 200);
+                    edit_address.stop().animate({'opacity':'0'}, 200);
+                    setTimeout(function(){
+                        edit_address.css('visibility', 'hidden')
+                    },200);
+                }
+                edit_address.find('.no').click(function(event) {
+                    hide_edit_box();
+                });
+            })
+        </script>
+    </body>
+</html>

@@ -1,0 +1,23 @@
+@charset "utf-8";
+/* CSS Document */
+body,ul,li,dl,dt,dd,h1,h2,h3,h4,h5,h6,input,p,form{ padding:0; margin:0;}
+img,input{border:0 none;}
+img{display:block;overflow: visible;}
+ul,ol{ list-style:none;}
+a{text-decoration:none; color:#fff;}
+a:hover{ color:#fff; }
+body{color:#fff;font:14px/1.5 "Microsoft Yahei",tahoma,arial,"Hiragino Sans GB",宋体,sans-serif;background-color: #2D333D;}
+input{outline: none;}
+
+.header{width: 427px;margin: 0 auto;}
+.logo{margin: 137px 0 56px;}
+.main{width: 360px;margin: 0 auto;}
+.title{text-align: center;font-size: 36px;line-height: 63px;margin-bottom: 61px;}
+.username,.password{width: 330px;height: 20px;color: #999;font-size: 14px;line-height: 20px;padding: 15px;margin-bottom: 20px;}
+/*.safe{height: 20px;padding: 9px 0 28px;position: relative;}
+.safe-login{height:20px;display: inline-block;vertical-align: middle;line-height: 25px;overflow: hidden;}
+.forget-pw{position: absolute;right: 0;line-height: 25px;}*/
+.submit button{font-size: 26px;height: 53px;line-height: 53px;background-color: #F40;text-align: center;width: 360px;color: #fff;border: 0;cursor: pointer;outline: none;}
+
+
+

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <title>Fushionbaby-待评价</title>
+    <meta name="apple-mobile-web-app-title" content="兜士宝-待评价">
+    <script type="text/javascript" src="js/public-headTag-local.js"></script><!-- 公共头部便签，css,js等 -->
+  </head>
+  <body id="evaluation">
+    <div class="container">
+      <div class="public_header fl width100">
+        <div class="public_header_wrap fl width100">
+          <a class="public_back" href="javascript:void(0);"  onclick="history.go(-1);">返回</a>
+          待评价
+          <a class="public_btn_r disabled" href="javascript:void(0);"></a>
+        </div>
+      </div>
+      <!-- 购物车列表  开始-->
+      <div class="public_products_wrap">
+        <a href="">
+          <div class="public_products_item">
+            <div class="item_picture">
+              <div class="img_c">
+                <img src="css/images/example.jpg" alt="">
+              </div>
+            </div>
+            <div class="item_name">
+              <p>Classic Pop Mold经典冰棒模具</p>
+              <span>型号：经典中号</span>
+            </div>
+            <div class="item_price">￥ 99.00</div>
+          </div>
+        </a>
+        <a href="">
+          <div class="public_products_item">
+            <div class="item_picture">
+              <div class="img_c">
+                <img src="css/images/example.jpg" alt="">
+              </div>
+            </div>
+            <div class="item_name">
+              <p>Classic Pop Mold经典冰棒模具</p>
+              <span>型号：经典中号</span>
+            </div>
+            <div class="item_price">￥ 99.00</div>
+          </div>
+        </a>
+      </div>
+      <!-- 购物车列表  结束-->
+      <div class="evaluation_wrap">
+        <input id="rank_num" type="hidden" value="">
+        <span>评价：</span>
+        <ul>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+      </div>
+      <textarea id="evaluation_textarea" class="width100" name="" id="" rows="6" placeholder="您对宝贝满意吗？在此填写评价。（字数10 - 60字）"></textarea>
+      <div class="public_form_wrap">
+        <form action="#">
+          <button id="evaluation_btn" class="public_button" type="button">提交评价</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- 对话框 -->
+    <div class="public_modal_backup">
+      <div class="public_modal">
+        <div class="modal_body">请点击星星评分</div>
+        <div class="modal_foot">
+          <button class="modal_confirm only_confirm">好</button>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="js/footer-local.js"></script>
+
+    <script>
+    $(function(){
+      /*点击星星评价*/
+      $('.evaluation_wrap').find("li").click(function(){
+        $(this).addClass("stared").prevAll().addClass("stared");
+        $(this).nextAll().removeClass("stared");
+        $("#rank_num").val($(".stared").length);
+      })
+
+      /*点击提交按钮*/
+      var $public_modal_backup = $(".public_modal_backup");
+      var $modal_body = $(".public_modal_backup").find(".modal_body");
+      var $modal_confirm = $(".public_modal_backup").find(".modal_confirm");
+
+      $("#evaluation_btn").click(function(){
+        var rank_num = $(".stared").length;
+        var evaluation_msg = $("#evaluation_textarea").val().length;
+
+        if(rank_num == 0){
+          $modal_body.html("请点击星星评分");
+          $public_modal_backup.fadeIn();
+        }
+        else if (evaluation_msg < 10) {
+          $modal_body.html("请至少输入10个字符");
+          $public_modal_backup.fadeIn();
+        }
+        else if (evaluation_msg > 60) {
+          $modal_body.html("您最多只可输入60个字符");
+          $public_modal_backup.fadeIn();
+        }
+        else {
+          /*提交成功操作*/
+          $modal_body.html("提交成功");
+          $public_modal_backup.fadeIn();
+          setTimeout(function(){
+            $public_modal_backup.fadeOut();
+            window.location='orderAll.html';
+          },1000)
+        }
+      })
+
+      $(".modal_confirm").click(function() {
+        $public_modal_backup.fadeOut();
+      });
+    })
+    </script>
+  </body>
+</html>

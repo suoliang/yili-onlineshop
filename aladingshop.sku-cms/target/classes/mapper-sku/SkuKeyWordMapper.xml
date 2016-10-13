@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.sku.cms.dao.SkuKeyWordDao">
+	<resultMap id="SkuKeyWordResultMap" type="SkuKeyWord">
+		<id column="id" property="id" />
+		<result column="product_code" property="productCode" />
+		<result column="keywords" property="keyWords" />
+		<result column="create_time" property="createTime" />
+		<result column="create_id" property="createId" />
+		<result column="update_time" property="updateTime" />
+		<result column="update_id" property="updateId" />
+	</resultMap>
+	<!-- 自动生成id策略 -->
+	<insert id="addKey" 
+		parameterType="SkuKeyWord">
+		insert into
+		t_sku_keyword(id,product_code,keywords,create_time,create_id,update_time,update_id)
+		values(#{id},#{productCode},#{keyWords},now(),#{createId},now(),#{updateId})
+	</insert>
+	<delete id="deleteKey">
+		DELETE FROM t_sku_keyword WHERE id = #{id}
+	</delete>
+	<update id="updateKey" parameterType="SkuKeyWord">
+		UPDATE 
+			t_sku_keyword 
+		SET
+			keywords = #{keyWords},
+			update_time = now()
+
+		WHERE
+			product_code = #{productCode}
+	</update>
+
+	<select id="findByProductCode"  resultMap="SkuKeyWordResultMap" parameterType="java.lang.String">
+		<![CDATA[
+			select 
+			id,product_code,keywords,create_time,create_id,update_time,update_id
+			from 
+			t_sku_keyword
+			where 
+				product_code = #{productCode}
+        ]]>
+	</select>
+</mapper>

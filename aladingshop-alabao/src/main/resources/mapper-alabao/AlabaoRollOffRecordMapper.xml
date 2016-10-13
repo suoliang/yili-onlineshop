@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.alabao.dao.AlabaoRollOffRecordDao">
+	<resultMap id="AlabaoRollOffRecordResultMap" type="AlabaoRollOffRecord">
+			<id column="id" property="id" />
+			<result column="transfer_money" property="transferMoney" />
+			<result column="member_id" property="memberId" />
+			<result column="roll_off_account_type" property="rollOffAccountType" />
+			<result column="account" property="account" />
+			<result column="create_time" property="createTime" />
+			<result column="is_success" property="isSuccess" />
+			<result column="serial_num" property="serialNum" />
+			<result column="batch_num" property="batchNum" />
+			<result column="memo" property="memo" />
+			
+			<result column="before_change_money" property="beforeChangeMoney" />
+		    <result column="after_change_money" property="afterChangeMoney" />
+			
+	</resultMap>
+	<!-- 定义宏转换为 -->
+	<sql id="AlabaoRollOffRecord_column">
+		id,member_id,account,transfer_money,roll_off_account_type,is_success,create_time,serial_num,batch_num,memo,before_change_money,after_change_money
+	</sql>
+	<insert id="add" parameterType="AlabaoRollOffRecord">
+		insert into 
+			t_alabao_roll_off_record
+		(
+					transfer_money,
+					member_id,
+					roll_off_account_type,
+					id,
+					account,
+					create_time,
+					is_success,
+					serial_num,
+					batch_num,
+					memo,before_change_money,after_change_money
+		)
+	    values 
+	    (
+				#{transferMoney},
+				#{memberId},
+				#{rollOffAccountType},
+				#{id},
+				#{account},
+				now(),
+				#{isSuccess},
+				#{serialNum},
+				#{batchNum},
+				#{memo},#{beforeChangeMoney},#{afterChangeMoney}
+		)
+	</insert>
+	<delete id="deleteById" parameterType="java.lang.Long">
+	
+		delete from t_alabao_roll_off_record where id = #{id}  
+	</delete>
+	
+	<update id="update"  parameterType="AlabaoRollOffRecord">
+		update t_alabao_roll_off_record
+			set
+				<if test="transferMoney !=null and transferMoney !=''">
+					transfer_money=#{transferMoney},
+				</if>
+				<if test="isSuccess !=null and isSuccess !=''">
+					is_success=#{isSuccess},
+				</if>
+				<if test="serialNum !=null and serialNum !=''">
+					serial_num=#{serialNum},
+				</if>
+				<if test="batchNum !=null and batchNum !=''">
+					batch_num=#{batchNum},
+				</if>
+				<if test="beforeChangeMoney !=null and beforeChangeMoney !=''">
+			        before_change_money = #{beforeChangeMoney}, 
+			    </if>
+				<if test="afterChangeMoney !=null and afterChangeMoney !=''">
+				    after_change_money = #{afterChangeMoney}, 
+				</if>
+				roll_off_account_type=#{rollOffAccountType}			
+		<where>
+			id = #{id} 
+		</where>
+	</update>
+	
+	<select id="findById" resultMap="AlabaoRollOffRecordResultMap" parameterType="java.lang.Long">
+		select  <include refid="AlabaoRollOffRecord_column"/> from t_alabao_roll_off_record where id = #{id} 
+	</select>
+	
+	<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="AlabaoRollOffRecordResultMap" parameterType="Map" >
+		select 
+			<include refid="AlabaoRollOffRecord_column"/>
+		from 
+			t_alabao_roll_off_record 
+		<where>
+				<if test="transferMoneyMin!=null and transferMoneyMin!=''">
+					and <![CDATA[ transfer_money >= #{transferMoneyMin} ]]>  
+				</if>
+				
+				<if test="transferMoneyMax!=null and transferMoneyMax!=''">
+					and  <![CDATA[transfer_money <= #{transferMoneyMax} ]]>  
+				</if>
+		
+				<if test="transferMoney !=null and transferMoney !=''">
+					 and transfer_money=#{transferMoney}
+				</if>
+				<if test="memberId !=null and memberId !=''">
+					 and member_id=#{memberId}
+				</if>
+				<if test="rollOffAccountType !=null and rollOffAccountType !=''">
+					 and roll_off_account_type=#{rollOffAccountType}
+				</if>
+				<if test="id !=null and id !=''">
+					 and id=#{id}
+				</if>
+				<if test="account !=null and account !=''">
+					 and account=#{account}
+				</if>
+				<if test="createTime !=null and createTime !=''">
+					 and create_time=#{createTime}
+				</if>
+				<if test="isSuccess !=null and isSuccess !=''">
+					 and is_success=#{isSuccess}
+				</if>
+				<if test="batchNum!=null and batchNum!=''">
+					and batch_num=#{batchNum}
+				</if>
+				<if test="serialNum!=null and serialNum!=''">
+					and serial_num=#{serialNum}
+				</if>
+				<if test="createTimeFrom != null and createTimeFrom !=''">
+			    	<![CDATA[
+						 and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+					]]>
+			    </if>
+				<if test="createTimeTo != null and createTimeTo != ''">
+			    	<![CDATA[
+						 and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d') 
+					]]>
+			    </if>
+		</where>
+				
+		ORDER BY create_time DESC
+		<if test="start!=null and limit!=null ">
+			limit #{start},#{limit}
+		</if>
+		 
+	</select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) from t_alabao_roll_off_record
+		
+		
+		<where>
+				<if test="transferMoneyMin!=null and transferMoneyMin!=''">
+					and <![CDATA[ transfer_money >= #{transferMoneyMin} ]]>  
+				</if>
+				
+				<if test="transferMoneyMax!=null and transferMoneyMax!=''">
+					and  <![CDATA[transfer_money <= #{transferMoneyMax} ]]>  
+				</if>
+		
+				<if test="transferMoney !=null and transferMoney !=''">
+					 and transfer_money=#{transferMoney}
+				</if>
+				<if test="memberId !=null and memberId !=''">
+					 and member_id=#{memberId}
+				</if>
+				<if test="rollOffAccountType !=null and rollOffAccountType !=''">
+					 and roll_off_account_type=#{rollOffAccountType}
+				</if>
+				<if test="id !=null and id !=''">
+					 and id=#{id}
+				</if>
+				<if test="account !=null and account !=''">
+					 and account=#{account}
+				</if>
+				<if test="createTime !=null and createTime !=''">
+					 and create_time=#{createTime}
+				</if>
+				<if test="isSuccess !=null and isSuccess !=''">
+					 and is_success=#{isSuccess}
+				</if>
+				<if test="batchNum!=null and batchNum!=''">
+					and batch_num=#{batchNum}
+				</if>
+				<if test="serialNum!=null and serialNum!=''">
+					and serial_num=#{serialNum}
+				</if>
+				<if test="createTimeFrom != null and createTimeFrom !=''">
+			    	<![CDATA[
+						 and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+					]]>
+			    </if>
+				<if test="createTimeTo != null and createTimeTo != ''">
+			    	<![CDATA[
+						 and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d') 
+					]]>
+			    </if>
+		</where>
+	</select>
+	
+	<!-- 查出转到银行卡列表的记录 -->
+	<select id="findByMemberIdTime" resultType="list" resultMap="AlabaoRollOffRecordResultMap" parameterType="Map">
+		select  <include refid="AlabaoRollOffRecord_column"/> from t_alabao_roll_off_record where member_id=#{memberId}  
+			and roll_off_account_type = '2'
+			<![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTime}, '%Y-%m-%d')
+			]]>
+			ORDER BY create_time DESC
+	</select>
+	
+	<select id="findAllByMemberId" resultMap="AlabaoRollOffRecordResultMap" parameterType="java.lang.Long">
+		select  <include refid="AlabaoRollOffRecord_column"/> from t_alabao_roll_off_record where member_id = #{memberId} ORDER BY create_time DESC
+	</select>
+	
+	<select id="findAllByAccount" resultMap="AlabaoRollOffRecordResultMap" parameterType="java.lang.String">
+		select  <include refid="AlabaoRollOffRecord_column"/> from t_alabao_roll_off_record where account=#{account} ORDER BY create_time DESC
+	</select>
+	<select id="findByBatchNum" resultMap="AlabaoRollOffRecordResultMap" parameterType="java.lang.String">
+		select  <include refid="AlabaoRollOffRecord_column"/> from  t_alabao_roll_off_record where batch_num=#{batchNum} ORDER BY create_time DESC
+	</select>
+	
+	<select id="findBySerialNum" resultMap="AlabaoRollOffRecordResultMap" parameterType="java.lang.String">
+		select  <include refid="AlabaoRollOffRecord_column"/> from  t_alabao_roll_off_record where serial_num=#{serialNum} 
+	</select>
+	
+	
+	<!-- 查询最近的交易记录 -->
+	<select id="findBillRecordByTime" resultMap="AlabaoRollOffRecordResultMap" >
+		select  <include refid="AlabaoRollOffRecord_column"/> from t_alabao_roll_off_record 
+		where account=#{account} AND 
+			DATE_FORMAT(create_time,'%Y-%m') > DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 4 MONTH),'%Y-%m')
+			ORDER BY create_time DESC
+	</select>
+	
+</mapper>

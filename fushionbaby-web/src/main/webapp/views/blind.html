@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>注册 - Fushionbaby</title>
+		<script src="ftl/publicHeadTags.js"></script><!-- 公共<head>标签 -->
+		<link rel="stylesheet"  href="css/public.css">
+		<link rel="stylesheet"  href="css/register.css">
+	</head>
+	<body>
+		<div class="content">
+			<div class="password container">
+				<div class="logo"><img src="images/logo.png" alt=""></div>
+				<div class="list">
+					<form action="">
+						<input type="hidden" id="reg_who" value="ph" />
+						<input type="hidden" id="register_verification"/>
+						<h3>
+						<span class="hav">欢迎 <a href="javascript:">XXX</a> 已有FUSHIONBABY账号？</span>
+						<a href="javascript:clickLogin();" class="land">立即登录</a>
+						</h3>
+						<div class="list-item">
+							<ul class="po" >
+								<li class="item-all">
+									<div class="clearfix">
+										<span class="list-label">电子邮箱</span>
+										<input id="register_email" type="text" class="textshort" placeholder="输入电子邮箱">
+									</div>
+									<div id="show_register_email" class="error"><em>*</em><em id="check_register_email"></em></div>
+								</li>
+								<li class="item-all">
+									<div class="clearfix">
+										<span class="list-label">设置密码</span>
+										<input id="register_setEmailPassword" type="text" class="textshort" placeholder="输入密码">
+									</div>
+									<div id="show_register_setEmailPassword" class="error"><em>*</em><em id="check_register_setEmailPassword"></em></div>
+								</li>
+								<li class="item-all">
+									<div class="clearfix">
+										<span class="list-label">确认密码</span>
+										<input id="register_confirmEmailPassword" type="text" class="textshort" placeholder="请再次输入密码">
+									</div>
+									<div id="show_register_confirmEmailPassword" class="error"><em>*</em><em id="check_register_confirmEmailPassword"></em></div>
+								</li>
+							</ul>
+						</div>
+						<input type="button" class="list-item-btn argee-btn" id="agree_register" value="立即设置"/>
+					</form>
+				</div>
+			</div>
+			<div class="protocol">
+				<p>
+				点击“立即注册”，即表示您同意并且愿意遵守FUSHIONBABY<a href="javascript:">用户协议</a>和<a href="javascript:">隐私政策</a>。
+				</p>
+			</div>
+		</div>
+		<div class="pop-up ar-wrap">
+			<div class="close"></div>
+			<p class="desc-info">恭喜您，已注册成功<span id="go" >5</span>秒后自动跳转到个人中心</p>
+			<a href="persona-order.html" class="pay-btn">确定</a>
+		</div>
+		<script type="text/javascript" src="js/base.js"></script>
+		<script type="text/javascript" src="js/persona-order.js"></script>
+		<script type="text/javascript" src="../web-js/register.js"></script>
+	</body>
+</html>

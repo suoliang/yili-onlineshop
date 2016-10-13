@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.store.dao.StoreSponsorsBankDao">
+	<resultMap id="StoreResultMap" type="StoreSponsorsBank">
+		<id column="id" property="id" />
+		<result column="store_code" property="storeCode" />
+		<result column="bank_name" property="bankName" />
+		<result column="bank_branch_name" property="bankBranchName" />
+		<result column="province" property="province" />
+		<result column="city" property="city" />
+		<result column="card_no" property="cardNo" />
+		<result column="card_holder" property="cardHolder" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="update_id" property="updateId" />
+		<result column="is_validate" property="isValidate" />
+		<result column="remark" property="remark" />
+	
+	</resultMap>
+	<sql id="StoreSponsorsBank_column">
+		id, store_code, bank_name ,bank_branch_name,province,city,card_no,card_holder,create_time,update_time,update_id,
+		is_validate,remark
+	   
+	</sql>
+	<insert id="add" parameterType="StoreSponsorsBank">
+		insert into 
+			t_store_sponsors_bank
+		(id, store_code, bank_name ,bank_branch_name,province,city,card_no,card_holder,create_time,update_time,update_id,
+		is_validate,remark)
+	    values 
+	    (#{id},#{storeCode},#{bankName},#{bankBranchName},#{province},#{city},#{cardNo},#{cardHolder},now(),now(),#{updateId},#{isValidate},
+	    #{remark})
+	</insert>
+	
+	
+	<update id="update">
+		update t_store_sponsors_bank
+			set
+		    store_code = #{storeCode}, 
+		    bank_name = #{bankName}, 
+		    
+		    bank_branch_name = #{bankBranchName}, 
+		    province = #{province}, 
+		    city = #{city}, 
+		    
+		    card_no = #{cardNo}, 
+		    card_holder = #{cardHolder}, 
+			update_time = now(),
+		    update_id = #{updateId},
+		    is_validate = #{isValidate}, 
+		    remark = #{remark}
+		    
+		<where>
+			id = #{id}
+		</where>
+	</update>
+	
+	<select id="findByStoreCode" resultMap="StoreResultMap" parameterType="java.lang.String">
+		select <include refid="StoreSponsorsBank_column"/> from t_store_sponsors_bank where store_code = #{storeCode}
+	</select>
+	
+	<select id="findById" resultMap="StoreResultMap" parameterType="java.lang.String">
+		select <include refid="StoreSponsorsBank_column"/> from t_store_sponsors_bank where id = #{id}
+	</select>
+	
+</mapper>

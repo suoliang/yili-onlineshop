@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.member.dao.MemberDao">
+
+	<resultMap id="MemberResultMap" type="member">
+		<id column="id" property="id" />
+		<result column="login_name" property="loginName" />
+		<result column="password" property="password" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="telephone" property="telephone" />
+		<result column="email" property="email" />
+		<result column="source_code" property="sourceCode" />
+		<result column="bankcodelast" property="bankcodelast" />
+		<result column="paymenttypelast" property="paymenttypelast" />
+		<result column="epoints" property="epoints" />
+		<result column="version" property="version" />
+		<result column="channel_code" property="channelCode" />
+		<result column="img_path" property="imgPath" />
+		<result column="disable" property="disable" />
+		<result column="open_id" property="openId" />
+		<result column="ip_address" property="ipAddress" />
+		<result column="wallet_money" property="walletMoney" />
+		<result column="available_money" property="availableMoney" />
+		<result column="default_address_id" property="defaultAddressId" />
+		<result column="member_type" property="memberType" />
+		
+		<result column="is_bind" property="isBind" />
+		<result column="sign_id" property="signId" />
+		
+		
+		<result column="contactor" property="contactor" />
+		<result column="mobile" property="mobile" />
+		
+	</resultMap>
+	
+	<insert id="add" parameterType="member">
+		<!-- 获取添加进数据库的id值 -->
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+		SELECT LAST_INSERT_ID() AS ID    
+		</selectKey>
+		insert  into
+		      t_member (id, login_name, password,create_time, telephone, email,bankcodelast,paymenttypelast, epoints, 
+		version, channel_code,disable,img_path,source_code,open_id,ip_address,wallet_money,available_money,is_bind,sign_id)
+		values (#{id}, #{loginName}, #{password},now(), #{telephone}, #{email},#{bankcodelast},#{paymenttypelast}, #{epoints}, 
+		#{version}, #{channelCode},'n', #{imgPath},#{sourceCode},#{openId},#{ipAddress},#{walletMoney},#{availableMoney},#{isBind},#{signId})
+	</insert>
+	
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_member where id = #{id}		
+	</delete>
+	
+	<update id="update" parameterType="member">
+		update t_member
+		set update_time = now()
+		<if test="loginName!=null and loginName!=''">
+		   ,login_name = #{loginName}
+		</if>
+		<if test="password!=null and password!=''">
+		   ,password = #{password}
+		</if>
+		<if test="telephone!=null and telephone!=''">
+		   ,telephone = #{telephone}
+		</if>
+		<if test="email!=null and email!=''">
+		   ,email = #{email}
+		</if>
+		<if test="bankcodelast!=null and bankcodelast!=''">
+		   ,bankcodelast = #{bankcodelast}
+		</if>
+		<if test="paymenttypelast!=null and paymenttypelast!=''">
+		   ,paymenttypelast = #{paymenttypelast}
+		</if>
+		<if test="epoints == 0 or (epoints != null and epoints != '')">
+		   ,epoints = #{epoints}
+		</if>
+		<if test="version!=null and version!=''">
+		   ,version = #{version}
+		</if>
+		<if test="channelCode!=null and channelCode!=''">
+		   ,channel_code = #{channelCode}
+		</if>
+		<if test="disable!=null and disable!=''">
+		   ,disable = #{disable}
+		</if>
+		<if test="imgPath!=null and imgPath!=''">
+		   ,img_path = #{imgPath}
+		</if>
+		<if test="sourceCode!=null and sourceCode!=''">
+		   ,source_code = #{sourceCode}
+		</if>
+		<if test="openId!=null and openId!=''">
+		   ,open_id = #{openId}
+		</if>
+		<if test="walletMoney !=null and walletMoney !=''">
+		   ,wallet_money = #{walletMoney}
+		</if>
+		<if test="availableMoney !=null and availableMoney !=''">
+		   ,available_money = #{availableMoney}
+		</if>
+		<if test="memberType!=null and memberType!=''">
+		   ,member_type = #{memberType} 
+		</if>
+		<if test="isBind!=null and isBind!=''">
+		   ,is_bind = #{isBind} 
+		</if>
+		<if test="signId !=null and signId !=''">
+		   ,sign_id = #{signId} 
+		</if>
+		where id = #{id}
+	</update>
+	
+	<!-- 修改会员用户状态 -->
+	<update id="updateMemberDisable" parameterType="member">
+		update 
+			t_member
+		set update_time = now(),
+			disable = #{disable}
+		where id = #{id}			
+	</update>
+	
+	<!-- 忘记密码-修改会员密码  -->
+	<update id="updatePassword">
+		update 
+			t_member
+		set update_time = now(),
+			password = #{password}
+		where 
+			login_name = #{loginName}
+	</update>
+	
+	<sql id="member_column">
+	    select 
+	       id, login_name, password, create_time,update_time, telephone, email, source_code, 
+	       bankcodelast, paymenttypelast, epoints, version, channel_code, disable,img_path,open_id,
+	       ip_address,wallet_money,available_money ,default_address_id,member_type,is_bind,sign_id
+	    from t_member
+	</sql>
+	
+	<!-- 通过用户名和密码获取对象 -->
+	<select id="loginByLoginNamePassword" resultMap="MemberResultMap" >
+		<include refid="member_column"/>  where login_name = #{loginName} and password = #{password} limit 1
+	</select>
+	
+	<!-- 通过用户名查询出会员对象 -->
+	<select id="findByLoginName" resultMap="MemberResultMap" parameterType="java.lang.String">
+		<include refid="member_column"/> where login_name = #{loginName} limit 1
+	</select>
+	
+		<!-- 通过第三方用户的openid查询出会员对象 -->
+	<select id="findByOpenId" resultMap="MemberResultMap" parameterType="java.lang.String">
+		<include refid="member_column"/> where open_id = #{openId}
+	</select>
+	<select id="findById" resultMap="MemberResultMap" parameterType="java.lang.Long">
+	   <include refid="member_column"/>  where id = #{id}	   
+	</select>
+
+	  
+	<select id="findAll" resultType="list" resultMap="MemberResultMap">
+	    <include refid="member_column"/>
+	</select>
+	<!-- 通过注册设备标志查询 -->
+	<select id="findBySignId" resultType="list" resultMap="MemberResultMap" parameterType="java.lang.String">
+	    <include refid="member_column"/> where sign_id=#{signId} 
+	</select>
+	
+	<sql id="member_where">
+	   <where>
+			<if test="loginName !=null and loginName !=''">
+	    	    login_name LIKE "%"#{loginName}"%"  
+		    </if>
+		    <if test="telephone !=null and telephone !=''">
+		    	AND telephone LIKE "%"#{telephone}"%"  
+		    </if>
+		    <if test="email !=null and email !=''">
+		    	AND email LIKE "%"#{email}"%"  
+		    </if>
+		    <if test="channelCode !=null and channelCode !=''">
+		    	AND channel_code = #{channelCode} 
+		    </if>
+		    <if test="sourceCode !=null and sourceCode !=''">
+		    	AND source_code = #{sourceCode} 
+		    </if>
+		    <if test="disable !=null and disable !=''">
+		    	AND disable = #{disable} 
+		    </if>
+		    <if test="memberType !=null and memberType !=''">
+		    	AND member_type = #{memberType} 
+		    </if>
+		    <if test="createTimeFrom != null and createTimeFrom !=''">
+	    	<![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+			]]>
+	    </if>
+		<if test="createTimeTo != null and createTimeTo != ''">
+	    	<![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+			]]>
+	    </if>
+		    
+		    
+		</where>
+	</sql>
+	
+	<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="MemberResultMap" parameterType="Map" >
+		<include refid="member_column"/>
+		<include refid="member_where"/>
+		 order by create_time desc
+		<if test="start!=null and limit!=null ">
+			limit #{start},#{limit}
+		</if>
+		 
+	</select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) from t_member
+		<include refid="member_where"/>	
+		
+	</select>
+	
+	<!-- 修改会员积分 -->
+	<update id="updateMemberEpointsById" parameterType="member">
+		update 
+			t_member
+		set update_time = now(),
+			epoints = #{epoints}
+		where id = #{id}			
+	</update>
+	
+	<!-- 修改账号余额 -->
+	<update id="updateMemberWallet">
+		update t_member set wallet_money = wallet_money + #{money}, 
+		       available_money = available_money + #{money} where id = #{memberId}			
+	</update>
+	
+	<!-- 查询注册会员数量  -->
+	<select id="count" parameterType="Map" resultType="java.util.HashMap">
+		select sum(case when source_code=1 then 1 else 0 end) AS android, 
+				sum(case when source_code=2 then 1 else 0 end) AS ios, 
+				sum(case when source_code=3 then 1 else 0 end) AS web, 
+				sum(case when source_code=6 then 1 else 0 end) AS cms, 
+				sum(case when channel_code=1 then 1 else 0 end) AS DEFAULT_CHANNEL,
+				sum(case when channel_code=2 then 1 else 0 end) AS QQ_CHANNEL,
+				sum(case when channel_code=3 then 1 else 0 end) AS WX_CHANNEL,
+				sum(case when channel_code=4 then 1 else 0 end) AS SINA_CHANNEL,
+				count(1) as cnt
+				from t_member		
+		<where>
+			<if test="createTime != null">
+			DATE_FORMAT(create_time,'%Y-%m-%d') = DATE_FORMAT(#{createTime},'%Y-%m-%d')
+			</if>
+		</where>
+		
+	</select>
+	
+	<!-- 修改默认地址 -->
+	<update id="updateDefaultAddressIdByMemberId">
+		update t_member set default_address_id=#{defaultAddressId} where id = #{id}			
+	</update>
+</mapper>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.member.dao.MemberAreaConfigDao" >
+
+  <resultMap id="MemberAreaConfigResultMap" type="memberAreaConfig" >
+    <id column="id" property="id" />
+    <result column="city" property="city" />
+    <result column="area_code" property="areaCode" />
+    <result column="parent_area_code" property="parentAreaCode" />
+    <result column="telephone_code" property="telephoneCode" />
+    <result column="area_level" property="areaLevel" />
+    <result column="area_type_name" property="areaTypeName" />
+    <result column="is_disable" property="isDisable" />
+  </resultMap>
+  
+  <select id="getNameByAreaCode" parameterType="java.lang.String" resultType="java.lang.String">
+    select 
+    	city 
+    from 
+    	t_member_area_config
+    where 
+    	area_code = #{areaCode} and is_disable='n'
+  </select>
+  
+  
+  <select id="findByAreaCode" parameterType="java.lang.String" resultMap="MemberAreaConfigResultMap">
+  
+    select 
+          id,city,area_code,parent_area_code,telephone_code,area_level,area_type_name,is_disable
+    from 
+    	t_member_area_config
+    
+    <where>
+    	area_code = #{areaCode} and is_disable='n' order by area_code asc
+    </where>
+  </select>
+  
+  
+  <select id="findByParentAreaCode" parameterType="java.lang.String" resultMap="MemberAreaConfigResultMap">
+    select 
+          id,city,area_code,parent_area_code,telephone_code,area_level,area_type_name,is_disable
+    from 
+    	t_member_area_config
+    where 
+    	parent_area_code = #{parentAreaCode}  and is_disable='n' order by area_code asc
+  </select>  
+</mapper>

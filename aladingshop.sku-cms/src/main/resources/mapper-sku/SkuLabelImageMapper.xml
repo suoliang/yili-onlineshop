@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.sku.cms.dao.SkuLabelImageDao">
+	<resultMap id="skuLabelImageResultMap" type="SkuLabelImage">
+		<id column="id" property="id" />
+		<result column="image_type_code" property="imageTypeCode" />
+		<result column="image_type_name" property="imageTypeName" />
+		<result column="label_code" property="labelCode" />
+		<result column="img_url" property="imgUrl" />
+		<result column="link_url" property="linkUrl" />
+		<result column="sort_order" property="sortOrder" />
+		<result column="create_time" property="createTime" />
+		<result column="create_time" property="updateTime" />
+	</resultMap>
+	<sql id="labelImage_column">
+		select 
+			id,image_type_code,image_type_name,label_code,img_url,link_url,sort_order,create_time,update_time
+		from 
+			t_sku_label_image 
+	</sql>
+	<!-- 自动生成id策略 -->
+	<insert id="add" 	parameterType="SkuLabelImage">
+		insert into t_sku_label_image
+			(id,image_type_code,image_type_name,label_code,img_url,link_url,sort_order,create_time,update_time)
+		values (#{id},#{imageTypeCode},#{imageTypeName},#{labelCode},#{imgUrl},#{linkUrl},#{sortOrder},now(),now());
+	</insert>
+	<delete id="deleteById" parameterType="java.lang.Long">
+		DELETE FROM t_sku_label_image WHERE id = #{id}
+	</delete>
+	<update id="update" parameterType="SkuLabelImage">
+		UPDATE 
+			t_sku_label_image 
+		<set>
+			<if test="imageTypeCode!=null and imageTypeCode!=''">
+				image_type_code = #{imageTypeCode} ,
+			</if>
+			<if test="imageTypeName!=null and imageTypeName!=''">
+				image_type_name = #{imageTypeName} ,
+			</if>
+			<if test="labelCode!=null and labelCode!=''">
+				label_code = #{labelCode} ,
+			</if>
+			<if test="imgUrl!=null and imgUrl!=''">
+				img_url = #{imgUrl} ,
+			</if>
+			<if test="linkUrl!=null and linkUrl!=''">
+				link_url = #{linkUrl} ,
+			</if>
+			<if test="sortOrder!=null and sortOrder!=''">
+				sort_order = #{sortOrder},
+			</if>	
+			
+				update_time = now()
+		</set>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+	<select id="findById" resultMap="skuLabelImageResultMap" parameterType="java.lang.Long">
+		<include refid="labelImage_column" />
+		<where>
+			id = #{id}
+		</where>
+	</select>
+	<!-- 查询全部 -->
+	<select id="findAll" resultMap="skuLabelImageResultMap" >
+		<include refid="labelImage_column" />
+	</select>
+	
+	<sql id="SkuLabelImage_where">
+		<where>
+		
+			<if test="imageTypeCode!=null and imageTypeCode!=''">
+				and image_type_code = #{imageTypeCode} 
+			</if>
+			<if test="imageTypeName!=null and imageTypeName!=''">
+				and image_type_name = #{imageTypeName} 
+			</if>
+			<if test="labelCode!=null and labelCode!=''">
+				and label_code = #{labelCode} 
+			</if>
+		
+		</where>
+	</sql>
+	<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="skuLabelImageResultMap" parameterType="Map">
+		<include refid="labelImage_column" />
+		<include refid="SkuLabelImage_where"></include>	
+		order by sort_order asc 
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">	
+		select 
+			count(id)
+		from 
+			t_sku_label_image
+		<include refid="SkuLabelImage_where"></include>	
+	</select>
+	
+	
+</mapper>

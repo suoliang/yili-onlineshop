@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.sku.dao.SkuPromotionsDao">
+	<resultMap id="skuPromotionsMap" type="SkuPromotions">
+		<id column="id" property="id" />
+		<result column="sku_code" property="skuCode" />
+		<result column="sku_promotions_status" property="skuPromotionsStatus" />
+		<result column="special_price" property="specialPrice" />
+		<result column="pm_code" property="pmCode" />
+		<result column="sort" property="sort" />
+		<result column="limit_count" property="limitCount" />
+		<result column="create_time" property="createTime" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		select 
+			id,sku_code,sku_promotions_status,special_price,pm_code,sort,limit_count,create_time
+		from 
+			t_sku_promotions_sku
+	</sql>
+	
+	<select id="queryByPmCode"  resultType="list" resultMap="skuPromotionsMap" parameterType="java.lang.String">
+		<include refid="Base_Column_List" />
+		<where>
+			  sku_promotions_status='y' and limit_count >= 1 and pm_code=#{pmCode} 
+		</where>
+		order by case when sort=0 or sort is null then 9999999 else sort end,create_time,id
+	</select>
+	
+	<select id="queryByPmCodeAndSkuCode"  resultMap="skuPromotionsMap">
+		<include refid="Base_Column_List" />
+		<where>
+			sku_promotions_status='y' and limit_count >= 1 and pm_code=#{pmCode}  and sku_code=#{skuCode} 
+		</where>
+	</select>
+	
+</mapper>

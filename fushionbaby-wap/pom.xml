@@ -1,0 +1,128 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.fushionbaby.wap</groupId>
+	<artifactId>fushionbaby-wap</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<parent>
+		<groupId>com.fushionbaby.parent</groupId>
+		<artifactId>fushionbaby-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<name>fushionbaby-wap Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+<!-- 
+	<distributionManagement>
+		<repository>
+			<id>fushionbaby-maven-releases</id>
+			<name>fushionbaby-maven-releases</name>
+			<url>http://192.168.8.37:8083/nexus/content/repositories/fushionbaby-maven-releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>fushionbaby-maven-snapshots</id>
+			<name>fushionbaby-maven-snapshots</name>
+			<url>http://192.168.8.37:8083/nexus/content/repositories/fushionbaby-maven-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+ -->
+	<dependencies>
+
+<!-- *********************fushionbaby-jar-begin*************************** -->
+		<dependency>
+			<groupId>com.fushionbaby.common</groupId>
+			<artifactId>fushionbaby-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.fushionbaby.cache</groupId>
+			<artifactId>fushionbaby-cache</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fushionbaby.sku</groupId>
+			<artifactId>fushionbaby-sku</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.fushionbaby.core</groupId>
+			<artifactId>fushionbaby-core</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.fushionbaby.member</groupId>
+			<artifactId>fushionbaby-member</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		
+		
+		<dependency>
+			<groupId>com.fushionbaby.sysmgr</groupId>
+			<artifactId>fushionbaby-sysmgr</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.fushionbaby.log</groupId>
+			<artifactId>fushionbaby-log</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.fushionbaby.sms</groupId>
+			<artifactId>fushionbaby-sms</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fushionbaby.sysactivity</groupId>
+			<artifactId>fushionbaby-sysactivity</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.fushionbaby.act.activity</groupId>
+			<artifactId>fushionbaby-activity</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fushionbaby.facade</groupId>
+			<artifactId>fushionbaby-facade</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			  <groupId>com.fushionbaby.other</groupId>
+			  <artifactId>fushionbaby-other</artifactId>
+			  <version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		
+		
+		
+		<!-- **************fushionbaby-jar-end*********************************** -->
+		
+		<dependency>
+		    <groupId>org.freemarker</groupId>
+		    <artifactId>freemarker</artifactId>
+		    <version>2.3.21</version>
+		</dependency>
+		<!-- 第三方登陆jar -->
+		<dependency>
+		  <groupId>sdk4j</groupId>
+		  <artifactId>sdk4j</artifactId>
+		  <version>1.0.0</version>
+		</dependency>
+		
+		
+	</dependencies>
+
+	<build>
+		<finalName>fushionbaby-wap</finalName>
+	</build>
+</project>

@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.fushionbaby.parent</groupId>
+		<artifactId>fushionbaby-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<groupId>com.aladingshop.wap</groupId>
+	<artifactId>aladingshop-wap</artifactId>
+	<packaging>war</packaging>
+	<name>aladingshop-wap</name>
+
+	<distributionManagement>
+		<repository>
+			<id>Yili-maven-releases</id>
+			<name>Yili-maven-releases</name>
+			<url>http://192.168.1.39:8081/nexus/content/repositories/Yili-maven-releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>Yili-maven-snapshots</id>
+			<name>Yili-maven-snapshots</name>
+			<url>http://192.168.1.39:8081/nexus/content/repositories/Yili-maven-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<dependencies>
+
+		<!-- *********************fushionbaby-jar-begin*************************** -->
+		<dependency>
+			<groupId>com.fushionbaby.common</groupId>
+			<artifactId>fushionbaby-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fushionbaby.cache</groupId>
+			<artifactId>fushionbaby-cache</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fushionbaby.facade</groupId>
+			<artifactId>fushionbaby-facade</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fushionbaby.payment</groupId>
+			<artifactId>fushionbaby-payment</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.aladingshop.alabao</groupId>
+			<artifactId>aladingshop-alabao</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fushionbaby.core</groupId>
+			<artifactId>fushionbaby-core</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.aladingshop.period-activity</groupId>
+			<artifactId>aladingshop-periodactivity</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<!-- **************fushionbaby-jar-end*********************************** -->
+
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>2.3.21</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.aspectj</groupId>
+		    <artifactId>aspectjweaver</artifactId>
+		    <version>1.6.8</version>
+		</dependency>
+
+	</dependencies>
+
+</project>

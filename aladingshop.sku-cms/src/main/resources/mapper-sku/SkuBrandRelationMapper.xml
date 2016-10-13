@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.sku.cms.dao.SkuBrandRelationDao">
+	<resultMap id="SkuBrandRelationMap" type="SkuBrandRelation">
+		<id column="id" property="id" />
+		<result column="brand_code" property="brandCode" />
+		<result column="sku_code" property="skuCode" />
+		<result column="show_order" property="showOrder" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="create_id" property="createId" />
+		<result column="update_id" property="updateId" />
+	</resultMap>
+		<!-- 自动生成id策略 -->
+	<insert id="add" 	parameterType="SkuBrandRelation">
+		insert into 
+			t_sku_brand_relation(id,brand_code,sku_code,show_order,create_time,update_time,create_id,update_id)
+		values
+			(#{id}, #{brandCode} ,#{skuCode},#{showOrder},now(),now(),#{createId},#{updateId})
+	</insert>
+	
+	<update id="update" parameterType="SkuBrandRelation">
+		update 
+			t_sku_brand_relation 
+		set
+			brand_code = #{brandCode},
+			sku_code = #{skuCode},
+			update_time = now(),
+			show_order = #{showOrder}
+		where 
+			id = #{id}
+	
+	</update>
+	
+	
+	
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_sku_brand_relation where id =#{id}
+	</delete>
+	
+	<select id="findAll" resultType="list" resultMap="SkuBrandRelationMap">
+		<![CDATA[
+			select 
+				id,brand_code,sku_code,show_order,create_time,update_time,create_id,update_id
+			from 
+				t_sku_brand_relation
+		 ]]>
+	</select>
+	
+	
+	<select id="findById" resultMap="SkuBrandRelationMap" parameterType="long">
+		<![CDATA[
+			select 
+				id,brand_code,sku_code,show_order,create_time,update_time,create_id,update_id
+			from 
+				t_sku_brand_relation
+		 	where 
+		 		id = #{id}
+        ]]>
+	</select>
+	<!-- 通过商品编号查询品牌关联表 -->
+	
+		<select id="findBySkuCode" resultMap="SkuBrandRelationMap" parameterType="String">
+		<![CDATA[
+			select 
+				id,brand_code,sku_code,show_order,create_time,update_time,create_id,update_id
+			from 
+				t_sku_brand_relation
+		 	where 
+		 		sku_code = #{skuCode}
+        ]]>
+	</select>
+	
+	<!-- 通过品牌号查询品牌关联 -->
+	<select id="findByBrandCode" resultType="list" resultMap="SkuBrandRelationMap" parameterType="String">
+		<![CDATA[
+			select 
+				id,brand_code,sku_code,show_order,create_time,update_time,create_id,update_id
+			from 
+				t_sku_brand_relation
+		 	where 
+		 		brand_code = #{brandCode}
+        ]]>
+	</select>
+	<!-- 总记录 -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(id) from t_sku_brand_relation 
+		<where>
+			<if test="brandCode !=null and brandCode !=''">
+				brand_code = #{brandCode}
+			</if>
+			<if test="skuCode !=null and skuCode !=''">
+				sku_code = #{skuCode}
+			</if>
+		</where>
+		
+		
+	</select>
+	<!-- 分页查询 -->
+	<select id="getPageList" resultType="list"  resultMap="SkuBrandRelationMap" parameterType="Map" >
+		select 
+			id,brand_code,sku_code,show_order,create_time,update_time,create_id,update_id
+		 from 
+			t_sku_brand_relation 
+		<where>
+			<if test="brandCode !=null and brandCode !=''">
+				brand_code = #{brandCode}
+			</if>
+			<if test="skuCode !=null and skuCode !=''">
+				sku_code = #{skuCode}
+			</if>
+		</where>
+		<![CDATA[
+			LIMIT #{start},#{limit}
+        ]]>
+	</select>
+	
+	<!-- 条件查询 -->
+	<select id="queryByCondition" resultType="list"  resultMap="SkuBrandRelationMap" parameterType="skuBrandRelationQueryCondition" >
+		select 
+			a.id,a.brand_code,a.sku_code,a.show_order
+		from 
+			t_sku_brand_relation as a 
+		inner join 
+			t_sku b
+		on 
+			a.sku_code = b.code
+		left join
+			t_sku_hot c
+		on 
+			b.code = c.sku_code
+		inner join
+			t_sku_inventory as d
+		on 
+			b.code = d.sku_code
+		<where>
+			d.available_qty > 0
+			<if test="brandCode !=null and brandCode !=''">
+			 	and 	a.brand_code = #{brandCode}
+			</if>
+			<if test="skuCode !=null and skuCode !=''">
+				and 	a.sku_code = #{skuCode}
+			</if>
+			<if test="status !=null and status !=''">
+				and 	b.status = #{status}
+			</if>
+		</where>
+
+		<if test="sortParam == 1"> 
+			order by a.show_order asc
+		</if>
+		<if test="sortParam == 2"> 
+			order by b.onshelvestime desc , a.show_order asc
+		</if>
+		<if test="sortParam == 3"> 
+			order by c.count desc, a.show_order asc
+		</if>
+		<if test="sortParam == 4 and sortType == 5"> 
+			order by b.current_price asc, a.show_order asc
+		</if>
+		<if test="sortParam == 4 and sortType == 6"> 
+			order by b.current_price desc, a.show_order asc
+		</if>
+		<if test="start >= 0 and limit !=null and limit !=''">
+			 LIMIT #{start},#{limit}
+		</if>
+	</select>
+	<!-- 总记录 -->
+	<select id="queryTotalByCondition" parameterType="Map" resultType="java.lang.Integer">
+		select 
+			count(a.id)
+		from
+		 	t_sku_brand_relation  as a
+		inner join 
+			t_sku as b
+		on 
+			a.sku_code = b.code
+		inner join 
+			t_sku_inventory as c
+		on 
+			b.code = c.sku_code 
+		<where>
+			c.available_qty > 0
+			<if test="brandCode !=null and brandCode !=''">
+				and a.brand_code = #{brandCode}
+			</if>
+			<if test="skuCode !=null and skuCode !=''">
+				and a.sku_code = #{skuCode}
+			</if>
+			<if test="status !=null and status !=''">
+				and b.status = #{status}
+			</if>
+		</where>
+	</select>
+	
+	<!--条件查询,根据多个sku_id,in查询、得到所有sku_id对应的,品牌id-->
+	<select id="findBrandCodesBySkuCodes" parameterType="Map" resultType="string">
+		<![CDATA[
+			select brand_code from t_sku_brand_relation where sku_code in('${skuCodes}')
+		]]>
+	</select>
+</mapper>

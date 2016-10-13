@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fushionbaby.core.dao.OrderExpressDao" >
+  <resultMap id="BaseResultMap" type="OrderExpress" >
+    <id column="id" property="id" />
+    <result column="name" property="name" />
+    <result column="code" property="code" />
+    <result column="remark" property="remark" />
+    <result column="create_time" property="createTime" />
+    <result column="update_time" property="updateTime" />
+  </resultMap>
+  
+  <insert id="add" parameterType="OrderExpress">
+		insert into t_order_express (id,
+		name, code, remark, create_time, update_time)
+		values (#{id},
+		#{name}, #{code}, #{remark}, now() ,now())
+  </insert>
+  
+   <delete id="deleteById" parameterType="Long">
+    delete from t_order_express
+    where id = #{id}
+   </delete>
+	
+  <sql id="Base_Column_List" >
+  	select 
+	    id, name, code, remark, create_time, update_time
+	from t_order_express
+  </sql>
+  
+  <update id="update" parameterType="OrderExpress">
+  	update t_order_express
+	<set>
+		<if test="name != null and name != ''">
+       		name = #{name},
+  		</if>
+		<if test="code != null and code != ''">
+       		code = #{code},
+  		</if>
+		<if test="remark != null and remark != ''">
+       		remark = #{remark},
+  		</if>
+  		update_time = now()
+	</set>
+	where id = #{id} 
+  </update>
+  
+  <select id="findByCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	<include refid="Base_Column_List" />
+  	where code = #{code}
+  </select>
+  
+  <sql id="orderExpress_where">
+  	<where>
+	    <if test="name!=null and name!=''">
+			<![CDATA[	and name like "%"#{name}"%"]]>
+	    </if>
+		<if test="code != null and code != ''">
+	    	<![CDATA[
+				and code = #{code}
+			]]>
+	    </if>
+  	</where>
+  </sql>
+  
+	<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="BaseResultMap" parameterType="Map" >
+		<include refid="Base_Column_List"/>
+		<include refid="orderExpress_where"/>
+		 order by create_time DESC
+		<if test="start!=null and limit!=null">
+			limit #{start},#{limit}
+		</if>
+	</select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) from t_order_express
+		<include refid="orderExpress_where"/>	
+	</select>
+</mapper>

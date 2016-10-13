@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8" />
+        <title>阿拉丁玛特 - 确认支付</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="renderer" content="webkit">
+        <meta name="description" content="阿拉丁玛特商城">
+        <meta name="keywords" content="阿拉丁玛特商城">
+        <link rel="shortcut icon" href="images/favicon.ico" />
+        <!-- styles -->
+        <link rel="stylesheet" href="css/style.min.css">
+        <!--[if IE 9 ]><html class="ie9"><![endif]-->
+        <!--[if IE 8 ]><html class="ie8"><![endif]-->
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+    </head>
+    <body class="cart-pay">
+
+        <!-- 顶部导航 开始 -->
+        <script src="public/topbar.js"></script>
+        <!-- 顶部导航 结束 -->
+
+        <div class="cart-top container">
+            <a href="index.html" class="logo"></a>
+            <ul>
+                <li>我的购物车<span></span></li>
+                <li>&emsp;&emsp;填写订单信息<span class="cart-pay-span"></span></li>
+                <li class="active">购物成功</li>
+            </ul>
+        </div>
+
+        <div class="cart-pay-top container oh">
+            <h3>确认收货信息<span>优惠券抵扣：-5元&emsp;&emsp;积分抵扣：-5元&emsp;&emsp;运费：5元</span></h3>
+            <div class="pay-top-wrap">
+                <p>
+                    <span>订单编号：10515484151</span>
+                    <span>下单时间：10515484151</span>
+                </p>
+                <h4>订单已提交成功！</h4>
+                <p class="price red">实付金额：&yen; 80.00</p>
+            </div>
+        </div>
+
+        <div class="pay-way container">
+            <input id="payWay" type="hidden">
+            <h3>支付方式</h3>
+            <a class="alipay" href="javascript:void(0)" title="alipay">
+                <div class="check-box fl checked">
+                    <i></i>
+                    <input name="chose-address" class="" type="radio" checked="checked">
+                </div>
+                <span></span>
+                <p>支付宝</p>
+                <i>推荐有支付宝账户者使用</i>
+            </a>
+            <a class="weichat" href="javascript:void(0)" title="weichat">
+                <div class="check-box fl">
+                    <i></i>
+                    <input name="chose-address" class="" type="radio">
+                </div>
+                <span></span>
+                <p>微信支付</p>
+                <i>推荐使用</i>
+            </a>
+            <a class="bank" href="javascript:void(0)" title="bank">
+                <div class="check-box fl">
+                    <i></i>
+                    <input name="chose-address" class="" type="radio">
+                </div>
+                <span></span>
+                <p>快捷支付</p>
+                <i>方便快捷</i>
+            </a>
+        </div>
+
+        <div class="pay-btn container">
+            <p class="price">实付金额：<span class="red">&yen; 80.00</span></p>
+            <button>确认支付</button>
+        </div>
+
+        <!-- 底部 开始 -->
+        <script src="public/footer.js"></script>
+        <!-- 底部 结束 -->
+
+        <!-- js -->
+        <script src="js/public.js"></script>
+        <script>
+            $(function(){
+                /*选择支付方式*/
+                var payWay_check = $('.pay-way').find('input[type=radio]');
+                payWay_check.click(function(event) {
+                    payWay_check.removeAttr('checked').parents('.check-box').removeClass('checked');
+                    this.checked = true;
+                    $(this).attr('checked', 'checked').parents('.check-box').addClass('checked');
+                    $('#payWay').val($(this).parents('a').attr('title'));
+                });
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.member.dao.MemberSkuCommentDao">
+	<resultMap id="MemberSkuCommentResultMap" type="MemberSkuComment">
+		<id column="id" property="id" />
+		<result column="comment_content" property="commentContent" />
+		<result column="create_time" property="createTime" />
+		<result column="ip_address" property="ipAddress" />
+		<result column="status" property="status" />
+		<result column="member_name" property="memberName" />
+		<result column="version" property="version" />
+		<result column="member_id" property="memberId" />
+		<result column="order_code" property="orderCode" />
+		<result column="order_line_id" property="orderLineId" />
+		<result column="disable" property="disable" />
+		<result column="score" property="score" />
+		<result column="sku_code" property="skuCode" />
+		<result column="product_code" property="productCode" />
+		
+		<result column="sku_color" property="skuColor" />
+		<result column="sku_size" property="skuSize" />
+		<result column="update_time" property="updateTime" />
+		<result column="update_id" property="updateId" />
+		
+		<result column="source_code" property="sourceCode" />
+		<result column="praise_count" property="praiseCount" />
+		
+		
+		<result column="is_anonymous" property="isAnonymous" />
+		<result column="comment_level" property="commentLevel" />
+		
+		
+		
+		
+	</resultMap>
+	<insert id="add" parameterType="MemberSkuComment">
+		<!-- 获取添加进数据库的id值 -->
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+		SELECT LAST_INSERT_ID() AS ID    
+		</selectKey>
+		insert into 
+		    t_member_sku_comment 
+				(id, comment_content,product_code ,create_time, ip_address, status,	member_name, version, member_id,
+				order_code, order_line_id, disable, score, sku_code,sku_color,sku_size
+				,update_time,update_id,source_code,praise_count,is_anonymous,comment_level)
+		values (#{id}, #{commentContent},#{productCode}, now(), #{ipAddress},#{status}, #{memberName}, 
+				now(), #{memberId},	 #{orderCode}, 	#{orderLineId}, 
+				#{disable}, #{score}, #{skuCode},#{skuColor},#{skuSize}
+				,now(),#{updateId},#{sourceCode},#{praiseCount},#{isAnonymous},#{commentLevel})
+	</insert>
+	
+	<delete id="deleteById" parameterType="java.lang.Long" >
+	    delete from 
+	    
+	           t_member_sku_comment
+	    where 
+	           id = #{id}
+  	</delete>
+	<update id="update" parameterType="MemberSkuComment">
+		update 
+		       t_member_sku_comment
+		set
+		comment_content = #{commentContent},
+		create_time = #{createTime},
+		ip_address = #{ipAddress},
+		status = #{status},
+		member_name = #{memberName},
+		version = #{version},
+		member_id = #{memberId},
+		order_code = #{orderCode},
+		order_line_id = #{orderLineId},
+		disable = #{disable},
+		score = #{score},
+		sku_code = #{skuCode},
+		sku_color = #{skuColor},
+		sku_size = #{skuSize},
+		product_code = #{productCode},
+		source_code=#{sourceCode},
+		praise_count=#{praiseCount},
+		is_anonymous=#{isAnonymous},
+		comment_level=#{commentLevel}
+	where id = #{id}
+	</update>
+	
+	<update id="updateDisable" parameterType="MemberSkuComment">
+		update t_member_sku_comment
+		set
+		version = now(),
+		disable = #{disable}
+		where id = #{id}
+	</update>
+	
+	<update id="updateStatus" parameterType="MemberSkuComment">
+		update t_member_sku_comment
+		set
+		version = now(),
+		status = #{status}
+		where id = #{id}
+	</update>
+	
+	<update id="updatePraiseCount" parameterType="Map">
+		update t_member_sku_comment
+		 set
+		    version = now(),
+           praise_count=#{praiseCount}
+		where id = #{id}
+	</update>
+	
+	
+	<select id="findById" resultMap="MemberSkuCommentResultMap">
+		  <include refid="baseSql"/>
+		    <where>id = #{id}</where> 
+	</select>
+	<select id="findAll" resultType="list" resultMap="MemberSkuCommentResultMap">
+  		<include refid="baseSql"/>
+	</select>
+	
+	<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="MemberSkuCommentResultMap" parameterType="Map" >
+		<include refid="baseSql"/>
+		<where>
+			<if test="memberName !=null and memberName !=''">
+	    	   member_name LIKE "%"#{memberName}"%"  
+	        </if>
+	        <if test="skuCode !=null and skuCode !=''">
+	    	   AND  sku_code = #{skuCode} 
+	        </if>
+	        <if test="disable!=null and disable !=''">
+	        	AND disable = #{disable}
+	        </if>
+	        <if test="status !=null and status!=''">
+	        	AND status = #{status}
+	        </if>
+		</where>
+		<if test="limit !=null and limit !=''">
+			order by create_time desc
+			LIMIT #{start},#{limit}
+		</if>
+	</select>
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select 
+			count(id)
+		from 
+			t_member_sku_comment
+		<where>
+			<if test="memberName !=null and memberName !=''">
+	    	    member_name LIKE "%"#{memberName}"%"  
+	        </if>
+	        <if test="skuCode !=null and skuCode !=''">
+	    	   AND  sku_code = #{skuCode}
+	        </if>
+	        <if test="status !=null and status!=''">
+	        	AND status = #{status}
+	        </if>
+	        <if test="disable!=null and disable !=''">
+	        	AND disable = #{disable}
+	        </if>
+		</where>
+	</select>
+	
+	<select id="queryByCondition" resultType="java.util.List"  resultMap="MemberSkuCommentResultMap" parameterType="MemberCommentQueryCondition">
+		    	<include refid="baseSql"/>
+		<where>
+			<if test="memberName !=null and memberName !=''">
+	    	   member_name LIKE "%"#{memberName}"%"  
+	        </if>
+	        <if test="skuCode !=null and skuCode !='' and (productCode==null or productCode=='')">
+	    	    AND  sku_code = #{skuCode}  
+	        </if>
+	        <if test="productCode!=null and productCode!=''">
+	        	AND product_code = #{productCode}
+	        </if>
+	        <if test="disable!=null and disable !=''">
+	        	AND disable = #{disable}
+	        </if>
+	        <if test="status !=null and status!=''">
+	        	AND status = #{status}
+	        </if>
+	        <if test="level !=null and level!=''">
+	        	AND comment_level = #{level}
+	        </if>
+	        <if test="memberId !=null and memberId !=''">
+	        	AND member_id = #{memberId }
+	        </if>
+		</where>
+		order by create_time desc
+		<if test="limit !=null and limit !=''">
+			LIMIT #{start},#{limit}
+		</if>
+	</select>
+	
+	<update id="addPraiseCount">
+		update t_member_sku_comment
+		 set
+		    version = now(), 
+            praise_count=praise_count+1 
+		 where id = #{id}
+	</update>
+	
+	<update id="subPraiseCount">
+		update t_member_sku_comment
+		 set
+		    version = now(), 
+            praise_count=praise_count-1 
+		 where id = #{id}
+	</update>
+	
+	<sql id="baseSql">
+		select 
+		    id, comment_content,product_code ,create_time, ip_address, status, member_name, version, member_id,  order_code,  
+		    order_line_id, disable, score, sku_code,sku_color,sku_size,update_time,update_id,source_code,praise_count,is_anonymous,comment_level
+	    from 
+	    	t_member_sku_comment
+	</sql>	
+	
+</mapper>

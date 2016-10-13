@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.auth.dao.AuthRolePrivilegeDao" >
+  <resultMap id="AuthRolePrivilegeResultMap" type="AuthRolePrivilege" >
+    <id column="id" property="id"  />
+    <result column="role_id" property="roleId"  />
+    <result column="privilege_id" property="privilegeId"/>
+  </resultMap>
+   <insert id="add" parameterType="AuthRolePrivilege"> 
+    insert into t_auth_role_privilege (id,role_id,privilege_id)
+    values (#{id},#{roleId},#{privilegeId})
+  </insert>
+  <delete id="deleteById" parameterType="java.lang.Long">
+    delete from t_auth_role_privilege where id = #{id}
+  </delete>
+    <delete id="deleteByRoleId" parameterType="java.lang.Long">
+    delete from t_auth_role_privilege where role_id= #{roleId}
+  </delete>
+  <update id="update"   parameterType="AuthRolePrivilege">
+    update t_auth_role_privilege    
+   set
+      <if test="roleId!=null and roleId!=''">
+          role_id = #{roleId},
+      </if>
+      <if test="privilegeId!=null and privilegeId!=''">
+          privilege_id = #{privilegeId}
+      </if>
+      where id = #{id}
+  </update>
+  <select id="findAll" resultMap="AuthRolePrivilegeResultMap" resultType="list">
+  <![CDATA[
+			select id, role_id,privilege_id from t_auth_role_privilege
+		 ]]>
+  </select> 
+   <select id="findById" resultMap="AuthRolePrivilegeResultMap" resultType="int" >
+  <![CDATA[
+			select id, role_id, privilege_id from t_auth_role_privilege where id=#{id}
+		 ]]>
+  </select>
+   <select id="findByRoleId" resultMap="AuthRolePrivilegeResultMap" resultType="list" >
+  <![CDATA[
+			select id,  privilege_id from t_auth_role_privilege where role_id=#{roleId}
+		 ]]>
+  </select>
+  
+</mapper>

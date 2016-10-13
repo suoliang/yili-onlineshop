@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.sysmgr.dao.SysmgrProductCompareDao">
+	<resultMap id="sysmgrProductCompareResultMap" type="sysmgrProductCompare">
+		<id column="id" property="id" />
+		<result column="sku_id" property="skuId" />
+		<result column="name" property="name" />
+		<result column="click_num" property="clickNum" />
+	</resultMap>
+	
+	<sql id="sysmgrProductCompare_column">
+	    select id,sku_id,name,click_num
+	   from t_sysmgr_product_compare
+	</sql>
+	
+	<sql id="sysmgrProductCompare_where">
+	  <where>
+			<if test="id!=null and id!=''">
+			   and id = #{id}
+			</if>
+			<if test="skuId!=null and skuId!=''">
+			   and sku_id = #{skuId}
+			</if>
+			<if test="name!=null and name!=''">
+			   and name = #{name}
+			</if>
+			<if test="clickNum!=null and clickNum!=''">
+			   and click_num = #{clickNum}
+			</if>
+	  </where>
+	</sql>
+	
+	<insert id="add" parameterType="sysmgrProductCompare">
+	    <selectKey keyProperty="id" resultType="long" order="AFTER">    
+           SELECT LAST_INSERT_ID() AS id      
+        </selectKey>
+		insert into t_sysmgr_product_compare 
+		(id,sku_id,name,click_num)
+		values 
+		(#{id},#{skuId},#{name},#{clickNum})
+	</insert>
+	
+	<update id="update" parameterType="sysmgrProductCompare">
+		update t_sysmgr_product_compare
+	    <trim prefix="set" prefixOverrides=",">   
+			<if test="id!=null and id!=''">
+			   , id = #{id}
+			</if>
+			<if test="name!=null and name!=''">
+			   , name = #{name}
+			</if>
+			<if test="clickNum!=null and clickNum!=''">
+			   , click_num = #{clickNum}
+			</if>
+		</trim>   
+		where sku_id = #{skuId}
+	</update>
+	
+	<delete id="deleteSysmgrProductCompareById" parameterType="long">
+		delete from t_sysmgr_product_compare where id = #{id}		
+	</delete>
+
+	<select id="getSysmgrProductCompareById" resultMap="sysmgrProductCompareResultMap" parameterType="long" >
+	   <include refid="sysmgrProductCompare_column"/>  where id = #{id}	   
+	</select>
+	
+	<select id="getSysmgrProductCompareBySkuId" resultMap="sysmgrProductCompareResultMap" parameterType="long" >
+	   <include refid="sysmgrProductCompare_column"/>  where sku_id = #{skuId}	   
+	</select>
+	
+	<select id="findAll" resultType="list" resultMap="sysmgrProductCompareResultMap">
+	   <include refid="sysmgrProductCompare_column"/>
+	</select>
+	
+	
+</mapper>

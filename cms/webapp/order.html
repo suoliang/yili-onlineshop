@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8" />
+        <title>订单列表 - CMS</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="renderer" content="webkit">
+        <meta name="description" content="阿拉丁后台管理系统">
+        <meta name="keywords" content="阿拉丁后台管理系统">
+        <link rel="shortcut icon" href="images/favicon.ico" />
+        <!-- styles -->
+        <link rel="stylesheet" href="css/bootstrap.min.css" />
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/font-awesome.min.css" /><!-- 字体图标css -->
+        <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css"><!-- 时间选择器css -->
+        <link rel="stylesheet" href="css/style.min.css"><!-- 自定义css -->
+        <!--[if lt IE 9]>
+        <script src="js/html5.js"></script>
+        <![endif]-->
+    </head>
+    <body id="" class="Cart">
+
+        <div class="container-fluid">
+            <div class="row">
+
+                <div class="col-md-12 content">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-shopping-cart"></i> 订单列表</h3>
+                        </div>
+                        <div class="panel-body">
+                            <form class="form-inline">
+                                <div class="form-group col-md-4 mB15">
+                                    <label for="a">订单编码：</label>
+                                    <input type="text" class="form-control" id="">
+                                </div>
+                                <div class="form-group col-md-4 mB15">
+                                    <label for="b">用&ensp;户&ensp;名：</label>
+                                    <input type="text" class="form-control" id="">
+                                </div>
+                                <div class="form-group col-md-4 mB15">
+                                    <label for="e">支付方式：</label>
+                                    <select name="" class="form-control lg-select">
+                                        <option value="">on</option>
+                                        <option value="">off</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4 mB15">
+                                    <label for="e">订单状态：</label>
+                                    <select name="" class="form-control lg-select">
+                                        <option value="">on</option>
+                                        <option value="">off</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4 mB15">
+                                    <label for="e">物流状态：</label>
+                                    <select name="" class="form-control lg-select">
+                                        <option value="">on</option>
+                                        <option value="">off</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4 mB15">
+                                    <label for="e">付款状态：</label>
+                                    <select name="" class="form-control lg-select">
+                                        <option value="">on</option>
+                                        <option value="">off</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4 mB15">
+                                    <label for="e">金额区间：</label>
+                                    <select name="" class="form-control lg-select">
+                                        <option value="">000 ~ 100</option>
+                                        <option value="">100 ~ 200 </option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4 mB15">
+                                    <label for="a">开始时间：</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control form_datetime" readonly>
+                                        <div class="input-group-addon form_datetime_addon"><i class="fa fa-times"></i></div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4 mB15">
+                                    <label for="a">结束时间：</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control form_datetime" readonly>
+                                        <div class="input-group-addon form_datetime_addon"><i class="fa fa-times"></i></div>
+                                    </div>
+                                    <button type="submit" class="btn btn-success speBtn">查 询</button>
+                                </div>
+                                <div class="clearfix"></div>
+                            </form>
+                            <!-- table -->
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover" id="roleTable">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <label for="checkAllBtn" class="check-label">
+                                                    <input type="checkbox" name="checkAllBtn" id="checkAllBtn">
+                                                </label>
+                                            </th>
+                                            <th>#</th>
+                                            <th>会员名</th>
+                                            <th>订单编码</th>
+                                            <th>下单时间</th>
+                                            <th>下单金额</th>
+                                            <th>支付方式</th>
+                                            <th>订单状态</th>
+                                            <th>付款状态</th>
+                                            <th>物流状态</th>
+                                            <th>收货人</th>
+                                            <th>联系电话</th>
+                                            <th>会员留言</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>
+                                                <label class="check-label">
+                                                    <input type="checkbox" name="checkAll">
+                                                </label>
+                                            </th>
+                                            <td scope="row">1</td>
+                                            <td>823425525</td>
+                                            <td>8888888</td>
+                                            <td>2016-06-16 11:00:00</td>
+                                            <td>1000.00</td>
+                                            <td>WEB支付宝</td>
+                                            <td>等待支付</td>
+                                            <td>未付款</td>
+                                            <td>未发货</td>
+                                            <td>张三</td>
+                                            <td>12345678904</td>
+                                            <td>发货，赶紧的！</td>
+                                            <td>
+                                                <button type="button" class="btn btn-default btn-xs edit-role">修改</button>
+                                                <button type="button" class="btn btn-danger btn-xs delete-role">删除</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                <label class="check-label">
+                                                    <input type="checkbox" name="checkAll">
+                                                </label>
+                                            </th>
+                                            <td scope="row">2</td>
+                                            <td>823425525</td>
+                                            <td>8888888</td>
+                                            <td>2016-06-16 11:00:00</td>
+                                            <td>1000.00</td>
+                                            <td>WEB支付宝</td>
+                                            <td>等待支付</td>
+                                            <td>未付款</td>
+                                            <td>未发货</td>
+                                            <td>张三</td>
+                                            <td>12345678904</td>
+                                            <td>发货，赶紧的！</td>
+                                            <td>
+                                                <button type="button" class="btn btn-default btn-xs edit-role">修改</button>
+                                                <button type="button" class="btn btn-danger btn-xs delete-role">删除</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- 分页 -->
+                            <form class="form-horizontal page-nav form-inline">
+                                <div class="form-group mL0">
+                                    <label class="control-label pT0">共 15 条，每页显示条数：</label>
+                                    <select name="" class="form-control">
+                                        <option value="">10</option>
+                                        <option value="">25</option>
+                                        <option value="">50</option>
+                                        <option value="">100</option>
+                                    </select>
+                                </div>
+                                <div class="input-group pull-right">
+                                    <a href="#" class="input-group-addon" title="首页"><i class="fa fa-angle-double-left"></i></a>
+                                    <a href="#" class="input-group-addon" title="上一页"><i class="fa fa-angle-left"></i></a>
+                                    <input type="text" class="form-control pageInput" value="1">
+                                    <a href="#" class="input-group-addon" title="下一页"><i class="fa fa-angle-right"></i></a>
+                                    <a href="#" class="input-group-addon" title="末页"><i class="fa fa-angle-double-right"></i></a>
+                                </div>
+                            </form>
+                            <!-- 分页 end -->
+                        </div>
+                        <!-- /.panel-body -->
+
+                    </div>
+                </div>
+                <!-- /.content -->
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+
+        <!-- 删除角色提示框 -->
+        <div class="modal fade" id="modalDeleteRole">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title"><i class="fa fa-info-circle"></i> 确认操作</h4>
+                    </div>
+                    <div class="modal-body text-danger">
+                        是否确认删除此角色？
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-danger">确认删除</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.modal -->
+
+        <!-- javascript -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery.validate.min.js"></script><!-- 表单验证 -->
+        <script src="js/bootstrap-datetimepicker.min.js"></script><!-- 时间选择器js -->
+        <script src="js/bootstrap-datetimepicker.zh-CN.js"></script><!-- 时间选择器中文js -->
+        <script src="js/public.js"></script>
+
+        <script>
+            $(function(){
+
+                /*点击删除角色按钮，显示确认框*/
+                $('.delete-role').click(function(){
+                    $('#modalDeleteRole').modal('show');
+                })
+
+            })
+        </script>
+    </body>
+</html>

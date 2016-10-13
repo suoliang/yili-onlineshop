@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fushionbaby.order.dao.OrderBaseDao" >
+  <resultMap id="BaseResultMap" type="OrderBase" >
+    <id column="id" property="id" />
+    <result column="order_code" property="orderCode" />
+    <result column="member_id" property="memberId" />
+    <result column="member_name" property="memberName" />
+    <result column="order_status" property="orderStatus" />
+    <result column="is_refused" property="isRefused" />
+    <result column="last_receive_time" property="lastReceiveTime" />
+    <result column="cancel_time" property="cancelTime" />
+    <result column="sys_cancel_time" property="sysCancelTime" />
+    <result column="sys_cancel_reason" property="sysCancelReason" />
+    <result column="is_delete" property="isDelete" />
+    <result column="source_code" property="sourceCode" />
+    <result column="total_point_used" property="totalPointUsed" />
+    <result column="order_point_gained" property="orderPointGained" />
+    <result column="is_handle_point" property="isHandlePoint" />
+    <result column="memo" property="memo" />
+    <result column="audit_fail_reason" property="auditFailReason" />
+    <result column="create_time" property="createTime" />
+    <result column="update_time" property="updateTime" />
+    <result column="update_id" property="updateId" />
+    <result column="is_group_buy" property="isGroupBuy" />
+    <result column="order_type" property="orderType" />
+    <!-- 额外显示字段 -->
+    <result column="receiver" property="receiver" />
+    <result column="receiver_mobile" property="receiverMobile" />
+    <result column="finance_status" property="financeStatus" />
+    <result column="payment_type" property="paymentType" />
+    <result column="payment_total_actual" property="paymentTotalActual" />
+    <result column="is_invoice" property="isInvoice" />
+    <result column="trans_status" property="transStatus" />
+    
+    
+    
+    <!-- 处理后台订单 分配-->
+    <result column="distribution" property="distribution" />
+    <result column="distribution_time" property="distributionTime" />
+    <result column="withdraw_time" property="withdrawTime" />
+    <!-- 门店编号 -->
+    <result column="store_code" property="storeCode" />
+    <!--是否自提的标志  -->
+    <result column="is_pickUp" property="isPickUp" />
+    
+    
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+  	select 
+	    id, order_code, member_id, member_name, order_status, is_refused, last_receive_time, 
+	    cancel_time, sys_cancel_time, sys_cancel_reason, is_delete, source_code, total_point_used,order_point_gained, 
+	    is_handle_point, memo, audit_fail_reason, create_time, update_time, update_id,is_group_buy,order_type,
+	    distribution,distribution_time,withdraw_time,store_code,is_pickUp
+	from t_order_base
+  </sql>
+  
+  <update id="update" parameterType="OrderBase">
+  	update t_order_base
+	<set>
+		<if test="orderStatus != null and orderStatus != ''">
+       		order_status = #{orderStatus},
+  		</if>
+		<if test="isRefused != null and isRefused != ''">
+       		is_refused = #{isRefused},
+  		</if>
+		<if test="lastReceiveTime != null and lastReceiveTime != ''">
+       		last_receive_time = #{lastReceiveTime},
+  		</if>
+		<if test="auditFailReason != null and auditFailReason != ''">
+       		audit_fail_reason = #{auditFailReason},
+  		</if>
+		<if test="updateId != null and updateId != ''">
+       		update_id = #{updateId},
+  		</if>
+  		<if test="memo != null and memo != ''">
+       		memo = #{memo},
+  		</if>
+		<if test="auditFailReason != null and auditFailReason != ''">
+       		audit_fail_reason = #{auditFailReason},
+  		</if>
+		<if test="sysCancelTime != null and sysCancelTime != ''">
+       		sys_cancel_time = #{sysCancelTime},
+  		</if>
+		<if test="sysCancelReason != null and sysCancelReason != ''">
+       		sys_cancel_reason = #{sysCancelReason},
+  		</if>
+		<if test="isHandlePoint != null and isHandlePoint != ''">
+       		is_handle_point = #{isHandlePoint},
+  		</if>
+  		<if test="orderType != null and orderType != ''">
+       		order_type = #{orderType},
+  		</if>
+  		<if test="isPickUp != null and isPickUp != ''">
+       		is_pickUp = #{isPickUp},
+  		</if>
+  		update_time = now()
+	</set>
+	where order_code = #{orderCode} 
+    	and member_id= #{memberId}
+  </update>
+  <update id="updateOrderDistributionWithdraw" parameterType="OrderBase">
+  	update t_order_base
+	<set>
+  		<if test="withdrawTime != null and withdrawTime != ''">
+       		withdraw_time = #{withdrawTime},
+  		</if>
+  		<if test="distribution != null and distribution != ''">
+       		distribution = #{distribution},
+  		</if>
+  		<if test="distributionTime != null and distributionTime != ''">
+       		distribution_time = #{distributionTime},
+  		</if>
+  		update_time = now()
+	</set>
+	where order_code = #{orderCode} 
+    	and member_id= #{memberId}
+  </update>
+  
+  <select id="findByMemberIdAndOrderCode" resultMap="BaseResultMap">
+  	<include refid="Base_Column_List" />
+  	where member_id = #{memberId} 
+    		and order_code=#{orderCode}
+  </select>
+  
+  <select id="findListByOrderStatus" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	<include refid="Base_Column_List" />
+  	where order_status = #{orderStatus}
+  </select>
+  
+  <select id="findListByStatusAndIsHandlePoint" resultMap="BaseResultMap">
+  	<include refid="Base_Column_List" />
+  	where order_status = #{orderStatus}
+       	and is_handle_point = #{isHandlePoint}
+  </select>
+  
+  <select id="findByOrderCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	<include refid="Base_Column_List" />
+  	where order_code = #{orderCode}
+  </select>
+  
+  <sql id="orderBase_where">
+  	<where>
+  		<if test="orderCode!=null and orderCode!=''">
+	    	<![CDATA[
+				and order_code = #{orderCode}
+			]]>
+	    </if>
+	    <if test="storeCode!=null or storeCode!=''">
+	    	<![CDATA[
+				and store_code = #{storeCode}
+			]]>
+	    </if>
+	    <if test="memberName!=null and memberName!=''">
+			<![CDATA[	and member_name like "%"#{memberName}"%"]]>
+	    </if>
+		<if test="orderStatus != null and orderStatus != ''">
+	    	<![CDATA[
+				and order_status = #{orderStatus}
+			]]>
+	    </if>
+	    <if test="orderType != null and orderType != ''">
+	    	<![CDATA[
+				and order_type = #{orderType}
+			]]>
+	    </if>
+		<if test="createTimeFrom != null and createTimeFrom !=''">
+	    	<![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d %H:%i:%s') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d %H:%i:%s')
+			]]>
+	    </if>
+		<if test="createTimeTo != null and createTimeTo != ''">
+	    	<![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d %H:%i:%s') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d %H:%i:%s')
+			]]>
+	    </if>
+  	</where>
+  </sql>
+  
+	<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="BaseResultMap" parameterType="Map" >
+		<include refid="Base_Column_List"/>
+		<include refid="orderBase_where"/>
+		 order by create_time DESC
+		<if test="start!=null and limit!=null">
+			limit #{start},#{limit}
+		</if>
+	</select>
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) from t_order_base
+		<include refid="orderBase_where"/>	
+	</select>
+	<!-- 查询用户有关的订单 -->
+	<select id="getUserListPage" resultType="list" resultMap="BaseResultMap" parameterType="Map" >
+		<include refid="Base_Column_List"/>
+		<where>
+		<if test="memberName!=null and memberName!=''">
+			<![CDATA[	and member_name like "%"#{memberName}"%"]]>
+	    </if>
+		<if test="orderStatus != null and orderStatus != ''">
+	    	<![CDATA[
+				and order_status = #{orderStatus}
+			]]>
+	    </if>
+	    <if test="orderType != null and orderType != ''">
+	    	<![CDATA[
+				and order_type = #{orderType}
+			]]>
+	    </if>
+		<if test="createTimeFrom != null and createTimeFrom !=''">
+	    	<![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d %H:%i:%s') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d %H:%i:%s')
+			]]>
+	    </if>
+		<if test="createTimeTo != null and createTimeTo != ''">
+	    	<![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d %H:%i:%s') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d %H:%i:%s')
+			]]>
+	    </if>
+		  <if test="orderCodeList!=null and orderCodeList.size()>0">
+		     and   order_code in
+		    <foreach collection="orderCodeList" item="orderCode" index="index"   open="(" close=")" separator=",">
+                #{orderCode}
+            </foreach>
+		  </if>
+		</where>
+		 order by create_time DESC
+		<if test="start!=null and limit!=null">
+			limit #{start},#{limit}
+		</if>
+	</select>
+	
+	<!-- 查询用户有关的订单 -->
+	<select id="getUserTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(id) from t_order_base
+	 <where>
+		<if test="memberName!=null and memberName!=''">
+			<![CDATA[	and member_name like "%"#{memberName}"%"]]>
+	    </if>
+		<if test="orderStatus != null and orderStatus != ''">
+	    	<![CDATA[
+				and order_status = #{orderStatus}
+			]]>
+	    </if>
+	    <if test="orderType != null and orderType != ''">
+	    	<![CDATA[
+				and order_type = #{orderType}
+			]]>
+	    </if>
+		<if test="createTimeFrom != null and createTimeFrom !=''">
+	    	<![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d %H:%i:%s') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d %H:%i:%s')
+			]]>
+	    </if>
+		<if test="createTimeTo != null and createTimeTo != ''">
+	    	<![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d %H:%i:%s') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d %H:%i:%s')
+			]]>
+	    </if>
+		   <if test="orderCodeList!=null and orderCodeList.size()>0">
+		     and   order_code in
+		    <foreach collection="orderCodeList" item="orderCode" index="index"   open="(" close=")" separator=",">
+                #{orderCode}
+            </foreach>
+		  </if>
+	   </where>
+	</select>
+	<!-- 查询从昨天到现在 -->
+	<select id="findListByOrderStatusAndCurrent" resultMap="BaseResultMap" parameterType="java.lang.String">
+  		<include refid="Base_Column_List" />
+  		where order_status = #{orderStatus} and update_time between DATE_SUB(curdate(), INTERVAL 1 DAY) and current_date()
+    </select>
+  
+  
+	  <sql id="orderBase_where_StatisticsUse">
+	  	<where>
+	  		a.order_code=b.order_code and a.member_id=b.member_id 
+			<if test="orderStatus != null and orderStatus != ''">
+		    	<![CDATA[
+					and a.order_status = #{orderStatus}
+				]]>
+		    </if>
+		    <if test="storeCode!=null and storeCode!=''">
+		    	<![CDATA[
+					and a.store_code = #{storeCode}
+				]]>
+	    	</if>
+			<if test="createTimeFrom != null and createTimeFrom !=''">
+		    	<![CDATA[
+					and DATE_FORMAT(a.create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+				]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(a.create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+		    <if test="paymentType != null and paymentType != ''">
+		    	<![CDATA[
+					and b.payment_type = #{paymentType}
+				]]>
+		    </if>
+	  	</where>
+	  </sql>
+    <select id="getListStatisticsUse" resultType="list" resultMap="BaseResultMap" parameterType="Map" >
+		select 
+	    a.id, a.order_code, a.member_id, a.member_name, a.order_status, a.is_refused, a.last_receive_time, 
+	    a.cancel_time, a.sys_cancel_time, a.sys_cancel_reason, a.is_delete, a.source_code, a.total_point_used,a.order_point_gained, 
+	    a.is_handle_point, a.memo, a.audit_fail_reason, a.create_time, a.update_time, a.update_id,a.is_group_buy,a.order_type,b.payment_type 
+		from t_order_base a,t_order_finance b    
+		<include refid="orderBase_where_StatisticsUse"/>
+		 order by create_time DESC
+	</select>
+	
+	
+	<!-- 分页条件查询 -->
+	<select id="findListPageStatisticsUse" resultType="list" resultMap="BaseResultMap" parameterType="Map" >
+		select 
+	    a.id, a.order_code, a.member_id, a.member_name, a.order_status, a.is_refused, a.last_receive_time, 
+	    a.cancel_time, a.sys_cancel_time, a.sys_cancel_reason, a.is_delete, a.source_code, a.total_point_used,a.order_point_gained, 
+	    a.is_handle_point, a.memo, a.audit_fail_reason, a.create_time, a.update_time, a.update_id,a.is_group_buy,a.order_type,b.payment_type 
+		from t_order_base a,t_order_finance b  
+		
+		<include refid="orderBase_where_StatisticsUse"/>
+		 order by create_time DESC
+		<if test="start!=null and limit!=null">
+			limit #{start},#{limit}
+		</if>
+	</select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotalStatisticsUse" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) from t_order_base a,t_order_finance b 
+		<include refid="orderBase_where_StatisticsUse"/>	
+	</select>
+	
+	<delete id="deleteByOrderCodeAndMemberId">
+		delete from t_order_base where order_code=#{orderCode} and member_id=#{memberId}
+	</delete>
+	
+	
+	<!-- 查询门店订单列表 -->
+	<select id="getStoreOrderPageList" resultType="list" resultMap="BaseResultMap" parameterType="Map" >
+		<include refid="Base_Column_List"/>
+			<!-- 排除商城的订单 -->
+			where store_code != '999'
+	  		<if test="orderCode!=null and orderCode!=''">
+		    	<![CDATA[
+					and order_code = #{orderCode}
+				]]>
+		    </if>
+		    <if test="storeCode!=null and storeCode!=''">
+		    	<![CDATA[
+					and store_code = #{storeCode}
+				]]>
+		    </if>
+		    <if test="memberName!=null and memberName!=''">
+				<![CDATA[	and member_name like "%"#{memberName}"%"]]>
+		    </if>
+			<if test="orderStatus != null and orderStatus != ''">
+		    	<![CDATA[
+					and order_status = #{orderStatus}
+				]]>
+		    </if>
+		    
+			<if test="createTimeFrom != null and createTimeFrom !=''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d %H:%i:%s') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d %H:%i:%s')
+				]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d %H:%i:%s') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d %H:%i:%s')
+				]]>
+		    </if>
+		    
+	  		 order by create_time DESC
+			<if test="start!=null and limit!=null">
+				limit #{start},#{limit}
+			</if>
+	</select>
+	
+	<!-- 查询门店订单 -->
+	<select id="getStoreOrderTotal" resultType="Integer"  parameterType="Map" >
+		select count(1) from t_order_base
+			<!-- 排除商城的订单 -->
+			where store_code != '999'
+	  		<if test="orderCode!=null and orderCode!=''">
+		    	<![CDATA[
+					and order_code = #{orderCode}
+				]]>
+		    </if>
+		    <if test="storeCode!=null and storeCode!=''">
+		    	<![CDATA[
+					and store_code = #{storeCode}
+				]]>
+		    </if>
+		    <if test="memberName!=null and memberName!=''">
+				<![CDATA[	and member_name like "%"#{memberName}"%"]]>
+		    </if>
+			<if test="orderStatus != null and orderStatus != ''">
+		    	<![CDATA[
+					and order_status = #{orderStatus}
+				]]>
+		    </if>
+		    
+			<if test="createTimeFrom != null and createTimeFrom !=''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d %H:%i:%s') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d %H:%i:%s')
+				]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d %H:%i:%s') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d %H:%i:%s')
+				]]>
+		    </if>
+	
+	</select>
+	
+	
+</mapper>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.sysactivity.dao.SysActivityFamilyCommentDao">
+	<resultMap id="SysActivityFamilyCommentResultMap" type="sysActivityFamilyComment">
+		<id column="id" property="id" />
+		<result column="article_id" property="articleId"  />
+		<result column="member_id" property="memberId"  />
+		<result column="comment_time" property="commentTime"  />
+		<result column="comment_nickname" property="commentNickname" />
+		<result column="comment_content" property="commentContent"/>
+	</resultMap>
+	<insert id="add" parameterType="sysActivityFamilyComment">
+		insert into t_sysactivity_family_comment
+		(id, article_id, member_id, comment_time, comment_nickname,comment_content
+		)
+		values (#{id}, #{articleId}, #{memberId}, now(), #{commentNickname}, #{commentContent}
+		)
+	</insert>
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from
+		t_sysactivity_family_comment
+		where id = #{id}
+	</delete>
+	<delete id="deleteByArticleId" parameterType="java.lang.Long">
+		delete from
+		t_sysactivity_family_comment
+		where article_id = #{articleId}
+	</delete>
+	<update id="update" parameterType="sysActivityFamilyComment">
+		update
+		t_sysactivity_family_comment
+		set article_id = #{articleId},
+		member_id = #{memberId},
+		comment_time = now(),
+		comment_nickname =#{commentNickname},
+		comment_content = #{commentContent}
+		where id = #{id}
+	</update>
+	<select id="findById" resultMap="SysActivityFamilyCommentResultMap">
+		<![CDATA[
+			select
+			id, article_id, member_id, comment_time, comment_nickname, comment_content
+			from t_sysactivity_family_comment
+			where id = #{id}
+		]]>
+	</select>
+	<select id="findAll" resultType="list" resultMap="SysActivityFamilyCommentResultMap">
+		<![CDATA[
+			select
+			id, article_id, member_id, comment_time, comment_nickname, comment_content
+			from t_sysactivity_family_comment
+		]]>
+	</select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="com.fushionbaby.sysactivity.condition.SysActivityFamilyCommentQueryCondition" resultType="java.lang.Integer">
+		select 
+			count(id)
+		from 
+			t_sysactivity_family_comment
+		<where>
+			<if test="articleId !=null and articleId !=''">
+	    	   AND  article_id = #{articleId} 
+	        </if>
+			<if test="commentNickname !=null and commentNickname !=''">
+	    	   AND  comment_nickname LIKE "%"#{commentNickname}"%"  
+	        </if>
+		</where>
+	</select>
+	
+	
+	<!-- 条件查询 -->
+	<select id="queryByCondition" resultType="list" resultMap="SysActivityFamilyCommentResultMap" 
+			parameterType="com.fushionbaby.sysactivity.condition.SysActivityFamilyCommentQueryCondition">
+			select
+				id, article_id, member_id, comment_time, comment_nickname, comment_content
+			from 
+				t_sysactivity_family_comment
+		<where>
+			<if test="articleId !=null and articleId !=''">
+	    	   AND  article_id = #{articleId} 
+	        </if>
+	        <if test="commentNickname !=null and commentNickname !=''">
+	    	   AND  comment_nickname LIKE "%"#{commentNickname}"%"  
+	        </if>
+		</where>
+		order by comment_time desc
+		<if test="start >=0 and limit !=null and limit !='' and limit > 0">
+			<![CDATA[
+				LIMIT #{start},#{limit}
+			]]>
+		</if>
+	
+	</select>
+	
+	
+</mapper>

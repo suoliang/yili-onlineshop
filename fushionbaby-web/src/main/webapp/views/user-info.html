@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>基础信息 - Fushionbaby</title>
+		<script src="ftl/publicHeadTags.js"></script><!-- 公共<head>标签 -->
+		<link rel="stylesheet"  href="css/public.css">
+		<link rel="stylesheet"  href="css/persona-order.css">
+		<script type="text/javascript" src="js/persona-order.js"></script>
+	</head>
+	<body>
+		<div class="user-info clearfix">
+			<h3 class="center-title">我的基本信息</h3>
+			<form action="">
+				<div class="user-info-l">
+					<div class="info-list clearfix">
+						<div class="info-list-l user-name">登录名：</div>
+						<div class="info-list-r">45646515649</div>
+					</div>
+					<div class="info-list clearfix">
+						<div class="info-list-l user-name">您的昵称：</div>
+						<div class="info-list-r">
+							<div class="pet">
+								<input id="nick_name" type="text" class="pet-info" placeholder="输入文本"/>
+							</div>
+						</div>
+					</div>
+					<div class="info-list clearfix">
+						<div class="info-list-l genera">您是：</div>
+						<div class="info-list-r">
+							<div class="select">
+								<input type="radio" name="parent" value="1" id="dad" checked="checked"/>
+								<label for="dad">
+									<span>宝爸</span>
+									<i class="dad"></i>
+								</label>
+							</div>
+							<div class="select">
+								<input type="radio" name="parent" value="0" id="mom"/>
+								<label for="mom">
+									<span>宝妈</span>
+									<i class="mom"></i>
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="info-list clearfix">
+						<div class="info-list-l genera">宝宝性别：</div>
+						<div class="info-list-r">
+							<div class="select">
+								<input type="radio" name="children" value="1" id="prince" checked="checked"/>
+								<label for="prince">
+									<span>王子</span>
+								</label>
+							</div>
+							<div class="select">
+								<input type="radio" name="children" value="2" id="princess"/>
+								<label for="princess">
+									<span>公主</span>
+								</label>
+							</div>
+							<div class="select">
+								<input type="radio" name="children" value="3" id="twins-m"/>
+								<label for="twins-m">
+									<span>双胞胎男</span>
+								</label>
+							</div>
+							<div class="select">
+								<input type="radio" name="children" value="4" id="twins-f"/>
+								<label for="twins-f">
+									<span>双胞胎女</span>
+								</label>
+							</div>
+							<div class="select">
+								<input type="radio" name="children" value="5"  id="twins-mf"/>
+								<label for="twins-mf">
+									<span>龙凤胎</span>
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="info-list clearfix">
+						<div class="info-list-l genera">宝宝生日：</div>
+						<div class="info-list-r">
+							<input type="text" class="pet-info" onclick="WdatePicker();"/>
+						</div>
+					</div>
+					<div class="info-list clearfix user-infor-weixin">
+					<div class="info-list-l genera">您的微信号：</div>
+					<div class="info-list-r">
+							<input type="text" value="" placeholder="输入微信号" class="pet-info" id="weixin_no">
+						<div class="error" id="show_weixin_no"><em>*</em><em id="check_weixin_no"></em></div>
+					</div>
+				</div>
+				<div class="info-list clearfix">
+					<input type="button" class="mod-btn info-desc fl" onclick="update_userInfo();" value="确认修改"/>
+					<span class="complete-information">完善资料将有赠品赠送</span>
+				</div>
+				</div>
+				<div class="user-info-r">
+					<div class="u-photo">
+					</div>
+					<input type="button" class="mod-btn info-desc" value="修改头像" >
+				</div>
+				<div class="upload-pic">
+					<div class="close"></div>
+					<div class="file-box">
+						<input type='text' name='textfield' id='textfield' class='txt' />
+						<input type='button' class='btn mod-btn info-desc' value='浏览...' />
+						<input type="file" name="fileField" class="file" id="fileField" size="28" onchange="document.getElementById('textfield').value=this.value" />
+						<!-- <button class="btn mod-btn info-desc c-upload">确定</button> -->
+					</div>
+				</div>
+
+			</form>
+		</div>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$(".if4",parent.document).addClass('list-current');
+				$(".if1",parent.document).removeClass('list-current');
+				});
+		</script>
+
+		<script type="text/javascript" src="../web-js/My97DatePicker/WdatePicker.js"></script>
+		<script type="text/javascript" src="../web-js/membercenter/user-info.js"></script>
+		<script type="text/javascript" src="../web-js/uploadify/swfobject.js"></script>
+		<script type="text/javascript" src="../web-js/uploadify/jquery.uploadify.js"></script>
+	</body>
+</html>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration 
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 命名空间 -->
+	<typeAliases>
+		<!-- 申请退款的记录-->
+		<typeAlias alias="FinanceRefundApply" type="com.aladingshop.finance.model.FinanceRefundApply" />
+		<!--  退款完成的记录-->
+		<typeAlias alias="FinanceRefundRecord" type="com.aladingshop.finance.model.FinanceRefundRecord" />
+	</typeAliases>
+	<!-- 注册SQL映射文件 -->
+	<mappers>
+	</mappers>
+</configuration>

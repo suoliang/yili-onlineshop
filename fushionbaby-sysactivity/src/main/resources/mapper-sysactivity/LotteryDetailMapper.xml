@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.sysactivity.dao.LotteryDetailDao">
+	<resultMap id="LotteryDetailResultMap" type="LotteryDetail">
+	 <id column="id" property="id" />
+	 <result column="member_id" property="memberId" />
+	 <result column="login_name" property="loginName" />
+	 <result column="prize_id" property="prizeId" />
+	 <result column="name" property="name" />
+	 <result column="level" property="level" />
+	 <result column="create_id" property="createId"/>
+	 <result column="update_id" property="updateId"/>
+	 <result column="create_time" property="createTime"/>
+	 <result column="update_time" property="updateTime"/>
+	 <result column="code" property="code"/>
+	</resultMap>
+	<sql id="Base_Column_List" >
+		id, member_id, login_name,prize_id,create_id,update_id,create_time,update_time
+	</sql>
+  
+	<insert id="add" parameterType="LotteryDetail" >
+		insert into t_lottery_details(id, member_id, login_name,prize_id,create_id,update_id,create_time,update_time)
+		values(#{id}, #{memberId}, #{loginName},#{prizeId},#{createId},#{updateId},now(),now())
+	</insert>
+	
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_lottery_details where id = #{id}
+	</delete>
+	
+	<update id="update" parameterType="LotteryDetail">
+		update t_lottery_details set member_id = #{memberId},login_name = #{loginName},prize_id=#{prizeId},update_time=NOW() where id = #{id}
+	</update>
+	
+	<select id="findById" resultMap="LotteryDetailResultMap">
+		select
+			<include refid="Base_Column_List" /> 
+		from t_lottery_details where id = #{id}
+	</select>
+	
+	<select id="findAll" resultMap="LotteryDetailResultMap">
+		select
+			<include refid="Base_Column_List" />
+		from t_lottery_details
+	</select>
+	
+	<select id="findWhereList" parameterType="map" resultType="list" resultMap="LotteryDetailResultMap">
+		select
+			<include refid="Base_Column_List" />
+		from t_lottery_details        
+		 <where>
+			 <if test="memberId !=null and memberId !=''">
+			 	and member_id=#{memberId}
+			 </if>
+			 <if test="loginName !=null and loginName !=''">
+			 	<![CDATA[ and login_name like "%"#{loginName}"%"]]>
+			 </if>
+		 </where>
+	</select>
+	<!-- 分页条件查询 -->
+	<select id="getPageList" resultType="list" resultMap="LotteryDetailResultMap" parameterType="Map" >
+	    SELECT t1.member_id,t1.login_name,t2.level,t2.name,t1.create_time,max(t3.code) as code
+		FROM t_lottery_details t1 LEFT JOIN t_lottery_prize t2 ON t1.prize_id=t2.id
+		LEFT JOIN baby_order.t_so_sales_order t3 ON t1.member_id=t3.member_id
+		GROUP BY t1.member_id,t1.login_name,t2.level,t2.name,t1.create_time
+		<where>
+			<if test="loginName !=null and loginName !=''">
+	    	   AND  t1.login_name LIKE "%"#{loginName}"%"  
+	        </if>	        
+		</where>
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+	
+	<select id="getTotal"  parameterType="Map" resultType="java.lang.Integer">
+	    SELECT count(1)
+		FROM t_lottery_details t1 LEFT JOIN t_lottery_prize t2 ON t1.prize_id=t2.id
+		<where>
+			<if test="loginName !=null and loginName !=''">
+	    	   AND  t1.login_name LIKE "%"#{loginName}"%"  
+	        </if>	        
+		</where>
+		
+	</select>
+</mapper>

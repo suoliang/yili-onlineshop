@@ -1,0 +1,16 @@
+@import "compass/utilities/sprites";
+@import "retina-sprites";
+
+// $logo-sprite-dimensions:true;
+// $logo-layout:smart;
+
+// @import "icon/*.png";
+
+// @include all-icon-sprites();
+
+$sprites:sprite-map("retina-version/sprites/*.png");
+$sprites2x:sprite-map("retina-version/sprites-retina/*.png");
+
+// .ico-file {
+//   @include retina-sprite(calendar,true);
+// }

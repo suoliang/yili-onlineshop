@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration 
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 命名空间 -->
+	<typeAliases>
+		<!-- 商品关键字信息 -->
+		<typeAlias alias="SkuKeyWord" type="com.aladingshop.sku.cms.model.SkuKeyWord"/>
+		<!-- 商品商城库存信息 -->
+		<typeAlias alias="SkuInventory" type="com.aladingshop.sku.cms.model.SkuInventory"/>
+		<!-- 商品搭配表 -->
+		<typeAlias alias="SkuLinkSkusRelation" type="com.aladingshop.sku.cms.model.SkuLinkSkusRelation" />
+		<!--商品标签表  -->
+		<typeAlias alias="SkuLabel" type="com.aladingshop.sku.cms.model.SkuLabel" />
+		<!--商品热销榜  -->
+		<typeAlias alias="SkuHot" type="com.aladingshop.sku.cms.model.SkuHot" />
+		
+		<!-- 商品额外信息 -->
+		<typeAlias alias="SkuExtraInfo" type="com.aladingshop.sku.cms.model.SkuExtraInfo"/>
+		<!-- 产品属性值 -->
+		<typeAlias alias="SkuProductAttr" type="com.aladingshop.sku.cms.model.SkuProductAttr"/>
+		
+		<!-- 商品品牌 -->
+		<typeAlias  alias="SkuBrand" type="com.aladingshop.sku.cms.model.SkuBrand"/>
+		<!-- 商品品牌关联 -->
+		<typeAlias alias="SkuBrandRelation" type="com.aladingshop.sku.cms.model.SkuBrandRelation"/>
+		<!-- 商品分类  -->
+		<typeAlias alias="SkuCategory" type="com.aladingshop.sku.cms.model.SkuCategory"/>
+		<!-- 分类关联 -->
+		<typeAlias alias="SkuCategoryRelation" type="com.aladingshop.sku.cms.model.SkuCategoryRelation"/>
+		<!-- 商品赠品 -->
+		<typeAlias alias="SkuGiftRelation" type="com.aladingshop.sku.cms.model.SkuGiftRelation"/>
+		<!-- 商品标签关联 -->
+		<typeAlias alias="SkuLabelRelation" type="com.aladingshop.sku.cms.model.SkuLabelRelation"/>	
+		<!-- 商品信息 -->
+		<typeAlias alias="Sku" type="com.aladingshop.sku.cms.model.Sku"/>
+		
+        <!--商品产品表  -->
+		<typeAlias alias="SkuProduct" type="com.aladingshop.sku.cms.model.SkuProduct" />
+		  <!--商品图片表  -->
+		<typeAlias alias="SkuImage" type="com.aladingshop.sku.cms.model.SkuImage" />
+		 <!--商品图片尺寸规格  -->
+		<typeAlias alias="skuImageStandardConfig" type="com.aladingshop.sku.cms.model.SkuImageStandardConfig" />
+		<!--退货原因表  -->
+		<typeAlias alias="skuRefundReason" type="com.aladingshop.sku.cms.model.SkuRefundReason" />
+		<!-- 产品图片 -->
+		<typeAlias alias="skuProductImage" type="com.aladingshop.sku.cms.model.SkuProductImage" />
+		<!-- 商品限时抢购 -->
+		<typeAlias alias="skuTimelimit" type="com.aladingshop.sku.cms.model.SkuTimelimit"/>
+		<!-- 优惠商品关联定义表 -->
+		<typeAlias alias="skuCombination" type="com.aladingshop.sku.cms.model.SkuCombination"/>
+		<!-- 优惠商品组合包含商品 -->
+		<typeAlias alias="skuCombinationItem" type="com.aladingshop.sku.cms.model.SkuCombinationItem"/>
+		<!-- 礼品卡 -->
+		<typeAlias alias="SkuGiftCard" type="com.aladingshop.sku.cms.model.SkuGiftCard"/>
+		<!-- 商品价格表 -->
+		<typeAlias alias="SkuPrice" type="com.aladingshop.sku.cms.model.SkuPrice" />
+		<!-- 商品分类和品牌关联表 -->
+		<typeAlias alias="SkuCategoryBrandRelation" type="com.aladingshop.sku.cms.model.SkuCategoryBrandRelation" />
+		
+		<!-- 查询条件 -->
+		<typeAlias alias="baseSkuQueryCondition" type="com.fushionbaby.common.condition.sku.BaseSkuQueryCondition"/>
+		
+		<typeAlias alias="skuEntryQueryCondition" type="com.fushionbaby.common.condition.sku.SkuEntryQueryCondition"/>
+		
+		<typeAlias alias="skuBrandQueryCondition" type="com.fushionbaby.common.condition.sku.SkuBrandQueryCondition"/>
+		
+		<typeAlias alias="skuBrandRelationQueryCondition" type="com.fushionbaby.common.condition.sku.SkuBrandRelationQueryCondition"/>
+		
+		<typeAlias alias="skuCategoryQueryCondition" type="com.fushionbaby.common.condition.sku.SkuCategoryQueryCondition"/>
+		
+		<typeAlias alias="skuCategoryRelationQueryCondition" type="com.fushionbaby.common.condition.sku.SkuCategoryRelationQueryCondition"/>
+		
+		<typeAlias alias="skuGiftQueryCondition" type="com.fushionbaby.common.condition.sku.SkuGiftQueryCondition"/>
+		
+		<typeAlias alias="skuInventoryQueryCondition" type="com.fushionbaby.common.condition.sku.SkuInventoryQueryCondition"/>
+		
+		<typeAlias alias="skuLabelQueryCondition" type="com.fushionbaby.common.condition.sku.SkuLabelQueryCondition"/>
+		
+		<typeAlias alias="skuLabelRelationQueryCondition" type="com.fushionbaby.common.condition.sku.SkuLabelRelationQueryCondition"/>
+		
+		<typeAlias alias="skuLinkSkusQueryCondition" type="com.fushionbaby.common.condition.sku.SkuLinkSkusQueryCondition"/>
+		
+		<typeAlias alias="skuCombinationQueryCondition" type="com.fushionbaby.common.condition.sku.SkuCombinationQueryCondition"/>
+		
+		<typeAlias alias="skuTogether" type="com.aladingshop.sku.cms.model.SkuTogether"/>
+		
+		<typeAlias alias="skuTogetherStatus" type="com.aladingshop.sku.cms.model.SkuTogetherStatus"/>
+		
+		<typeAlias alias="skuBrowseHistories" type="com.aladingshop.sku.cms.model.SkuBrowseHistories"/>
+		<!-- 标签和分类的关联 -->
+		<typeAlias alias="SkuLabelCategoryRelation" type="com.aladingshop.sku.cms.model.SkuLabelCategoryRelation"/>
+		<!-- 商品分类图片  -->
+	     <typeAlias alias="SkuCategoryImage" type="com.aladingshop.sku.cms.model.SkuCategoryImage"/>
+	     <!-- 便签图片 -->
+	     <typeAlias alias="SkuLabelImage" type="com.aladingshop.sku.cms.model.SkuLabelImage"/>
+	 	 <!-- 图片类型 -->
+	     <typeAlias alias="SkuImageType" type="com.aladingshop.sku.cms.model.SkuImageType"/>
+	     <!-- 储蓄卡和商品关联 -->
+	     <typeAlias alias="SkuCardRelation" type="com.aladingshop.sku.cms.model.SkuCardRelation"/>
+	
+		<typeAlias alias="SkuPromotionsInfo" type="com.aladingshop.sku.cms.model.SkuPromotionsInfo"/>
+	
+	    <typeAlias alias="SkuPromotionsSku" type="com.aladingshop.sku.cms.model.SkuPromotionsSku"/>
+	    
+	    <typeAlias alias="SkuEpoint" type="com.aladingshop.sku.cms.model.SkuEpoint" />
+	</typeAliases>
+	<!-- 注册SQL映射文件 -->
+	<mappers>
+	</mappers>
+</configuration>

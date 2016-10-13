@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.store.auth.dao.StoreAuthUserRoleDao" >
+  <resultMap id="StoreAuthUserRoleResultMap" type="StoreAuthUserRole" >
+    <id column="id" property="id" />
+    <result column="user_id" property="userId"  />
+    <result column="role_id" property="roleId"  />
+    
+    <result column="update_time" property="updateTime"/>
+    <result column="update_id" property="updateId"/>
+    
+  </resultMap>
+  <insert id="add" parameterType="StoreAuthUserRole"> 
+    insert into  
+         t_store_auth_user_role(id,user_id,role_id,update_time,update_id)
+            values(#{id},#{userId},#{roleId},now(),#{updateId})
+  </insert>
+  
+  <delete id="deleteById" parameterType="long">
+    delete from t_store_auth_user_role where id = #{id}
+  </delete>
+  
+   <delete id="deleteByUserId"  parameterType="long">
+    delete from t_store_auth_user_role where user_id = #{userId}
+  </delete>
+  
+  <update id="update" parameterType="StoreAuthUserRole" >
+    update 
+           t_store_auth_user_role    
+       set 
+    <if test="roleId!=null and roleId!=''">
+         role_id = #{roleId},
+     </if>
+    <if test="userId!=null and userId!=''">
+         user_id = #{userId},
+     </if>
+    <if test="updateId!=null and updateId!=''">
+         update_id = #{updateId},
+     </if>
+      update_time = now()
+      where id = #{id}
+  </update>
+  
+  <sql id="base_select_sql">
+     <![CDATA[ select id,user_id, role_id, update_time,update_id from t_store_auth_user_role  ]]>
+  </sql>
+  
+  <select id="findAll" resultMap="StoreAuthUserRoleResultMap" resultType="list">
+    <include refid="base_select_sql"/>
+  </select> 
+  
+   <select id="findById" resultMap="StoreAuthUserRoleResultMap" parameterType="long" >
+     <include refid="base_select_sql"/>
+		  where id=#{id}
+  </select>
+   <select id="findByRoleId" resultMap="StoreAuthUserRoleResultMap" resultType="list" >
+        <include refid="base_select_sql"/>
+		 where role_id=#{roleId}
+  </select>
+  
+     <select id="findByUserId" resultMap="StoreAuthUserRoleResultMap" resultType="list" >
+		  <include refid="base_select_sql"/>
+		  where user_id =#{userId}
+  </select>
+  
+</mapper>

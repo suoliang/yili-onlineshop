@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.card.dao.MemberCardOrderDao" >
+  <resultMap id="MemberCardOrderResultMap" type="MemberCardOrder" >
+    <id column="id" property="id" />
+    <result column="member_id" property="memberId"/>
+    <result column="member_name" property="memberName"/>
+    <result column="order_code" property="orderCode" />
+    <result column="order_status" property="orderStatus" />
+     <result column="total_actual" property="totalActual" />
+    <result column="pay_type" property="payType" />
+    <result column="pay_complete_time" property="payCompleteTime" />
+    <result column="finance_status" property="financeStatus" />
+    <result column="source_code" property="sourceCode" />
+    <result column="create_time" property="createTime" />
+    <result column="update_time" property="updateTime" />
+    <result column="update_id" property="updateId" />
+    <result column="memo" property="memo" />
+    <result column="order_type" property="orderType" />
+  </resultMap>
+  
+  <insert id="add" parameterType="MemberCardOrder"> 
+    insert into t_member_card_order (id,member_id,member_name,order_code,order_status,total_actual,pay_type, 
+      pay_complete_time,finance_status,source_code,create_time,update_time,update_id,memo)
+    values (#{id}, #{memberId}, #{memberName},#{orderCode},#{orderStatus}, #{totalActual}, #{payType},
+    #{payCompleteTime},#{financeStatus}, #{sourceCode},now(),now(),#{updateId},#{memo})
+  </insert>
+  <delete id="deleteById"  parameterType="java.lang.Long">
+    delete from t_member_card_order where id = #{id}
+  </delete>
+  
+  <update id="update" parameterType="MemberCardOrder">
+    update t_member_card_order
+    <set>
+    	<if test="memberId!=null and memberId!=''">
+    		member_id = #{memberId},
+    	</if>
+    	<if test="memberName!=null and memberName!=''">
+    		member_name = #{memberName},
+    	</if>
+    	<if test="orderCode!=null and orderCode!=''">
+    		order_code = #{orderCode},
+    	</if>
+    	<if test="orderStatus!=null and orderStatus!=''">
+    		order_status = #{orderStatus},
+    	</if>
+    	<if test="totalActual!=null and totalActual!=''">
+    		total_actual = #{totalActual},
+    	</if>
+    	<if test="payType!=null and payType!=''">
+    		pay_type = #{payType},
+    	</if>
+    	<if test="financeStatus!=null and financeStatus!=''">
+    		finance_status = #{financeStatus},
+    	</if>
+    	<if test="payCompleteTime!=null and payCompleteTime!=''">
+    		pay_complete_time = #{payCompleteTime},
+    	</if>
+    	<if test="sourceCode!=null and sourceCode!=''">
+    		source_code = #{sourceCode},
+    	</if>
+    	<if test="updateId!=null and updateId!=''">
+    		update_id = #{updateId},
+    	</if>
+    	<if test="memo!=null and memo!=''">
+    		memo = #{memo},
+    	</if>
+    	<if test="orderType!=null and orderType!=''">
+    		order_type = #{orderType},
+    	</if>
+    	update_time = now()
+    </set>
+    <where>
+    	id = #{id}
+    </where>
+  </update>
+  <sql id="Base_Column_List" >
+  	select id, member_id, member_name,order_code,order_status,total_actual,pay_type, 
+      pay_complete_time,finance_status,source_code,create_time,update_time,update_id,memo,order_type 
+		 from t_member_card_order
+  </sql>
+  <select id="findAll" resultMap="MemberCardOrderResultMap" resultType="list">
+  	<include refid="Base_Column_List" /> where finance_status='y' ORDER BY update_time DESC
+  </select> 
+   <select id="findById" resultMap="MemberCardOrderResultMap" parameterType="java.lang.Long" >
+	   <include refid="Base_Column_List" />
+	   <where>
+	   		id=#{id}
+	   </where>
+  </select>
+  
+  	  <!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="MemberCardOrderResultMap" parameterType="Map" >
+	    <include refid="Base_Column_List" />
+		<where>
+		<if test="orderCode !=null and orderCode !=''">
+	    	   AND  order_code=#{orderCode}  
+	        </if>
+			<if test="memberId !=null and memberId!=''">
+	    	   AND  member_id=#{memberId} 
+	        </if>
+			<if test="memberName !=null and memberName!=''">
+	    	   AND  member_name  like "%"#{memberName}"%" 
+	        </if>
+			<if test="financeStatus !=null and financeStatus!=''">
+	    	   AND  finance_status  =#{financeStatus} 
+	        </if>
+			<if test="createTimeFrom != null and createTimeFrom !=''">
+	    	<![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+			]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+		       and  finance_status='y'
+		</where>
+		     ORDER BY update_time DESC
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select  count(id) from t_member_card_order
+		<where>
+		   
+			<if test="orderCode !=null and orderCode !=''">
+	    	   AND  order_code=#{orderCode}  
+	        </if>
+			<if test="memberId !=null and memberId!=''">
+	    	   AND  member_id=#{memberId} 
+	        </if>
+			<if test="memberName !=null and memberName!=''">
+	    	   AND  member_name like "%"#{memberName}"%" 
+	        </if>
+			<if test="financeStatus !=null and financeStatus!=''">
+	    	   AND  finance_status  =#{financeStatus} 
+	        </if>
+			<if test="createTimeFrom != null and createTimeFrom !=''">
+	    	<![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+			]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+		   and  finance_status='y'
+		</where>
+		   ORDER BY update_time DESC
+	</select>
+      <select id="findByMemberIdOrderCode" resultMap="MemberCardOrderResultMap" parameterType="Map" >
+	   <include refid="Base_Column_List" />
+	   <where>
+	   		member_id=#{memberId} and order_code=#{orderCode}
+	   </where>
+  </select>
+
+  <update id="updateByMemberIdOrderCode" parameterType="MemberCardOrder">
+    update t_member_card_order
+    <set>
+    	<if test="memberName!=null and memberName!=''">
+    		member_name = #{memberName},
+    	</if>
+    	<if test="orderStatus!=null and orderStatus!=''">
+    		order_status = #{orderStatus},
+    	</if>
+    	<if test="totalActual!=null and totalActual!=''">
+    		total_actual = #{totalActual},
+    	</if>
+    	<if test="payType!=null and payType!=''">
+    		pay_type = #{payType},
+    	</if>
+    	<if test="financeStatus!=null and financeStatus!=''">
+    		finance_status = #{financeStatus},
+    	</if>
+    	<if test="payCompleteTime!=null and payCompleteTime!=''">
+    		pay_complete_time = #{payCompleteTime},
+    	</if>
+    	<if test="sourceCode!=null and sourceCode!=''">
+    		source_code = #{sourceCode},
+    	</if>
+    	<if test="updateId!=null and updateId!=''">
+    		update_id = #{updateId},
+    	</if>
+    	<if test="memo!=null and memo!=''">
+    		memo = #{memo},
+    	</if>
+    	<if test="orderType!=null and orderType!=''">
+    		order_type = #{orderType},
+    	</if>
+    	update_time = now()
+    </set>
+    <where>
+    	member_id=#{memberId} and order_code=#{orderCode}
+    </where>
+  </update>
+
+
+</mapper>

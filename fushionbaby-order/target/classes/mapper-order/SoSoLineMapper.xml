@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fushionbaby.order.dao.SoSoLineDao">
+  <resultMap id="BaseResultMap" type="SoSoLine">
+    <id column="id" property="id"  />
+    <result column="create_time" property="createTime"  />
+    <result column="line_type" property="lineType"  />
+    <result column="remark" property="remark"  />
+    <result column="size" property="size"  />
+    <result column="color" property="color"  />
+    <result column="sku_code" property="skuCode"  />
+    <result column="cost_price" property="costPrice"  />
+    <result column="sku_name" property="skuName"  />
+    <result column="total_actual" property="totalActual"  />
+    <result column="total_price" property="totalPrice"  />
+    <result column="quantity" property="quantity"  />
+    <result column="sku_retail_price" property="skuRetailPrice"  />
+    <result column="unit_price" property="unitPrice"  />
+    <result column="version" property="version"  />
+    <result column="so_code" property="soCode"  />
+    <result column="sku_id" property="skuId"  />
+    <result column="is_comment" property="isComment" />
+    <result column="update_time" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, create_time, line_type, remark, size, color, sku_code, cost_price, sku_name,
+    total_actual, total_price, quantity, sku_retail_price, unit_price, version, 
+    so_code, sku_id,is_comment,update_time
+  </sql>
+  <insert id="add" parameterType="SoSoLine">
+    insert into t_so_so_line (id, create_time, line_type, 
+      remark, size, color, 
+      sku_code, cost_price, sku_name, 
+      total_actual, total_price, 
+      quantity, sku_retail_price, unit_price, 
+      version, so_code, sku_id)
+    values (#{id},now(), #{lineType}, 
+      #{remark}, #{size}, #{color}, 
+      #{skuCode}, #{costPrice}, #{skuName}, 
+      #{totalActual}, #{totalPrice}, 
+      #{quantity}, #{skuRetailPrice}, #{unitPrice}, 
+      now(), #{soCode}, #{skuId})
+  </insert>
+  <delete id="deleteById" parameterType="Long">
+    delete from t_so_so_line
+    where id = #{id}
+  </delete>
+  
+   <select id="findById" parameterType="long" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List"/>
+  	from t_so_so_line where id = #{value}
+  </select>
+  
+   <select id="findByOrderCode" resultMap="BaseResultMap">
+  	select 
+  		<include refid="Base_Column_List"/>
+  	from 
+  		t_so_so_line 
+  	where
+  		 so_code = #{soCode}
+  	<if test="isComment !=null and isComment !=''">
+  		and is_comment = #{isComment}
+  	</if>
+  </select>
+  
+  <update id="updateIsComment" parameterType="java.util.Map">
+     update t_so_so_line
+     set update_time = now(),
+         is_comment = #{isComment}
+     where id = #{id}
+  </update>
+  
+  <select id="findSoOrderCodeBySkuCode" resultType="list"  parameterType="Map" resultMap="BaseResultMap">
+  	select 
+  		so_code
+  	from 
+  		t_so_so_line 
+  	where
+  		 sku_code = #{skuCode}
+  </select>
+</mapper>

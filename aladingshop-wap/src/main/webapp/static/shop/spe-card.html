@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>阿拉丁卡</title>
+        <!-- 通用部分 开始 -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0,user-scalable=no">
+        <link rel="shortcut icon" href="images/favicon.ico" />
+        <link rel="stylesheet" href="css/style.min.css"><!-- 通用 CSS -->
+        <script src="farmwork/jquery/jquery-2.1.3.min.js"></script><!-- 通用jQuery JS -->
+        <script src="farmwork/velocity/velocity.min.js"></script><!-- velocity JS -->
+        <script src="farmwork/velocity/velocity.ui.min.js"></script><!-- velocity JS -->
+        <script src="js/min/public.min.js"></script><!-- 通用 public JS -->
+        <!-- 通用部分 结束 -->
+    </head>
+    <body id="">
+
+        <div class="container">
+
+            <div class="head">
+                <a href="javascript:history.go(-1)" class="a-left">
+                    <span class="back"></span>
+                </a>
+                <p>阿拉丁卡</p>
+            </div>
+
+            <div class="card-detail-wrap fl wp100">
+                <p class="noCard">抱歉，您还没有购卡记录！</p>
+                <ul>
+                    <li>
+                        <div class="card-detail-t fl wp100">
+                            <h5>面值：100元</h5>
+                            <span>购卡时间：2015-11-10-1</span>
+                            <i>类型：季卡</i>
+                        </div>
+                        <div class="card-detail-m fl wp100">
+                            <p class="fl">卡号：1234567890</p>
+                            <p class="fr">累计赠券：22元</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="card-detail-t fl wp100">
+                            <h5>面值：100元</h5>
+                            <span>购卡时间：2015-11-10-1</span>
+                            <i>类型：季卡</i>
+                        </div>
+                        <div class="card-detail-m fl wp100">
+                            <p class="fl">卡号：1234567890</p>
+                            <p class="fr">累计赠券：22元</p>
+                        </div>
+                    </li>
+                </ul>
+                <div class="btn-wrap">
+                    <a href="spe-card-buy.html"><button>在线购卡</button></a>
+                </div>
+            </div>
+
+        </div><!-- /.container -->
+
+        <script>
+            $(function(){
+                if (!$('.card-detail-wrap').find('li').length) {
+                    $('.noCard').show();
+                };
+            })
+        </script>
+
+    </body>
+</html>

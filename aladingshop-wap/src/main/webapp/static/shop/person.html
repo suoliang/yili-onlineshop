@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>个人中心</title>
+        <!-- 通用部分 开始 -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0,user-scalable=no">
+        <link rel="shortcut icon" href="images/favicon.ico" />
+        <link rel="stylesheet" href="css/style.min.css"><!-- 通用 CSS -->
+        <script src="farmwork/jquery/jquery-2.1.3.min.js"></script><!-- 通用jQuery JS -->
+        <script src="farmwork/velocity/velocity.min.js"></script><!-- velocity JS -->
+        <script src="farmwork/velocity/velocity.ui.min.js"></script><!-- velocity JS -->
+        <script src="js/min/public.min.js"></script><!-- 通用 public JS -->
+        <!-- 通用部分 结束 -->
+    </head>
+    <body id="persopn">
+
+        <div class="container">
+
+            <div class="head">
+                <a href="javascript:history.go(-1)" class="a-left">
+                    <span class="back"></span>
+                </a>
+                <p>个人中心</p>
+                <a href="setting.html" class="a-right">
+                    <span class="cog"></span>
+                </a>
+            </div>
+
+            <div class="person-a fl wp100 mB10">
+                <img src="images/p-back.png">
+                <div class="status">
+                    <!-- 未登录 -->
+                    <div class="unlogined fl">
+                        <a class="status-l" href="login.html">登录</a>
+                        <span></span>
+                        <a class="status-r" href="registering-phone.html">注册</a>
+                    </div>
+                    <!-- 未登录 -->
+
+                    <!-- 已登录 -->
+                    <div class="logined fl wp100" style="display:none">
+                        <p>181****7567</p>
+                        <!-- 非vip显示 start -->
+                        <div class="no-vip">
+                            <a class="btn-a" href="">普通会员</a>
+                            <a class="btn-b" href="person-open-vip.html">开通 VIP</a>
+                        </div>
+                        <!-- 非vip显示 end -->
+
+                        <!-- vip显示 start -->
+                        <div class="vip" style="display:none"></div>
+                        <!-- vip显示 end -->
+                    </div>
+                    <!-- 已登录 -->
+
+                </div>
+                <ul class="person-a-innerbox">
+                    <a href="coupon.html">
+                        <li>
+                            <span>0张</span>
+                            <p>优惠券</p>
+                        </li>
+                    </a>
+                    <a href="spe-bonus-earn.html">
+                        <li>
+                            <span>0元</span>
+                            <p>红包</p>
+                        </li>
+                    </a>
+                    <a class="" href=""><!-- 登录后添加类名star,登录后且已签到添加类名stared -->
+                        <i></i>
+                        <li>
+                            <span>0</span>
+                            <p>积分</p>
+                        </li>
+                    </a>
+                </ul>
+            </div>
+
+            <div class="person-b fl wp100 mB0">
+                <ul class="list">
+                    <li>
+                        <h3 class="p-order"></h3>
+                        <p>我的订单</p>
+                        <a href="order.html">
+                            <span>查看全部订单</span>
+                            <i class="right"></i>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="person-c fl wp100 mB10">
+                    <a href="order.html?status=1">
+                        <span class="p-topay"><i>4</i></span>
+                        <p>待付款</p>
+                    </a>
+                    <a href="order.html?status=2">
+                        <span class="p-tosend"><i>2</i></span>
+                        <p>待发货</p>
+                    </a>
+                    <a href="order.html?status=3">
+                        <span class="p-toresive"><i>2</i></span>
+                        <p>待收货</p>
+                    </a>
+                    <a href="order.html?status=4">
+                        <span class="p-torank"></span>
+                        <p>待评价</p>
+                    </a>
+                </div>
+
+                <ul class="list">
+                    <a href="address.html">
+                        <li>
+                            <h3 class="p-address"></h3>
+                            <p>地址管理</p>
+                            <i class="right"></i>
+                        </li>
+                    </a>
+                    <a href="collection.html">
+                        <li>
+                            <h3 class="p-heart"></h3>
+                            <p>我的收藏</p>
+                            <i class="right"></i>
+                        </li>
+                    </a>
+                    <a href="history.html">
+                        <li>
+                            <h3 class="p-history"></h3>
+                            <p>我的足迹</p>
+                            <i class="right"></i>
+                        </li>
+                    </a>
+                </ul>
+
+                <ul class="list">
+                    <a href="spe-ruyi.html">
+                        <li>
+                            <h3 class="p-ruyi"></h3>
+                            <p>如意消费卡</p>
+                            <i class="right"></i>
+                        </li>
+                    </a>
+                    <a href="spe-card.html">
+                        <li>
+                            <h3 class="p-card"></h3>
+                            <p>阿拉丁卡</p>
+                            <i class="right"></i>
+                        </li>
+                    </a>
+                    <a href="contact.html">
+                        <li>
+                            <h3 class="p-contact"></h3>
+                            <p>联系客服</p>
+                            <i class="right"></i>
+                        </li>
+                    </a>
+                </ul>
+
+            </div>
+
+        </div><!-- /.container -->
+
+        <script src="js/menu_local.js"></script><!-- 公共底部菜单 -->
+
+    </body>
+</html>

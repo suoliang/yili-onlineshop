@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" name="viewport" id="viewport" />
+    <title>fushionbaby触屏版</title>
+    <link rel="stylesheet" type="text/css" href="css/cssRset.css"/>
+    <link rel="stylesheet" type="text/css" href="css/style_li.css"/>
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/yxMobileSlider.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/swipe.js"></script>
+
+  </head>
+  <body>
+    <!--顶部-->
+    <header id="header">
+      <img src="images/1.gif" class="logo"/>
+      <section>
+        <a href="products.html"><img src="images/2.gif" class="fenleitu"/></a>
+        <h4 class="fenlei">分类</h4>
+      </section>
+      <div class="searchbox">
+        <input type="text" placeholder="搜索商品" class="search"/>
+      </div>
+    </header>
+
+    <!--banner-->
+    <section class="slider">
+      <ul>
+        <li><a href="detail.html" target="_blank"><img src="images/4.gif"></a></li>
+        <li><a href="detail.html" target="_blank"><img src="images/4.gif"></a></li>
+        <li><a href="detail.html" target="_blank"><img src="images/4.gif"></a></li>
+      </ul>
+    </section>
+    <script type="text/javascript" src="js/yxMobileSlider.js"></script>
+    <script>
+    $(".slider").yxMobileSlider({width:700,height:380,during:3000})
+    </script>
+
+    <!--选项栏-->
+    <section id="xuanze">
+      <ul>
+        <li>
+          <a href="car.html"><img src="images/5.gif"/></a>
+          <span>购物车</span>
+        </li>
+        <li>
+          <a href="person-center.html"><img src="images/6.gif"/></a>
+          <span>我的</span>
+        </li>
+        <li>
+          <a href="tel:400-888-8888"><img src="images/7.gif"/></a>
+          <span>联系我们</span>
+        </li>
+        <li class="choose">
+          <a href="products.html"><img src="images/8.gif"/></a>
+          <span>分类</span>
+        </li>
+      </ul>
+    </section>
+
+    <!--抢购专区，直击低价-->
+    <section id="qianggou">
+      <h3>抢购专区，直击低价</h3>
+    </section>
+    <section class="new-pro">
+      <!--抢购专区，直击低价,banner-->
+      <div id="slider" style='display:none'>
+        <div class="swipe-wrap">
+          <div class="wrap">
+            <ul>
+              <li>
+                <div class="endtime" value="1454188800000"></div>
+                <a href="detail.html">
+                  <img src="images/9.gif" >
+                </a>
+                <span>￥：1860</span>
+              </li>
+              <li>
+                <div class="endtime" value="1454188800000"></div>
+                <a href="detail.html">
+                  <img src="images/9.gif" >
+                </a>
+                <span>￥：1860</span>
+              </li>
+              <li>
+                <div class="endtime" value="1454188800000"></div>
+                <a href="detail.html">
+                  <img src="images/9.gif" >
+                </a>
+                <span>￥：1860</span>
+              </li>
+
+            </ul>
+          </div>
+          <div class="wrap">
+            <ul>
+              <li>
+                <div class="endtime" value="1454188800000"></div>
+                <a href="detail.html">
+                  <img src="images/9.gif" >
+                </a>
+                <span>￥：1860</span>
+              </li>
+              <li>
+                <div class="endtime" value="1454188800000"></div>
+                <a href="detail.html">
+                  <img src="images/9.gif" >
+                </a>
+                <span>￥：1860</span>
+              </li>
+              <li>
+                <div class="endtime" value="1454188800000"></div>
+                <a href="detail.html">
+                  <img src="images/9.gif" >
+                </a>
+                <span>￥：1860</span>
+              </li>
+
+            </ul>
+          </div>
+          <div class="wrap">
+            <ul>
+              <li>
+                <div class="endtime" value="1454188800000"></div>
+                <a href="detail.html">
+                  <img src="images/9.gif" >
+                </a>
+                <span>￥：1860</span>
+              </li>
+              <li>
+                <div class="endtime" value="1454188800000"></div>
+                <a href="detail.html">
+                  <img src="images/9.gif" >
+                </a>
+                <span>￥：1860</span>
+              </li>
+              <li>
+                <div class="endtime" value="1454188800000"></div>
+                <a href="detail.html">
+                  <img src="images/9.gif" >
+                </a>
+                <span>￥：1860</span>
+              </li>
+
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script>
+    var slider =
+      Swipe(document.getElementById('slider'),{
+      auto: 3000,// 每3秒切换图片
+    continuous: true,
+    callback: function(pos) { //pos  返回的是索引值
+
+    }
+    });
+    </script>
+
+    <!--海外同步专区-->
+    <section id="overseas">
+      <div class="fuji">
+        <h3>海外同步专区</h3>
+        <a href="product-detail.html"><img src="images/18.gif" class="moremore"></img></a>
+      </div>
+    </section>
+    <section class="overseasevery">
+      <div class="overseasall">
+        <div class="overseasalls">
+          <ul>
+            <li>
+              <a href="detail.html"><img src="images/12.gif"/></a>
+              <span>翻转盖玻璃饮料瓶</span>
+              <ol class="money">
+                <li class="dollor">￥320</li>
+                <li class="dollor2">640</li>
+                <li class="dollor3">5.0折</li>
+              </ol>
+            </li>
+            <li>
+              <a href="detail.html"><img src="images/13.gif"/></a>
+              <span>Meal-mat 婴儿餐垫</span>
+              <ol class="money">
+                <li class="dollor">￥120</li>
+                <li class="dollor2">340</li>
+                <li class="dollor3">5.0折</li>
+              </ol>
+            </li>
+          </ul>
+        </div>
+        <div class="overseasalls">
+          <ul>
+            <li>
+              <a href="detail.html"><img src="images/14.gif"/></a>
+              <span>swaddles 襁褓包巾</span>
+              <ol class="money">
+                <li class="dollor">￥260</li>
+                <li class="dollor2">520</li>
+                <li class="dollor3">5.0折</li>
+              </ol>
+            </li>
+            <li>
+              <a href="detail.html"><img src="images/15.gif"/></a>
+              <span>My Natural 环保牙胶</span>
+              <ol class="money">
+                <li class="dollor">￥69</li>
+                <li class="dollor2">130</li>
+                <li class="dollor3">5.0折</li>
+              </ol>
+            </li>
+          </ul>
+        </div>
+        <div class="overseasallss">
+          <ul>
+            <li>
+              <a href="detail.html"><img src="images/16.gif"/></a>
+              <span>Burpy Bibs口水巾</span>
+              <ol class="money">
+                <li class="dollor">￥60</li>
+                <li class="dollor2">120</li>
+                <li class="dollor3">5.0折</li>
+              </ol>
+            </li>
+            <li>
+              <a href="detail.html"><img src="images/17.gif"/></a>
+              <span>Classic Pop Mold冰棒</span>
+              <ol class="money">
+                <li class="dollor">￥270</li>
+                <li class="dollor2">540</li>
+                <li class="dollor3">5.0折</li>
+              </ol>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+
+    <!--FushionbBaby特惠-->
+    <section id="tehui">
+      <div class="fuji">
+        <h3>FushionbBaby特惠</h3>
+        <a href="product-detail.html"><img src="images/18.gif" class="moremore"></img></a>
+      </div>
+    </section>
+    <section class="overseasevery">
+      <div class="overseasall">
+        <div class="overseasalls">
+          <ul>
+            <li>
+              <a href="detail.html"><img src="images/12.gif"/></a>
+              <span>翻转盖玻璃饮料瓶</span>
+              <ol class="money">
+                <li class="dollor">￥320</li>
+                <li class="dollor2">640</li>
+                <li class="dollor3">5.0折</li>
+              </ol>
+            </li>
+            <li>
+              <a href="detail.html"><img src="images/13.gif"/></a>
+              <span>Meal-mat 婴儿餐垫</span>
+              <ol class="money">
+                <li class="dollor">￥120</li>
+                <li class="dollor2">340</li>
+                <li class="dollor3">5.0折</li>
+              </ol>
+            </li>
+          </ul>
+        </div>
+        <div class="overseasalls">
+          <ul>
+            <li>
+              <a href="detail.html"><img src="images/14.gif"/></a>
+              <span>swaddles 襁褓包巾</span>
+              <ol class="money">
+                <li class="dollor">￥260</li>
+                <li class="dollor2">520</li>
+                <li class="dollor3">5.0折</li>
+              </ol>
+            </li>
+            <li>
+              <a href="detail.html"><img src="images/15.gif"/></a>
+              <span>My Natural 环保牙胶</span>
+              <ol class="money">
+                <li class="dollor">￥69</li>
+                <li class="dollor2">130</li>
+                <li class="dollor3">5.0折</li>
+              </ol>
+            </li>
+          </ul>
+        </div>
+        <div class="overseasallss">
+          <ul>
+            <li>
+              <a href="detail.html"><img src="images/16.gif"/></a>
+              <span>Burpy Bibs口水巾</span>
+              <ol class="money">
+                <li class="dollor">￥60</li>
+                <li class="dollor2">120</li>
+                <li class="dollor3">5.0折</li>
+              </ol>
+            </li>
+            <li>
+              <a href="detail.html"><img src="images/17.gif"/></a>
+              <span>Classic Pop Mold冰棒</span>
+              <ol class="money">
+                <li class="dollor">￥270</li>
+                <li class="dollor2">540</li>
+                <li class="dollor3">5.0折</li>
+              </ol>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!--FushionBaby品牌购-->
+    <section id="pinpai">
+      <div class="fuji">
+        <h3>FushionbBaby品牌购</h3>
+        <a href="product-detail.html"><img src="images/18.gif" class="moremore"></img></a>
+      </div>
+    </section>
+    <section>
+      <div class="pinpailogo1">
+        <ul>
+          <li>
+            <a href="product-detail.html"><img src="images/19.gif"/></a>
+          </li>
+          <li>
+            <a href="product-detail.html"><img src="images/20.gif"/></a>
+          </li>
+          <li>
+            <a href="product-detail.html"><img src="images/21.gif"/></a>
+          </li>
+        </ul>
+      </div>
+      <div class="pinpailogo1">
+        <ul>
+          <li>
+            <a href="product-detail.html"><img src="images/22.gif"/></a>
+          </li>
+          <li>
+            <a href="product-detail.html"><img src="images/23.gif"/></a>
+          </li>
+          <li>
+            <a href="product-detail.html"><img src="images/23.gif"/></a>
+          </li>
+        </ul>
+      </div>
+      <div class="pinpailogo1">
+        <ul>
+          <li>
+            <a href="product-detail.html"><img src="images/24.gif"/></a>
+          </li>
+          <li>
+            <a href="product-detail.html"><img src="images/25.gif"/></a>
+          </li>
+          <li>
+            <a href="product-detail.html"><img src="images/25.gif"/></a>
+          </li>
+        </ul>
+      </div>
+      <div class="pinpailogo1">
+        <ul>
+          <li>
+            <a href="product-detail.html"><img src="images/26.gif"/></a>
+          </li>
+          <li>
+            <a href="product-detail.html"><img src="images/27.gif"/></a>
+          </li>
+          <li>
+            <a href="product-detail.html"><img src="images/27.gif"/></a>
+          </li>
+        </ul>
+      </div>
+    </section>
+    <!--返回顶部   footer-->
+    <script type="text/javascript" src="js/footer.js"></script>
+
+
+
+
+  </body>
+</html>

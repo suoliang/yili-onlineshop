@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>商品介绍</title>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="css/style1.css"/>
+    <script src="js/min/mui.min.js"></script>
+    <style>
+    	.mui-table-view:before {
+		    top: 0px;
+		}
+		#item2 img{width: 100%;height: auto;float:left;}
+	</style>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+	    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	    <h1 class="mui-title">
+	    	<div id="segmentedControl" class="mui-segmented-control">
+		    	<a href="#item1" class="mui-control-item mui-active" style="text-align:right;padding-right:5px;">商品介绍</a>
+		    	<a href="#item2" class="mui-control-item" style="text-align:left;padding-left:5px;">图文详情</a>
+	    	</div>
+	    </h1>
+	</header>
+
+	<div class="mui-content mB100">
+		<div id="item1" class="mui-control-content mui-active">
+			<div id="slider" class="mui-slider" >
+				<div class="mui-slider-group mui-slider-loop">
+					<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+					<div class="mui-slider-item mui-slider-item-duplicate">
+						<a href="#">
+							<img src="picture/shangpin_03.png">  <!--第四张-->
+						</a>
+					</div>
+					<!-- 第一张 -->
+					<div class="mui-slider-item">
+						<a href="#">
+							<img src="picture/shangpin_03.png">
+						</a>
+					</div>
+					<!-- 第二张 -->
+					<div class="mui-slider-item">
+						<a href="#">
+							<img src="picture/shangpin_03.png">
+						</a>
+					</div>
+					<!-- 第三张 -->
+					<div class="mui-slider-item">
+						<a href="#">
+							<img src="picture/shangpin_03.png">
+						</a>
+					</div>
+					<!-- 第四张 -->
+					<div class="mui-slider-item">
+						<a href="#">
+							<img src="picture/shangpin_03.png">
+						</a>
+					</div>
+					<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+					<div class="mui-slider-item mui-slider-item-duplicate">
+						<a href="#">
+							<img src="picture/shangpin_03.png"> <!--第一张-->
+						</a>
+					</div>
+				</div>
+				<div class="mui-slider-indicator">
+					<div class="mui-indicator mui-active"></div>
+					<div class="mui-indicator"></div>
+					<div class="mui-indicator"></div>
+					<div class="mui-indicator"></div>
+				</div>
+			</div>
+			<div class="mui-table-view">
+				<div class="mui-table-view-cell">
+					<p class="color-black">Five Plus2015新女夏装拼接镂空提花无袖针织连衣裙2152084040</p>
+					<p>原价：<del>￥399.00</del></p>
+					<div class="hot">积分：500</div>
+				</div>
+			</div>
+			<div class=" mui-table-view mT20 mui-table-view-cell">
+				<big class="mui-navigate-right">商品评价</big>
+				<p >评分：
+					<span class="mui-icon mui-icon-star-filled hot"></span>
+					<span class="mui-icon mui-icon-star-filled hot"></span>
+					<span class="mui-icon mui-icon-star-filled hot"></span>
+					<span class="mui-icon mui-icon-star-filled hot"></span>
+					<span class="mui-icon mui-icon-starhalf hot"></span>
+				</p>
+				<p>评论：很喜欢这件衣服，没有色差，非常满意哦！</p>
+			</div>
+		</div>
+		<div id="item2" class="mui-control-content">
+			<img src="picture/2.jpg"/>
+			<img src="picture/2.jpg"/>
+			<img src="picture/4.jpg"/>
+			<img src="picture/4.jpg"/>
+			<img src="picture/shangpin_03.png">
+		</div>
+	</div>
+	<div class="mui-bar mui-bar-tab">
+		<button class="mui-btn  mui-btn-red mui-btn-big mui-btn-block">提交订单</button>
+	</div>
+    <script type="text/javascript" charset="utf-8">
+        mui.init({
+                swipeBack:true //启用右滑关闭功能
+            });
+        var gallery = mui('.mui-slider');
+            gallery.slider({
+              interval:5000//自动轮播周期，若为0则不自动播放，默认为0；
+            });
+    </script>
+</body>
+</html>
+
+

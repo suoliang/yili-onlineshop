@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.sku.cms.dao.SkuCategoryDao">
+	<resultMap id="skuCategoryResultMap" type="SkuCategory">
+		<id column="id" property="id" />
+		<result column="code" property="code" />
+		<result column="create_time" property="createTime"/>
+		<result column="name" property="name" />
+		<result column="show_order" property="showOrder" />
+		<result column="version" property="version" />
+		<result column="grandcategory_code" property="grandcategoryCode" />
+		<result column="category_level" property="categoryLevel" />
+		<result column="english_name" property="englishName" />
+		<result column="keywords" property="keywords" />
+		<result column="is_show" property="isShow" />
+		<result column="category_logo_url" property="categoryLogoUrl" />
+	<!-- 	<result column="jump_style" property="jumpStyle" /> -->
+		<result column="create_id" property="createId" />
+		<result column="update_time" property="updateTime" />
+		<result column="update_id" property="updateId" />
+		<result column="link_url" property="linkUrl" />
+		
+		<result column="store_code" property="storeCode" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		 select 
+	     		id, code, create_time, name, show_order, version, grandcategory_code,
+				category_level,english_name, keywords, is_show, category_logo_url,
+				create_id, update_time, update_id, link_url,store_code
+			from 
+				t_sku_category 
+	</sql>
+	
+	<insert id="add" parameterType="SkuCategory" useGeneratedKeys="true" keyProperty="id">
+		insert into
+			t_sku_category (id, code, create_time,name,show_order,version,grandcategory_code,
+				category_level,english_name,keywords, is_show,category_logo_url,
+				create_id,update_time,update_id,link_url,store_code)
+		values (#{id}, #{code}, now(),#{name},#{showOrder}, now(),#{grandcategoryCode},
+				#{categoryLevel},#{englishName},#{keywords}, #{isShow},#{categoryLogoUrl},
+				#{createId},now(),#{updateId},#{linkUrl},#{storeCode})
+	</insert>
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from 
+			t_sku_category
+		where 
+			id = #{id}
+	</delete>
+	<update id="update">
+		update 
+			t_sku_category 
+		<set>
+			<if test="code !=null and code !=''">
+				code = #{code},
+			</if>
+			<if test="name !=null and name !=''">
+				name = #{name},
+			</if>
+			<if test="showOrder !=null and showOrder !=''">	
+				show_order = #{showOrder},
+			</if>
+			<if test="categoryLevel !=null and categoryLevel !=''">	
+				category_level = #{categoryLevel},
+			</if>
+			<if test="grandcategoryCode !=null and grandcategoryCode !=''">	
+				grandcategory_code = #{grandcategoryCode},
+			</if>	
+			<if test="englishName !=null and englishName !=''">	
+				english_name = #{englishName},
+			</if>
+			<if test="keywords !=null and  keywords !=''">	
+				keywords = #{keywords},
+			</if>
+			<if test="isShow !=null and isShow !=''">	
+				is_show = #{isShow},
+			</if>
+			<if test="categoryLogoUrl !=null and categoryLogoUrl !=''">
+				category_logo_url =#{categoryLogoUrl},
+			</if>	
+			<if test="linkUrl !=null and linkUrl !=''">
+				link_url = #{linkUrl},
+			</if>
+		    	store_code=#{storeCode},
+			version = now()
+		</set>
+		where 
+			id = #{id}
+	</update>
+	<select id="findById" resultMap="skuCategoryResultMap">
+	    <include refid="Base_Column_List" />
+		where 
+			id = #{id}
+	</select>
+	
+	<select id="findMaxCategoryCode" resultType="java.lang.String" >
+		select 
+			max(code)
+		from 
+			t_sku_category
+			
+		<where>
+			<if test="categoryLevel !=null and categoryLevel != ''">
+				and category_level = #{categoryLevel}
+			</if>
+			
+			<if test="storeCode == null or storeCode == '' or storeCode=='999'">
+		    	and (store_code is null or store_code='' or store_code='999')
+		    </if>
+		 	<if test="storeCode != null and storeCode != '' and storeCode!='999'">
+		    	and store_code=#{storeCode}
+		    </if>
+		</where>
+			
+	</select>
+
+	<sql id="skuCategory_where">
+		<where>
+			<if test="name !=null and name != ''">
+				and name like "%"#{name}"%"
+			</if>
+			<if test="code !=null and code != ''">
+				and code = #{code}
+			</if>
+			<if test="categoryLevel !=null and categoryLevel != ''">
+				and category_level = #{categoryLevel}
+			</if>
+			<if test="isShow !=null and isShow != ''">
+				and is_show = #{isShow}
+			</if>
+			<if test="grandcategoryCode !=null and grandcategoryCode != ''">
+				and grandcategory_code = #{grandcategoryCode}
+			</if>
+			<if test="isLabelRelationed == 'y'.toString() and relationedCategoryCodes !=null and relationedCategoryCodes != ''">
+				and code in (${relationedCategoryCodes}) 
+			</if>
+			<if test="isLabelRelationed == 'n'.toString() and relationedCategoryCodes !=null and relationedCategoryCodes != ''">
+				and code not in (${relationedCategoryCodes}) 
+			</if>
+			<if test="isLabelRelationed == 'y'.toString() and (relationedCategoryCodes ==null or relationedCategoryCodes == '')">
+				and 1!=1
+			</if>
+			<if test="isLabelRelationed == 'n'.toString() and (relationedCategoryCodes ==null or relationedCategoryCodes == '')">
+				and 1=1
+			</if>
+			<if test="storeCode == null or storeCode == '' or storeCode=='999'">
+		    	and (store_code is null or store_code='' or store_code='999')
+		    </if>
+		 	<if test="storeCode != null and storeCode != '' and storeCode!='999'">
+		    	and store_code=#{storeCode}
+		    </if>
+			
+		</where>
+	</sql>
+	
+	<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="skuCategoryResultMap" parameterType="Map">
+		<include refid="Base_Column_List" />
+		<include refid="skuCategory_where" />
+		order by create_time desc,show_order asc
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">	
+		select 
+			count(id)
+		from 
+			t_sku_category
+		<include refid="skuCategory_where" />
+	</select>
+	
+
+	<select id="queryByCondition" resultType="list" resultMap="skuCategoryResultMap" parameterType="Map">
+		<include refid="Base_Column_List" />
+		<where>
+			<if test="name !=null and name != ''">
+				and name like "%"#{name}"%"
+			</if>
+			<if test="code !=null and code != ''">
+				and code = #{code}
+			</if>
+			<if test="categoryLevel !=null and categoryLevel != ''">
+				and category_level = #{categoryLevel}
+			</if>
+			<if test="isShow !=null and isShow != ''">
+				and is_show = #{isShow}
+			</if>
+			<if test="grandCode !=null and grandCode != ''">
+				and grandcategory_code = #{grandCode}
+			</if>
+			<if test="storeCode == null or storeCode == '' or storeCode =='999'">
+		    	and (store_code is null or store_code='' or store_code='999')
+		    </if>
+			
+		 	<if test="storeCode != null and storeCode != '' and storeCode!='999'">
+		    	and store_code=#{storeCode}
+		    </if>
+		</where>
+		order by create_time desc,show_order asc
+		<if test="start!=null and limit!=null">
+			LIMIT #{start},#{limit}
+		</if>
+	</select>
+	
+	
+
+	
+</mapper>

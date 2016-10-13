@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.sku.dao.SkuImageStandardConfigDao">
+	<resultMap id="skuImageStandardConfigMap" type="skuImageStandardConfig">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="code" property="code" />
+		<result column="size" property="size" />
+	</resultMap>
+	
+	<select id="findByCode" resultMap="skuImageStandardConfigMap" parameterType="java.lang.String">
+		select 
+			id,name,code,size
+		from 
+			t_sku_image_standard_config
+		where 
+			code = #{code}
+	</select>
+</mapper>

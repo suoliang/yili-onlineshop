@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.order.dao.OrderEpointDao">
+	<resultMap id="OrderEpointResultMap" type="OrderEpoint">
+		<id column="id" property="id" />
+		<result column="order_code" property="orderCode" />
+		<result column="member_id" property="memberId" />
+		<result column="member_name" property="memberName" />
+		<result column="sku_name" property="skuName"/>
+		<result column="sku_code" property="skuCode"/>
+		<result column="size" property="size"/>
+		<result column="color" property="color"/>
+		<result column="quantity" property="quantity"/>
+		<result column="order_status" property="orderStatus"/>
+		<result column="source_code" property="sourceCode"/>
+		<result column="total_epoint_used" property="totalEpointUsed"/>
+		<result column="memo" property="memo"/>
+		<result column="create_time" property="createTime"/>
+		<result column="update_time" property="updateTime"/>
+		<result column="update_id" property="updateId"/>
+		<result column="order_type" property="orderType"/>
+	</resultMap>
+
+	<insert id="add" parameterType="OrderEpoint">
+		insert into 
+			t_epoint_order_base
+		(id,order_code,member_id,member_name,sku_code,sku_name,size,color,quantity,order_status,source_code,
+		total_epoint_used,memo,create_time,update_time,update_id,order_type)
+	    values
+	    (#{id},#{orderCode},#{memberId},#{memberName},#{skuCode},#{skuName},#{size},#{color},#{quantity},
+	    #{orderStatus},#{sourceCode},#{totalEpointUsed},#{memo},now(),now(),#{updateId},#{orderType})
+	</insert>
+	
+	<delete id="deleteById">
+		delete from t_epoint_order_base where id=#{id}
+	</delete>
+	
+	<sql id="integral_column">	
+	    select 
+	       id, order_code, member_id, member_name,sku_name, sku_code, size, color, 
+	       quantity, order_status, source_code, total_epoint_used, memo, create_time,update_time,
+	       update_id,order_type   
+	    from t_epoint_order_base
+	</sql>
+
+	
+	
+	<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="OrderEpointResultMap" parameterType="Map" >
+		<include refid="integral_column"/>
+		<include refid="integral_where"/>
+		 order by create_time desc
+		<if test="start!=null and limit!=null ">
+			limit #{start},#{limit}
+		</if>
+	</select>
+
+	<select id="getTotal"   parameterType="Map" resultType="java.lang.Integer">
+		select count(1) from t_epoint_order_base 
+		<include refid="integral_where"/>
+	</select>
+	
+	<sql id="integral_where">
+	   <where>
+			<if test="skuName !=null and skuName !=''">
+	    	    sku_name LIKE "%"#{skuName}"%"  
+		    </if>
+		    <if test="skuCode !=null and skuCode !=''">
+		    	AND sku_code LIKE "%"#{skuCode}"%"  
+		    </if>
+		    <if test="sourceCode !=null and sourceCode !=''">
+		    	AND source_code LIKE "%"#{sourceCode}"%"  
+		    </if>
+			<if test="createTimeFrom != null and createTimeFrom !=''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+				]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+		</where>
+	</sql>
+</mapper>

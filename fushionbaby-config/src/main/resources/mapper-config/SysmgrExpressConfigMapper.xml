@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.config.dao.SysmgrExpressConfigDao" >
+  <resultMap id="SECResultMap" type="SysmgrExpressConfig" >
+    <id column="id" property="id" />
+    <result column="express_company_name" property="expressCompanyName" />
+    <result column="express_company_code" property="expressCompanyCode" />
+    <result column="memo" property="memo" />
+  </resultMap>
+  <insert id="add" parameterType="SysmgrExpressConfig" >
+    insert into t_sysmgr_express_config (id, express_company_name, express_company_code,memo)
+    values (#{id}, #{expressCompanyName}, #{expressCompanyCode}, #{memo})
+  </insert>
+  
+  <delete id="deleteById" parameterType="java.lang.Long" >
+    delete from t_sysmgr_express_config
+      where id = #{id}
+  </delete>
+  
+    
+  
+  
+  <select id="findById" resultMap="SECResultMap" parameterType="java.lang.Long" >
+    select   
+         id, express_company_name, express_company_code,memo 
+      from 
+         t_sysmgr_express_config
+      where 
+         id = #{id}
+  </select>
+  
+  <select id="findByExpressCompanyName" resultMap="SECResultMap" parameterType="java.lang.String" >
+    select 
+         id, express_company_name, express_company_code,memo
+    from t_sysmgr_express_config
+    where 
+        express_company_name = #{expressCompanyName}
+  </select>
+  
+  <select id="findAll" resultMap="SECResultMap" resultType="list" >
+    select 
+       id, express_company_name, express_company_code, memo
+    from t_sysmgr_express_config
+  </select>
+  
+    <!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="SECResultMap" parameterType="Map" >
+       select 
+         id, express_company_name, express_company_code, memo
+       from t_sysmgr_express_config
+		<where>
+			<if test="expressCompanyCode !=null and expressCompanyCode !=''">
+	    	   AND  express_company_code =#{expressCompanyCode} 
+	        </if>
+	        <if test="expressCompanyName !=null and expressCompanyName !=''">
+	    	   AND  express_company_name LIKE "%"#{expressCompanyName}"%"  
+	        </if>
+		</where>
+		order by id desc
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select 
+			count(id)
+		from 
+	        t_sysmgr_express_config
+		<where>
+			<if test="expressCompanyCode !=null and expressCompanyCode !=''">
+	    	   AND  express_company_code =#{expressCompanyCode} 
+	        </if>
+	        <if test="expressCompanyName !=null and expressCompanyName !=''">
+	    	   AND  express_company_name LIKE "%"#{expressCompanyName}"%"  
+	        </if>
+		</where>
+  </select>
+  
+  
+</mapper>

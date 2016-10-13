@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.push.dao.SysmgrJpushDao" >
+  <resultMap id="SysmgrJpushResultMap" type="SysmgrJpush" >
+     <id column="id" property="id" />
+     <result column="push_time" property="pushTime" />
+     <result column="push_title" property="pushTitle" />
+     <result column="push_content" property="pushContent" />
+     <result column="push_tag" property="pushTag" />
+     <result column="push_alias" property="pushAlias" />
+     <result column="push_isok" property="pushIsOk" />
+     <result column="push_url" property="pushUrl" />
+     <result column="message_type" property="messageType" />
+     <result column="push_device" property="pushDevice" />
+  </resultMap>
+  <insert id="add" parameterType="SysmgrJpush" >
+    insert into 
+        t_sysmgr_jpush (id, push_time, push_title,push_content,push_tag,push_alias,push_isok,push_url,message_type,push_device)
+    values(#{id}, #{pushTime}, #{pushTitle},#{pushContent},#{pushTag},#{pushAlias},#{pushIsOk},#{pushUrl},#{messageType},#{pushDevice})
+  </insert>
+  <delete id="deleteById" parameterType="java.lang.Long" >
+    delete from  
+            t_sysmgr_jpush
+       where 
+            id = #{id}
+  </delete>
+  <update id="update" parameterType="SysmgrJpush" >
+    update 
+         t_sysmgr_jpush
+       set 
+       <if test="pushTime !=null and pushTime!=''">
+          push_time = #{pushTime},
+       </if> 
+       <if test="pushTitle!=null and pushTitle!=''">
+           push_title = #{pushTitle},
+       </if>
+       <if test="pushContent!=null and pushContent!=''">
+           push_content = #{pushContent},
+       </if>
+       <if test="pushTag!=null and pushTag!=''">
+           push_tag=#{pushTag},
+       </if>
+       <if test="pushAlias!=null and pushAlias!=''"> 
+            push_alias=#{pushAlias},
+        </if>
+       
+       <if test="pushIsOk !=null and pushIsOk !=''">  
+         push_isok=#{pushIsOk},
+          </if>
+       <if test="pushUrl !=null and pushUrl !=''">   
+           push_url=#{pushUrl},
+         </if>
+       <if test="messageType !=null and messageType !=''">   
+           message_type=#{messageType},
+         </if>
+       <if test="pushDevice !=null and pushDevice !=''">   
+           push_device=#{pushDevice},
+         </if>
+         id = #{id}
+        where id = #{id}
+  </update>
+  
+  <select id="findById" resultMap="SysmgrJpushResultMap" parameterType="java.lang.Long" >
+    select 
+          id, push_time, push_title,push_content,push_tag,push_alias,push_isok,push_url,message_type,push_device
+    from 
+          t_sysmgr_jpush   where id = #{id}
+  </select>
+  
+  
+  <select id="findAll" resultMap="SysmgrJpushResultMap" resultType="list" >
+    select 
+         id, push_time, push_title,push_content,push_tag,push_alias,push_isok,push_url,message_type,push_device
+    from 
+         t_sysmgr_jpush
+  </select>
+  
+    <!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="SysmgrJpushResultMap" parameterType="Map" >
+       select 
+           id, push_time, push_title,push_content,push_tag,push_alias,push_isok,push_url,message_type,push_device
+       from 
+           t_sysmgr_jpush
+		<where>
+			<if test="pushTitle !=null and pushTitle !=''">
+	    	   AND  push_title LIKE "%"#{pushTitle}"%" 
+	        </if>
+	        	<if test="pushAlias !=null and pushAlias !=''">
+	    	   AND  push_alias LIKE "%"#{pushAlias}"%"  
+	        </if>
+		</where>
+		   order by id desc
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select 
+			count(id)
+		from 
+	        t_sysmgr_jpush
+		<where>
+			<if test="pushTitle !=null and pushTitle !=''">
+	    	   AND  push_title LIKE "%"#{pushTitle}"%"
+	        </if>
+	     <if test="pushAlias !=null and pushAlias !=''">
+	    	   AND  push_alias LIKE "%"#{pushAlias}"%"  
+	        </if>
+		</where>
+  </select>
+  
+  
+</mapper>

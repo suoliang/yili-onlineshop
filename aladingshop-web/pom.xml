@@ -1,0 +1,144 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.fushionbaby.parent</groupId>
+    <artifactId>fushionbaby-parent</artifactId> 
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <groupId>com.aladingshop.web</groupId>
+  <artifactId>aladingshop-web</artifactId>
+  <packaging>war</packaging>
+  <name>aladingshop-web</name>
+  
+  
+   <distributionManagement>
+		<repository>
+			<id>Yili-maven-releases</id>
+			<name>Yili-maven-releases</name>
+			<url>http://192.168.1.39:8081/nexus/content/repositories/Yili-maven-releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>Yili-maven-snapshots</id>
+			<name>Yili-maven-snapshots</name>
+			<url>http://192.168.1.39:8081/nexus/content/repositories/Yili-maven-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement> 
+ 
+
+	<dependencies>
+
+<!-- *********************fushionbaby-jar-begin*************************** -->
+		<dependency>
+			<groupId>com.fushionbaby.common</groupId>
+			<artifactId>fushionbaby-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fushionbaby.cache</groupId>
+			<artifactId>fushionbaby-cache</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fushionbaby.facade</groupId>
+			<artifactId>fushionbaby-facade</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.fushionbaby.payment</groupId>
+			<artifactId>fushionbaby-payment</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.aladingshop.alabao</groupId>
+			<artifactId>aladingshop-alabao</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<!-- **************fushionbaby-jar-end*********************************** -->
+
+
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>2.3.21</version>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>0.11.4</version>
+		</dependency>
+		<!-- web银联包 -->
+		<dependency>
+		  <groupId>upacp_sdk</groupId>
+		  <artifactId>upacp_sdk-web</artifactId>
+		  <version>1.0.0</version>
+		</dependency>
+		
+		<dependency>
+		  <groupId>bcprov-jdk16</groupId>
+		  <artifactId>bcprov-jdk16</artifactId>
+		  <version>1.45</version>
+		</dependency>
+	</dependencies>
+	
+	<build>
+		<finalName>aladingshop-web</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<filters>
+			<filter>src/main/resources/conf/aladingshop-${env}.properties</filter>
+		</filters>
+		<plugins>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-jar</id>
+						<phase>package</phase>
+						<configuration>
+							<tasks>
+								<delete dir="c:/alljar/creditcard_web.war" />
+								<copy todir="c:/alljar/">
+									<fileset dir="target/">
+										<include name="creditcard_web.war" />
+									</fileset>
+								</copy>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<env>dev</env>
+			</properties>
+		</profile>
+		<profile>
+			<id>prod</id>
+			<properties>
+				<env>prod</env>
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<env>test</env>
+			</properties>
+		</profile>
+	</profiles>
+</project>

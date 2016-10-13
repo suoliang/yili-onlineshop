@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>fushionbaby-android-App下载页</title>
+</head>
+<script type="text/javascript">
+
+	window.onload = function() {
+		var browser = navigator.userAgent
+		if(browser.indexOf('iPhone') > -1){
+		window.location.href="https://itunes.apple.com/us/app/dou-shi-bao/id953358017?mt=8";
+
+		}else if(browser.indexOf('Android') > -1 || browser.indexOf('Linux') > -1){
+			window.open("http://www.fushionbaby.com/app_download/index.html");
+		}else{
+			//document.getElementById("open").click();
+			window.open("http://www.fushionbaby.com");
+		}
+	 }
+
+</script>
+<body>
+	<a id="open" href="https://itunes.apple.com/us/app/shu-du-zhi-zhanhd/id646357480?ls=1&mt=8" target="_blank"></a>
+</body>
+</html>

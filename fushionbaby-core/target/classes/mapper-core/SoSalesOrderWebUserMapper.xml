@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fushionbaby.core.dao.SoSalesOrderWebUserDao">
+  <resultMap id="BaseResultMap" type="SoSalesOrder">
+  
+    <id column="id" property="id"  />
+    <result column="actual_transfer_fee" property="actualTransferFee"  />
+    <result column="cancel_time" property="cancelTime"  />
+    <result column="code" property="code"  />
+    <result column="create_time" property="createTime"  />
+    
+    <result column="finance_status" property="financeStatus"  />
+    <result column="invoice_type" property="invoiceType"  />
+    <result column="is_invoice" property="isInvoice"  />
+    <result column="invoice_title" property="invoiceTitle"  />
+    <result column="is_refused" property="isRefused"  />
+    
+    <result column="last_receive_time" property="lastReceiveTime"  />
+    <result column="memo" property="memo"  />
+    <result column="source_code" property="sourceCode"  />
+    <result column="order_point_gained" property="orderPointGained"  />
+    <result column="payable_transfer_fee" property="payableTransferFee"  />
+    
+    <result column="payment_complete_time" property="paymentCompleteTime"  />
+    <result column="payment_type" property="paymentType"  />
+    <result column="trans_status" property="transStatus"  />
+    <result column="sys_cancel_reason" property="sysCancelReason"  />
+    <result column="total_actual" property="totalActual"  />
+    
+    <result column="total_af_discount" property="totalAfDiscount"  />
+    <result column="total_bf_discount" property="totalBfDiscount"  />
+    <result column="total_point_used" property="totalPointUsed"  />
+    <result column="trans_code" property="transCode"  />
+    <result column="trans_name" property="transName"  />
+    <result column="send_date" property="sendDate"  />
+    
+    <result column="version" property="version"  />
+    <result column="order_status" property="orderStatus"  />
+    <result column="member_id" property="memberId"  />
+    <result column="is_delete" property="isDelete"  />
+	<result column="member_name" property="memberName"  />
+	
+	<result column="cardno" property="cardno"  />
+    <result column="card_amount" property="cardAmount"  />
+	<result column="tax_price" property="taxPrice"  />
+	<result column="is_handle_point" property="isHandlePoint"  />
+	<result column="use_wallet_money" property="useWalletMoney"  />
+	<result column="epoints_redeem_money" property="epointsRedeemMoney"  />
+	
+	<result column="sku_discount_total" property="skuDiscountTotal"  />
+	<result column="audit_fail_reason" property="auditFailReason"  />
+	
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    id, actual_transfer_fee, cancel_time,
+    code, create_time, finance_status, 
+    invoice_type, is_invoice,invoice_title, is_refused,
+    last_receive_time, memo, source_code, 
+    order_point_gained, payable_transfer_fee, payment_complete_time, 
+    payment_type, trans_status, sys_cancel_reason, 
+    total_actual, total_af_discount, total_bf_discount, 
+    total_point_used, trans_code,  trans_name,send_date, 
+    version, order_status, member_id, 
+    is_delete,member_name,
+    cardno,card_amount,tax_price,is_handle_point,sku_discount_total,audit_fail_reason,epoints_redeem_money,use_wallet_money
+  </sql>
+   <insert id="add" parameterType="SoSalesOrder">
+    insert into t_so_sales_order (id, actual_transfer_fee, cancel_time, 
+      code, create_time, finance_status, 
+      invoice_type,is_invoice, invoice_title, is_refused, 
+      last_receive_time, memo, source_code, 
+      order_point_gained, payable_transfer_fee, payment_complete_time, 
+      payment_type, trans_status, sys_cancel_reason, 
+      total_actual, total_af_discount, total_bf_discount, 
+      total_point_used, trans_code, trans_name,send_date,
+      version, order_status, member_id,member_name,
+      is_delete,cardno,card_amount,tax_price,is_handle_point,
+      sku_discount_total,epoints_redeem_money,use_wallet_money)
+    values (#{id}, #{actualTransferFee}, #{cancelTime}, 
+      #{code}, now(), #{financeStatus}, 
+      #{invoiceType}, #{isInvoice}, #{invoiceTitle}, #{isRefused}, 
+      #{lastReceiveTime}, #{memo}, #{sourceCode}, 
+      #{orderPointGained}, #{payableTransferFee}, #{paymentCompleteTime}, 
+      #{paymentType}, #{transStatus}, #{sysCancelReason}, 
+      #{totalActual}, #{totalAfDiscount}, #{totalBfDiscount}, 
+      #{totalPointUsed}, #{transCode}, #{transName},#{sendDate},
+      #{version}, #{orderStatus}, #{memberId},#{memberName},
+      #{isDelete}, #{cardno}, #{cardAmount}, #{taxPrice}, #{isHandlePoint},
+      #{skuDiscountTotal},#{epointsRedeemMoney},#{useWalletMoney})
+  </insert>
+  
+  <!-- 订单列表查询,app分页查询  -->
+  <select id="getListPage" parameterType="Map" resultType="list" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List" /> 
+	from t_so_sales_order
+	<where>
+		<if test="memberId != null and memberId != ''">
+			<![CDATA[
+				and member_id = #{memberId}
+			]]>
+	    </if>
+		<if test="orderStatus != null and orderStatus != ''">
+			<![CDATA[
+				and order_status = #{orderStatus}
+			]]>
+	    </if>
+	    <![CDATA[
+	    	and (is_delete is null or is_delete ='n')
+	    ]]>
+    </where>
+    order by create_time desc
+	<![CDATA[
+			LIMIT ${start},${limit}
+	]]>
+  </select>
+  <!-- 查询总条数 -->
+  <select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(id) 
+			from t_so_sales_order
+		<where>
+			<if test="memberId != null and memberId != ''">
+				<![CDATA[
+					and member_id = #{memberId}
+				]]>
+		    </if>
+			<if test="orderStatus != null and orderStatus != ''">
+				<![CDATA[
+					and order_status = #{orderStatus}
+				]]>
+		    </if>
+		    <![CDATA[
+		    	and (is_delete is null or is_delete ='n')
+		    ]]>
+	    </where>
+	</select>
+	 <!-- 通过条件查询订单列表 -->
+	 <select id = "queryByCondition" resultMap="BaseResultMap" resultType="list" parameterType="com.fushionbaby.core.condition.SoSalesOrderQueryConditionUser">
+		select 
+			 <include refid="Base_Column_List" />
+		from 
+			t_so_sales_order
+		<where>
+			<if test="code !=null and code !=''">
+				and code = #{code}
+			</if>
+			<if test="financeStatus!=null and financeStatus !=''" >
+				and finance_status = #{financeStatus}
+			</if>
+			<if test="orderStatus !=null and orderStatus !=''" >
+				and order_status = #{orderStatus}
+			</if>
+			<if test="paymentType !=null and paymentType !=''" >
+				and payment_type =#{paymentType}
+			</if>
+			<if test="isDelete != null and isDelete !=''">
+				and is_delete =#{isDelete}
+			</if>
+			<if test = "memberId !=null and memberId !=''" >
+				and member_id =#{memberId}
+			</if>
+			<if test = "memberName != null and memberName !=''">
+				and member_name = #{memberName}
+			</if>
+			<if test="isHandlePoint !=null and isHandlePoint !=''">
+				and is_handle_point = #{isHandlePoint}
+			</if>
+		</where>
+	 </select>
+	<!-- 交易完成的数据 -->
+    <select id="getListPageEvaluate" parameterType="Map" resultType="list" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" /> 
+		from t_so_sales_order
+		<where>
+			<if test="memberId != null and memberId != ''">
+				<![CDATA[
+					and member_id = #{memberId}
+				]]>
+		    </if>
+				<![CDATA[
+					and order_status in (6,8)
+				]]>
+		    <![CDATA[
+		    	and (is_delete is null or is_delete ='n')
+		    ]]>
+	    </where>
+	    order by create_time desc
+		<![CDATA[
+				LIMIT ${start},${limit}
+		]]>
+  </select>
+  <!-- 交易完成的总条数 -->
+  <select id="getTotalEvaluate" parameterType="Map" resultType="java.lang.Integer">
+		select count(id) 
+			from t_so_sales_order
+		<where>
+			<if test="memberId != null and memberId != ''">
+				<![CDATA[
+					and member_id = #{memberId}
+				]]>
+		    </if>
+				<![CDATA[
+					and order_status in (6,8)
+				]]>
+		    <![CDATA[
+		    	and (is_delete is null or is_delete ='n')
+		    ]]>
+	    </where>
+	</select>
+  
+  <!-- 订单查询根据用户id和订单code查询会员的某一个订单  -->
+  <select id="getOrderByMemberIdAndOrderCode" parameterType="SoSalesOrder" resultMap="BaseResultMap">
+	select 
+		<include refid="Base_Column_List"/>
+	from 
+		t_so_sales_order
+	<where>
+		<if test="memberId != null and memberId != ''">
+			<![CDATA[
+				and member_id = #{memberId}
+			]]>
+	    </if>
+		<if test="code != null and code != ''">
+			<![CDATA[
+				and code = #{code}
+			]]>
+	    </if>
+	    <![CDATA[
+	    	and (is_delete is null or is_delete ='n')
+	    ]]>
+    </where>
+  </select>
+  
+  <!--查询该会员在系统指定时间范围内已经付款的订单总金额-->
+  <select id="findByOrderAllTotalActual" parameterType="Map" resultType="bigdecimal">
+	select SUM(IFNULL(total_actual,0)) from t_so_sales_order
+	<where>
+		<if test="memberId != null and memberId != ''">
+			<![CDATA[
+				and member_id = #{memberId}
+			]]>
+	    </if>
+	    <if test="financeStatus!=null and financeStatus !=''" >
+ 			and finance_status = #{financeStatus}
+ 		</if>
+		<if test="startFrom != null and startFrom != ''">
+			<![CDATA[
+				and DATE_FORMAT(version,'%Y-%m-%d') >= DATE_FORMAT(#{startFrom}, '%Y-%m-%d')
+			]]>
+	    </if>
+		<if test="endFrom != null and endFrom != ''">
+			<![CDATA[
+				and DATE_FORMAT(version,'%Y-%m-%d') <= DATE_FORMAT(#{endFrom}, '%Y-%m-%d')
+			]]>
+	    </if>
+	    <![CDATA[
+	    	and (is_delete is null or is_delete ='n')
+	    ]]>
+    </where>
+  </select>
+  
+  <!--查询返回指定条件范围内,订单总数量-->
+  <select id="findByOrderCount" parameterType="Map" resultType="int">
+	select count(1) from t_so_sales_order
+	<where>
+		<if test="memberId != null and memberId != ''">
+			<![CDATA[
+				and member_id = #{memberId}
+			]]>
+	    </if>
+	    <if test="financeStatus!=null and financeStatus !=''" >
+ 			and finance_status = #{financeStatus}
+ 		</if>
+		<if test="startFrom != null and startFrom != ''">
+			<![CDATA[
+				and DATE_FORMAT(version,'%Y-%m-%d') >= DATE_FORMAT(#{startFrom}, '%Y-%m-%d')
+			]]>
+	    </if>
+		<if test="endFrom != null and endFrom != ''">
+			<![CDATA[
+				and DATE_FORMAT(version,'%Y-%m-%d') <= DATE_FORMAT(#{endFrom}, '%Y-%m-%d')
+			]]>
+	    </if>
+	    <![CDATA[
+	    	and (is_delete is null or is_delete ='n')
+	    ]]>
+    </where>
+  </select>
+  
+  <!-- 删除 仅用于测试 -->
+  <delete id="deleteByIdTest" parameterType="java.lang.Long">
+		delete from t_so_sales_order where id = #{id} 	
+  </delete>
+ 
+  
+  <update id="deleteByCode" parameterType="SoSalesOrder">
+  	<![CDATA[
+  		update t_so_sales_order set is_delete = #{isDelete},`version`= NOW() WHERE member_id=#{memberId} AND code=#{code}
+  	]]>
+  </update>
+  
+  <update id="deleteById" parameterType="SoSalesOrder">
+  	<![CDATA[
+  		update t_so_sales_order set is_delete = #{isDelete},`version`= NOW() WHERE member_id=#{memberId} AND id=#{id}
+  	]]>
+  </update>
+  
+  <update id="updateOrderByCodeStatus" parameterType="SoSalesOrder">
+  	<![CDATA[
+  		update t_so_sales_order set order_status = #{orderStatus},`version`= NOW() WHERE member_id=#{memberId} AND code=#{code}
+  	]]>
+  </update>
+  
+  <update id="updateFinanceStatus" parameterType="SoSalesOrder">
+  	<![CDATA[
+  		update t_so_sales_order set finance_status = #{financeStatus},`version`= NOW() WHERE member_id=#{memberId} AND code=#{code}
+  	]]>
+  </update>
+  
+  <update id="updateOrderByIdStatus" parameterType="SoSalesOrder">
+  	<![CDATA[
+  		update t_so_sales_order set order_status = #{orderStatus},`version`= NOW() WHERE member_id=#{memberId} AND code=#{code}
+  	]]>
+  </update>
+  
+  <update id="updateOrderByTransStatus" parameterType="SoSalesOrder">
+  	<![CDATA[
+  		update t_so_sales_order set trans_status = #{transStatus},`version`= NOW() WHERE member_id=#{memberId} AND code=#{code}
+  	]]>
+  </update>
+  
+  <update id="updatePaymentType" parameterType="SoSalesOrder">
+  	<![CDATA[
+  		update t_so_sales_order set payment_type = #{paymentType},`version`= NOW() WHERE member_id=#{memberId} AND code=#{code}
+  	]]>
+  </update>
+  
+  <update id="confirmReceipt" parameterType="SoSalesOrder">
+  	<![CDATA[
+  		update t_so_sales_order set order_status = #{orderStatus},trans_status=#{transStatus},last_receive_time=NOW(),`version`= NOW() WHERE member_id=#{memberId} AND code=#{code}
+  	]]>
+  </update>
+  
+   <!-- 修改订单支付  财务状态为已付款   订单状态为2审核中-->
+  <update id="modifyOrderPayment" parameterType="map">
+	  	update 
+	  		t_so_sales_order
+	  	set
+	  		finance_status = #{financeStatus},
+	  		order_status = '2'
+	  	<where>
+	  		code = #{orderCode}
+	  		and payment_type = #{paymentType}
+	  	</where>
+  </update>
+  <!-- 通过订单号修改付款方式 -->
+  <update id="modifyPaymentType">
+	update 
+		t_so_sales_order
+	set
+	 	payment_type = #{paymentType}
+	<where>
+		code = #{code}
+	</where>
+  </update> 
+  <!-- 查询该用户所有等待付款并且未删除的订单 --> 
+  <select id="queryOrderStatusByWaiting" parameterType="java.lang.Long" resultType="list" resultMap="BaseResultMap">
+	  	select 
+			<include refid="Base_Column_List"/>
+		from 
+			t_so_sales_order
+		<where>
+			member_id = #{memberId} and order_status = '1' and is_delete = 'n' 
+		</where>
+  </select>	
+</mapper>

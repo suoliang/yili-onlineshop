@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>购物车</title>
+        <!-- 通用部分 开始 -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0,user-scalable=no">
+        <link rel="shortcut icon" href="images/favicon.ico" />
+        <link rel="stylesheet" href="css/style.min.css"><!-- 通用 CSS -->
+        <script src="farmwork/jquery/jquery-2.1.3.min.js"></script><!-- 通用jQuery JS -->
+        <script src="farmwork/velocity/velocity.min.js"></script><!-- velocity JS -->
+        <script src="farmwork/velocity/velocity.ui.min.js"></script><!-- velocity JS -->
+        <script src="js/min/public.min.js"></script><!-- 通用 public JS -->
+        <!-- 通用部分 结束 -->
+
+        <link rel="stylesheet" href="farmwork/swiper/swiper.min.css"><!-- swiper CSS-->
+    </head>
+    <body id="cart">
+
+        <div class="container">
+
+            <div class="head mB10">
+                <a href="javascript:history.go(-1)" class="a-left">
+                    <span class="back"></span>
+                </a>
+                <p>购物车</p>
+                <a href="javascript:void(0)" class="a-right">
+                    <span id="deleteBtn">编辑</span>
+                </a>
+            </div>
+
+            <div class="cart-wrap fl wp100 checkbox">
+                <div class="cart-tit">
+                    <span class="house"></span>
+                    <h3>阿拉丁商品</h3>
+                    <p>共计 2 件</p>
+                </div>
+
+                <div class="cart-item">
+                    <div class="check-box fl checked">
+                        <i></i>
+                        <input name="checkItem" class="checkItem" type="checkbox" checked="checked">
+                    </div>
+                    <img src="picture/1.jpg">
+                    <div class="cart-item-mid">
+                        <p>舒肤佳金银花/菊花沐浴露400毫升</p>
+                        <span>参数：属性</span>
+                        <div class="modal-c fl wp100">
+                            <button class="Add">+</button>
+                            <i class="count-num count-i">1</i>
+                            <button class="Reduce">-</button>
+                            <input type="hidden" value="1">
+                        </div>
+                    </div>
+                    <div class="price">&yen; 299.90</div>
+                    <div class="delete">删除</div>
+                </div>
+                <div class="cart-item">
+                    <div class="check-box fl checked">
+                        <i></i>
+                        <input name="checkItem" class="checkItem" type="checkbox" checked="checked">
+                    </div>
+                    <img src="picture/2.jpg">
+                    <div class="cart-item-mid">
+                        <p>舒肤佳金银花/菊花沐浴露400毫升</p>
+                        <span>参数：属性</span>
+                        <div class="modal-c fl wp100">
+                            <button class="Add">+</button>
+                            <i class="count-num count-i">1</i>
+                            <button class="Reduce">-</button>
+                            <input type="hidden" value="1">
+                        </div>
+                    </div>
+                    <div class="price">&yen; 299.90</div>
+                    <div class="delete">删除</div>
+                </div>
+                <div class="cart-item">
+                    <div class="check-box fl checked">
+                        <i></i>
+                        <input name="checkItem" class="checkItem" type="checkbox" checked="checked">
+                    </div>
+                    <img src="picture/3.jpg">
+                    <div class="cart-item-mid">
+                        <p>舒肤佳金银花/菊花沐浴露400毫升</p>
+                        <span>参数：属性</span>
+                        <div class="modal-c fl wp100">
+                            <button class="Add">+</button>
+                            <i class="count-num count-i">1</i>
+                            <button class="Reduce">-</button>
+                            <input type="hidden" value="1">
+                        </div>
+                    </div>
+                    <div class="price">&yen; 299.90</div>
+                    <div class="delete">删除</div>
+                </div>
+
+                <div class="cart-b fl wp100">
+                    <div class="check-box fl checked checkAll">
+                        <i></i>
+                        <input id="checkAll" name="checkAll" class="checkItem" type="checkbox" checked="checked">
+                        <label for="checkAll">全选</label>
+                    </div>
+                    <div class="cart-b-m fl">
+                        <p>合计：<i class="red">&yen; 200.00</i></p>
+                        <span>满68包邮</span>
+                    </div>
+                    <a href="cart-confirm.html"><button>去结算</button></a>
+                </div>
+
+            </div>
+
+            <div id="cartNone" class="detail-c fl wp100 like-wrap">
+                <div class="cart-none fl wp100">
+                    <span></span>
+                    <div class="not-login fl wp100">
+                        <p>您可以在登录后同步电脑与手机购物车中的商品</p>
+                        <div class="btn-wrap">
+                            <a href="login.html">登录</a>
+                            <a href="registering-phone.html">注册</a>
+                        </div>
+                    </div>
+                    <div class="logined fl wp100" style="display:none">
+                        <p>您的购物车是空的！</p>
+                        <div class="btn-wrap">
+                            <a href="index.html">去逛逛</a>
+                        </div>
+                    </div>
+                </div>
+                <p class="detail-tit fl wp100">猜你喜欢</p>
+                <div id="detailBannerLike" class="swiper-container">
+                    <div class="swiper-wrapper">
+                        <a href="detail.html" class="swiper-slide">
+                            <img src="picture/1.jpg">
+                            <p>舒肤佳金银花</p>
+                            <span>&yen; 29.9</span>
+                        </a>
+                        <a href="detail.html" class="swiper-slide">
+                            <img src="picture/2.jpg">
+                            <p>舒肤佳金银花</p>
+                            <span>&yen; 29.9</span>
+                        </a>
+                        <a href="detail.html" class="swiper-slide">
+                            <img src="picture/3.jpg">
+                            <p>舒肤佳金银花</p>
+                            <span>&yen; 29.9</span>
+                        </a>
+                        <a href="detail.html" class="swiper-slide">
+                            <img src="picture/4.jpg">
+                            <p>舒肤佳金银花</p>
+                            <span>&yen; 29.9</span>
+                        </a>
+                        <a href="detail.html" class="swiper-slide">
+                            <img src="picture/5.jpg">
+                            <p>舒肤佳金银花</p>
+                            <span>&yen; 29.9</span>
+                        </a>
+                        <a href="detail.html" class="swiper-slide">
+                            <img src="picture/6.jpg">
+                            <p>舒肤佳金银花</p>
+                            <span>&yen; 29.9</span>
+                        </a>
+                        <a href="detail.html" class="swiper-slide">
+                            <img src="picture/7.jpg">
+                            <p>舒肤佳金银花舒肤佳金银花/菊花沐浴露400毫升</p>
+                            <span>&yen; 29.9</span>
+                        </a>
+                    </div>
+                </div><!-- /.swiper-container -->
+            </div>
+
+        </div><!-- /.container -->
+
+        <script src="js/menu_local.js"></script><!-- 公共底部菜单 -->
+
+        <script src="farmwork/swiper/swiper.jquery.min.js"></script><!-- swiper JS -->
+        <script>
+            $(function(){
+                $('#deleteBtn').click(function(event) {
+                    if ($(this).html()==="编辑") {
+                        $(this).html("取消");
+                    } else {
+                        $(this).html("编辑");
+                    };
+                    $('.cart-item').toggleClass('open');
+                });
+
+                $('.delete').click(function(event) {
+                    $(this).parents('.cart-item').velocity({height:0,opacity:0,padding:0},{duration: 200}).velocity({border:0},{
+                        complete:function(){
+                            $(this).remove();
+                            hideSomethings();
+                        }
+                    });
+                });
+                hideSomethings();
+
+            })
+
+            function hideSomethings(){
+                if (!$('#cart').find('.cart-item').length) {
+                    $('.a-right').hide();
+                    $('.cart-wrap').hide();
+                    $('#cartNone').show();
+                    /*猜你喜欢 滚动初始化*/
+                    var swiper = new Swiper('#detailBannerLike',{
+                        grabCursor: true,
+                        slidesPerView: 'auto'
+                    });
+                };
+            }
+        </script>
+
+    </body>
+</html>

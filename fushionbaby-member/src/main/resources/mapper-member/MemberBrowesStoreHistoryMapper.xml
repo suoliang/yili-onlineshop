@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.member.dao.MemberBrowesStoreHistoryDao">
+	<resultMap id="MemberBrowesStoreHistoryResultMap" type="MemberBrowesStoreHistory">
+		<id column="id" property="id" />
+		<result column="member_id" property="memberId" />
+		<result column="member_account" property="memberAccount" />
+		<result column="store_code" property="storeCode" />
+		<result column="browes_count" property="browesCount" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		
+	</resultMap>
+	
+	<sql id="MemberBrowesStoreHistory_column">
+		select 
+	      id,member_id,member_account,store_code,browes_count,create_time,update_time
+	   from t_member_browes_store_history
+	</sql>
+	
+	<insert id="add" parameterType="MemberSign">
+		insert into 
+			t_member_browes_store_history
+		(id,member_id,member_account,store_code,browes_count,create_time,update_time)
+	    values 
+	    (#{id},#{memberId},#{memberAccount},#{storeCode},#{browesCount},now(),now())
+	</insert>
+	
+	<update id="update" parameterType="MemberSign">
+		update t_member_browes_store_history 
+		<set>
+			<if test="memberId != null and memberId != ''">
+				member_id = #{memberId},
+			</if>
+			<if test="memberAccount != null and memberAccount != ''">
+				member_account = #{memberAccount},
+			</if>
+			<if test="storeCode != null and storeCode != ''">
+				store_code = #{storeCode},
+			</if>
+			<if test="browesCount != null and browesCount != ''">
+				browes_count = #{browesCount},
+			</if>
+			update_time=now() 
+		</set>
+			where id = #{id}
+	</update>
+	
+	<select id="findByAccountAndStoreCode" resultMap="MemberBrowesStoreHistoryResultMap" parameterType="Map">
+		<include refid="MemberBrowesStoreHistory_column"/>
+		<where>
+			<if test="memberAccount != null and memberAccount != ''">
+				and member_account = #{memberAccount}
+			</if>
+			<if test="storeCode != null and storeCode != ''">
+				and store_code = #{storeCode}
+			</if>
+		</where>
+	</select>
+	
+		<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="MemberBrowesStoreHistoryResultMap" parameterType="Map" >
+		<include refid="MemberBrowesStoreHistory_column"/>
+		<where>
+			<if test="memberId != null and memberId != ''">
+				and member_id = #{memberId}
+			</if>
+			<if test="memberAccount != null and memberAccount != ''">
+				and member_account = #{memberAccount}
+			</if>
+			<if test="storeCode != null and storeCode != ''">
+				and store_code = #{storeCode}
+			</if>
+			<if test="browesCount != null and browesCount != ''">
+				and browes_count = #{browesCount}
+			</if>
+		    <if test="createTimeFrom != null and createTimeFrom !=''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+				]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+		</where>
+		 order by create_time desc
+		<if test="start!=null and limit!=null ">
+			limit #{start},#{limit}
+		</if>
+		 
+	</select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) from t_member_browes_store_history
+		<where>
+			<if test="memberId != null and memberId != ''">
+				and member_id = #{memberId}
+			</if>
+			<if test="memberAccount != null and memberAccount != ''">
+				and member_account = #{memberAccount}
+			</if>
+			<if test="storeCode != null and storeCode != ''">
+				and store_code = #{storeCode},
+			</if>
+			<if test="browesCount != null and browesCount != ''">
+				and browes_count = #{browesCount}
+			</if>
+		    <if test="createTimeFrom != null and createTimeFrom !=''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+				]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+		</where>
+		
+	</select>
+	
+	
+	
+</mapper>

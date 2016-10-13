@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.sku.dao.SkuLabelCategoryRelationDao">
+	<resultMap id="SkuLabelCategoryRelationMap" type="SkuLabelCategoryRelation">
+		<id column="id" property="id" />
+		<result column="label_code" property="labelCode" />
+		<result column="category_code" property="categoryCode" />
+		<result column="create_time" property="createTime" />	
+		<result column="update_time" property="updateTime" />
+		<result column="sort_order" property="sortOrder" />
+		<result column="disable" property="disable" />	
+		<result column="create_id" property="createId" />	
+		<result column="update_id" property="updateId" />
+	</resultMap>
+	
+	<sql id="labelCategory_base_column">
+		select 	id,label_code,category_code,create_time,
+				update_time,sort_order,disable,create_id,update_id
+		from 
+			t_sku_label_category_relation
+	</sql>
+	
+	<select id="findObjectById" resultMap="SkuLabelCategoryRelationMap">
+		<include refid="labelCategory_base_column" />
+		<where>
+			id = #{id} 
+		</where>
+	</select>
+	
+	<select id="findListByLabelCode" resultMap="SkuLabelCategoryRelationMap">
+		<include refid="labelCategory_base_column" />
+		<where>
+			label_code = #{labelCode}
+		</where>
+	</select>
+	
+	<select id="findSkuCodeByLabelAndCategory"  resultType="java.lang.String" parameterType="labelCategoryRelationQueryCondition">
+		SELECT 
+			DISTINCT c.unique_code
+		FROM
+			t_sku_label_category_relation a
+		INNER JOIN
+			t_sku_label_relation b
+		ON 
+			a.label_code = b.label_code
+		INNER JOIN
+			t_sku c
+		ON b.sku_code = c.unique_code
+		<where>
+			a.label_code = #{labelCode} and c.category_code LIKE #{categoryCode}"%" and status='2'
+		</where>
+		order by case when  b.show_order=0 or b.show_order is null then 9999999 else show_order end,
+			case when  c.showorder=0 or c.showorder is null then 9999999 else showorder end
+		<if test="start !=null and start>-1">
+			LIMIT #{start}
+		</if>
+		<if test="start !=null and start>-1 and limit !=null and limit !=''">
+			,#{limit}
+		</if>		
+	
+	</select>
+	
+</mapper>

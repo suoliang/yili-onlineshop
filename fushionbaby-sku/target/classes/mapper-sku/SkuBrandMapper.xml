@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.sku.dao.SkuBrandDao">
+	<resultMap id="SkuBrandResultMap" type="SkuBrand">
+		<id column="id" property="id" />
+		<result column="brand_name" property="brandName" />
+		<result column="brand_code" property="brandCode" />
+		<result column="brand_prefix" property="brandPrefix" />
+		<result column="brand_logo_web_url" property="brandLogoWebUrl" />
+		<result column="brand_desc" property="brandDesc" />
+		<result column="brand_site_url" property="brandSiteUrl" />
+		<result column="sort_order" property="sortOrder" />
+		<result column="is_show" property="isShow" />
+		<result column="brand_logo_app_url" property="brandLogoAppUrl" />
+		
+		<result column="create_time" property="createTime" />
+		<result column="create_id" property="createId" />
+		<result column="update_time" property="updateTime" />
+		<result column="update_id" property="updateId" />
+	</resultMap>
+	<!-- 自动生成id策略 -->
+	<insert id="add" 
+		parameterType="SkuBrand">
+		insert into
+		t_sku_brand(id,brand_code,brand_name,
+		brand_prefix,brand_logo_web_url,brand_desc,brand_site_url,sort_order,is_show,
+		brand_logo_app_url,create_time,create_id,update_time,update_id)
+		values(#{id},#{brandCode},#{brandName},
+		#{brandPrefix},#{brandLogoWebUrl},#{brandDesc},#{brandSiteUrl},#{sortOrder},#{isShow},
+		#{brandLogoAppUrl},now(),#{createId},now(),#{updateId})
+	</insert>
+	<delete id="deleteById">
+		DELETE FROM t_sku_brand WHERE id = #{id}
+	</delete>
+	<update id="update" parameterType="SkuBrand">
+		UPDATE 
+			t_sku_brand 
+		SET
+		<if test="brandCode!=null and brandCode!=''">
+			brand_code = #{brandCode} ,
+		</if>
+		<if test="brandName!=null and brandName!=''">
+			brand_name = #{brandName} ,
+		</if>
+		<if test="brandPrefix!=null and brandPrefix!=''">
+			brand_prefix = #{brandPrefix} ,
+		</if>
+		<if test="brandLogoWebUrl!=null and brandLogoWebUrl!=''">
+			brand_logo_web_url = #{brandLogoWebUrl} ,
+		</if>
+		<if test="brandDesc!=null and brandDesc!=''">
+			brand_desc = #{brandDesc} ,
+		</if>	
+		<if test="brandSiteUrl!=null and brandSiteUrl!=''">
+			brand_site_url = #{brandSiteUrl} ,
+		</if>
+		<if test="sortOrder!=null and sortOrder!=''">
+			sort_order = #{sortOrder} ,
+		</if>
+		<if test="brandLogoAppUrl!=null and brandLogoAppUrl!=''">
+			brand_logo_app_url = #{brandLogoAppUrl} ,
+		</if>
+			is_show = #{isShow}
+
+		WHERE
+			id = #{id}
+	</update>
+	<select id="findById" resultMap="SkuBrandResultMap" parameterType="java.lang.Long">
+		<![CDATA[
+			select 
+				id,brand_code,brand_name,brand_prefix,brand_logo_web_url,brand_desc,brand_site_url,sort_order,is_show ,
+				brand_logo_app_url,create_time,create_id,update_time,update_id
+			from 
+				t_sku_brand 
+			where 
+				id = #{id}
+			
+        ]]>
+	</select>
+	<!-- 查询全部 -->
+	<select id="findAll" resultMap="SkuBrandResultMap" parameterType="java.lang.Long">
+		<![CDATA[
+			select 
+				id,brand_code,brand_name,brand_prefix,brand_logo_web_url,brand_desc,brand_site_url,sort_order,is_show ,
+				brand_logo_app_url,create_time,create_id,update_time,update_id
+			from 
+				t_sku_brand 
+        ]]>
+	</select>
+	<sql id="skuBrand_where">
+		<where>
+			<if test="brandCodes !=null and brandCodes != ''">
+				and brand_code in (${brandCodes})
+			</if>
+			<if test="brandName !=null and brandName != ''">
+				and brand_name like "%"#{brandName}"%"
+			</if>
+			<if test="brandCode !=null and brandCode != ''">
+				and brand_code = #{brandCode}
+			</if>
+			<if test="isShow !=null and isShow != ''">
+				and is_show = #{isShow}
+			</if>
+		</where>
+	</sql>
+	<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="SkuBrandResultMap" parameterType="Map">
+		select 
+			id,brand_code,brand_name,brand_prefix,brand_logo_web_url,brand_desc,brand_site_url,sort_order,is_show ,
+			brand_logo_app_url,create_time,create_id,update_time,update_id
+		from 
+			t_sku_brand
+		<include refid="skuBrand_where"></include>	
+		order by sort_order asc,  brand_name asc 
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">	
+		select 
+			count(id)
+		from 
+			t_sku_brand
+		<include refid="skuBrand_where"></include>	
+	</select>
+	
+	<select id="findAllApp" resultMap="SkuBrandResultMap" parameterType="java.util.Map">
+        select 
+		    id,brand_code,brand_name,brand_prefix,brand_logo_web_url,brand_desc,brand_site_url,sort_order,is_show ,
+		    brand_logo_app_url,create_time,create_id,update_time,update_id
+		from  
+			t_sku_brand 
+		where 
+			is_show = #{isShow} 
+			order by sort_order asc,  brand_name asc 
+			limit #{offset},#{size}	
+	</select>
+	
+	<select id="findAllWeb" resultMap="SkuBrandResultMap" parameterType="java.util.Map">
+        select 
+		    id,brand_code,brand_name,brand_prefix,brand_logo_web_url,brand_desc,brand_site_url,sort_order,is_show ,
+		    brand_logo_app_url,create_time,create_id,update_time,update_id
+		from  
+			t_sku_brand 
+		where 
+			is_show = #{isShow} 
+			order by sort_order asc,  brand_name asc 
+			
+			<if test="size !=null and size !=''">
+				limit #{offset},#{size}	
+			</if>
+	</select>
+	<select id="findByCondition"  resultMap="SkuBrandResultMap" resultType="java.util.List" parameterType="skuBrandQueryCondition">
+		 select 
+		    id,brand_code,brand_name,brand_prefix,brand_logo_web_url,brand_desc,brand_site_url,sort_order,is_show ,
+		    brand_logo_app_url,create_time,create_id,update_time,update_id
+		from  
+			t_sku_brand 
+		<where>
+			<if test="isShow !=null and isShow !=''">
+				and is_show = #{isShow} 
+			</if>
+			<if test="brandName !=null and brandName != ''">
+				and brand_name like   #{brandName}"%"
+			</if>
+			<if test="brandPrefix !=null and brandPrefix != ''">
+				and brand_prefix = #{brandPrefix}
+			</if>
+		order by sort_order asc,  brand_name asc 
+		<if test="limit !=null and limit !=''">
+			<![CDATA[
+				LIMIT #{start},#{limit}
+			]]>
+		</if>
+		</where>
+	
+	</select>
+	
+	<select id="findByBrandCode" resultMap="SkuBrandResultMap" parameterType="java.lang.String">
+		<![CDATA[
+			select 
+				id,brand_code,brand_name,brand_prefix,brand_logo_web_url,brand_desc,brand_site_url,sort_order,is_show ,
+				brand_logo_app_url,create_time,create_id,update_time,update_id
+			from 
+				t_sku_brand 
+			where 
+				brand_code = #{brandCode}
+			
+        ]]>
+	</select>
+	<select id="findListByBrandCodes" resultMap="SkuBrandResultMap" resultType="java.util.List" parameterType="java.util.List">
+			select 
+				id,brand_code,brand_name,brand_prefix,brand_logo_web_url,brand_desc,brand_site_url,sort_order,is_show ,
+				brand_logo_app_url,create_time,create_id,update_time,update_id
+			from 
+				t_sku_brand 
+			<where>
+				brand_code in 
+				<foreach collection="brandCodes" index="index" item="itemCode" open="(" separator="," close=")">
+					#{itemCode}
+				</foreach>
+			</where>
+	</select>
+</mapper>

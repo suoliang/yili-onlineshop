@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.alabao.dao.AlabaoShiftToRecordDao" >
+  <resultMap id="AlabaoShiftToRecordResultMap" type="AlabaoShiftToRecord" >
+    <id column="id" property="id" />
+    <result column="member_id" property="memberId" />
+    <result column="account" property="account" />
+    <result column="shift_to_account_type" property="shiftToAccountType" />
+    <result column="transfer_money" property="transferMoney" />
+    <result column="create_time" property="createTime" />
+    <result column="serial_num" property="serialNum" />
+    <result column="batch_num" property="batchNum" />
+    
+    <result column="before_change_money" property="beforeChangeMoney" />
+    <result column="after_change_money" property="afterChangeMoney" />
+    
+  </resultMap>
+  <sql id="AlabaoShiftToRecord_Column_List" >
+    	id, member_id, account, shift_to_account_type, transfer_money, create_time, serial_num,batch_num,memo,before_change_money,after_change_money
+  </sql>
+  <insert id="add" parameterType="AlabaoShiftToRecord" >
+    insert into t_alabao_shift_to_record 
+    	(id, member_id, account, 
+      		shift_to_account_type, transfer_money, create_time,serial_num,batch_num,memo,before_change_money,after_change_money)
+    values (#{id}, #{memberId}, #{account}, 
+      	#{shiftToAccountType}, #{transferMoney}, now(),#{serialNum},#{batchNum},#{memo},#{beforeChangeMoney},#{afterChangeMoney})
+  </insert>
+  
+	
+	<select id="findAllByMemberId" resultMap="AlabaoShiftToRecordResultMap" parameterType="java.lang.Long">
+		select  <include refid="AlabaoShiftToRecord_Column_List"/> from t_alabao_shift_to_record where member_id = #{memberId} ORDER BY create_time DESC
+	</select>
+	
+	<select id="findAllByAccount" resultMap="AlabaoShiftToRecordResultMap" parameterType="java.lang.String">
+		select  <include refid="AlabaoShiftToRecord_Column_List"/> from t_alabao_shift_to_record where  account = #{account} ORDER BY create_time DESC
+	</select>
+	
+	<select id="findAllByBatchNum" resultMap="AlabaoShiftToRecordResultMap" parameterType="java.lang.String">
+		select  <include refid="AlabaoShiftToRecord_Column_List"/> from t_alabao_shift_to_record where  batch_num = #{batchNum} ORDER BY create_time DESC
+	</select>
+	
+	<select id="getListPage"  resultType="list" resultMap="AlabaoShiftToRecordResultMap" parameterType="Map">
+		select  <include refid="AlabaoShiftToRecord_Column_List"/> from t_alabao_shift_to_record 
+		<include refid="AlabaoShiftToRecord_where" />
+		ORDER BY create_time DESC
+		<if test="start !=null and limit !=null ">
+			limit #{start},#{limit}
+		</if>
+	</select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) from t_alabao_shift_to_record
+		<include refid="AlabaoShiftToRecord_where"/>	
+	</select>
+	
+	<sql id="AlabaoShiftToRecord_where">
+	   <where>
+			<if test="transferMoneyMin!=null and transferMoneyMin!=''">
+				and <![CDATA[ transfer_money >= #{transferMoneyMin} ]]>  
+			</if>
+			
+			<if test="transferMoneyMax!=null and transferMoneyMax!=''">
+				and  <![CDATA[transfer_money <= #{transferMoneyMax} ]]>  
+			</if>
+			<if test="shiftToAccountType!=null and shiftToAccountType!=''">
+				and shift_to_account_type=#{shiftToAccountType}
+			</if>
+			<if test="serialNum !=null and serialNum!=''">
+				and serial_num = #{serialNum}
+			</if>
+			<if test="batchNum!=null and batchNum!=''">
+				and batch_num=#{batchNum}
+			</if>
+			<if test="account !=null and account !=''">
+				and account =#{account}
+			</if>
+			<if test="memberId !=null and memberId !=''">
+	    	  and member_id = #{memberId}  
+		    </if>
+		    <if test="createTimeFrom != null and createTimeFrom !=''">
+	    	<![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+			]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+	   </where>
+    </sql>
+    
+    <delete id="deleteByAccountAndBatchNum">
+    	delete from t_alabao_shift_to_record 
+    	<where>
+    		account = #{accountCode} and batch_num=#{batchNum}
+    	</where>
+    </delete>
+    
+    <!-- 查询最近的交易记录 -->
+	<select id="findBillRecordByTime" resultMap="AlabaoShiftToRecordResultMap" >
+		select  <include refid="AlabaoShiftToRecord_Column_List"/> from t_alabao_shift_to_record 
+		where account = #{account}  AND 
+			DATE_FORMAT(create_time,'%Y-%m') > DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 4 MONTH),'%Y-%m')
+			ORDER BY create_time DESC
+	</select>
+    
+</mapper>

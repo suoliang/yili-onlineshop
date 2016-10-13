@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.sku.cms.dao.SkuCategoryImageDao">
+	<resultMap id="SkuCategoryImageResultMap" type="SkuCategoryImage">
+		<id column="id" property="id" />
+		<result column="image_type_code" property="imageTypeCode" />
+		<result column="image_type_name" property="imageTypeName" />
+		<result column="category_code" property="categoryCode" />
+		<result column="img_url" property="imgUrl" />
+		<result column="link_url" property="linkUrl" />
+		<result column="sort_order" property="sortOrder" />
+		<result column="create_time" property="createTime" />
+		<result column="create_id" property="createId" />
+		<result column="update_time" property="updateTime" />
+		<result column="update_id" property="updateId" />
+	</resultMap>
+	<sql id="categoryImage_column">
+		select 
+			id,image_type_code,image_type_name,category_code,img_url,link_url,sort_order,
+			create_time,create_id,update_time,update_id
+		from 
+			t_sku_category_image 
+	</sql>
+	<!-- 自动生成id策略 -->
+	<insert id="add" 	parameterType="SkuCategoryImage">
+		insert into t_sku_category_image
+			(id,image_type_code,image_type_name,category_code,img_url,link_url,
+			sort_order,create_time,create_id,update_time,update_id)
+		values (#{id},#{imageTypeCode},#{imageTypeName},#{categoryCode},#{imgUrl},#{linkUrl},
+			#{sortOrder},now(),#{createId},now(),#{updateId})
+	</insert>
+	<delete id="deleteById" parameterType="java.lang.Long">
+		DELETE FROM t_sku_category_image WHERE id = #{id}
+	</delete>
+	<update id="update" parameterType="SkuCategoryImage">
+		UPDATE 
+			t_sku_category_image 
+		SET
+		<if test="imageTypeCode!=null and imageTypeCode!=''">
+			image_type_code = #{imageTypeCode} ,
+		</if>
+		<if test="imageTypeName!=null and imageTypeName!=''">
+			image_type_name = #{imageTypeName} ,
+		</if>
+		<if test="categoryCode!=null and categoryCode!=''">
+			category_code = #{categoryCode} ,
+		</if>
+		<if test="imgUrl!=null and imgUrl!=''">
+			img_url = #{imgUrl} ,
+		</if>
+		<if test="linkUrl!=null and linkUrl!=''">
+			link_url = #{linkUrl} ,
+		</if>
+		<if test="sortOrder!=null and sortOrder!=''">
+			sort_order = #{sortOrder} ,
+		</if>	
+		<if test="createTime!=null and createTime!=''">
+			create_time = #{createTime} ,
+		</if>
+		<if test="updateId!=null and updateId!=''">
+             update_id=#{updateId} ,
+		</if>
+			update_time = now()
+		WHERE
+			id = #{id}
+	</update>
+	<select id="findById" resultMap="SkuCategoryImageResultMap" parameterType="java.lang.Long">
+		<include refid="categoryImage_column" />
+		where 
+			id = #{id}
+	</select>
+	<!-- 查询全部 -->
+	<select id="findAll" resultMap="SkuCategoryImageResultMap" parameterType="java.lang.Long">
+		<include refid="categoryImage_column" />
+	</select>
+	
+	<sql id="SkuCategoryImage_where">
+		<where>
+		
+		<if test="imageTypeCode!=null and imageTypeCode!=''">
+			and image_type_code = #{imageTypeCode} 
+		</if>
+		<if test="imageTypeName!=null and imageTypeName!=''">
+			and image_type_name = #{imageTypeName} 
+		</if>
+		<if test="categoryCode!=null and categoryCode!=''">
+			and category_code = #{categoryCode} 
+		</if>
+		<if test="imgUrl!=null and imgUrl!=''">
+			and img_url = #{imgUrl} 
+		</if>
+		<if test="sortOrder!=null and sortOrder!=''">
+			and sort_order = #{sortOrder} 
+		</if>
+		<if test="createTime!=null and createTime!=''">
+			 and create_time = #{createTime} 
+		</if>
+		<if test="updateTime!=null and updateTime!=''">
+			 and update_time = #{updateTime} 
+		</if>
+		
+		</where>
+	</sql>
+	<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="SkuCategoryImageResultMap" parameterType="Map">
+		<include refid="categoryImage_column" />
+		<include refid="SkuCategoryImage_where"></include>	
+		order by sort_order asc 
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">	
+		select 
+			count(id)
+		from 
+			t_sku_category_image
+		<include refid="SkuCategoryImage_where"></include>	
+	</select>
+	
+	
+</mapper>

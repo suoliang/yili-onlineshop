@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.store.auth.dao.StoreAuthRoleDao" >
+
+  <resultMap id="StoreAuthRoleResultMap" type="StoreAuthRole" >
+    <id column="id" property="id"  />
+    <result column="name" property="name"  />
+    <result column="description" property="description"  />
+    
+    
+    
+    <result column="store_code" property="storeCode"  />
+    <result column="update_time" property="updateTime"  />
+    <result column="update_id" property="updateId"  />
+    
+  </resultMap> 
+   <insert id="add" parameterType="StoreAuthRole"> 
+    	<!-- 获取数据库自动生成的主键 -->
+	   <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+		SELECT LAST_INSERT_ID() AS ID    
+        </selectKey>
+       insert into 
+           t_store_auth_role (id,description,name,store_code,update_time,update_id)
+           
+              values (#{id},#{description},#{name},#{storeCode},now(),#{updateId})
+  </insert>
+	  <delete id="deleteById" parameterType="java.lang.Long">
+	     delete from t_store_auth_role where id = #{id}
+	  </delete>
+  
+  <update id="update"  parameterType="StoreAuthRole">
+    update t_store_auth_role   
+    set
+    <if test="name!=null and name!=''">
+        name = #{name},
+    </if> 
+    <if test="description!=null and description!=''">
+        description = #{description},
+    </if> 
+    <if test="storeCode!=null and storeCode!=''">
+        store_code = #{storeCode},
+    </if> 
+    <if test="updateId!=null and updateId!=''">
+        update_id = #{updateId},
+    </if> 
+      update_time =now()
+   where 
+          id = #{id}
+  </update>
+  
+  <sql id="base_select_sql">
+       <![CDATA[
+			select id, description, name ,store_code,update_time,update_id from t_store_auth_role
+		 ]]>
+  </sql>
+  
+  <select id="findAll" resultMap="StoreAuthRoleResultMap" resultType="list">
+        <include refid="base_select_sql"/> where store_code=#{storeCode}
+  </select> 
+  
+   <select id="findById" resultMap="StoreAuthRoleResultMap" parameterType="java.lang.Long" >
+    <include refid="base_select_sql"/>
+		 where id=#{id} 
+  </select>
+    <select id="findByName" resultMap="StoreAuthRoleResultMap" parameterType="string">
+     <include refid="base_select_sql"/>
+		  where name=#{name}
+  </select> 
+
+  
+</mapper>

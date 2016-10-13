@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.periodactivity.dao.ActivityShareRegisterRecordDao">
+	<resultMap id="ActivityShareRegisterRecordMap" type="ActivityShareRegisterRecord">
+		<id column="id" property="id" />
+		<result column="member_shares_id" property="memberSharesId" />
+		<result column="member_register_id" property="memberRegisterId" />
+		<result column="gain_red_envelope" property="gainRedEnvelope" />
+		<result column="create_time" property="createTime" />
+
+	</resultMap>
+	<sql id="select_column">
+		select 
+			id, member_shares_id, member_register_id ,gain_red_envelope,create_time
+		from t_activity_share_register_record
+	   
+	</sql>
+	<insert id="add" parameterType="ActivityShareRegisterRecord">
+		insert into 
+			t_activity_share_member
+		(id, member_shares_id, member_register_id ,gain_red_envelope,create_time)
+	    values 
+	    (#{id},#{memberSharesId},#{memberRegisterId},#{gainRedEnvelope},now())
+	</insert>
+
+	
+	<select id="findByMemberSharesId"  resultType="list" resultMap="ActivityShareRegisterRecordMap" parameterType="java.lang.Long">
+		 <include refid="select_column"/>  
+		 <where>member_id = #{memberId}</where> 
+	</select>
+	
+	<select id="findBymemberRegisterId" resultMap="ActivityShareRegisterRecordMap" parameterType="java.lang.Long">
+		 <include refid="select_column"/>  
+		 <where>member_register_id = #{memberRegisterId}</where> 
+	</select>
+	
+</mapper>

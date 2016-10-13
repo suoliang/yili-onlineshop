@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.member.dao.MemberDeviceDao">
+	<resultMap id="MemberDeviceMap" type="MemberDevice">
+		<id column="id" property="id" />
+		<result column="phone" property="phone" />
+		<result column="mac" property="mac" />
+		<result column="type" property="type" />
+		<result column="source_code" property="sourceCode" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		
+	</resultMap>
+	<insert id="add" parameterType="MemberDevice">
+		insert into t_member_device (id, phone, mac,
+		type, source_code,create_time,update_time)
+		values (
+			#{id}, 
+			#{phone}, 
+			#{mac},
+			#{type}, 
+			#{sourceCode},
+			now(),
+			now()
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_member_device
+		where id = #{id}
+	</delete>
+	
+	<update id="update" parameterType="memberExtraInfo">
+		update t_member_device
+		<set>
+			<if test="phone != null and phone != ''">
+				phone = #{phone},
+			</if>
+			<if test="mac != null and mac != ''">
+				mac = #{mac},
+			</if>
+			<if test="type != null and type != ''">
+				type = #{type},
+			</if>
+			<if test="sourceCode != null and sourceCode != ''">
+				source_code = #{sourceCode},
+			</if>
+			update_time = now() 
+		</set>
+			where id = #{id}
+	</update>
+	
+	<select id="findById" resultMap="MemberDeviceMap" parameterType="java.lang.Long">
+		<![CDATA[
+			select
+			id, phone, mac,type, source_code,create_time,update_time
+			from t_member_device
+			where id = #{id}
+		]]>
+	</select>
+	
+	<select id="findByMac" resultType="list" resultMap="MemberDeviceMap" parameterType="java.lang.String">
+		<![CDATA[
+			select
+			id, phone, mac,type, source_code,create_time,update_time
+			from t_member_device
+			where mac = #{mac}
+		]]>
+	</select>
+	
+		<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="MemberDeviceMap" parameterType="Map" >
+		select
+			id, phone, mac,type, source_code,create_time,update_time
+			from t_member_device
+		<where>
+			<if test="phone != null and phone != ''">
+				and phone = #{phone}
+			</if>
+			<if test="type != null and type != ''">
+				and type = #{type}
+			</if>
+			<if test="sourceCode != null and sourceCode != ''">
+				and source_code = #{sourceCode}
+			</if>
+		    <if test="createTimeFrom != null and createTimeFrom !=''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+				]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+		</where>
+		 order by create_time desc
+		<if test="start!=null and limit!=null ">
+			limit #{start},#{limit}
+		</if>
+		 
+	</select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) from t_member_device
+		<where>
+			<if test="phone != null and phone != ''">
+				and phone = #{phone}
+			</if>
+			<if test="type != null and type != ''">
+				and type = #{type}
+			</if>
+			<if test="sourceCode != null and sourceCode != ''">
+				and source_code = #{sourceCode}
+			</if>
+		    <if test="createTimeFrom != null and createTimeFrom !=''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+				]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+		</where>
+	</select>
+</mapper>

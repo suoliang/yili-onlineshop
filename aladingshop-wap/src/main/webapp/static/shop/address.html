@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>选择地址</title>
+
+        <!-- 通用部分 开始 -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" href="images/favicon.ico" />
+        <link rel="stylesheet" href="css/style.min.css"><!-- 通用 CSS -->
+        <script src="farmwork/jquery/jquery-2.1.3.min.js"></script><!-- 通用jQuery JS -->
+        <script src="farmwork/velocity/velocity.min.js"></script><!-- velocity JS -->
+        <script src="farmwork/velocity/velocity.ui.min.js"></script><!-- velocity JS -->
+        <script src="js/min/public.min.js"></script><!-- 通用 public JS -->
+        <!-- 通用部分 结束 -->
+    </head>
+    <body id="address">
+
+        <div class="container">
+
+            <div class="head mB10">
+                <a href="javascript:history.go(-1)" class="a-left">
+                    <span class="back"></span>
+                </a>
+                <p>收货地址</p>
+                <a href="javascript:void(0)" class="a-right">
+                    <span class="edit">操作</span>
+                </a>
+            </div>
+
+            <div class="address radio">
+                <div class="address-box">
+                    <div class="check-box fl checked">
+                        <i></i>
+                        <input name="chose-address" class="checkItem" type="radio" checked="checked">
+                    </div>
+                    <div class="address-detail fl">
+                        <span class="name">收件人：揭志勇</span>
+                        <span class="phone">电话：18116407567</span>
+                        <p>地址：上海市闵行区浦江镇 恒西路189号901室</p>
+                    </div>
+                    <div class="address-btn">
+                        <span></span>
+                    </div>
+                    <a href="javascript:void(0)" class="address-delete-btn">删除</a>
+                    <a href="address-edit.html" class="address-edit-btn">编辑</a>
+                </div>
+                <div class="address-box">
+                    <div class="check-box fl">
+                        <i></i>
+                        <input name="chose-address" class="checkItem" type="radio">
+                    </div>
+                    <div class="address-detail fl">
+                        <span class="name">收件人：揭志勇</span>
+                        <span class="phone">电话：18116407567</span>
+                        <p>地址：上海市闵行区浦江镇 恒西路189号901室</p>
+                    </div>
+                    <div class="address-btn">
+                        <span></span>
+                    </div>
+                    <a href="javascript:void(0)" class="address-delete-btn">删除</a>
+                    <a href="address-edit.html" class="address-edit-btn">编辑</a>
+                </div>
+                <div class="address-box">
+                    <div class="check-box fl">
+                        <i></i>
+                        <input name="chose-address" class="checkItem" type="radio">
+                    </div>
+                    <div class="address-detail fl">
+                        <span class="name">收件人：揭志勇</span>
+                        <span class="phone">电话：18116407567</span>
+                        <p>地址：上海市闵行区浦江镇 恒西路189号901室</p>
+                    </div>
+                    <div class="address-btn">
+                        <span></span>
+                    </div>
+                    <a href="javascript:void(0)" class="address-delete-btn">删除</a>
+                    <a href="address-edit.html" class="address-edit-btn">编辑</a>
+                </div>
+                <div class="address-box">
+                    <div class="check-box fl">
+                        <i></i>
+                        <input name="chose-address" class="checkItem" type="radio">
+                    </div>
+                    <div class="address-detail fl">
+                        <span class="name">收件人：揭志勇</span>
+                        <span class="phone">电话：18116407567</span>
+                        <p>地址：上海市闵行区浦江镇 恒西路189号901室</p>
+                    </div>
+                    <div class="address-btn">
+                        <span></span>
+                    </div>
+                    <a href="javascript:void(0)" class="address-delete-btn">删除</a>
+                    <a href="address-edit.html" class="address-edit-btn">编辑</a>
+                </div>
+                <div class="address-box">
+                    <div class="check-box fl">
+                        <i></i>
+                        <input name="chose-address" class="checkItem" type="radio">
+                    </div>
+                    <div class="address-detail fl">
+                        <span class="name">收件人：揭志勇</span>
+                        <span class="phone">电话：18116407567</span>
+                        <p>地址：上海市闵行区浦江镇 恒西路189号901室</p>
+                    </div>
+                    <div class="address-btn">
+                        <span></span>
+                    </div>
+                    <a href="javascript:void(0)" class="address-delete-btn">删除</a>
+                    <a href="address-edit.html" class="address-edit-btn">编辑</a>
+                </div>
+            </div>
+
+            <div class="btn-wrap">
+                <a href="address-add.html">新增地址</a>
+            </div>
+
+        </div><!-- /.container -->
+
+        <script>
+        $(function(){
+            $('#address').find('.edit').click(function(event) {
+                if ($(this).html()==="操作") {
+                    $(this).html("取消");
+                } else {
+                    $(this).html("操作");
+                };
+                $('.address-box').toggleClass('open');
+            });
+
+            $('.address-delete-btn').click(function(event) {
+                $(this).parents('.address-box').velocity({height:0,opacity:0},{duration: 200}).velocity({border:0},{complete:function(){$(this).remove();hideRightBtn();}});
+            });
+            hideRightBtn();
+        })
+
+        function hideRightBtn(){
+            if (!$('#address').find('.address-box').length) {
+                $('.a-right').hide();
+            };
+        }
+        </script>
+
+    </body>
+</html>

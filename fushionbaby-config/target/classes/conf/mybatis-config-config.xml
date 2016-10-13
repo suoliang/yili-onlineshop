@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration 
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 命名空间 -->
+	<typeAliases>
+		<!-- 来源 -->
+		<typeAlias alias="SysmgrSourceConfig" type="com.fushionbaby.config.model.SysmgrSourceConfig" />
+		<!-- 程序发布版本 -->
+		<typeAlias alias="SysmgrVersionConfig" type="com.fushionbaby.config.model.SysmgrVersionConfig" />  
+		<!-- 顺丰资费表 -->
+		<typeAlias alias="SysmgrSfFreightConfig" type="com.fushionbaby.config.model.SysmgrSfFreightConfig" />
+		<!-- 系统配置重要信息表 -->
+		<typeAlias alias="sysmgrImportanceConfig" type="com.fushionbaby.config.model.SysmgrImportanceConfig" /> 
+		<!-- 系统配置表 -->
+		<typeAlias alias="sysmgrGlobalConfig" type="com.fushionbaby.config.model.SysmgrGlobalConfig" /> 
+		<!-- 系统广告表 -->
+		<typeAlias alias="sysmgrAdvertisementConfig" type="com.fushionbaby.config.model.SysmgrAdvertisementConfig" /> 
+		<!-- 系统字典表 -->
+		<typeAlias alias="sysmgrDictConfig" type="com.fushionbaby.config.model.SysmgrDictConfig" /> 
+	</typeAliases>
+
+
+	<!-- 注册SQL映射文件 -->
+	<mappers>
+	</mappers>
+</configuration>

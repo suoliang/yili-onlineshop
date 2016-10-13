@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.sms.dao.EmailOperateDao" >
+  <resultMap id="BaseResultMap" type="EmailOperate" >
+    <id column="id" property="id" />
+    <result column="email_content" property="emailContent" />
+    <result column="email_subject" property="emailSubject" />
+    <result column="create_id" property="createId" />
+    <result column="create_time" property="createTime" />
+    <result column="remark" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, email_content, email_subject, create_id, create_time, remark
+  </sql>
+ 
+  <insert id="add" parameterType="EmailOperate" >
+    insert into t_email_operate (id, email_content, email_subject, 
+      create_id, create_time, remark
+      )
+    values (#{id}, #{emailContent}, #{emailSubject}, 
+      #{createId}, #{createTime}, #{remark}
+      )
+  </insert>
+ 
+</mapper>

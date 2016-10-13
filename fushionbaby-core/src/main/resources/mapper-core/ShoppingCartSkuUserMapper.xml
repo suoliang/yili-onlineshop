@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fushionbaby.core.dao.ShoppingCartSkuUserDao">
+  <resultMap id="BaseResultMap" type="ShoppingCartSkuUser">
+    <id column="id" property="id"  />
+    <result column="member_id" property="memberId" />
+    <result column="store_code" property="storeCode" />
+    <result column="sku_code" property="skuCode" />
+    <result column="current_price" property="currentPrice" />
+    <result column="quantity" property="quantity" />
+    <result column="sku_name" property="skuName" />
+    <result column="color" property="color" />
+    <result column="size" property="size" />
+    <result column="brand_code" property="brandCode" />
+    <result column="category_code" property="categoryCode" />
+    <result column="is_gift" property="isGift" />
+    <result column="is_selected" property="isSelected" />
+    <result column="create_time" property="createTime" />
+    <result column="update_time" property="updateTime" />
+    <result column="version" property="version" />
+    <result column="line_total_price" property="lineTotalPrice" />
+    <!-- 门店编号 -->
+    <result column="store_code" property="storeCode" /> 
+    
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, store_code,create_time, brand_code, category_code,is_gift, 
+    quantity,sku_code,color,size,update_time,is_selected,sku_name,current_price,member_id,
+    line_total_price, store_code
+  </sql>
+  <!--通过会员id查询购物车中勾选的商品行-->
+  <select id="findSelectedCartSkuByMemberId" parameterType="java.lang.Long" resultType="list" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List" />
+  	<![CDATA[
+		from t_shopping_cart_sku where member_id = #{memberId} and is_selected = 'y'
+	]]>
+  </select>
+    <!--查询购物车中勾选的商品行,的sku_code列表-->
+  <select id="findCartSkuSelectedSkuCode" parameterType="shoppingCartQueryCondition" resultType="string">
+	select 
+		sku_code 
+	from 
+		t_shopping_cart_sku
+	<where> 
+			<if test="memberId!=null">
+				AND member_id = #{memberId}
+			</if>
+			<if test="storeCode==null or storeCode=='' or storeCode=='999'">
+				AND (store_code is null or store_code = '' or store_code ='999')
+			</if>
+			<if test="storeCode!=null and storeCode!='' and storeCode!='999'">
+				AND store_code = #{storeCode}
+			</if>
+		
+			<if test="isSelected!=null and isSelected!=''">
+				AND is_selected = #{isSelected}
+			</if>
+	  	</where>
+  </select>
+
+  <select id="findByQueryCondition" resultType="list" resultMap="BaseResultMap" parameterType="shoppingCartQueryCondition">
+	  	select
+			<include refid="Base_Column_List" />
+		from 
+			t_shopping_cart_sku 
+		<where> 
+			<if test="memberId!=null and memberId!=''">
+				AND member_id = #{memberId}
+			</if>
+			<if test="storeCode==null or storeCode=='' or storeCode=='999'">
+				AND (store_code is null or store_code = '' or store_code ='999')
+			</if>
+			<if test="storeCode!=null and storeCode!='' and storeCode!='999'">
+				AND store_code = #{storeCode}
+			</if>
+			<if test="skuCode!=null and skuCode!=''">
+				AND sku_code = #{skuCode}
+			</if>
+			<if test="isSelected!=null and isSelected!=''">
+				AND is_selected = #{isSelected}
+			</if>
+	  	</where>
+	  	
+	  	<if test="start!=null and limit!=null and limit!=''" >
+	  		LIMIT #{start},#{limit}
+	  	</if>
+	  	
+  </select>
+  
+  
+  <!-- 分页查询  -->
+  <select id="getListPage" parameterType="Map" resultType="list" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List" />
+	from t_shopping_cart_sku where member_id = #{memberId}
+	LIMIT #{start},#{limit}
+  </select>
+  
+  <select id="findById" parameterType="long" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List" />
+	from t_shopping_cart_sku where id = #{id}
+  </select>
+  
+  
+  <select id="findByMemberId" resultType="list" resultMap="BaseResultMap">
+	  	select
+			<include refid="Base_Column_List" />
+		from 
+			t_shopping_cart_sku 
+		<where> 
+			member_id = #{memberId}
+	  	</where>
+  </select>
+  
+  
+ 
+  <insert id="add" parameterType="ShoppingCartSkuUser">
+    insert into t_shopping_cart_sku (id,store_code, create_time, brand_code, 
+      category_code,is_gift,quantity, 
+      sku_code,color, 
+      size,sku_name,current_price,member_id,line_total_price)
+    values (#{id},#{storeCode}, now(), #{brandCode}, 
+      #{categoryCode},#{isGift},#{quantity}, 
+      #{skuCode},#{color}, 
+      #{size},#{skuName},#{currentPrice},#{memberId},#{lineTotalPrice})
+  </insert>
+  
+  <update id="update" parameterType="ShoppingCartSkuUser">
+  	update t_shopping_cart_sku 
+  	<set>
+		current_price =#{currentPrice},
+		line_total_price = #{lineTotalPrice},
+		quantity = #{quantity},
+		line_total_price = #{lineTotalPrice},
+		is_selected = #{isSelected},
+  		update_time=now()
+  	</set>
+  	where id = #{id}
+  
+  </update>
+  
+  <delete id="deleteById">
+    delete from t_shopping_cart_sku
+    where id=#{id}
+  </delete>
+</mapper>

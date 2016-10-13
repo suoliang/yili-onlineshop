@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.member.dao.MemberSignDao">
+	<resultMap id="MemberSignResultMap" type="memberSign">
+		<id column="id" property="id" />
+		<result column="member_id" property="memberId" />
+		<result column="member_name" property="memberName" />
+		<result column="sign_count" property="signCount" />
+		<result column="create_time" property="createTime" />
+		<result column="last_modify_time" property="lastModifyTime" />
+	</resultMap>
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_member_sign
+		where id = #{id}
+	</delete>
+	<insert id="add" parameterType="memberSign">
+		insert into t_member_sign (id,member_id,member_name,sign_count,create_time,last_modify_time)
+		values (#{id},#{memberId},#{memberName},#{signCount},now(),now())
+	</insert>
+	<update id="update" parameterType="memberSign">
+		update t_member_sign
+		set
+		sign_count = #{signCount},
+		last_modify_time = now()
+		where id = #{id}
+	</update>
+	<select id="findByMemberId" resultMap="MemberSignResultMap" parameterType="java.lang.Long">
+		<![CDATA[
+			select
+			id,member_id,member_name,sign_count,create_time,last_modify_time
+			from t_member_sign
+			where member_id = #{memberId}
+		]]>
+	</select>
+	<select id="findById" resultMap="MemberSignResultMap" parameterType="java.lang.Long">
+		<![CDATA[
+			select
+			id,member_id,member_name,sign_count,create_time,last_modify_time
+			from t_member_sign
+			where id = #{id}
+		]]>
+	</select>
+	<select id="findAll" resultType="list" resultMap="MemberSignResultMap">
+		<![CDATA[
+			select
+			id,member_id,member_name,sign_count,create_time,last_modify_time
+			from t_member_sign
+		]]>
+	</select>
+</mapper>

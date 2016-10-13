@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.store.auth.dao.StoreAuthUserDao" >
+  <resultMap id="StoreAuthUserResultMap" type="StoreAuthUser" >
+    <id column="id" property="id"  />
+    <result column="name" property="name"  />
+    <result column="password" property="password" />
+    <result column="email" property="email"  />
+    <result column="phone" property="phone"  />
+    <result column="user_type" property="userType"/>
+    <result column="create_time" property="createTime"  />
+    <result column="update_time" property="updateTime"/>
+    <result column="is_disabled" property="isDisabled"/>
+    <result column="memo" property="memo" />
+    
+    <result column="store_code" property="storeCode"  />
+    <result column="create_id" property="createId"  />
+    <result column="update_id" property="updateId"  />
+    <result column="store_number" property="storeNumber"  />
+    
+     
+  </resultMap>
+
+<!-- 状态默认启用的 -->
+  <insert id="add" parameterType="StoreAuthUser" useGeneratedKeys="true"  keyProperty="id">
+    insert into  t_store_auth_user(id,create_time,update_time, email, name, memo, password, phone, is_disabled,user_type,store_code,create_id,update_id,store_number )
+    values   (#{id}, now(), now(),#{email}, #{name}, #{memo}, #{password},#{phone}, #{isDisabled}, #{userType},#{storeCode},#{createId},#{updateId},#{storeNumber})
+  </insert>
+  
+   <delete id="deleteById"  >
+     delete from t_store_auth_user    where id = #{id}
+   </delete> 
+  
+  <update id="update" parameterType="StoreAuthUser" >
+    update 
+    	t_store_auth_user 
+    set 
+    
+    <if test="name!=null and name!=''">
+         name=#{name},
+    </if>
+    <if test="password!=null and password!=''">
+         password=#{password},
+    </if>
+    <if test="storeCode!=null and storeCode!=''">
+         store_code=#{storeCode},
+    </if>
+    <if test="email!=null and email!=''">
+         email=#{email},
+    </if>
+    <if test="phone!=null and phone!=''">
+         phone=#{phone},
+    </if>
+    <if test="userType!=null and userType!=''">
+         user_type=#{userType},
+    </if>
+    
+    <if test="updateId!=null and updateId!=''">
+         update_id=#{updateId},
+    </if>
+    <if test="memo!=null and memo!=''">
+         memo=#{memo},
+    </if>
+    <if test="isDisabled!=null and isDisabled!=''">
+         is_disabled=#{isDisabled},
+    </if>
+    <if test="storeNumber!=null and storeNumber!=''">
+         store_number=#{storeNumber},
+    </if>
+         update_time=now()
+    where 
+        id = #{id}
+  </update> 
+  <!-- 修改用户的状态 -->
+  <update id="updateIsDisabled" parameterType="StoreAuthUser" >
+    update 
+    	t_store_auth_user 
+    set 
+      	is_disabled=#{isDisabled}
+    where 
+      	id = #{id}
+  </update> 
+  
+  <sql id="base_select_sql">
+	  select 
+		id, create_time, email,update_time,name, memo, password,phone,is_disabled,user_type,store_number,store_code
+	      from 
+	           t_store_auth_user 
+  </sql>
+  
+<select id="findById" resultMap="StoreAuthUserResultMap" parameterType="long"  >
+    <include refid="base_select_sql"/>
+		  where id=#{id}
+  </select> 
+  
+  
+  <select id="findAll" resultMap="StoreAuthUserResultMap" parameterType="list"  >
+     <include refid="base_select_sql"/> where store_code=#{storeCode}
+  </select> 
+  
+  
+  <select id="findStoreAuthUserByUserNameAndStoreNumber" resultMap="StoreAuthUserResultMap"  >
+         <include refid="base_select_sql"/>
+		 where name=#{name} and store_number=#{storeNumber} and is_disabled='n'
+  </select>
+  
+  <select id="findStoreAuthUserByUserNameAndStoreCode" resultMap="StoreAuthUserResultMap"  >
+         <include refid="base_select_sql"/>
+		 where name=#{name} and store_code=#{storeCode} 
+  </select>
+  
+<!--判断用户是不是系统用户    系统用户的标识是user_type=1 -->
+    <select id="isSystemUser" resultMap="StoreAuthUserResultMap" parameterType="long"  >
+        <include refid="base_select_sql"/>
+		 where  user_type=1 and id=#{id} 
+  </select> 
+
+
+	<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="StoreAuthUserResultMap" parameterType="Map" >
+	    	select 
+			id, create_time, email, update_time, name, memo,
+			password,is_disabled,
+			phone, user_type 
+			from t_store_auth_user 
+		<where>
+			store_code=#{storeCode} 
+			<if test="loginName !=null and loginName !=''">
+	    	   AND  name LIKE "%"#{loginName}"%"  
+	        </if>
+	        <if test="phone !=null and phone !=''">
+	    	   AND  phone LIKE "%"#{phone}"%"  
+	        </if>
+	        <if test="includeIds !=null and includeIds !=''">
+	    	   AND  id in (${includeIds})  
+	        </if>
+		</where>
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select 
+			count(id)
+		from t_store_auth_user 
+		<where>
+			store_code=#{storeCode} 
+			<if test="loginName !=null and loginName !=''">
+	    	   AND  name LIKE "%"#{loginName}"%"  
+	        </if>
+	        <if test="phone !=null and phone !=''">
+	    	   AND  phone LIKE "%"#{phone}"%"  
+	        </if>
+	        <if test="includeIds !=null and includeIds !=''">
+	    	   AND  id in (${includeIds})  
+	        </if>
+		</where>
+	</select>
+	
+	<select id="findSysUserByStoreCode" resultMap="StoreAuthUserResultMap"  >
+         <include refid="base_select_sql"/>
+		 where store_code=#{storeCode} and user_type = 1
+  </select>
+</mapper>

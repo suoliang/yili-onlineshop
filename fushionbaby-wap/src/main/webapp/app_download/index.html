@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <!-- 删除苹果默认的工具栏和菜单栏 -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!-- 设置苹果工具栏颜色 -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <!-- 忽略页面中的数字识别为电话，忽略email识别 -->
+    <meta name="format-detection" content="telphone=no, email=no" />
+    <!-- 启用360浏览器的极速模式(webkit) -->
+    <meta name="renderer" content="webkit">
+    <!-- 避免IE使用兼容模式 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 -->
+    <meta name="HandheldFriendly" content="true">
+    <!-- 微软的老式浏览器 -->
+    <meta name="MobileOptimized" content="320">
+    <!-- uc强制竖屏 -->
+    <meta name="screen-orientation" content="portrait">
+    <!-- QQ强制竖屏 -->
+    <meta name="x5-orientation" content="portrait">
+    <!-- UC强制全屏 -->
+    <meta name="full-screen" content="yes">
+    <!-- QQ强制全屏 -->
+    <meta name="x5-fullscreen" content="true">
+    <!-- UC应用模式 -->
+    <meta name="browsermode" content="application">
+    <!-- QQ应用模式 -->
+    <meta name="x5-page-mode" content="app">
+    <!-- windows phone 点击无高光 -->
+    <meta name="msapplication-tap-highlight" content="no">
+    <!-- 适应移动端end -->
+		<title></title>
+		<style type="text/css">
+			body,div,img,button{ padding: 0; margin: 0; list-style: none; border: 0 none; outline: none;}
+			#DownLoad{ width: 100%; height: auto; position: relative; min-width: 320px; max-width: 619px; margin: 0 auto;}
+			#DownLoad img{ width: 100%; height: auto; display:block;}
+			#DownLoad button{ width: 100px; height: 40px; position: absolute; top: 20%; left:50%; margin-left:-50px; background: #ab8d73; border-radius: 5px; font-size: 20px; cursor: pointer; font-weight: 400px; font-family: "微软雅黑";}
+		</style>
+		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript">
+			$(function(){
+				$('button').click(function(){
+					window.open("http://filepic.fushionbaby.com/app/Fushionbaby_Android.apk");
+				})
+			})
+		</script>
+
+	</head>
+	<body>
+		<div id="DownLoad">
+			<img src="images/wenxin.jpg"/>
+			<button>立即下载</button>
+		</div>
+	</body>
+</html>

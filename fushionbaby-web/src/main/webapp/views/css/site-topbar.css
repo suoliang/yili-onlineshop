@@ -1,0 +1,31 @@
+@charset "UTF-8";
+/**
+* site-topbar.css(公共顶部 应用于topbar.ftl)
+* @authors Your Name (you@example.org)
+* @date    2015-01-09 09:39:56
+* @version $Id$
+*/
+.site-topbar { height: 30px; line-height: 30px; border-bottom: 1px solid #FED27E; position: relative; z-index: 4; }
+.st-bdl { width: 370px; height: 30px; float: left;}
+.user-drop li a i,.car-module-r .dele{background:url(../images/myself.fw.png) 0 0 no-repeat;}
+/** 登录快速注册的隐藏 */
+.icon { color: #6AE0FF; }
+.tn-line { color: #ccc; }
+.icon { color: #6AE0FF; }
+.st-bdr { height: 30px; float: right; text-align: right; font-size: 0; position: relative; }
+.st-bdr span { font-size: 12px; float: left; }
+.uesrname-wrapper { margin-right: 8px; height: 30px; float: left;display: none ;cursor: pointer;}
+/* 用户名的隐藏 */
+.service span { margin-right: 5px; }
+.st-signed .uesrname { text-overflow: ellipsis; white-space: nowrap; height: 30px; position: relative; display: inline-block;cursor: pointer;}
+.st-signed .arrow-tips { overflow: hidden; width: 0; height: 0; position: absolute;right:  -12px;top:14px;border-width: 4px; border-color:#757577 transparent transparent transparent; vertical-align: top; display: block; border-style:solid dashed dashed dashed; -webkit-transition: -webkit-transform 0.3s ease-in 0s; -o-transition: -o-transform 0.3s ease-in 0s; -moz-transition: -moz-transform 0.3s ease-in 0s; -ms-transition: -ms-transform 0.3s ease-in 0s; transition: transform 0.3s ease-in 0s; -webkit-transform-origin: 4px 1px; -moz-transform-origin: 4px 1px; -o-transform-origin: 4px 1px; -ms-transform-origin: 4px 1px; transform-origin: 4px 1px; }
+.uesrname-wrapper:hover .arrow-tips { -webkit-transform: rotate(180deg); -o-transform: rotate(180deg); -moz-transform: rotate(180deg); -ms-transform: rotate(180deg); transform: rotate(180deg); }
+.user-drop { position: absolute; top: 30px; right: -8px; width: 100px; z-index: 10001; background-color: #fff; display: none; border: 1px solid #fed27e; border-top: 1px solid #fff; }
+.user-drop li { height: 30px; }
+.user-drop li a { display: block; height: 30px; line-height: 30px; text-align: left; padding-left: 10px; }
+.user-drop li a i { width: 22px; height: 24px; float: left; }
+.user-drop li a span { float: left; }
+.user-drop li a:hover { background-color: #7DDFF6; }
+.user-drop .collect i { background-position: 0 -30px; }
+.user-drop .withdraw i { background-position: 0 -60px; }
+.st-bdr .baoy {color: #32c6ae;}

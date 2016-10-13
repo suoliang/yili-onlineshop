@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>fushionbaby 母婴用品【商品评价】</title>
+		<link rel="stylesheet"  href="css/base.css">
+		<link rel="stylesheet"  href="css/persona-order.css">
+		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="js/persona-order.js"></script>
+		<script type="text/javascript" src="js/ratingsys.js"></script>
+		<script type="text/javascript">
+		var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ff1cde14f81847d03c80464a605207068' 	type='text/javascript'%3E%3C/script%3E"));
+		</script>
+		<style>
+			.order-info .sended {background-position: -34px -157px; color: #0089A8;}
+		</style>
+		<script type="text/javascript">
+		// 星级评分
+		window.onload = function (){
+		var oStar = document.getElementById("star");
+		var aLi = oStar.getElementsByTagName("li");
+		var oUl = oStar.getElementsByTagName("ul")[0];
+		var oSpan = oStar.getElementsByTagName("span")[1];
+		var oP = oStar.getElementsByTagName("p")[0];
+		var i = iScore = iStar = 0;
+		var aMsg = [
+					"很不满意|差得太离谱，与卖家描述的严重不符，非常不满",
+					"不满意|部分有破损，与卖家描述的不符，不满意",
+					"一般|质量一般，没有卖家描述的那么好",
+					"满意|质量不错，与卖家描述的基本一致，还是挺满意的",
+					"非常满意|质量非常好，与卖家描述的完全一致，非常满意"
+					]
+		for (i = 1; i <= aLi.length; i++){
+			aLi[i - 1].index = i;
+			//鼠标移过显示分数
+			aLi[i - 1].onmouseover = function (){
+				fnPoint(this.index);
+				//浮动层显示
+				// oP.style.display = "block";
+				//计算浮动层位置
+				// oP.style.left = oUl.offsetLeft + this.index * this.offsetWidth - 104 + "px";
+				//匹配浮动层文字内容
+				// oP.innerHTML = "<em><b>" + this.index + "</b> 分 " + aMsg[this.index - 1].match(/(.+)\|/)[1] + "</em>" + aMsg[this.index - 1].match(/\|(.+)/)[1]
+			};
+			//鼠标离开后恢复上次评分
+			aLi[i - 1].onmouseout = function (){
+				fnPoint();
+				//关闭浮动层
+				// oP.style.display = "none"
+			};
+			//点击后进行评分处理
+			aLi[i - 1].onclick = function (){
+				iStar = this.index;
+				// oP.style.display = "none";
+				// oSpan.innerHTML = "<strong>" + (this.index) + " 分</strong> (" + aMsg[this.index - 1].match(/\|(.+)/)[1] + ")"
+				console.log('iStar:'+iStar);
+			}
+		}
+		//评分处理
+		function fnPoint(iArg){
+			//分数赋值
+			iScore = iArg || iStar;
+			for (i = 0; i < aLi.length; i++) aLi[i].className = i < iScore ? "on" : "";
+		}
+		};
+		</script>
+	</head>
+	<body>
+		<div class="order-main mb">
+			<p class="com-list">
+			商品评价
+			<span class="cl-desc"></span>
+			</p>
+			<table class="order-table evaluate">
+				<tbody>
+					<tr class="title-list">
+						<th class="col0"></th>
+						<th class="t-title col1">商品信息</th>
+						<th class="t-title col2"></th>
+						<th class="t-title col3"></th>
+						<th class="t-title col4">购买时间</th>
+						<th class="t-title col5"></th>
+						<th class="t-title col6"></th>
+					</tr>
+				</tbody>
+				<tbody>
+					<tr class="order-list">
+						<td colspan="7">
+							<span class="order-oder-num">
+							订单编号：125547826975813543
+							</span>
+							<span class="order-oder-time">
+							下单日期：2014-09-12 08:00
+							</span>
+						</td>
+					</tr>
+					<tr class="order-con">
+						<td colspan="4" class="con-1">
+							<div class="order-goods">
+								<a href="order-goods-item">
+									<img src="images/order-list01.gif" alt="">
+								</a>
+							</div>
+							<div class="order-tex">
+								<p><a href="javascript:">easy swaddles 简易型襁褓包巾, 透气.有助于降低过热的风险</a></p>
+								<div class="order-tex-bd">
+									<div class="size">尺寸:M</div>
+									<div class="color">颜色:丛林演奏</div>
+								</div>
+							</div>
+						</td>
+						<td class="con-list pri">2014-08-22</td>
+						<td class="con-list"></td>
+						<td class="con-list tot" colspan="2">
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<form action="">
+				<div class="eva-drop-down">
+					<div class="score clearfix">
+						<!-- <p class="info-left">评分：</p>
+						<div id="rateMe">
+									<a onClick="rateIt(this,'1',5,1)" id="_1" title="较差" onMouseOver="rating(this,'1',5,1)" onMouseOut="off(this,'1',5,1)"></a>
+									<a onClick="rateIt(this,'1',5,1)" id="_2" title="还可以" onMouseOver="rating(this,'1',5,1)" onMouseOut="off(this,'1',5,1)"></a>
+									<a onClick="rateIt(this,'1',5,1)" id="_3" title="好" onMouseOver="rating(this,'1',5,1)" onMouseOut="off(this,'1',5,1)"></a>
+									<a onClick="rateIt(this,'1',5,1)" id="_4" title="相当好" onMouseOver="rating(this,'1',5,1)" onMouseOut="off(this,'1',5,1)"></a>
+									<a onClick="rateIt(this,'1',5,1)" id="_5" title="好极了" onMouseOver="rating(this,'1',5,1)" onMouseOut="off(this,'1',5,1)"></a>
+						</div> -->
+						<div id="star">
+							<span>评分：</span>
+							<ul>
+								<li><a href="javascript:void(0);">1</a></li>
+								<li><a href="javascript:void(0);">2</a></li>
+								<li><a href="javascript:void(0);">3</a></li>
+								<li><a href="javascript:void(0);">4</a></li>
+								<li><a href="javascript:void(0);">5</a></li>
+							</ul>
+							</div><!--star end-->
+						</div>
+						<textarea name="" id="" cols="30" rows="10" class="user-valuation" placeholder="请输入详情评价"></textarea>
+						<button class="pay-btn con-eva-btn">发表评价</button>
+					</div>
+				</form>
+			</div>
+			<script type="text/javascript" src="js/star.js"></script>
+		</body>
+	</html>

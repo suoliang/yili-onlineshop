@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>支付页面 - Fushionbaby</title>
+		<script src="ftl/publicHeadTags.js"></script><!-- 公共<head>标签 -->
+		<link rel="stylesheet" href="css/public.css">
+		<link rel="stylesheet"  href="css/checkout-list.css">
+	</head>
+	<body>
+		<script type="text/javascript" src="ftl/topbar.js"></script><!-- 公共顶部JS -->
+		<!--site-topbar end-->
+		<div class="site-header container" style="height:179px">
+			<div class="logo">
+				<h1>
+				<a href="index.html">
+					<img src="images/logo.jpg" alt="fushion baby" title="fushion baby">
+					<span class="logo-txt">fushion baby</span>
+				</a>
+				</h1>
+			</div>
+			<div class="site-header-r">
+				<ul class="progress-t">
+					<li>
+						<span>我的购物车</span>
+						<em></em>
+					</li>
+					<li>
+						<span>确认订单并付款</span>
+						<em></em>
+					</li>
+					<li style="margin:0 0 0 6px;background-color:#CBCBCB">
+						<span>完成订单</span>
+						<em class="progress-t-n"></em>
+					</li>
+				</ul>
+				<div class="progress"></div>
+			</div>
+		</div>
+		<!-- site-header end -->
+		<!-- address -->
+		<div class="address container">
+			<form action="#" class="fl width100">
+				<h3>确认收货地址</h3>
+				<div class="add-ages-l fl width100">
+					<ul id="address-li" class="fl width100">
+						<li class="choosed address-li">
+							<div class="add-select">
+								<p class="name">揭志勇</p>
+								<p>河南 郑州市 三路口的复古镂空尽量靠近</p>
+								<p>15921648115</p>
+							</div>
+							<div class="add-ages-r">
+								<a class="add-r-ico rub" href="javascript:" title="删除"></a>
+								<a class="add-r-ico txt" href="javascript:" title="编辑"></a>
+								<div class="new-addr">
+									<div class="arrow"></div>
+									<div class="new-addr-hd">
+										<h3>编辑您的地址</h3>
+										<a href="#" class="cancel"></a>
+									</div>
+									<ul class="new-addr-bd oh">
+										<li>
+											<span class="title">
+											<label for="">所在地区</label>
+											</span>
+											<p>
+											<select name="" id="" class="address-prov">
+												<option value="">上海</option>
+												<option value="">上海</option>
+												<option value="">上海</option>
+												<option value="">上海</option>
+												<option value="">上海</option>
+											</select>
+											<select name="" id="" class="address-city">
+												<option value="">上海市</option>
+											</select>
+											<select name="" id="" class="address-area">
+												<option value="">闵行区</option>
+											</select>
+											</p>
+										</li>
+										<li>
+											<span class="title">
+											<label for="deliverAddress1">详细地址</label>
+											</span>
+											<p>
+											<textarea cols="30" rows="10" class="address-txt" id="deliverAddress1" placeholder="请输入详细的地址"></textarea>
+											</p>
+										</li>
+										<li>
+											<div class="name-l">
+												<span class="title">
+												<label for="deliverName1">收件人</label>
+												</span>
+												<p>
+												<input type="text" id="deliverName1"  placeholder="请输入姓名">
+												</p>
+											</div>
+											<div class="name-r">
+												<span class="title">
+												<label for="phone1">手机</label>
+												</span>
+												<p>
+												<input type="text" id="plone1" placeholder="请输入手机号">
+												</p>
+											</div>
+										</li>
+									</ul>
+									<div class="submitButton">
+										<button>确定</button>
+									</div>
+								</div>
+							</div>
+						</li>
+						<li class="address-li" >
+							<div class="add-select">
+								<p class="name">揭志勇</p>
+								<p>河南 郑州市 三路口的复古镂空尽量靠近</p>
+								<p>15921648115</p>
+							</div>
+							<div class="add-ages-r">
+								<a title="删除" href="javascript:" class="add-r-ico rub"></a>
+								<a title="编辑" href="javascript:" class="add-r-ico txt"></a>
+								<div class="new-addr">
+									<div class="arrow"></div>
+									<div class="new-addr-hd">
+										<h3>编辑您的地址</h3>
+										<a class="cancel" href="#"></a>
+									</div>
+									<ul class="new-addr-bd oh">
+										<li>
+											<span class="title">
+											<label for="">所在地区</label>
+											</span>
+											<p>
+											<select class="address-prov" id="" name="">
+												<option value="">上海</option>
+												<option value="">上海</option>
+												<option value="">上海</option>
+												<option value="">上海</option>
+												<option value="">上海</option>
+											</select>
+											<select class="address-city" id="" name="">
+												<option value="">上海市</option>
+											</select>
+											<select class="address-area" id="" name="">
+												<option value="">闵行区</option>
+											</select>
+											</p>
+										</li>
+										<li>
+											<span class="title">
+											<label for="deliverAddress1">详细地址</label>
+											</span>
+											<p>
+											<textarea placeholder="请输入详细的地址" id="deliverAddress1" class="address-txt" rows="10" cols="30"></textarea>
+											</p>
+										</li>
+										<li>
+											<div class="name-l">
+												<span class="title">
+												<label for="deliverName1">收件人</label>
+												</span>
+												<p>
+												<input type="text" placeholder="请输入姓名" id="deliverName1">
+												</p>
+											</div>
+											<div class="name-r">
+												<span class="title">
+												<label for="phone1">手机</label>
+												</span>
+												<p>
+												<input type="text" placeholder="请输入手机号" id="plone1">
+												</p>
+											</div>
+										</li>
+									</ul>
+									<div class="submitButton">
+										<button>确定</button>
+									</div>
+								</div>
+							</div>
+						</li>
+						<li class="address-li"  id="add-address-btn" style="margin-right:0;">
+							<div class="add-address">
+								<!-- <i></i> -->
+								<span class="add-tit">添加其他地址</span>
+								<div class="new-addr" id="add-address" style="left:-77px;top:98px;">
+									<div class="arrow"></div>
+									<div class="new-addr-hd">
+										<h3>编辑您的地址</h3>
+										<a href="javascript:" class="cancel"></a>
+									</div>
+									<ul class="new-addr-bd">
+										<li>
+											<span class="title">
+											<label for="">所在地区</label>
+											</span>
+											<p>
+											<select name="" id="" class="address-prov">
+												<option value="">上海</option>
+												<option value="">上海</option>
+												<option value="">上海</option>
+												<option value="">上海</option>
+												<option value="">上海</option>
+											</select>
+											<select name="" id="" class="address-city">
+												<option value="">上海市</option>
+											</select>
+											<select name="" id="" class="address-area">
+												<option value="">闵行区</option>
+											</select>
+											</p>
+										</li>
+										<li>
+											<span class="title">
+											<label for="deliverAddress1">详细地址</label>
+											</span>
+											<p>
+											<textarea cols="30" rows="10" class="address-txt" id="deliverAddress1" placeholder="请输入详细的地址"></textarea>
+											</p>
+										</li>
+										<li>
+											<div class="name-l">
+												<span class="title">
+												<label for="deliverName1">收件人</label>
+												</span>
+												<p>
+												<input type="text" id="deliverName1"  placeholder="请输入姓名">
+												</p>
+											</div>
+											<div class="name-r">
+												<span class="title">
+												<label for="phone1">手机</label>
+												</span>
+												<p>
+												<input type="text" id="plone1" placeholder="请输入手机号">
+												</p>
+											</div>
+										</li>
+									</ul>
+									<div class="submitButton">
+										<button>确定</button>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</li>
+	</ul>
+</div>
+</form>
+</div>
+<!-- payment -->
+<div class="payment container">
+<h3>支付方式</h3>
+<ul class="mode fl width100">
+<li class="zfb clickc checked">
+	<a href="javascript:">
+		<img src="images/zfb.png">
+		<span class="changecolor">支付宝支付</span>
+	</a>
+</li>
+<li class="wx clickc">
+	<a href="javascript:">
+		<img src="images/wxzf.png">
+		<span class="changecolor">微信支付</span>
+	</a>
+</li>
+<li class="wy clickc">
+	<a href="javascript:">
+		<img src="images/wyzf.png" alt="">
+		<span class="changecolor">银联</span>
+	</a>
+</li>
+<li class="hdfk clickc">
+	<a href="javascript:">
+		<img src="images/hdfk.jpg" alt="">
+		<span class="changecolor">货到付款</span>
+	</a>
+</li>
+</ul>
+<div class="time fl width100">
+<h3 class="public_title">配送时间</h3>
+<div class="time_choose fl width100">
+	<input id="sent_time" type="hidden" value="周一至周日（任意时间）">
+	<a href="javascript:void(0);" title="周一至周五（工作日）">
+		<p>工作日送货</p>
+		<span>周一至周五</span>
+	</a>
+	<a href="javascript:void(0);" title="周六至周日（休息日）">
+		<p>双休日送货</p>
+		<span>周六至周日</span>
+	</a>
+	<a class="choosed" href="javascript:void(0);" title="周一至周日（任意时间）">
+		<p>不限送货时间</p>
+		<span>周一至周日</span>
+	</a>
+</div>
+<p class="color-warning fl">※由第三方快递发货</p>
+</div>
+</div>
+<!-- invoice start  -->
+<div class="invoice container">
+<h3>发票信息</h3>
+<div class="invoice-box fl">
+<a href="javascript:" class="fp">开具发票</a>
+<div class="getfp">
+	<i class="arrow-top"></i>
+	<div class="getfp-box">
+		<ul>
+			<li>
+				<span>是否需要：</span>
+				<input type="radio" value="n" onclick="orderInit.getTax()" name="chose1" checked="checked" id="per1">
+				<label for="per1">不需要</label>
+				<input type="radio" value="y" onclick="orderInit.getTax()" name="chose1" id="com1">
+				<label for="com1" class="marginR0"><span>需要</span><span class="color-warning">（加收"商品总金额*6%的税费"）<span></label>
+			</li>
+			<div class="invoice-hide-box">
+				<li class="getfp-box-t">
+					<span>发票种类：</span>
+					<input type="radio" value="1" name="chose" checked="checked">
+					<label for="per">个人</label>
+					<input type="radio" value="2" name="chose">
+					<label for="com" class="marginR0">公司</label>
+				</li>
+				<li class="getfp-box-b">
+					<span>发票抬头：</span>
+					<input type="text" placeholder="请输入姓名" id="invoice_title" class="tit">
+				</li>
+				<li><p class="gbb-tip color-warning">* 发票抬头内容不能为空,一经确定,不予更改。</p></li>
+				<li>
+					<a href="javascript:void(0);" class="invoice-btn radius4">确定</a>
+				</li>
+			</div>
+		</ul>
+	</div>
+</div>
+</div>
+</div>
+<!-- invoice end  -->
+<!-- confirm -->
+<div class="confirm container">
+<h3>确认商品及优惠券</h3>
+<table class="shop-cart-goods">
+<thead>
+	<tr class="shop-header">
+		<th class="col-1">商品</th>
+		<th class="col-2">单品价格</th>
+		<th class="col-3">购买数量</th>
+		<th class="col-4">小计</th>
+	</tr>
+</thead>
+<tbody>
+	<tr class="item-row">
+		<td class="col">
+			<div class="g-pic">
+				<a href="javascript:"><img src="images/g-pic_r1_c1.png" alt=""></a>
+			</div>
+			<div class="g-info">
+				<div class="g-name">
+					<a href="javascript:">
+						650ml玻璃饮料瓶，防烫手，天然塑胶无毒无害,外出</br>旅游用。
+					</a>
+				</div>
+				<p class="g-type">
+				<span>颜色：天蓝色</span>
+				<span>尺码：650ml</span>
+				</p>
+			</div>
+		</td>
+		<td class="col-2 col">&yen:140.00</td>
+		<td class="col-3 col">2</td>
+		<td class="col-4 col">&yen:140.00</td>
+	</tr>
+	<tr class="item-row">
+		<td class="col">
+			<div class="g-pic">
+				<a href="javascript:"><img src="images/g-pic_r3_c1.png" alt=""></a>
+			</div>
+			<div class="g-info">
+				<div class="g-name">
+					<a href="javascript:">
+						650ml玻璃饮料瓶，防烫手，天然塑胶无毒无害,外出</br>旅游用。
+					</a>
+				</div>
+				<p class="g-type">
+				<span>颜色：天蓝色</span>
+				<span>尺码：650ml</span>
+				</p>
+			</div>
+		</td>
+		<td class="col-2 col">&yen:140.00</td>
+		<td class="col-3 col">2</td>
+		<td class="col-4 col">&yen:140.00</td>
+	</tr>
+	<tr class="item-row">
+		<td class="col">
+			<div class="g-pic">
+				<a href="javascript:"><img src="images/g-pic_r5_c1.png" alt=""></a>
+			</div>
+			<div class="g-info">
+				<div class="g-name">
+					<a href="javascript:">
+						650ml玻璃饮料瓶，防烫手，天然塑胶无毒无害,外出</br>旅游用。
+					</a>
+				</div>
+				<p class="g-type">
+				<span>颜色：天蓝色</span>
+				<span>尺码：650ml</span>
+				</p>
+			</div>
+		</td>
+		<td class="col-2 col">&yen:140.00</td>
+		<td class="col-3 col">2</td>
+		<td class="col-4 col">&yen:140.00</td>
+	</tr>
+	<tr class="item-row">
+		<td class="col">
+			<div class="g-pic">
+				<a href="javascript:"><img src="images/g-pic_r7_c1.png" alt=""></a>
+			</div>
+			<div class="g-info">
+				<div class="g-name">
+					<a href="javascript:">
+						650ml玻璃饮料瓶，防烫手，天然塑胶无毒无害,外出</br>旅游用。
+					</a>
+				</div>
+				<p class="g-type">
+				<span>颜色：天蓝色</span>
+				<span>尺码：650ml</span>
+				</p>
+			</div>
+		</td>
+		<td class="col-2 col">&yen:140.00</td>
+		<td class="col-3 col">2</td>
+		<td class="col-4 col">&yen:140.00</td>
+	</tr>
+</tbody>
+</table>
+<div class="shop-cart-box-ft container ">
+<div class="cheap-buy fl">
+	<div class="message container">
+		<span>给fushionbaby留言：</span>
+		<textarea name="message" id="message" cols="30" rows="10" placeholder="选填：对本次交易的说明"></textarea>
+	</div>
+</div>
+<div class="price container fl">
+	<div class="price-panel">
+		<ul>
+			<li class="figure color_red">组合产品优惠金额：<span class="figure-all">-30元</span>
+			</li>
+			<li class="figure">
+				税费：
+				<span class="figure-all">
+				<span class="num">8</span>
+				元
+				</span>
+			</li>
+			<li class="figure">
+				商品件数：
+				<span class="figure-all">
+				<span class="num">4</span>
+				件
+				</span>
+			</li>
+			<li class="figure">
+				金额合计：
+				<span class="figure-all">
+				<span class="num">560</span>
+				元
+				</span>
+			</li>
+			<li class="figure">
+				<strong>邮费：</strong>
+				<span class="figure-all">
+				<span class="num"><strong>30</strong></span>
+				元
+				</span>
+			</li>
+		</ul>
+	</div>
+</div>
+<!-- 代金券等折扣 开始  -->
+<div id="discount">
+	<div class="discount-wrap">
+		<a class="discount-btn discount-btn-current" href="javascript:void(0);">使用兜米</a>
+		<div class="discount-box" style="display:block !important;">
+			<div class="discount-input-group fl width100">
+				<label for="本次使用">本次使用：</label>
+				<input type="text" class="small_input">
+				<label for="兜米支付" class="marginL10"><span>兜米支付&emsp;</span><span style="font-weight:500;">抵用 <i class="color_red">20.00</i> 元现金</span></label>
+				<div class="discount-box-btn-wrap marginT0 marginL20 ">
+					<a class="discount-box-btn confirm" href="javascript:void(0);">使用</a>
+				</div>
+			</div>
+			<p class="discount-box-line"></p>
+			<span class="marginT10">您有兜米 <strong style="color:#4d4d4d;">0</strong> 个，本次可用 <strong style="color:#f9a565">0</strong> 个</span>
+			<span class="marginT10" style="float:right;"><a href="${rc.contextPath}/activity/goToHelp.do#doumi" class="color-green">[了解什么是兜米]</a></span>
+		</div>
+	</div>
+	<div class="discount-wrap">
+		<a class="discount-btn" href="javascript:void(0);">使用礼品卡</a>
+		<div class="discount-box">
+			<div class="discount-input-group fl width100">
+				<label for="本次使用">本次使用：</label>
+				<input type="text" class="small_input">
+				<label for="" class="marginL10"><span>元支付</label>
+				<div class="discount-box-btn-wrap marginT0 marginL20 ">
+					<a class="discount-box-btn confirm" href="javascript:void(0);">使用</a>
+				</div>
+				<span style="float:right;">已有礼品卡？ <a href="链接到个人中心礼品卡" class="color-green">[使用礼品卡充值]</a></span>
+			</div>
+			<p class="discount-box-line"></p>
+			<span class="marginT10">您当前有可用余额 <strong id="card_ye" class="color_red">0</strong>，最多可用 <strong class="color_red">0</strong>
+			<strong class="color_black card_ye_message">&emsp;您礼品卡可用余额为零，无法使用礼品卡余额支付</strong>
+			</span>
+		</div>
+		<script>
+		$(window).load(function(){
+			/*可用余额为0时，显示提示*/
+			if ($('#card_ye').text() == 0) {
+				$('.card_ye_message').show();
+			};
+		})
+		</script>
+	</div>
+	<!-- <div class="discount-wrap coupon">
+				<a class="discount-btn" href="javascript:void(0);">使用代金券</a>
+				<div class="discount-box">
+							<div class="discount-input-group fl width100">
+										<label for="输入代金券">输入代金券：</label>
+										<input type="text" placeholder="请输入代金券...">
+										<span class="color-warning marginL10">￥：100.00</span>
+							</div>
+							<p class="discount-box-line" style="border-color:#9f8e66;"></p>
+							<div class="discount-box-btn-wrap">
+										<a class="discount-box-btn confirm" href="javascript:void(0);">使用</a>
+										<a class="discount-box-btn cancel" href="javascript:void(0);">取消</a>
+							</div>
+				</div>
+	</div> -->
+	<!-- <div class="discount-wrap">
+				<a class="discount-btn" href="javascript:void(0);">使用礼品卡</a>
+				<div class="discount-box">
+							<div class="discount-input-group fl width100">
+										<label for="卡号">卡号：</label>
+										<input type="text" placeholder="请输入卡号...">
+							</div>
+							<div class="discount-input-group fl width100">
+										<label for="密码">密码：</label>
+										<input type="text" placeholder="请输入密码...">
+										<span class="color-green marginL10">※单次未使用完的金额将自动转入用户余额内</span>
+							</div>
+							<p class="discount-box-line"></p>
+							<div class="discount-box-btn-wrap">
+										<a class="discount-box-btn confirm" href="javascript:void(0);">使用</a>
+										<a class="discount-box-btn cancel" href="javascript:void(0);">取消</a>
+							</div>
+							<span class="coupon-error color-warning textC width100">代金券不存在或已经被使用！</span>
+				</div>
+	</div> -->
+	<div class="discount-wrap">
+		<a class="discount-btn" href="javascript:void(0);">使用账户余额</a>
+		<div class="discount-box">
+			<div class="discount-input-group fl width100">
+				<label for="本次使用">本次使用：</label>
+				<input type="text" class="small_input">
+				<label for="兜米支付" class="marginL10">元支付</label>
+				<div class="discount-box-btn-wrap marginT0 marginL20 ">
+					<a class="discount-box-btn confirm" href="javascript:void(0);">使用</a>
+				</div>
+			</div>
+			<p class="discount-box-line"></p>
+			<span class="marginT10">钱包可用： <strong style="color:#f9a565">600.00</strong> 元</span>
+		</div>
+	</div>
+	<div class="discount-wrap" id="coupon">
+		<div class="discount-input-group fr">
+			<label for="Coupon Code" class="fl">Coupon Code</label>
+			<input type="text" class="fl">
+			<div class="discount-box-btn-wrap marginT0 marginL20 ">
+				<a href="javascript:void(0);" class="discount-box-btn confirm">使用</a>
+			</div>
+		</div>
+		<p class="fr width100 coupon_error">※请输入正确的代金卷号码</p>
+	</div>
+</div>
+<!-- 代金券等折扣 结束  -->
+<!-- 应付金额 开始  -->
+<div class="shop-cart-sesult fl width100 radius2">
+	<div class="btn fr">
+		<input type="button" onclick="orderInit.create();" value="确认订单并支付" id="ok_pay" class="btn-info btn-next">
+	</div>
+	<div class="btn fr">
+		<input type="button" onclick="backCartList();" value="返回购物车" class="btn-info btn-back">
+	</div>
+	<div class="shop-cart-action fr">
+		<p class="total-price">
+		<span>应付总金额：</span>
+		<i>867</i> 元
+		</p>
+	</div>
+	<p class="width100 fl size14 textR shop-cart-sesult-p marginT20">寄送至：上海市 闸北区 彭浦新村 岭南路</p>
+	<p class="width100 fl size14 textR shop-cart-sesult-p">收货人：aka 150****1234</p>
+</div>
+<!-- 应付金额 结束  -->
+</div>
+</div>
+<script type="text/javascript" src="ftl/footer.js"></script><!-- 公共底部JS -->
+<script type="text/javascript" src="ftl/nav.js"></script><!-- 公共底部JS -->
+
+<script type="text/javascript" src="js/base.js"></script>
+<script type="text/javascript" src="js/persona-order.js"></script>
+<script type="text/javascript" src="js/checked.js"></script>
+</body>
+</html>

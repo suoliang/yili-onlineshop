@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.card.dao.MemberCardIncomeRecordDao" >
+  <resultMap id="MemberCardIncomeRecordResultMap" type="MemberCardIncomeRecord" >
+    <id column="id" property="id" />
+    <result column="income_member_id" property="incomeMemberId" />
+    <result column="income_card_code" property="incomeCardNo" />
+    <result column="income_money" property="incomeMoney" />
+    <result column="income_type" property="incomeType" />
+    <result column="create_time" property="createTime" />
+  </resultMap>
+  <insert id="add" parameterType="MemberCardIncomeRecord"> 
+		   insert into t_member_card_income_record (id, income_member_id, income_card_code, 
+		      income_money, income_type,create_time)
+		    values (#{id}, #{incomeMemberId}, #{incomeCardNo}, 
+		      #{incomeMoney},#{incomeType}, now())
+  </insert>
+  <delete id="deleteById"  parameterType="java.lang.Long">
+    		delete from t_member_card_income_record where id = #{id}
+  </delete>
+  <sql id="Base_Column_List" >
+  			select id, income_member_id, income_card_code,income_type, income_money, create_time from t_member_card_income_record
+  </sql>
+  <select id="findAll" resultMap="MemberCardIncomeRecordResultMap" resultType="list">
+  		<include refid="Base_Column_List" />
+  </select> 
+   <select id="findById" resultMap="MemberCardIncomeRecordResultMap" parameterType="java.lang.Long" >
+   		<include refid="Base_Column_List" />
+   		<where>
+   			id=#{id}
+   		</where>
+  </select>
+  
+	<!-- 分页条件查询 -->
+  <select id="getListPage" resultType="list" resultMap="MemberCardIncomeRecordResultMap" parameterType="Map" >
+    	<include refid="Base_Column_List" />
+		<where>
+	        <if test=" incomeCardNo !=null and incomeCardNo !=''">
+			      AND  income_card_code LIKE "%"#{incomeCardNo}"%" 
+			 </if>
+			<if test="createTimeFrom != null and createTimeFrom !=''">
+	    	<![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+			]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+		</where>
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+   </select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select 
+			count(0) 
+		from t_member_card_income_record 
+		<where>
+			<if test="incomeCardNo!=null and incomeCardNo!=''">
+				AND  income_card_code LIKE "%"#{incomeCardNo}"%"  
+			</if>
+			<if test="createTimeFrom != null and createTimeFrom !=''">
+	    	<![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+			]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+		</where>
+	</select>
+</mapper>

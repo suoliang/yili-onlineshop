@@ -1,0 +1,25 @@
+
+/* activity-list */
+.portlet-body{overflow:auto;}
+.control-group .control-label{width: 90px;margin-left: 10px;}
+.control-group .m-wrap,.control-group .input-append{float: left;}
+.input-append .m-wrap{width: 150px;}
+.add-on{cursor: pointer;}
+.btn{float: left;margin-left:60px}
+.table{cursor: pointer;}
+
+
+
+/* activity-add */
+.control-group .datax{margin-left: 80px;}
+.control-group .datax input{width: 205px;}
+.fileupload{margin: 0;}
+textarea{resize:none;}
+.portlet-body{position: relative;}
+.pic-big{position: absolute;right: 10px;top: 10px;width: 472px;height: 300px;background-color: #f40;overflow:hidden;}
+.pic-big img{width: 230px;float:left;}
+
+.control-group select.pri{width: 214px !important;height: 28px !important;}
+ 
+/* parent-child-course-add */
+.wysihtml5-toolbar .btn,.fushion-add{margin: 0;}

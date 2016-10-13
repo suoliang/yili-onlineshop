@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>确认订单</title>
+        <!-- 通用部分 开始 -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0,user-scalable=no">
+        <link rel="shortcut icon" href="images/favicon.ico" />
+        <link rel="stylesheet" href="css/style.min.css"><!-- 通用 CSS -->
+        <script src="farmwork/jquery/jquery-2.1.3.min.js"></script><!-- 通用jQuery JS -->
+        <script src="farmwork/velocity/velocity.min.js"></script><!-- velocity JS -->
+        <script src="farmwork/velocity/velocity.ui.min.js"></script><!-- velocity JS -->
+        <script src="js/min/public.min.js"></script><!-- 通用 public JS -->
+        <!-- 通用部分 结束 -->
+    </head>
+    <body id="cart-confirm">
+
+        <div class="container">
+
+            <div class="head mB10">
+                <a href="javascript:history.go(-1)" class="a-left">
+                    <span class="back"></span>
+                </a>
+                <p>确认订单</p>
+            </div>
+
+            <div class="address">
+                <div class="address-box">
+                    <div class="icon-wrap">
+                        <span class="icon-address"></span>
+                    </div>
+                    <a href="address.html">
+                        <div class="address-detail fl">
+                            <span class="name">收件人：揭志勇</span>
+                            <span class="phone">电话：18116407567</span>
+                            <p>地址：上海市闵行区浦江镇 恒西路189号901室</p>
+                        </div>
+                        <div class="address-btn">
+                            <span></span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="cart-confirm-a fl wp100">
+                <span class="icon-house"></span>
+                <h4>阿拉丁商品</h4>
+                <p>共计 <i class="count-num">1</i> 件</p>
+            </div>
+
+            <div class="cart-confirm-b fl wp100">
+                <a href="detail.html"><img src="picture/1.jpg"></a>
+                <p>舒肤佳金银花/菊花沐浴露400毫升</p>
+                <span>参数：属性</span>
+                <span>参数：属性</span>
+                <i>&yen; 29.9</i>
+                <div class="modal-c fl wp100 textR size12">数量：1</div>
+            </div>
+            <div class="cart-confirm-b fl wp100">
+                <a href="detail.html"><img src="picture/2.jpg"></a>
+                <p>舒肤佳金银花/菊花沐浴露400毫升</p>
+                <span>参数：属性</span>
+                <span>参数：属性</span>
+                <i>&yen; 29.9</i>
+                <div class="modal-c fl wp100 textR size12">数量：1</div>
+            </div>
+            <div class="cart-confirm-c fl wp100">
+                <textarea name="" id="" placeholder="给卖家留言..."></textarea>
+            </div>
+            <div class="cart-confirm-d fl wp100">
+                <div id="" class="form-group">
+                    <ul class="list mB0" id="choseTime">
+                        <input type="hidden">
+                        <li>
+                            <p>配送时间：</p>
+                            <span></span>
+                            <i class="right"></i>
+                        </li>
+                    </ul>
+                    <a href="cart-confirm-choose-discount.html">
+                        <ul class="list mB0" id="cartCoupon">
+                            <input type="hidden">
+                            <li>
+                                <p>优惠券</p>
+                                <span></span>
+                                <b>-30 元</b>
+                                <i class="right"></i>
+                            </li>
+                        </ul>
+                    </a>
+                    <!-- <div class="input-group coupon-wrap">
+                        <label for="">代金券：</label>
+                        <input name="" type="text" placeholder="请输入代金券号码" autocomplete="off">
+                        <div class="ios-btn-wrap">
+                            <div class="ios-btn">
+                                <input type="checkbox">
+                                <i></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group coupon-password">
+                        <label for="">密码：</label>
+                        <input name="" type="password" placeholder="请输入密码" autocomplete="off">
+                        <div class="cut">-5.0 元</div>
+                    </div> -->
+                    <div class="input-group">
+                        <label for=""><i class="label-i">您有 30 积分可用</i>&emsp;&emsp;-2元</label>
+                        <input id="" name="password" type="password" placeholder="" autocomplete="off">
+                        <div class="ios-btn-wrap">
+                            <div class="ios-btn">
+                                <input type="checkbox">
+                                <i></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="" class="wp100"><i class="label-i">您有 8 元红包可用</i>&emsp;&emsp;<i class="cut-b">-4元</i></label>
+                        <input id="" name="password" type="password" placeholder="" autocomplete="off">
+                        <div class="ios-btn-wrap">
+                            <div class="ios-btn">
+                                <input type="checkbox">
+                                <i></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cart-confirm-e fl wp100">
+                <p>合计：<i class="red">&yen;  200.00</i></p>
+                <span>运费：&yen; 0.00 （满 68 包邮）</span>
+                <a href="pay.html"><button>提交订单</button></a>
+            </div>
+
+        </div><!-- /.container -->
+
+        <div id="choseTimeBox" class="modal-wrap">
+            <ul class="list mB0 fl wp100 radio">
+                <li>
+                    <p>周一至周日（任意时间）</p>
+                    <div class="check-box fr">
+                        <i></i>
+                        <input id="" class="checkItem" type="checkbox" value="0">
+                    </div>
+                </li>
+                <li>
+                    <p>周一至周五（工作日）</p>
+                    <div class="check-box fr">
+                        <i></i>
+                        <input id="forgot-password.html" class="checkItem" type="checkbox" value="1">
+                    </div>
+                </li>
+                <li>
+                    <p>周六至周日（双休日）</p>
+                    <div class="check-box fr">
+                        <i></i>
+                        <input id="" class="checkItem" type="checkbox" value="2">
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <script>
+        $(function(){
+            /*选择收货时间*/
+            var timeInput = $('#choseTime').find('input');
+            var timeSpan = $('#choseTime').find('span');
+            var choseTimeBox = $('#choseTimeBox');
+            $('#choseTime').click(function(event) {
+                choseTimeBox.fadeIn();
+                choseTimeBox.find('.list').velocity({bottom:0});
+            });
+            choseTimeBox.find('li').click(function(event) {
+                timeInput.val($(this).find('input').val());
+                timeSpan.html($(this).find('p').html());
+            });
+            choseTimeBox.click(function(event) {
+                choseTimeBox.find('.list').velocity({bottom:"-100%"});
+                choseTimeBox.fadeOut();
+            });
+        })
+        </script>
+
+    </body>
+</html>

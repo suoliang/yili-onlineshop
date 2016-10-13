@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.sku.dao.SkuGiftCardDao">
+	<resultMap id="skuGiftCardResultMap" type="SkuGiftCard">
+		<id column="id" property="id" />
+		<result column="code" property="code" />
+		<result column="card_no" property="cardNo" />
+		<result column="charge_pwd" property="chargePwd" />
+		<result column="face_value" property="faceValue" />
+		<result column="create_time" property="createTime" />
+		<result column="expiration" property="expiration" />
+		<result column="status" property="status" />
+		<result column="member_id" property="memberId" />
+		<result column="charge_time" property="chargeTime"/>
+	</resultMap>
+	<insert id="add" parameterType="SkuGiftCard">
+		insert into 
+			t_sku_gift_card(id,code,card_no,charge_pwd,face_value,create_time,expiration,status,member_id,charge_time)
+		values
+			(#{id},#{code}, #{cardNo},#{chargePwd},#{faceValue},now(),#{expiration},#{status},#{memberId},#{chargeTime})
+	</insert>
+	
+	<delete id="deleteById" parameterType="java.lang.Long">
+		DELETE FROM t_sku_gift_card WHERE id = #{id}
+	</delete>
+	
+	<select id="updateStatus" parameterType="map">
+	update 
+	         t_sku_gift_card
+	     set 
+	        status=#{status}
+	        
+	     where id=#{id}   
+	
+	</select>
+		<select id="update" parameterType="SkuGiftCard">
+	update 
+	         t_sku_gift_card
+	     set 
+	     
+	        card_no=#{cardNo},
+	        code=#{code},
+	        charge_pwd=#{chargePwd},
+	        face_value=#{faceValue},
+	        expiration=#{expiration},
+	        status=#{status},
+	        member_id=#{memberId},
+	        charge_time=#{chargeTime}
+	     where id=#{id}   
+	
+	</select>
+	
+	<select id="findAll" resultType="list" resultMap="skuGiftCardResultMap">
+		select 
+			id,code,card_no,charge_pwd,face_value,create_time,expiration,status,member_id,charge_time
+		from 
+			t_sku_gift_card
+	</select>
+	<select id="findById" resultMap="skuGiftCardResultMap" parameterType="java.lang.Long">
+		select 
+			id,code,card_no,charge_pwd,face_value,create_time,expiration,status,member_id,charge_time
+		from 
+			t_sku_gift_card
+	 	where 
+	 		id = #{id}
+	</select>
+	<select id="listUnSaleSkuGiftCard" resultType="list" resultMap="skuGiftCardResultMap">
+		select 
+			id,code,card_no,charge_pwd,face_value,create_time,expiration,status,member_id,charge_time
+		from 
+			t_sku_gift_card
+			
+			where   status='0'
+	</select>
+
+	<select id="getListPage" resultType="list" resultMap="skuGiftCardResultMap" parameterType="Map" >
+			select 
+				id,code,card_no,charge_pwd,face_value,create_time,expiration,status,member_id,charge_time
+			from 
+				t_sku_gift_card
+		<where>
+			<if test="code !=null and code !=''">
+	    	   AND  code LIKE "%"#{code}"%"  
+	        </if>
+	       <if test="status !=null and status!=''">
+	         AND  status =#{status}  
+	       </if>
+		</where>
+		   order by create_time desc
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select 
+			count(id)
+		from 
+			t_sku_gift_card
+		<where>
+			<if test="code !=null and code !=''">
+	    	   AND  code LIKE "%"#{code}"%"  
+	        </if>
+	        <if test="status !=null and status !=''">
+	    	   AND  status = #{status}  
+	        </if>
+		</where>
+	</select>
+	<select id="getCurrentCode" resultType="java.lang.String" parameterType="java.lang.String">
+		select MAX(code) from t_sku_gift_card where code like #{dateStr}"%";
+	</select>
+	
+	<select id="findByCardNo" resultMap="skuGiftCardResultMap" parameterType="java.lang.String">
+		select 
+			id,code,card_no,charge_pwd,face_value,create_time,expiration,status,member_id,charge_time
+		from 
+			t_sku_gift_card
+	 	where 
+	 		card_no = #{cardNo} and expiration >= NOW() and status=1
+	</select>
+	
+</mapper>

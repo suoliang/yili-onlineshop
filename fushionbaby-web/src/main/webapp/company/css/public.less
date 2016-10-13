@@ -1,0 +1,127 @@
+@charset "UTF-8";
+ // * public.less  基础公共less，用于引用，谨慎修改
+ // * @import "public.less";
+ // * @authors 揭志勇
+ // * @date    2015-02-06 09:45:05
+ // * @version $1.0$
+
+
+// color
+@color_base : #767676;
+@color_primary : #286090;
+@color_success : #5cb85c;
+@color_info : #5bc0de;
+@color_warning : #f0ad4e;
+@color_danger : #d9534f;
+
+.scale(@scale) {
+  -webkit-transform: scale(@scale, @scale);transform: scale(@scale, @scale);
+}
+.transition(@duration) {-webkit-transition: all @duration ease-out 0s; -moz-transition: all @duration ease-out 0s; -o-transition: all @duration ease-out 0s; transition: all @duration ease-out 0s;}
+
+.darken(@color) {
+  background-color:darken(@color,10%);
+  color:darken(@color,10%);
+}
+.lighten(@color) {
+  background-color:lighten(@color,10%);
+  color:lighten(@color,10%);
+}
+// border-radius
+.radius (@lt: 4px,@rt:4px,@rb:4px,@lb:4px) {
+  -webkit-border-radius: @arguments;
+  -moz-border-radius: @arguments;
+  -ms-border-radius: @arguments;
+  -o-border-radius: @arguments;
+  border-radius: @arguments;
+}
+// box-shadow
+.box-shadow (@x: 2px, @y: 2px, @blur: 2px, @color: #333) {
+  -webkit-box-shadow: @arguments;
+  -moz-box-shadow: @arguments;
+  box-shadow: @arguments;
+}
+// text-shadow
+.text-shadow (@x: 2px, @y: 2px, @blur: 2px, @color: #333) {
+  -webkit-text-shadow: @arguments;
+  -moz-text-shadow: @arguments;
+  text-shadow: @arguments;
+}
+// opacity
+.opacity(@opacity:0.8) {
+  opacity: @opacity;
+  @opa : @opacity*100;
+  filter: ~"alpha(opacity=@{opa})";
+}
+// grba()&&fliter()
+.rgba(@r:0,@g:0,@b:0,@a:0.8) {
+  @color-rgba : rgba(@r,@g,@b,@a);
+  @AA :alpha(@color-rgba);
+  @RR : red(@color-rgba);
+  @GG : green(@color-rgba);
+  @BB : blue(@color-rgba);
+  background-color: @color-rgba;
+  @argb : argb(@color-rgba);
+  filter: ~"progid:DXImageTransform.Microsoft.gradient(startcolorstr=@{argb},endcolorstr=@{argb})";
+}
+.filter(@color:#000,@a:0.8) {
+  @RR : red(@color);
+  @GG : green(@color);
+  @BB : blue(@color);
+  @color-rgba : rgba(@RR,@GG,@BB,@a);
+  background-color:@color-rgba;
+  @argb : argb(@color-rgba);
+  filter: ~"progid:DXImageTransform.Microsoft.gradient(startcolorstr=@{argb},endcolorstr=@{argb})";
+}
+// 图片上下左右居中
+.img_c (@width,@height) {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  width:@width;
+  height:@height;
+  img {
+    max-width: @width;
+    max-height: @height;
+  }
+}
+// 文字超过长度隐藏，显示...
+.nowrap(@width) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: @width;
+  display:inline-block;
+}
+// 居中
+.positionC(@width,@height) {
+  width:@width;
+  height:@height;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -@width/2;
+  margin-top: -@height/2;
+}
+
+// // .eg
+//  a {color:@color_base;
+//   &:hover{color:@color_success;}
+// }
+// .item {background-color : @color_success;
+//  &:hover{.darken(@color_success)}
+//   .b {background-color : @color_danger;.radius(2px,2px,2px,2px);.box-shadow(3px,3px,3px,#169fe6);
+//     &:hover{.lighten(@color_danger)}
+//   }
+//   .c {background-color : @color_warning;}
+//     &:hover{.opacity(0.6);}
+//   .d {.positionC(400px,300px)}
+//   .e {.rgba(0,0,0,0.8);}
+//   .f {.filter(#169fe6,0.8);}
+//   .g {.rgba(22,159,230,0.8);}
+//   .img_c {.img_c(100px,80px)}
+//   .nowrap {.nowrap(98%;)}
+//   .z {width:400px;
+//     @media (min-width: 400px) and (max-width: 960px) {width: 100px;}
+//   }
+// }

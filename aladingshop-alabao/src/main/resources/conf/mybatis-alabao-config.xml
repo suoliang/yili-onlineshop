@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration 
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 命名空间 -->
+	<typeAliases>
+		<!-- 阿拉宝信息 -->
+		<typeAlias alias="AlabaoAccount" type="com.aladingshop.alabao.model.AlabaoAccount" />
+		<!-- 阿拉宝配置信息 -->
+		<typeAlias alias="AlabaoConfig" type="com.aladingshop.alabao.model.AlabaoConfig" />
+		<!-- 阿拉宝消费信息 -->
+		<typeAlias alias="AlabaoConsumeRecord" type="com.aladingshop.alabao.model.AlabaoConsumeRecord" />
+		<!-- 阿拉宝消费信息 -->
+		<typeAlias alias="AlabaoDailyRate" type="com.aladingshop.alabao.model.AlabaoDailyRate" />
+		<!-- 阿拉宝收益记录表 -->
+		<typeAlias alias="AlabaoIncomeRecord" type="com.aladingshop.alabao.model.AlabaoIncomeRecord" />
+		<!-- 阿拉宝转出金额记录表 -->
+		<typeAlias alias="AlabaoRollOffRecord" type="com.aladingshop.alabao.model.AlabaoRollOffRecord" />
+		<!-- 阿拉宝转入金额记录表 -->
+		<typeAlias alias="AlabaoShiftToRecord" type="com.aladingshop.alabao.model.AlabaoShiftToRecord" />
+		<!-- 阿拉宝转入金额记录表 -->
+		<typeAlias alias="AlabaoOrder" type="com.aladingshop.alabao.model.AlabaoOrder" />
+		
+		
+		<!-- 阿拉宝账户关联银行卡 -->
+		<typeAlias alias="AlabaoAccountBank" type="com.aladingshop.alabao.model.AlabaoAccountBank" />
+		<!-- 阿拉宝账户银行卡配置 -->
+		<typeAlias alias="AlabaoBankConfig" type="com.aladingshop.alabao.model.AlabaoBankConfig" />
+		<!-- 阿拉宝转出配置表 -->
+		<typeAlias alias="AlabaoRolloffConfig" type="com.aladingshop.alabao.model.AlabaoRolloffConfig" />
+		<!-- 阿拉宝转出金额供cms管理员线下转账操作-->
+		<typeAlias alias="AlabaoTurnOut" type="com.aladingshop.alabao.model.AlabaoTurnOut" />
+		<!-- 阿拉宝转出金额到阿拉宝账户记录-->
+		<typeAlias alias="AlabaoTurnToAlabao" type="com.aladingshop.alabao.model.AlabaoTurnToAlabao" />
+		
+		<!-- 阿拉宝转出限制-->
+		<typeAlias alias="AlabaoLimit" type="com.aladingshop.alabao.model.AlabaoLimit" />
+		
+		<!-- 如意消费卡的联系人表-->
+		<typeAlias alias="AlabaoContacts" type="com.aladingshop.alabao.model.AlabaoContacts" />
+	</typeAliases>
+
+	<!-- 注册SQL映射文件 -->
+	<mappers>
+	</mappers>
+</configuration>

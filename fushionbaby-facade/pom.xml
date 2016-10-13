@@ -1,0 +1,153 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.fushionbaby.facade</groupId>
+  <artifactId>fushionbaby-facade</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+  
+  	<parent>
+		<groupId>com.fushionbaby.parent</groupId>
+		<artifactId>fushionbaby-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+  <name>fushionbaby-facade</name>
+  <url>http://maven.apache.org</url>
+	 	<distributionManagement>
+		<repository>
+			<id>Yili-maven-releases</id>
+			<name>Yili-maven-releases</name>
+			<url>http://192.168.1.39:8081/nexus/content/repositories/Yili-maven-releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>Yili-maven-snapshots</id>
+			<name>Yili-maven-snapshots</name>
+			<url>http://192.168.1.39:8081/nexus/content/repositories/Yili-maven-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+<!-- *********************fushionbaby-jar-begin*************************** -->
+	<dependencies>
+
+		<dependency>
+			<groupId>com.fushionbaby.common</groupId>
+			<artifactId>fushionbaby-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.fushionbaby.cache</groupId>
+			<artifactId>fushionbaby-cache</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fushionbaby.sku</groupId>
+			<artifactId>fushionbaby-sku</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.fushionbaby.core</groupId>
+			<artifactId>fushionbaby-core</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fushionbaby.auth</groupId>
+			<artifactId>fushionbaby-auth</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.fushionbaby.sysmgr</groupId>
+			<artifactId>fushionbaby-sysmgr</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.fushionbaby.log</groupId>
+			<artifactId>fushionbaby-log</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+
+		<dependency>
+			<groupId>com.fushionbaby.member</groupId>
+			<artifactId>fushionbaby-member</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.fushionbaby.sms</groupId>
+			<artifactId>fushionbaby-sms</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fushionbaby.sysactivity</groupId>
+			<artifactId>fushionbaby-sysactivity</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.fushionbaby.act.activity</groupId>
+			<artifactId>fushionbaby-activity</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+		 <groupId>com.fushionbaby.other</groupId>
+         <artifactId>fushionbaby-other</artifactId>
+           <version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+		 <groupId>com.fushionbaby.config</groupId>
+         <artifactId>fushionbaby-config</artifactId>
+           <version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.aladingshop.card</groupId>
+		    <artifactId>aladingshop-card</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.aladingshop.alabao</groupId>
+			<artifactId>aladingshop-alabao</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.aladingshop.period-activity</groupId>
+		    <artifactId>aladingshop-periodactivity</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.aladingshop.store</groupId>
+		    <artifactId>aladingshop-store</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<!-- **************fushionbaby-jar-end*********************************** -->
+		
+		
+		
+			<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
+	</dependencies>
+
+	<build>
+		<finalName>fushionbaby-facade</finalName>
+	</build>
+
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+</project>

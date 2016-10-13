@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <title>Fushionbaby-全部订单</title>
+    <meta name="apple-mobile-web-app-title" content="兜士宝-全部订单">
+    <script type="text/javascript" src="js/public-headTag-local.js"></script>
+    <!-- 公共头部便签，css,js等 -->
+  </head>
+  <body id="collect" class="orderAll">
+    <div class="container">
+      <div class="public_header fl width100 marginB0">
+        <div class="public_header_wrap fl width100">
+          <a class="public_back" href="javascript:void(0);"  onclick="history.go(-1);">返回</a>
+          全部订单
+          <a class="public_btn_r disabled" href="javascript:void(0);"></a>
+        </div>
+      </div>
+      <div class="order_tit">
+        <a class="order_tit_on" href="orderAll.html">全部订单</a>
+        <a href="orderToPay.html">待付款</a>
+        <a href="orderToConfirm.html">待收货</a>
+        <a href="orderToEvaluation.html">待评价</a>
+      </div>
+      <!-- 列表  开始-->
+      <div class="public_products_wrap">
+        <ul class="list_view_ul OH padding0 margin0">
+          <li>
+            <div class="public_products_item list_view_item">
+              <a href="orderDetail.html">
+                <div class="item_picture">
+                  <div class="img_c">
+                    <img class="bttrlazyloading" data-bttrlazyloading-lg-src="css/images/example.jpg" alt="">
+                  </div>
+                </div>
+                <div class="item_name">
+                  <p>订单号：1236548897</p>
+                  <p>金额：<i>&yen; 68</i></p>
+                  <p>交易状态：<i>待付款</i></p>
+                  <p>订单日期：2014/09/28 15:00</p>
+                </div>
+              </a>
+              <a class="order_btn order_cancel" href="javascript:void(0);">取消订单</a>
+              <a class="order_btn order_pay" href="pay.html">立即支付</a>
+            </div>
+          </li>
+          <li>
+            <div class="public_products_item list_view_item">
+              <a href="orderDetail.html">
+                <div class="item_picture">
+                  <div class="img_c">
+                    <img class="bttrlazyloading" data-bttrlazyloading-lg-src="css/images/example.jpg" alt="">
+                  </div>
+                </div>
+                <div class="item_name">
+                  <p>订单号：1236548897</p>
+                  <p>金额：<i>&yen; 68</i></p>
+                  <p>交易状态：<i>待评价</i></p>
+                  <p>订单日期：2014/09/28 15:00</p>
+                </div>
+              </a>
+              <a class="order_btn" href="evaluation.html">立即评价</a>
+            </div>
+          </li>
+          <li>
+            <div class="public_products_item list_view_item">
+              <a href="orderDetail.html">
+                <div class="item_picture">
+                  <div class="img_c">
+                    <img class="bttrlazyloading" data-bttrlazyloading-lg-src="css/images/example.jpg" alt="">
+                  </div>
+                </div>
+                <div class="item_name">
+                  <p>订单号：1236548897</p>
+                  <p>金额：<i>&yen; 68</i></p>
+                  <p>交易状态：<i>待收货</i></p>
+                  <p>订单日期：2014/09/28 15:00</p>
+                </div>
+              </a>
+              <a class="order_btn orderToConfirm" href="javascript:void(0);">确认收货</a>
+            </div>
+          </li>
+          <li>
+            <div class="public_products_item list_view_item">
+              <a href="orderDetail.html">
+                <div class="item_picture">
+                  <div class="img_c">
+                    <img class="bttrlazyloading" data-bttrlazyloading-lg-src="css/images/example.jpg" alt="">
+                  </div>
+                </div>
+                <div class="item_name">
+                  <p>订单号：1236548897</p>
+                  <p>金额：<i>&yen; 68</i></p>
+                  <p>交易状态：<i>已完成</i></p>
+                  <p>订单日期：2014/09/28 15:00</p>
+                </div>
+              </a>
+              <a class="order_btn" href="javascript:void(0);">删除订单</a>
+            </div>
+          </li>
+          <li>
+            <div class="public_products_item list_view_item">
+              <a href="orderDetail.html">
+                <div class="item_picture">
+                  <div class="img_c">
+                    <img class="bttrlazyloading" data-bttrlazyloading-lg-src="css/images/example.jpg" alt="">
+                  </div>
+                </div>
+                <div class="item_name">
+                  <p>订单号：1236548897</p>
+                  <p>金额：<i>&yen; 68</i></p>
+                  <p>交易状态：<i>已关闭</i></p>
+                  <p>订单日期：2014/09/28 15:00</p>
+                </div>
+              </a>
+              <a class="order_btn" href="javascript:void(0);">删除订单</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <!-- 收藏列表  结束-->
+    </div>
+    <!-- 对话框 -->
+    <div id="order_confirm" class="public_modal_backup">
+      <div class="public_modal">
+        <div class="modal_body">是否确定收货？</div>
+        <div class="modal_foot">
+          <button class="modal_confirm">确定</button>
+          <button class="modal_cancel">取消</button>
+        </div>
+      </div>
+    </div>
+    <!-- 对话框 -->
+    <div id="order_cancel" class="public_modal_backup">
+      <div class="public_modal">
+        <div class="modal_body">是否取消订单？</div>
+        <div class="modal_foot">
+          <button class="modal_confirm">确定</button>
+          <button class="modal_cancel">取消</button>
+        </div>
+      </div>
+    </div>
+    <!-- 收藏列表为空提示 -->
+    <section class="car-none">
+      <img src="css/images/collect.png">
+      <p>您的订单 空！空！空！</p>
+      <p>赶快去逛逛吧！</p>
+      <a href="index.html">去商城逛逛</a>
+    </section>
+    <script type="text/javascript" src="js/footer-local.js"></script>
+    <script type="text/javascript" src="js/jquery.bttrlazyloading.min.js"></script>
+    <script type="text/javascript">
+    $(".bttrlazyloading").bttrlazyloading({placeholder:'images/lazyload.gif'});
+    </script>
+    <script>
+      $(function(){
+        /*  显示确认收货弹出窗  */
+        $(".orderToConfirm").click(function() {
+          $('#order_confirm').fadeIn();
+        });
+        /*  显示取消订单弹出窗  */
+        $(".order_cancel").click(function() {
+          $('#order_cancel').fadeIn();
+        });
+        /*  取消按钮：隐藏弹出窗  */
+        $(".modal_cancel").click(function() {
+          $('.public_modal_backup').fadeOut();
+        });
+        /*  确定收货按钮  */
+        $("#order_confirm .modal_confirm").click(function() {
+          $('.public_modal_backup').fadeOut();
+          /*  do something  */
+        });
+        /*  确定取消订单按钮  */
+        $("#order_cancel .modal_confirm").click(function() {
+          $('.public_modal_backup').fadeOut();
+          /*  do something  */
+        });
+      })
+    </script>
+  </body>
+</html>

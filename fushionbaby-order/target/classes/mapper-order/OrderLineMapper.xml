@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fushionbaby.order.dao.OrderLineDao">
+  <resultMap id="BaseResultMap" type="SoSoLine">
+    <id column="id" property="id"  />
+    <result column="create_time" property="createTime"  />
+    <result column="line_type" property="lineType"  />
+    <result column="remark" property="remark"  />
+    <result column="size" property="size"  />
+    <result column="color" property="color"  />
+    <result column="sku_code" property="skuCode"  />
+    <result column="cost_price" property="costPrice"  />
+    <result column="sku_name" property="skuName"  />
+    <result column="total_actual" property="totalActual"  />
+    <result column="total_price" property="totalPrice"  />
+    <result column="quantity" property="quantity"  />
+    <result column="sku_retail_price" property="skuRetailPrice"  />
+    <result column="unit_price" property="unitPrice"  />
+    <result column="version" property="version"  />
+    <result column="order_code" property="orderCode"  />
+    <result column="is_comment" property="isComment" />
+    <result column="update_time" property="updateTime" />
+    <result column="sku_no" property="skuNo"  />
+    
+    
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, create_time, line_type, remark, size, color, sku_code, cost_price, sku_name,
+    total_actual, total_price, quantity, sku_retail_price, unit_price, version, 
+    order_code, is_comment,update_time
+  </sql>
+  <sql id="orderLine_where">
+	  	<where>
+	  		  <if test="skuCode != null and skuCode != ''">
+		       and sku_code = #{skuCode}
+		      </if>
+		      <if test="skuName != null and skuName != ''">
+		        and sku_name like  "%"#{skuName}"%" 
+		      </if>
+		      <if test="orderCode != null and  orderCode!= ''">
+		        and order_code = #{orderCode}
+		      </if>
+		    
+	  	</where>
+	  </sql>
+  <insert id="add" parameterType="SoSoLine">
+    insert into t_order_line (id, create_time, line_type, 
+      remark, size, color, 
+      sku_code, cost_price, sku_name, 
+      total_actual, total_price, 
+      quantity, sku_retail_price, unit_price, 
+      version, order_code)
+    values (#{id},now(), #{lineType}, 
+      #{remark}, #{size}, #{color}, 
+      #{skuCode}, #{costPrice}, #{skuName}, 
+      #{totalActual}, #{totalPrice}, 
+      #{quantity}, #{skuRetailPrice}, #{unitPrice}, 
+      now(), #{orderCode})
+  </insert>
+  <delete id="deleteById" parameterType="Long">
+    delete from t_order_line
+    where id = #{id}
+  </delete>
+  
+   <select id="findById" parameterType="long" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List"/>
+  	from t_order_line where id = #{value}
+  </select>
+  
+   <select id="findByOrderCode" resultMap="BaseResultMap">
+  	select 
+  		<include refid="Base_Column_List"/>
+  	from 
+  		t_order_line 
+  	where
+  		 order_code = #{orderCode}
+  	<if test="isComment !=null and isComment !=''">
+  		and is_comment = #{isComment}
+  	</if>
+  </select>
+  
+  <update id="updateIsComment" parameterType="java.util.Map">
+     update t_order_line
+     set update_time = now(),
+         is_comment = #{isComment}
+     where id = #{id}
+  </update>
+  
+  <select id="findSoOrderCodeBySkuCode" resultType="list"  parameterType="Map" resultMap="BaseResultMap">
+  	select 
+  		order_code
+  	from 
+  		t_order_line 
+  	where
+  		 sku_code = #{skuCode}
+  </select>
+  
+  <!-- 分页条件查询 -->
+	<select id="findList" resultType="list" resultMap="BaseResultMap" parameterType="Map" >
+		select a.id, a.create_time, a.line_type, a.remark, a.size, a.color, a.cost_price, a.sku_name,a.sku_code,
+		    a.total_actual, a.total_price, a.quantity, a.sku_retail_price, a.unit_price, a.version, 
+		    a.order_code, a.is_comment,a.update_time
+		 from baby_order.t_order_line a 
+		<where>
+	  		  <if test="skuCode != null and skuCode != ''">
+		       and a.sku_code = #{skuCode}
+		      </if>
+		      <if test="skuName != null and skuName != ''">
+		        and a.sku_name like  "%"#{skuName}"%" 
+		      </if>
+		      <if test="orderCode != null and  orderCode!= ''">
+		        and a.order_code = #{orderCode}
+		      </if>
+	  	</where>
+		 order by a.create_time DESC
+		<if test="start!=null and limit!=null">
+			limit #{start},#{limit}
+		</if>
+	</select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) 
+    	from baby_order.t_order_line a 
+		<where>
+			<if test="skuCode != null and skuCode != ''">
+		       and a.sku_code = #{skuCode}
+		      </if>
+		      <if test="skuName != null and skuName != ''">
+		        and a.sku_name like  "%"#{skuName}"%" 
+		      </if>
+		      <if test="orderCode != null and  orderCode!= ''">
+		        and a.order_code = #{orderCode}
+		      </if>
+	  	</where>
+	</select>
+</mapper>

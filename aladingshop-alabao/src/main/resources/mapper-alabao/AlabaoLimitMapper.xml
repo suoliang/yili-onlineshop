@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.alabao.dao.AlabaoLimitDao">
+	<resultMap id="AlabaoLimitResultMap" type="AlabaoLimit">
+			<id column="id" property="id" />
+			<result column="account" property="account" />
+			<result column="money_limit" property="moneyLimit" />
+			<result column="number_limit" property="numberLimit" />
+			<result column="account_level" property="accountLevel" />
+			<result column="remark" property="remark" />
+			<result column="create_time" property="createTime" />
+			<result column="update_time" property="updateTime" />
+			<result column="create_id" property="createId" />
+	</resultMap>
+	<!-- 定义宏转换为 -->
+	<sql id="AlabaoLimit_column">
+		id,account,money_limit,number_limit,account_level,remark,create_time,update_time,create_id
+	</sql>
+	<insert id="add" parameterType="AlabaoLimit">
+		insert into 
+			t_alabao_limit
+		(
+			id,account,money_limit,number_limit,account_level,remark,
+			create_time,update_time,create_id
+		)
+	    values 
+	    (
+				#{id},
+				#{account},
+				#{moneyLimit},
+				#{numberLimit},
+				#{accountLevel},
+				#{remark},
+				now(),
+				#{updateTime},
+				#{createId}
+			)
+	</insert>
+	
+	<select id="findByAccount" resultMap="AlabaoLimitResultMap" parameterType="java.lang.String">
+		select  <include refid="AlabaoLimit_column"/> from t_alabao_limit where account = #{account} 
+	</select>
+	
+	<update id="update"  parameterType="AlabaoLimit">
+		update t_alabao_limit
+			set
+				<if test="account !=null and account !=''">
+					account=#{account},
+				</if>
+				<if test="moneyLimit !=null and moneyLimit !=''">
+					money_limit=#{moneyLimit},
+				</if>
+				<if test="numberLimit !=null and numberLimit !=''">
+					number_limit=#{numberLimit},
+				</if>
+				<if test="accountLevel !=null and accountLevel !=''">
+					account_level=#{accountLevel},
+				</if>
+				<if test="remark !=null and remark !=''">
+					remark=#{remark},
+				</if>
+				<if test="createTime !=null and createTime !=''">
+					create_time=#{createTime},
+				</if>
+				<if test="updateTime !=null and updateTime !=''">
+					update_time=#{updateTime},
+				</if>
+				<if test="createId !=null and createId !=''">
+					create_id=#{createId},
+				</if>
+				
+				update_time=now()
+		<where>
+			id = #{id} 
+		</where>
+	</update>
+	
+	<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="AlabaoLimitResultMap" parameterType="Map" >
+		select <include refid="AlabaoLimit_column"/>
+		from t_alabao_limit  
+		<where>
+				<if test="account !=null and account !=''">
+					and account=#{account} 
+				</if>
+				<if test="moneyLimit !=null and moneyLimit !=''">
+					and money_limit=#{moneyLimit} 
+				</if>
+				<if test="numberLimit !=null and numberLimit !=''">
+					and number_limit=#{numberLimit} 
+				</if>
+				<if test="accountLevel !=null and accountLevel !=''">
+					and account_level=#{accountLevel} 
+				</if>
+				<if test="remark !=null and remark !=''">
+					and remark=#{remark} 
+				</if>
+				<if test="updateTime !=null and updateTime !=''">
+					and update_time=#{updateTime} 
+				</if>
+				<if test="createId !=null and createId !=''">
+					and create_id=#{createId} 
+				</if>
+				<if test="createTimeFrom != null and createTimeFrom !=''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+				]]>
+			    </if>
+				<if test="createTimeTo != null and createTimeTo != ''">
+			    	<![CDATA[
+						and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+					]]>
+			    </if>
+		</where>
+		 order by create_time desc 
+		<if test="start!=null and limit!=null">
+			limit #{start},#{limit}
+		</if>
+	</select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) from t_alabao_limit
+		<where>
+				<if test="account !=null and account !=''">
+					and account=#{account} 
+				</if>
+				<if test="moneyLimit !=null and moneyLimit !=''">
+					and money_limit=#{moneyLimit} 
+				</if>
+				<if test="numberLimit !=null and numberLimit !=''">
+					and number_limit=#{numberLimit} 
+				</if>
+				<if test="accountLevel !=null and accountLevel !=''">
+					and account_level=#{accountLevel} 
+				</if>
+				<if test="remark !=null and remark !=''">
+					and remark=#{remark} 
+				</if>
+				<if test="updateTime !=null and updateTime !=''">
+					and update_time=#{updateTime} 
+				</if>
+				<if test="createId !=null and createId !=''">
+					and create_id=#{createId} 
+				</if>
+				<if test="createTimeFrom != null and createTimeFrom !=''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+				]]>
+			    </if>
+				<if test="createTimeTo != null and createTimeTo != ''">
+			    	<![CDATA[
+						and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+					]]>
+			    </if>
+		</where>
+	</select>
+	
+	<delete id="deleteById">
+		delete from t_alabao_limit where id=#{id}
+	</delete>
+	
+</mapper>

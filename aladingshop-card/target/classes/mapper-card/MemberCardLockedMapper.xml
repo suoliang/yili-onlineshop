@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.card.dao.MemberCardLockedDao" >
+  <resultMap id="MemberCardLockedResultMap" type="MemberCardLocked" >
+    <id column="id" property="id" />
+    <result column="locked_interest" property="lockedInterest"/>
+    <result column="locked_rebate" property="lockedRebate"/>
+    <result column="locked_card" property="lockedCard" />
+    <result column="member_id" property="memberId" />
+    <result column="order_code" property="orderCode" />
+    <result column="create_time" property="createTime" />
+  </resultMap>
+  <insert id="add" parameterType="MemberCardLocked"> 
+    insert into t_member_card_locked (id, locked_interest, locked_rebate, 
+      member_id, order_code, locked_card,create_time)
+    values (#{id}, #{lockedInterest}, #{lockedRebate}, 
+      #{memberId}, #{orderCode}, #{lockedCard},now())
+  </insert>
+  <delete id="deleteById"  parameterType="java.lang.Long">
+    delete from t_member_card_locked where id = #{id}
+  </delete>
+  
+  <sql id="Base_Column_List" >
+  	select id, locked_interest, locked_rebate, member_id, order_code, locked_card,create_time from t_member_card_locked
+  </sql>
+  <select id="findAll" resultMap="MemberCardLockedResultMap" resultType="list">
+  	<include refid="Base_Column_List" />
+  </select> 
+   <select id="findById" resultMap="MemberCardLockedResultMap" parameterType="java.lang.Long" >
+   	<include refid="Base_Column_List" />
+   	<where>
+   		id=#{id}
+   	</where>
+  </select>
+  
+  	  <!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="MemberCardLockedResultMap" parameterType="Map" >
+	    <include refid="Base_Column_List" />
+		<where>
+			<if test="lockedCard !=null and lockedCard !=''">
+	    	   AND  locked_card LIKE "%"#{lockedCard}"%"  
+	        </if>
+		</where>
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select  count(id) from t_member_card
+		<where>
+			<if test="lockedCard !=null and lockedCard !=''">
+	    	   AND  locked_card LIKE "%"#{lockedCard}"%"  
+	        </if>
+		</where>
+	</select>
+	
+   <select id="findByMember" resultType="list" resultMap="MemberCardLockedResultMap" parameterType="MemberCardLocked" >
+ 			<include refid="Base_Column_List" />
+ 			<where>
+ 				<if test="memberId !=null and memberId !=''">
+    	   		AND  member_id = #{memberId}  
+        	</if>
+        	<if test="lockedCard !=null and lockedCard !=''">
+    	   		AND  locked_card = #{lockedCard}  
+        	</if>
+        	<if test="orderCode !=null and orderCode !=''">
+    	   		AND  order_code = #{orderCode}  
+        	</if>
+ 			</where>
+  </select>
+</mapper>

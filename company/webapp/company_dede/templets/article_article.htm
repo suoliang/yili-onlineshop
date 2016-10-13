@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="{dede:global.cfg_soft_lang/}">
+        <title>{dede:field.title/}_{dede:global.cfg_webname/}</title>
+        <meta name="description" content="{dede:global.cfg_description/}" />
+        <meta name="keywords" content="{dede:global.cfg_keywords/}" />
+        <meta name="renderer" content="webkit">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <link rel="shortcut icon" href="{dede:global.cfg_templets_skin/}/company/images/favicon.ico" />
+        <link rel="stylesheet" href="{dede:global.cfg_templets_skin/}/company/farmework/materialize/css/materialize.min.css">
+        <link rel="stylesheet" type="text/css" href="{dede:global.cfg_templets_skin/}/company/engine/style.css" />
+        <link rel="stylesheet" href="{dede:global.cfg_templets_skin/}/company/css/style.min.css">
+        <!--[if lt IE 9 ]><html class="ltie9"><![endif]-->
+    </head>
+    <body class="news">
+        {dede:include filename="head.htm"/}
+        <!-- /header -->
+        <div class="container">
+            <p class="center-align mT10">
+                <img src="{dede:global.cfg_templets_skin/}/company/images/news-1.jpg">
+            </p>
+            <p class="center-align">
+                <img src="{dede:global.cfg_templets_skin/}/company/images/news-2.png">
+            </p>
+            <p class="center-align slider-tit">行业&动态</p>
+            <blockquote>
+                <h5>当前位置： {dede:field name='position'/}</h5>
+            </blockquote>
+            <ul class="collapsible" data-collapsible="accordion">
+                <li class="active">
+                    <div class="collapsible-header active"><i></i>{dede:field.title/}</div>
+<div class="collapsible-body">
+                    <div class="info">时间：{dede:field.pubdate function="MyDate('Y-m-d H:i',@me)"/}  点击：
+                        <script src="{dede:field name='phpurl'/}/count.php?view=yes&aid={dede:field name='id'/}&mid={dede:field name='mid'/}" type='text/javascript' language="javascript"></script> 次
+                    </div>
+                    {dede:field.body/}
+</div>
+                </li>
+            </ul>
+
+            <div class="handle">
+                <div class="context">
+                    <ul>
+                        <li>{dede:prenext get='pre'/}</li>
+                        <li>{dede:prenext get='next'/}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {dede:include filename="footer.htm"/}
+        <!-- /footer -->
+        <div class="ie9-box-wrap">
+            <div class="ie9-box">检测到您正在使用IE浏览器版本过低！请升级或使用 <a href="http://se.360.cn/" target="_blank">360</a>，<a href="http://www.google.cn/chrome/browser/desktop/index.html" target="_blank">谷歌</a>，<a href="http://www.firefox.com.cn/" target="_blank">火狐</a> 等现代浏览器，体验更优质！
+            <a href="javascript:void(0);" class="ie9-close red-text">X</a>
+        </div>
+    </div>
+    <script src="{dede:global.cfg_templets_skin/}/company/farmework/jquery/jquery.min.js"></script>
+    <script src="{dede:global.cfg_templets_skin/}/company/farmework/materialize/js/materialize.min.js"></script>
+    <script src="{dede:global.cfg_templets_skin/}/company/js/min/public.min.js"></script>
+    <script>
+        $(function(){
+            $('.collapsible-body').find('h5').prepend('<i></i>');
+        })
+    </script>
+</body>
+</body>
+</html>

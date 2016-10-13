@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fushionbaby.order.dao.SoSoMemberCMSDao">
+  <resultMap id="BaseResultMap" type="SoSoMember">
+    <id column="id"  property="id" />
+    <result column="address"  property="address" />
+    <result column="city"  property="city" />
+    <result column="contact_person"  property="contactPerson" />
+    <result column="country"  property="country" />
+    <result column="create_time"  property="createTime" />
+    <result column="district"  property="district" />
+    <result column="status"  property="status" />
+    <result column="member_email"  property="memberEmail" />
+    <result column="member_name"  property="memberName" />
+    <result column="province"  property="province" />
+    <result column="receiver"  property="receiver" />
+    <result column="receiver_mobile"  property="receiverMobile" />
+    <result column="receiver_phone"  property="receiverPhone" />
+    <result column="version"  property="version" />
+    <result column="zipcode"  property="zipcode" />
+    <result column="member_id"  property="memberId" />
+    <result column="so_code"  property="soCode" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, address, city, contact_person, country, create_time, district, status,member_email, 
+    member_name, province, receiver, receiver_mobile, receiver_phone, version, zipcode, 
+    member_id,so_code
+  </sql>
+  <!-- 用于测试 -->
+  <insert id="add" parameterType="SoSoMember">
+    insert into t_so_so_member (id, address, city, 
+      contact_person, country, create_time, 
+      district, status, member_email, 
+      member_name, province, receiver,
+      receiver_mobile, receiver_phone, version, 
+      zipcode, member_id, so_code)
+    values (#{id}, #{address}, #{city}, 
+      #{contactPerson}, #{country},now(), 
+      #{district}, #{status}, #{memberEmail}, 
+      #{memberName}, #{province}, #{receiver}, 
+      #{receiverMobile}, #{receiverPhone},now(), 
+      #{zipcode}, #{memberId}, #{soCode})
+  </insert>
+  
+  <select id="findByOrderCode" parameterType="String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_so_so_member
+    where so_code = #{soCode}
+  </select>
+  <update id="updateByOrderCodeAddress" parameterType="SoSoMember">
+    update t_so_so_member
+    <set>
+      <if test="address != null and address != ''">
+        address = #{address},
+      </if>
+      <if test="city != null and city != ''">
+        city = #{city},
+      </if>
+      <if test="contactPerson != null and contactPerson != ''">
+        contact_person = #{contactPerson},
+      </if>
+      <if test="country != null and country != ''">
+        country = #{country},
+      </if>
+      <if test="district != null and district != ''">
+        district = #{district},
+      </if>
+      <if test="status != null and status != ''">
+        status = #{status},
+      </if>
+      <if test="memberEmail != null and memberEmail != ''">
+        member_email = #{memberEmail},
+      </if>
+      <if test="memberName != null and memberName != ''">
+        member_name = #{memberName},
+      </if>
+      <if test="province != null and province != ''">
+        province = #{province},
+      </if>
+      <if test="receiver != null and receiver !=''">
+        receiver = #{receiver},
+      </if>
+      <if test="receiverMobile != null and receiverMobile != ''">
+        receiver_mobile = #{receiverMobile},
+      </if>
+      <if test="receiverPhone != null and receiverPhone != ''">
+        receiver_phone = #{receiverPhone},
+      </if>
+      <if test="zipcode != null and zipcode != ''">
+        zipcode = #{zipcode},
+      </if>
+      <if test="memberId != null and memberId != ''">
+        member_id = #{memberId},
+      </if>
+      <if test="soCode != null and soCode != ''">
+        so_code = #{soCode},
+      </if>
+      version = now()
+    </set>
+    where so_code = #{soCode}
+  </update>
+  <!-- 删除只用于Test测试 -->
+  <delete id="deleteById" parameterType="java.lang.Long">
+    delete from t_so_so_member
+    where id = #{id}
+  </delete>
+</mapper>

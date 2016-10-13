@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fushionbaby.core.dao.ShoppingCartSkuUserDao">
+  <resultMap id="BaseResultMap" type="ShoppingCartSkuUser">
+    <id column="id" property="id"  />
+    <result column="member_id" property="memberId" />
+    <result column="sku_code" property="skuCode" />
+    <result column="current_price" property="currentPrice" />
+    <result column="retail_price" property="retailPrice" />
+    <result column="quantity" property="quantity" />
+    <result column="sku_name" property="skuName" />
+    <result column="color" property="color" />
+    <result column="size" property="size" />
+    <result column="brand_code" property="brandCode" />
+    <result column="category_code" property="categoryCode" />
+    <result column="is_gift" property="isGift" />
+    <result column="is_selected" property="isSelected" />
+    <result column="create_time" property="createTime" />
+    <result column="update_time" property="updateTime" />
+    <result column="version" property="version" />
+    <result column="line_total_price" property="lineTotalPrice" />
+    
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, create_time, brand_code, category_code,is_gift, retail_price, 
+    quantity,sku_code,color,size,update_time,is_selected,sku_name,current_price,member_id,
+    line_total_price
+  </sql>
+  <!--通过会员id查询购物车中勾选的商品行-->
+  <select id="findSelectedCartSkuByMemberId" parameterType="java.lang.Long" resultType="list" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List" />
+  	<![CDATA[
+		from t_shopping_cart_sku where member_id = #{memberId} and is_selected = 'y'
+	]]>
+  </select>
+  
+  <!--通过会员id和勾选的商品行查询购物车中价格和数量-->
+  <select id="getSelectedSumCartSkuByMemberId" parameterType="java.lang.Long" resultType="list" resultMap="BaseResultMap">
+  	SELECT SUM(k.current_price * k.quantity) retail_price,SUM(k.retail_price * k.quantity) original_amount,SUM(k.quantity) quantity
+		FROM t_shopping_cart_sku k WHERE k.member_id = #{memberId} AND k.is_selected = 'y'
+  </select>
+  
+  <!--查询购物车中勾选的商品行,的sku_code列表-->
+  <select id="findCartSkuSelectedSkuCode" parameterType="java.lang.Long" resultType="string">
+  	<![CDATA[
+		select sku_code from t_shopping_cart_sku where member_id = #{memberId} and is_selected = 'y'
+	]]>
+  </select>
+  
+  <!-- 通过商品id和用户id查询出购物车行记录 -->
+  <select id="findBySkuCodeAndMemberId" parameterType="map" resultMap="BaseResultMap">
+  	select
+		<include refid="Base_Column_List" />
+	from 
+		t_shopping_cart_sku 
+	where 
+		sku_code = #{skuCode} 
+	and
+		member_id = #{memberId}
+  </select>
+  
+  <!-- 分页查询  -->
+  <select id="getListPage" parameterType="Map" resultType="list" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List" />
+	from t_shopping_cart_sku where member_id = #{memberId}
+	LIMIT #{start},#{limit}
+  </select>
+  
+  <select id="findById" parameterType="long" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List" />
+	from t_shopping_cart_sku where id = #{id}
+  </select>
+  
+  <select id="getCartSize" parameterType="long" resultType="long">
+	select count(1) from t_shopping_cart_sku where member_id = #{memberId}
+  </select>
+ 
+  <insert id="add" parameterType="ShoppingCartSkuUser">
+    insert into t_shopping_cart_sku (id, create_time, brand_code, 
+      category_code,is_gift,retail_price, quantity, 
+      sku_code,color, 
+      size,sku_name,current_price,member_id,line_total_price)
+    values (#{id}, now(), #{brandCode}, 
+      #{categoryCode},#{isGift}, #{retailPrice}, #{quantity}, 
+      #{skuCode},#{color}, 
+      #{size},#{skuName},#{currentPrice},#{memberId},#{lineTotalPrice})
+  </insert>
+  
+  <update id="update" parameterType="ShoppingCartSkuUser">
+  	update t_shopping_cart_sku 
+  	<set>
+  		<if test="quantity!=null and quantity!=''"> 
+  			quantity = #{quantity},
+  		</if>
+  		<if test="lineTotalPrice!=null and lineTotalPrice!=''"> 
+  			line_total_price = #{lineTotalPrice},
+  		</if>
+  		update_time=now()
+  	</set>
+  	where sku_code = #{skuCode} and member_id = #{memberId}
+  
+  </update>
+  
+  <update id="updateItemQuantity" parameterType="ShoppingCartSkuUser">
+  	update t_shopping_cart_sku set quantity = #{quantity},update_time=now()
+  	where sku_code = #{skuCode} and member_id = #{memberId}
+  </update>
+  <delete id="deleteCartSkuRow">
+    delete from t_shopping_cart_sku
+    where sku_code = #{skuCode} and member_id = #{memberId}
+  </delete>
+  <update id="updateCartItemSelectedBySkuCodeAndMemberId" parameterType="ShoppingCartSkuUser">
+  	update t_shopping_cart_sku 
+  		set is_selected = #{isSelected},update_time=now()
+  	where 
+  		sku_code = #{skuCode} and member_id = #{memberId}
+  </update>
+  
+</mapper>

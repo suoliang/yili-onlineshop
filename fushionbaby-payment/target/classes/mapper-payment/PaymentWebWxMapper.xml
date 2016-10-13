@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.payment.dao.PaymentWebWxDao">
+	<resultMap id="PaymentWebWxResultMap" type="PaymentWebWx">
+		<id column="id" property="id" />
+		<result column="order_number" property="orderNumber" />
+		<result column="order_code" property="orderCode" />
+		<result column="member_id" property="memberId" />
+		<result column="settle_amount" property="settleAmount" />
+		<result column="trade_time" property="tradeTime" />
+		<result column="order_des" property="orderDes" />
+		<result column="wx_status" property="wxStatus" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="wx_open_id" property="wxOpenId" />
+		<result column="wx_transaction_id" property="wxTransactionId" />
+		<result column="remote_addr" property="remoteAddr" />
+	</resultMap>
+	<sql id="PaymentWebWx_column">
+		select 
+	      id,order_number,order_code,member_id,settle_amount,trade_time,order_des,
+	      wx_status,create_time,update_time,
+	      wx_open_id,wx_transaction_id,remote_addr
+	   from t_payment_web_wx
+	</sql>
+	<insert id="add" parameterType="PaymentWebWx">
+		insert into 
+			t_payment_web_wx
+		(id,order_number,order_code,member_id,settle_amount,trade_time,order_des,
+	      wx_status,create_time,wx_open_id,wx_transaction_id,remote_addr)
+	    values 
+	    (#{id},#{orderNumber},#{orderCode},#{memberId},#{settleAmount},#{tradeTime},#{orderDes},
+	    #{wxStatus},now(),#{wxOpenId},#{wxTransactionId},#{remoteAddr})
+	</insert>
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_payment_web_wx where id = #{id}
+	</delete>
+	<update id="updateByMemberIdAndOrderCode">
+		update t_payment_web_wx
+			set update_time = now()
+			<if test="orderNumber!=null and orderNumber!=''">
+			   , order_number = #{orderNumber}
+			</if>
+			<if test="tradeTime!=null and tradeTime!=''">
+			   , trade_time = #{tradeTime}
+			</if>
+			<if test="orderDes!=null and orderDes!=''">
+			   , order_des = #{orderDes}
+			</if>
+			<if test="wxStatus!=null and wxStatus!=''">
+			   , wx_status = #{wxStatus}
+			</if>
+			<if test="wxOpenId!=null and wxOpenId!=''">
+			   , wx_open_id = #{wxOpenId}
+			</if>
+			<if test="wxTransactionId!=null and wxTransactionId!=''">
+			   , wx_transaction_id = #{wxTransactionId}
+			</if>
+			<if test="remoteAddr!=null and remoteAddr!=''">
+			   , remote_addr = #{remoteAddr}
+			</if>
+		<where>
+			member_id = #{memberId} and order_code = #{orderCode}
+		</where>
+	</update>
+	<select id="getById" resultMap="PaymentWebWxResultMap" parameterType="java.lang.Long">
+		<include refid="PaymentWebWx_column"/> where id = #{id}
+	</select>
+	<select id="getByOrderNumber" resultMap="PaymentWebWxResultMap" parameterType="java.lang.String">
+		<include refid="PaymentWebWx_column"/> where order_number = #{orderNumber}
+	</select>
+	<select id="getByMemberIdAndOrderCode" resultMap="PaymentWebWxResultMap">
+		<include refid="PaymentWebWx_column"/> 
+		where member_id = #{memberId} and order_code = #{orderCode}
+	</select>
+</mapper>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>商品详情</title>
+
+        <!-- 通用部分 开始 -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0,user-scalable=no">
+        <link rel="shortcut icon" href="images/favicon.ico" />
+        <link rel="stylesheet" href="css/style.min.css"><!-- 通用 CSS -->
+        <script src="farmwork/jquery/jquery-2.1.3.min.js"></script><!-- 通用jQuery JS -->
+        <script src="farmwork/velocity/velocity.min.js"></script><!-- velocity JS -->
+        <script src="farmwork/velocity/velocity.ui.min.js"></script><!-- velocity JS -->
+        <script src="js/min/public.min.js"></script><!-- 通用 public JS -->
+        <!-- 通用部分 结束 -->
+
+        <link rel="stylesheet" href="farmwork/swiper/swiper.min.css"><!-- swiper CSS-->
+    </head>
+    <body id="detail">
+
+        <div class="container">
+
+            <div class="head">
+                <a href="javascript:history.go(-1)" class="a-left">
+                    <span class="back"></span>
+                </a>
+                <p class="active menu-a"><i>商品介绍</i></p>
+                <p class="menu-b"><i>图文详情</i></p>
+                <a href="cart.html" class="a-right">
+                    <span class="cart">
+                        <i>9</i>
+                    </span>
+                </a>
+                <a href="javascript:void(0)" class="a-right" onclick="openShareModal()">
+                    <span class="share"></span>
+                </a>
+            </div>
+
+            <div class="detail-box-a fl wp100">
+                <div id="detailBanner" class="swiper-container">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <img data-src="picture/1.jpg" alt="" class="swiper-lazy">
+                            <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
+                        </div>
+                        <div class="swiper-slide">
+                            <img data-src="picture/2.jpg" alt="" class="swiper-lazy">
+                            <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
+                        </div>
+                        <div class="swiper-slide">
+                            <img data-src="picture/3.jpg" alt="" class="swiper-lazy">
+                            <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
+                        </div>
+                        <div class="swiper-slide">
+                            <img data-src="picture/4.jpg" alt="" class="swiper-lazy">
+                            <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div><!-- /.swiper-container -->
+
+                <div class="detail-a">
+                    <p class="detail-tit">舒肤佳金银花/菊花沐浴露400毫升</p>
+                    <span>&yen; 99.00</span>
+                    <ul>
+                        <p>产品参数：</p>
+                        <li>参数：属性</li>
+                        <li>参数：属性</li>
+                        <li>参数：属性</li>
+                        <li>参数：属性</li>
+                        <li>参数：属性</li>
+                    </ul>
+                </div>
+
+                <a href="rank.html">
+                    <div class="detail-b">
+                        <p class="detail-tit">商品评价</p>
+                        <ul class="rank">
+                            <span>评分：</span>
+                            <li class="active"></li>
+                            <li class="active"></li>
+                            <li class="active"></li>
+                            <li class="active"></li>
+                            <li></li>
+                        </ul>
+                        <p>评论：很不错哦，好评好评！</p>
+                        <span class="right"></span>
+                    </div>
+                </a>
+            </div>
+            <div class="detail-box-b fl wp100">
+                <img src="picture/detail-1.jpg">
+                <img src="picture/detail-2.jpg">
+                <img src="picture/detail-3.jpg">
+                <img src="picture/detail-4.jpg">
+                <img src="picture/detail-5.jpg">
+                <img src="picture/detail-6.jpg">
+            </div>
+
+            <div class="detail-c fl wp100 like-wrap">
+                <p class="detail-tit">猜你喜欢</p>
+                <div id="detailBannerLike" class="swiper-container">
+                    <div class="swiper-wrapper">
+                        <a href="" class="swiper-slide">
+                            <img src="picture/1.jpg">
+                            <p>舒肤佳金银花</p>
+                            <span>&yen; 29.9</span>
+                        </a>
+                        <a href="" class="swiper-slide">
+                            <img src="picture/2.jpg">
+                            <p>舒肤佳金银花</p>
+                            <span>&yen; 29.9</span>
+                        </a>
+                        <a href="" class="swiper-slide">
+                            <img src="picture/3.jpg">
+                            <p>舒肤佳金银花</p>
+                            <span>&yen; 29.9</span>
+                        </a>
+                        <a href="" class="swiper-slide">
+                            <img src="picture/4.jpg">
+                            <p>舒肤佳金银花</p>
+                            <span>&yen; 29.9</span>
+                        </a>
+                        <a href="" class="swiper-slide">
+                            <img src="picture/5.jpg">
+                            <p>舒肤佳金银花</p>
+                            <span>&yen; 29.9</span>
+                        </a>
+                        <a href="" class="swiper-slide">
+                            <img src="picture/6.jpg">
+                            <p>舒肤佳金银花</p>
+                            <span>&yen; 29.9</span>
+                        </a>
+                        <a href="" class="swiper-slide">
+                            <img src="picture/7.jpg">
+                            <p>舒肤佳金银花舒肤佳金银花/菊花沐浴露400毫升</p>
+                            <span>&yen; 29.9</span>
+                        </a>
+                    </div>
+                </div><!-- /.swiper-container -->
+            </div>
+
+            <div class="detail-d wp100 fl">
+                <span class="heart"></span>
+                <a href="cart.html">立即购买</a>
+                <a href="javascript:void(0)" onclick="openAddCartModal()">加入购物车</a>
+            </div>
+
+        </div><!-- /.container -->
+
+        <div class="modal-wrap" id="addCartModal">
+            <div class="add-cart-modal">
+                <div class="close-wrap" onclick="closeAddCartModal()">
+                    <span class="close"></span>
+                </div>
+                <div class="modal-a fl wp100">
+                    <img src="picture/1.jpg">
+                    <img src="picture/2.jpg" style="display:none">
+                    <img src="picture/3.jpg" style="display:none">
+                    <img src="picture/4.jpg" style="display:none">
+                    <img src="picture/5.jpg" style="display:none">
+                    <img src="picture/6.jpg" style="display:none">
+                    <img src="picture/7.jpg" style="display:none">
+                    <p>舒肤佳金银花舒肤佳金银花/菊花沐浴露400毫升</p>
+                    <span>&yen;29.9</span>
+                </div>
+                <div class="modal-b fl wp100">
+                    <p class="detail-tit">参数：</p>
+                    <span class="active">属性</span>
+                    <span>属性</span>
+                    <span>属性</span>
+                    <span>属性</span>
+                    <span>属性</span>
+                    <span>属性</span>
+                    <span>属性</span>
+                </div>
+                <div class="modal-b fl wp100">
+                    <p class="detail-tit">参数：</p>
+                    <span class="active">属性</span>
+                    <span>属性</span>
+                    <span>属性</span>
+                </div>
+                <div class="modal-c fl wp100">
+                    <span>数量：<i class="count-num">1</i></span>
+                    <button class="Add">+</button>
+                    <i class="count-num count-i">1</i>
+                    <button class="Reduce">-</button>
+                    <input type="hidden" value="1">
+                </div>
+                <div class="modal-d fl wp100">
+                    <button>确定</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-wrap" id="shareModal">
+            <div class="share-wrap">
+                <div class="bdsharebuttonbox">
+                    <div class="share-box"><a title="分享到QQ空间" href="#" class="bds_qzone" data-cmd="qzone"></a><p>QQ空间</p></div>
+                    <div class="share-box"><a title="分享到新浪微博" href="#" class="bds_tsina" data-cmd="tsina"></a><p>新浪微博</p></div>
+                    <div class="share-box"><a title="分享到腾讯微博" href="#" class="bds_tqq" data-cmd="tqq"></a><p>腾讯微博</p></div>
+                </div>
+                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":[],"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+            </div>
+        </div>
+
+        <script src="farmwork/swiper/swiper.jquery.min.js"></script><!-- swiper JS -->
+        <script type="text/javascript">
+        $(document).ready(function() {
+            $('.modal-d button').click(function() {
+                openModal(1,'添加成功',1000);
+                closeAddCartModal();
+            });
+            /*banner*/
+            var swiper = new Swiper('#detailBanner',{
+                autoplay:3000,
+                speed:600,
+                autoplayDisableOnInteraction : false,/*用户操作swiper之后，是否禁止autoplay。默认为true：停止。*/
+                loop:true,
+                pagination:'.swiper-pagination',
+                setWrapperSize :true,
+                roundLengths : true,/*设定为true将slide的宽和高取整(四舍五入)以防止某些分辨率的屏幕上文字模糊。*/
+                iOSEdgeSwipeDetection : true,/*设置为true开启IOS的UIWebView环境下的边缘探测。如果拖动是从屏幕边缘开始则不触发swiper。*/
+                lazyLoading : true,
+                lazyLoadingInPrevNext : true,
+                lazyLoadingOnTransitionStart : true,
+                observer:true,
+                observeParents:true,
+            });
+
+            /*猜你喜欢*/
+            var swiper = new Swiper('#detailBannerLike',{
+                grabCursor: true,
+                slidesPerView: 'auto'
+            });
+
+            /*商品介绍/图文详情切换*/
+            $('.menu-a').click(function(event) {
+                $('body').removeClass('menu-b-active');
+            });
+            $('.menu-b').click(function(event) {
+                $('body').addClass('menu-b-active');
+            });
+
+            /*选择属性*/
+            $('.modal-b').find('span').click(function(event) {
+                var thisIndex = $(this).index() - 1;
+                $(this).addClass('active').siblings('span').removeClass('active');
+                $('.modal-a').find('img').eq(thisIndex).show().siblings('img').hide();
+            });
+
+        });
+
+        function openAddCartModal(){
+            var wrap = $('#addCartModal');
+            var box = $('.add-cart-modal');
+            wrap.fadeIn();
+            box.velocity({bottom:'0'});
+        }
+        function closeAddCartModal(){
+            var wrap = $('#addCartModal');
+            var box = $('.add-cart-modal');
+            wrap.fadeOut();
+            box.velocity({bottom:'-100%'});
+        }
+        </script>
+
+    </body>
+</html>

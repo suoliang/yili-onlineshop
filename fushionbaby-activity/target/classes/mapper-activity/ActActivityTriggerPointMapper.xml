@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.act.activity.dao.ActActivityTriggerPointDao" >
+  <resultMap id="ActActivityTriggerPointMap" type="ActActivityTriggerPoint" >
+    <id column="id" property="id"/>
+    <result column="activity_ids" property="activityIds"/>
+    <result column="trigger_point" property="triggerPoint"/>
+  </resultMap>
+   <insert id="add" parameterType="ActActivityTriggerPoint"> 
+    insert into t_act_activity_trigger_point (id,activity_ids,trigger_point)
+    values (#{id},#{activityIds},#{triggerPoint})
+  </insert>
+  <delete id="deleteById" parameterType="java.lang.Long">
+    delete from t_act_activity_trigger_point where id = #{id}
+  </delete>
+  
+  <update id="update" parameterType="ActActivityTriggerPoint" >
+    update t_act_activity_trigger_point    
+    set 
+          activity_ids = #{activityIds},
+          trigger_point=#{triggerPoint}
+          
+      where id = #{id}
+  </update>
+  <select id="findAll" resultMap="ActActivityTriggerPointMap" resultType="list">
+  <![CDATA[
+			select id, activity_ids,trigger_point from t_act_activity_trigger_point
+		 ]]>
+  </select> 
+   <select id="findById" resultMap="ActActivityTriggerPointMap" parameterType="java.lang.Long">
+  <![CDATA[
+			select id, activity_ids, trigger_point from t_act_activity_trigger_point where id=#{id}
+		 ]]>
+  </select>
+
+</mapper>

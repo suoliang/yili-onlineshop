@@ -1,0 +1,238 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.aladingshop.storeManager</groupId>
+  <artifactId>aladingshop-storeManager</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
+  <parent>
+    <groupId>com.fushionbaby.parent</groupId>
+    <artifactId>fushionbaby-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  
+  <name>aladingshop-storeManager</name>
+  <url>http://maven.apache.org</url>
+  
+ 	<distributionManagement>
+		<repository>
+			<id>Yili-maven-releases</id>
+			<name>Yili-maven-releases</name>
+			<url>http://192.168.1.39:8081/nexus/content/repositories/Yili-maven-releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>Yili-maven-snapshots</id>
+			<name>Yili-maven-snapshots</name>
+			<url>http://192.168.1.39:8081/nexus/content/repositories/Yili-maven-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement> 
+	
+	<dependencies>
+	<!-- *********************fushionbaby-jar-begin*************************** -->
+	
+		<dependency>
+			<groupId>com.fushionbaby.common</groupId>
+			<artifactId>fushionbaby-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fushionbaby.cache</groupId>
+			<artifactId>fushionbaby-cache</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.aladingshop.sku.cms</groupId>
+			<artifactId>aladingshop.sku-cms</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fushionbaby.log</groupId>
+			<artifactId>fushionbaby-log</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fushionbaby.sms</groupId>
+			<artifactId>fushionbaby-sms</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			 <groupId>com.aladingshop.store</groupId>
+	  		 <artifactId>aladingshop-store</artifactId>
+	  		 <version>0.0.1-SNAPSHOT</version>
+  		 </dependency>
+  		 
+  		 <dependency>
+			 <groupId>com.aladingshop.store.sku</groupId>
+	  		 <artifactId>aladingshop-store-sku</artifactId>
+	  		 <version>0.0.1-SNAPSHOT</version>
+  		 </dependency>
+  		 
+		<dependency>
+			 <groupId>com.aladingshop.store.auth</groupId>
+	  		<artifactId>store-auth</artifactId>
+	  		<version>0.0.1-SNAPSHOT</version>
+  		</dependency>
+		<dependency>
+			<groupId>com.fushionbaby.config</groupId>
+		    <artifactId>fushionbaby-config</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.aladingshop.refund</groupId>
+		    <artifactId>aladingshop-refund</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fushionbaby.payment</groupId>
+		    <artifactId>fushionbaby-payment</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fushionbaby.member</groupId>
+			<artifactId>fushionbaby-member</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+			<dependency>
+			<groupId>com.fushionbaby.order</groupId>
+			<artifactId>fushionbaby-order</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.aladingshop.finance</groupId>
+			<artifactId>aladingshop-finance</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+				<groupId>com.aladingshop.period-activity</groupId>
+				<artifactId>aladingshop-periodactivity</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+				<groupId>com.fushionbaby.other</groupId>
+				<artifactId>fushionbaby-other</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+			
+		
+		<!-- **************fushionbaby-jar-end*********************************** -->
+	
+	
+	
+	<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>taglibs</groupId>
+			<artifactId>standard</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.8.1</version>
+		</dependency>
+		<dependency>
+	    <groupId>org.apache.directory.studio</groupId>
+		    <artifactId>org.dom4j.dom4j</artifactId>
+		    <version>1.6.1</version>
+		</dependency>
+
+ 		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.11</version>
+		</dependency> 
+		
+		<!-- JSP jar start-->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.1</version>
+		</dependency>
+		<!-- JSP jar end -->
+		
+		<!-- CKFinder begin -->
+			<dependency>
+				<groupId>net.coobird</groupId>
+				<artifactId>thumbnailator</artifactId>
+				<version>0.4.2</version>
+			</dependency>
+			
+		<!-- CKFinder end -->
+		
+		<!-- 
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-commons</artifactId>
+			<version>1.8.1.RELEASE</version>
+		</dependency>
+	-->
+	
+	 <dependency>
+		<groupId>javax.inject</groupId>
+		<artifactId>javax.inject</artifactId>
+		<version>1</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.poi</groupId>  
+		<artifactId>poi-ooxml</artifactId>  
+		<version>3.5-FINAL</version>  
+	</dependency>
+	
+	
+	<dependency>
+		<groupId>org.apache.httpcomponents</groupId>
+		<artifactId>httpmime</artifactId>
+		<version>4.5</version>
+	</dependency>
+	<dependency>
+		<groupId>com.google.guava</groupId>
+		<artifactId>guava</artifactId>
+		<version>17.0</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>commons-net</groupId>
+		<artifactId>commons-net</artifactId>
+		<version>2.2</version>
+	</dependency>
+	
+	
+	<dependency>
+		<groupId>com.enterprisedt</groupId>
+		<artifactId>edtFTPj</artifactId> 
+		<version>2.4.0</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.commons</groupId>
+		<artifactId>commons-lang3</artifactId>
+	</dependency>
+
+	<dependency>
+		<groupId>org.aspectj</groupId>
+		<artifactId>aspectjweaver</artifactId>
+		<version>1.6.8</version>
+	</dependency>
+	
+	<dependency>
+	<groupId>commons-logging</groupId>
+	<artifactId>commons-logging</artifactId>
+	<version>1.1.1</version>
+</dependency>
+		
+		
+	
+</dependencies>	
+	
+	<build>
+		<finalName>aladingshop-storeManager</finalName>
+	</build>
+</project>

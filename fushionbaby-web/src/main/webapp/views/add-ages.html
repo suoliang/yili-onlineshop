@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>fushionbaby 母婴用品【地址管理】</title>
+		<link rel="stylesheet"  href="css/base.css">
+		<link rel="stylesheet"  href="css/persona-order.css">
+		<link rel="stylesheet" href="css/checkout-list.css">
+		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="js/persona-order.js"></script>
+		<script type="text/javascript" src="js/checked.js"></script>
+		<script type="text/javascript">
+		var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+		document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ff1cde14f81847d03c80464a605207068' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</head>
+	<body>
+		<div class="add-ages clearfix">
+		<div class="address">
+			<form class="fl width100" action="#">
+				<h3>确认收货地址</h3>
+				<div class="add-ages-l fl width100">
+					<input type="hidden" value="" id="address_id"><input type="hidden" value="" id="area_code">
+					<ul id="address-li" class="fl width100">
+						<li r="r" class="choosed"><input type="hidden" value="187" name="address_id">
+						<div class="add-select">
+							<p class="name">
+							揭志勇
+							</p>
+							<p>
+							上海 上海市 闵行区
+							</p>
+							<p>
+							18116407567
+							</p>
+						</div>
+						<div class="add-ages-r">
+							<a title="删除" href="javascript:address.del(187);" class="add-r-ico rub"></a><a title="编辑" href="javascript:address.edit(187);" class="add-r-ico txt"></a>
+							<div class="new-addr">
+								<div class="arrow">
+								</div>
+								<div class="new-addr-hd">
+									<h3>编辑您的地址</h3>
+									<a class="cancel" href="#"></a>
+								</div>
+								<ul class="new-addr-bd oh">
+									<li><span class="title"><label for="">所在地区</label></span>
+									<p>
+									<select pvalue="1002" class="address-prov myProvince" id="updateProvinceId187" name="province_id">
+										<option value="-1">请选择</option>
+										<option value="1000">北京</option>
+										<option value="1001">天津</option>
+										<option value="1002">上海</option>
+										<option value="1003">重庆</option>
+										<option value="130000">河北省</option>
+										<option value="140000">山西省</option>
+										<option value="150000">内蒙古自治区</option>
+										<option value="210000">辽宁省</option>
+										<option value="220000">吉林省</option>
+										<option value="230000">黑龙江省</option>
+										<option value="320000">江苏省</option>
+										<option value="330000">浙江省</option>
+										<option value="340000">安徽省</option>
+										<option value="350000">福建省</option>
+										<option value="360000">江西省</option>
+										<option value="370000">山东省</option>
+										<option value="410000">河南省</option>
+										<option value="420000">湖北省</option>
+										<option value="430000">湖南省</option>
+										<option value="440000">广东省</option>
+										<option value="450000">广西壮族自治区</option>
+										<option value="460000">海南省</option>
+										<option value="510000">四川省</option>
+										<option value="520000">贵州省</option>
+										<option value="530000">云南省</option>
+										<option value="540000">西藏自治区</option>
+										<option value="610000">陕西省</option>
+										<option value="620000">甘肃省</option>
+										<option value="630000">青海省</option>
+										<option value="640000">宁夏回族自治区</option>
+										<option value="650000">新疆维吾尔自治区</option>
+									</select>
+									<select cvalue="310000" class="address-city myCity" id="updateCityId187" name="city_id">
+										<option value="-1">请选择</option>
+										<option value="310000">上海市</option>
+									</select>
+									<select dvalue="310112" class="address-area myDistrict" id="updateDistrictId187" name="district_id">
+										<option value="-1">请选择</option>
+										<option value="310101">黄浦区</option>
+										<option value="310104">徐汇区</option>
+										<option value="310105">长宁区</option>
+										<option value="310106">静安区</option>
+										<option value="310107">普陀区</option>
+										<option value="310108">闸北区</option>
+										<option value="310109">虹口区</option>
+										<option value="310110">杨浦区</option>
+										<option value="310112">闵行区</option>
+										<option value="310113">宝山区</option>
+										<option value="310114">嘉定区</option>
+										<option value="310115">浦东新区</option>
+										<option value="310116">金山区</option>
+										<option value="310117">松江区</option>
+										<option value="310118">青浦区</option>
+										<option value="310120">奉贤区</option>
+										<option value="310230">崇明县</option>
+									</select>
+									</p>
+								</li>
+								<li><span class="title"><label for="deliverAddress187">详细地址</label></span>
+								<p>
+								<textarea value="请输入详细的地址" onfocus="if(this.value=='请输入详细的地址')this.value='';" onblur="if(this.value=='')this.value='请输入详细的地址';" id="deliverAddress187" class="address-txt" rows="10" cols="30">上海</textarea>
+								</p>
+							</li>
+							<li>
+								<div class="name-l">
+									<span class="title"><label for="deliverName187">收件人</label></span>
+									<p>
+									<input type="text" value="揭志勇" placeholder="请输入姓名" id="deliverName187">
+									</p>
+								</div>
+								<div class="name-r">
+									<span class="title"><label for="phone187">手机</label></span>
+									<p>
+									<input type="text" value="18116407567" placeholder="请输入手机号" id="phone187">
+									</p>
+								</div>
+							</li>
+						</ul>
+						<div class="submitButton">
+							<button onclick="address.editSubmit();">确定</button>
+						</div>
+					</div>
+				</div>
+			</li>
+			<li r="r"><input type="hidden" value="158" name="address_id">
+			<div class="add-select">
+				<p class="name">
+				宋德福
+				</p>
+				<p>
+				北京 北京市 西城区
+				</p>
+				<p>
+				15000407904
+				</p>
+			</div>
+			<div class="add-ages-r">
+				<a title="删除" href="javascript:address.del(158);" class="add-r-ico rub"></a><a title="编辑" href="javascript:address.edit(158);" class="add-r-ico txt"></a>
+				<div class="new-addr">
+					<div class="arrow">
+					</div>
+					<div class="new-addr-hd">
+						<h3>编辑您的地址</h3>
+						<a class="cancel" href="#"></a>
+					</div>
+					<ul class="new-addr-bd oh">
+						<li><span class="title"><label for="">所在地区</label></span>
+						<p>
+						<select pvalue="1000" class="address-prov myProvince" id="updateProvinceId158" name="province_id">
+							<option value="-1">请选择</option>
+							<option value="1000">北京</option>
+							<option value="1001">天津</option>
+							<option value="1002">上海</option>
+							<option value="1003">重庆</option>
+							<option value="130000">河北省</option>
+							<option value="140000">山西省</option>
+							<option value="150000">内蒙古自治区</option>
+							<option value="210000">辽宁省</option>
+							<option value="220000">吉林省</option>
+							<option value="230000">黑龙江省</option>
+							<option value="320000">江苏省</option>
+							<option value="330000">浙江省</option>
+							<option value="340000">安徽省</option>
+							<option value="350000">福建省</option>
+							<option value="360000">江西省</option>
+							<option value="370000">山东省</option>
+							<option value="410000">河南省</option>
+							<option value="420000">湖北省</option>
+							<option value="430000">湖南省</option>
+							<option value="440000">广东省</option>
+							<option value="450000">广西壮族自治区</option>
+							<option value="460000">海南省</option>
+							<option value="510000">四川省</option>
+							<option value="520000">贵州省</option>
+							<option value="530000">云南省</option>
+							<option value="540000">西藏自治区</option>
+							<option value="610000">陕西省</option>
+							<option value="620000">甘肃省</option>
+							<option value="630000">青海省</option>
+							<option value="640000">宁夏回族自治区</option>
+							<option value="650000">新疆维吾尔自治区</option>
+						</select>
+						<select cvalue="110000" class="address-city myCity" id="updateCityId158" name="city_id">
+							<option value="-1">请选择</option>
+							<option value="110000">北京市</option>
+						</select>
+						<select dvalue="110102" class="address-area myDistrict" id="updateDistrictId158" name="district_id">
+							<option value="-1">请选择</option>
+							<option value="110101">东城区</option>
+							<option value="110102">西城区</option>
+							<option value="110105">朝阳区</option>
+							<option value="110106">丰台区</option>
+							<option value="110107">石景山区</option>
+							<option value="110108">海淀区</option>
+							<option value="110109">门头沟区</option>
+							<option value="110111">房山区</option>
+							<option value="110112">通州区</option>
+							<option value="110113">顺义区</option>
+							<option value="110114">昌平区</option>
+							<option value="110115">大兴区</option>
+							<option value="110116">怀柔区</option>
+							<option value="110117">平谷区</option>
+							<option value="110228">密云县</option>
+							<option value="110229">延庆县</option>
+						</select>
+						</p>
+					</li>
+					<li><span class="title"><label for="deliverAddress158">详细地址</label></span>
+					<p>
+					<textarea value="请输入详细的地址" onfocus="if(this.value=='请输入详细的地址')this.value='';" onblur="if(this.value=='')this.value='请输入详细的地址';" id="deliverAddress158" class="address-txt" rows="10" cols="30">sdfghfghsdfgd.fllskdfglkjsd</textarea>
+					</p>
+				</li>
+				<li>
+					<div class="name-l">
+						<span class="title"><label for="deliverName158">收件人</label></span>
+						<p>
+						<input type="text" value="宋德福" placeholder="请输入姓名" id="deliverName158">
+						</p>
+					</div>
+					<div class="name-r">
+						<span class="title"><label for="phone158">手机</label></span>
+						<p>
+						<input type="text" value="15000407904" placeholder="请输入手机号" id="phone158">
+						</p>
+					</div>
+				</li>
+			</ul>
+			<div class="submitButton">
+				<button onclick="address.editSubmit();">确定</button>
+			</div>
+		</div>
+	</div>
+</li>
+<li style="margin-right:0;" id="add-address-btn">
+	<div class="add-address">
+		<i></i><span class="add-tit">添加其他地址</span>
+		<div style="left:-77px;top:98px;" id="add-address" class="new-addr">
+			<div class="arrow">
+			</div>
+			<div class="new-addr-hd">
+				<h3>编辑您的地址</h3>
+				<a class="cancel" href="javascript:"></a>
+			</div>
+			<ul class="new-addr-bd">
+				<li><span class="title"><label for="">所在地区</label></span>
+				<p>
+				<select class="address-prov myProvince" id="addProvinceId" name="province_id">
+					<option value="-1">请选择</option>
+					<option value="1000">北京</option>
+					<option value="1001">天津</option>
+					<option value="1002">上海</option>
+					<option value="1003">重庆</option>
+					<option value="130000">河北省</option>
+					<option value="140000">山西省</option>
+					<option value="150000">内蒙古自治区</option>
+					<option value="210000">辽宁省</option>
+					<option value="220000">吉林省</option>
+					<option value="230000">黑龙江省</option>
+					<option value="320000">江苏省</option>
+					<option value="330000">浙江省</option>
+					<option value="340000">安徽省</option>
+					<option value="350000">福建省</option>
+					<option value="360000">江西省</option>
+					<option value="370000">山东省</option>
+					<option value="410000">河南省</option>
+					<option value="420000">湖北省</option>
+					<option value="430000">湖南省</option>
+					<option value="440000">广东省</option>
+					<option value="450000">广西壮族自治区</option>
+					<option value="460000">海南省</option>
+					<option value="510000">四川省</option>
+					<option value="520000">贵州省</option>
+					<option value="530000">云南省</option>
+					<option value="540000">西藏自治区</option>
+					<option value="610000">陕西省</option>
+					<option value="620000">甘肃省</option>
+					<option value="630000">青海省</option>
+					<option value="640000">宁夏回族自治区</option>
+					<option value="650000">新疆维吾尔自治区</option>
+				</select>
+				<select class="address-city myCity" id="addCityId" name="city_id">
+					<option value="-1">请选择</option>
+				</select>
+				<select class="address-area myDistrict" id="addDistrictId" name="district_id">
+					<option value="-1">请选择</option>
+				</select>
+				</p>
+				<div id="error_PCD_id" class="error">
+					<em>*</em><span id="">请选择省市县</span>
+				</div>
+			</li>
+			<li><span class="title"><label for="deliverAddress">详细地址</label></span>
+			<p>
+			<textarea value="请输入详细的地址" onfocus="if(this.value=='请输入详细的地址')this.value='';" onblur="if(this.value=='')this.value='请输入详细的地址';" id="deliverAddress" class="address-txt" rows="10" cols="30"></textarea>
+			</p>
+		</li>
+		<li>
+			<div class="name-l">
+				<span class="title"><label for="deliverName">收件人</label></span>
+				<p>
+				<input type="text" placeholder="请输入姓名" id="deliverName">
+				</p>
+				<div id="error_deliverName_id" class="error">
+					<em>*</em><span id="">请输入姓名</span>
+				</div>
+			</div>
+			<div class="name-r">
+				<span class="title"><label for="phone">手机</label></span>
+				<p>
+				<input type="text" placeholder="请输入手机号" id="phone">
+				</p>
+				<div id="error_phone_id" class="error">
+					<em>*</em><span id="">请输入手机号</span>
+				</div>
+			</div>
+		</li>
+	</ul>
+	<div class="submitButton">
+		<button onclick="address.add();">确定</button>
+	</div>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</form>
+</div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(".if5",parent.document).addClass('list-current');
+		$(".if1",parent.document).removeClass('list-current');
+	});
+</script>
+</body>
+</html>

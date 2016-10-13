@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.sku.cms.dao.SkuExtraInfoDao">
+	<resultMap id="SkuExtraInfoResultMap" type="skuExtraInfo">
+		<id column="id" property="id" />
+		<result column="sku_code" property="skuCode" />
+		<result column="onshelvestime" property="onshelvestime" />
+		<result column="offshelvestime" property="offshelvestime" />
+		<result column="has_gift" property="hasGift" />
+		<result column="has_discount" property="hasDiscount" />
+		<result column="is_gift" property="isGift" />
+		<result column="is_video" property="isVideo" />
+		<result column="video_url" property="videoUrl" />
+		<result column="sales_volume" property="salesVolume" />
+		<result column="actual_sales_volume" property="actualSalesVolume" />
+		<result column="comment_count" property="commentCount" />		
+		<result column="version" property="version" />
+		<result column="create_id" property="createId" />
+		<result column="create_time" property="createTime" />
+		<result column="update_id" property="updateId" />
+		<result column="update_time" property="updateTime" />
+	</resultMap>
+	
+	<insert id="add"
+		parameterType="skuExtraInfo">
+		insert into 
+			t_sku_extra_info(id,
+			sku_code,
+			onshelvestime,
+			offshelvestime,
+			has_gift,
+			has_discount,
+			is_gift,
+			is_video,
+			video_url, 
+			sales_volume,
+			actual_sales_volume,
+			comment_count,
+            version,
+            create_id,
+            create_time,
+            update_id,
+            update_time) 
+		values
+			(#{id}, #{skuCode}, #{onshelvestime}, #{offshelvestime}, #{hasGift}, #{hasDiscount}, #{isGift}, #{isVideo},
+			#{videoUrl},#{salesVolume},#{actualSalesVolume},#{commentCount},now(),
+			 #{createId}, now(), #{updateId}, #{updateTime})
+	</insert>
+
+
+	<select id="findBySkuCode" resultMap="SkuExtraInfoResultMap" parameterType="java.lang.String">
+		<![CDATA[
+			select 
+			id,
+			sku_code,
+			onshelvestime,
+			offshelvestime,
+			has_gift,
+			has_discount,
+			is_gift,
+			is_video,
+			video_url, 
+			sales_volume,
+			actual_sales_volume,
+			comment_count,
+            version,
+            create_id,
+            create_time,
+            update_id,
+            update_time 
+			from 
+				t_sku_extra_info
+		 	where 
+		 		sku_code = #{skuCode}
+        ]]>
+	</select>
+	
+	<update id="update" parameterType="skuExtraInfo">
+		UPDATE 
+			t_sku_extra_info
+		SET
+		<if test="skuCode !=null and skuCode !=''">
+			sku_code = #{skuCode}, 
+		</if>
+		<if test="onshelvestime !=null and onshelvestime !=''">
+			onshelvestime = #{onshelvestime}, 
+		</if>
+		<if test="offshelvestime !=null and offshelvestime !=''">
+			offshelvestime = #{offshelvestime}, 
+		</if>
+		<if test="hasGift !=null and hasGift !=''">
+			has_gift = #{hasGift}, 
+		</if>
+		<if test="hasDiscount !=null and hasDiscount !=''">
+			has_discount = #{hasDiscount}, 
+		</if>
+		<if test="isGift !=null and isGift !=''">
+			is_gift = #{isGift}, 
+		</if>
+		<if test="isVideo !=null and isVideo !=''">
+			is_video = #{isVideo}, 
+		</if>
+		<if test="videoUrl !=null and videoUrl !=''">
+			video_url = #{videoUrl}, 
+		</if>
+		<if test="salesVolume !=null and salesVolume !=''">
+			sales_volume = #{salesVolume}, 
+		</if>
+		<if test="actualSalesVolume !=null and actualSalesVolume !=''">
+			actual_sales_volume = #{actualSalesVolume}, 
+		</if>
+		<if test="commentCount !=null and commentCount !=''">
+			comment_count = #{commentCount}, 
+		</if>
+		<if test="version !=null and version !=''">
+			version = now(), 
+		</if>
+		<if test="updateId !=null and updateId !=''">
+			update_id = #{updateId}, 
+		</if>
+		update_time=now() 
+		WHERE
+			id = #{id}
+	</update>
+
+	<delete id="deleteBySkuCode" parameterType="java.lang.String">
+		DELETE FROM t_sku_extra_info WHERE sku_code = #{skuCode}
+	</delete>
+</mapper>

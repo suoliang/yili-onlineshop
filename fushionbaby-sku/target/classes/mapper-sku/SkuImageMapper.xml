@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.sku.dao.SkuImageDao">
+	<resultMap id="skuImageMap" type="SkuImage">
+		<id column="id" property="id" />
+		<result column="sku_code" property="skuCode" />
+		<result column="image_type_id" property="imageTypeId" />
+		<result column="image_type_code" property="imageTypeCode" />
+		<result column="img_url" property="imgUrl" />
+		<result column="sort_order" property="sortOrder" />
+		<result column="create_time" property="createTime" />
+		<result column="create_id" property="createId" />
+		<result column="update_time" property="updateTime" />
+		<result column="update_id" property="updateId" />
+	</resultMap>
+	
+	<insert id="add" parameterType="SkuImage">
+		insert into
+			t_sku_image(id,sku_code,image_type_id,image_type_code,img_url,sort_order,
+			create_time,create_id,update_time,update_id)
+		values
+			(#{id},#{skuCode},#{imageTypeId},#{imageTypeCode},#{imgUrl},#{sortOrder},
+			now(),#{createId},now(),#{updateId})
+	</insert>
+	
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_sku_image where id = #{id}
+	</delete>
+	
+	<update id="update" parameterType="SkuImage">
+	update t_sku_image
+	    set 
+		    sku_code=#{skuCode},
+		    image_type_id=#{imageTypeId},
+		    image_type_code=#{imageTypeCode},
+		    img_url=#{imgUrl},
+		    sort_order = #{sortOrder},
+		    create_time=now(),
+		    create_id=#{createId},
+		    update_time=now(),
+		    update_id=#{updateId}
+    	where id=#{id}
+	
+	</update>
+	
+	<select id="findById" resultMap="skuImageMap" parameterType="long">
+	   <include refid="base_query_sql"></include>
+		where 
+			id = #{id}
+	</select>
+	
+	
+
+	<select id="findBySkuCode" resultMap="skuImageMap" parameterType="String" resultType="list">
+		select 
+			id,sku_code,image_type_id,image_type_code,img_url,sort_order,
+			create_time,create_id,update_time,update_id
+		from 
+			t_sku_image
+		where 
+			sku_code = #{skuCode}
+			
+		order by case when  sort_order=0 or sort_order is null then 9999999 else sort_order end
+	</select>
+	
+	<select id="findImageBySkuCode" resultMap="skuImageMap" parameterType="Map">
+		select 
+			id,sku_code,image_type_id,image_type_code,img_url,sort_order,
+			create_time,create_id,update_time,update_id
+		from 
+			t_sku_image
+		where 
+			sku_code = #{skuCode} and image_type_code = #{imageType}
+	</select>
+	
+	<select id="findAll" resultMap="skuImageMap" resultType="list">
+		<include refid="base_query_sql"></include>
+	</select>
+	
+	<select id="findBySkuCodeByImageTypeCode" resultMap="skuImageMap" resultType="list">
+		<include refid="base_query_sql"></include>
+		<where> 
+			<if test="skuCode !=null and skuCode!=''">  
+				and	sku_code = #{skuCode} 
+			</if>
+			<if test="imageTypeCode !=null and imageTypeCode!=''">
+				and image_type_code=#{imageTypeCode}
+			</if>
+		</where>
+	</select>
+	
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+	select 
+	      count(id)
+	from 
+	        t_sku_image
+	       
+	  <where>
+		<if test="skuCode !=null and skuCode!=''">  
+			and	sku_code = #{skuCode} 
+		</if>
+		<if test="imageTypeCode !=null and imageTypeCode!=''">
+			and image_type_code=#{imageTypeCode}
+		</if>
+		</where>
+	</select>
+	<select id="getListPage" resultType="list" resultMap="skuImageMap" parameterType="Map">
+	    <include refid="base_query_sql"></include>
+		<where>
+			<if test="skuCode !=null and skuCode!=''">  
+					sku_code = #{skuCode} 
+			</if>
+			<if test="imageTypeCode !=null and imageTypeCode!=''">
+				and image_type_code=#{imageTypeCode}
+			</if>
+		</where>
+		order by sort_order asc	
+		<![CDATA[
+			LIMIT #{start},#{limit}  
+		]]>
+		
+	</select>
+	
+	<sql id="base_query_sql">
+	 <![CDATA[ 
+	  select 
+			  id,sku_code,image_type_code,image_type_id,img_url,sort_order,
+			  create_time,create_id,update_time,update_id 
+		from 
+			  t_sku_image
+		]]>
+	</sql>
+	
+	
+	
+</mapper>

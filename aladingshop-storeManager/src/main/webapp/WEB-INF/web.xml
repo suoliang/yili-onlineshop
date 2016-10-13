@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+
+
+	<!-- 读取spring配置文件 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+		<!-- 开发 环境  -->
+		<!-- -->
+		classpath:conf/spring-store-auth-develop.xml;classpath:conf/spring-store-auth-mybatis.xml;
+		classpath:conf/spring-config-develop.xml;classpath:conf/spring-config-mybatis.xml;
+		classpath:conf/spring-sku-cms-develop.xml;classpath:conf/spring-sku-cms-mybatis.xml;
+		classpath:conf/spring-sms-develop.xml;classpath:conf/spring-sms-mybatis.xml;
+		classpath:conf/spring-sysmgr-develop.xml;classpath:conf/spring-sysmgr-mybatis.xml;
+		classpath:conf/spring-log-develop.xml;classpath:conf/spring-log-mybatis.xml;
+		classpath:conf/spring-store-develop.xml;classpath:conf/spring-store-mybatis.xml;
+		classpath:conf/spring-refund-develop.xml;classpath:conf/spring-refund-mybatis.xml;	
+		classpath:conf/spring-order-develop.xml;classpath:conf/spring-order-mybatis.xml;
+		classpath:conf/spring-payment-develop.xml;classpath:conf/spring-payment-mybatis.xml;
+		classpath:conf/spring-member-develop.xml;classpath:conf/spring-member-mybatis.xml;
+		classpath:conf/spring-finance-develop.xml;classpath:conf/spring-finance-mybatis.xml;
+		classpath:conf/spring-period-activity-develop.xml;classpath:conf/spring-period-activity-mybatis.xml;	
+		classpath:conf/spring-cache.xml; 
+	     <!-- 预发布 -->
+	     <!-- 	
+		classpath:conf/spring-store-auth-predeploy.xml;classpath:conf/spring-store-auth-mybatis.xml;
+		classpath:conf/spring-config-predeploy.xml;classpath:conf/spring-config-mybatis.xml;
+		classpath:conf/spring-sku-cms-predeploy.xml;classpath:conf/spring-sku-cms-mybatis.xml;
+		classpath:conf/spring-sms-predeploy.xml;classpath:conf/spring-sms-mybatis.xml;
+		classpath:conf/spring-sysmgr-predeploy.xml;classpath:conf/spring-sysmgr-mybatis.xml;
+		classpath:conf/spring-log-predeploy.xml;classpath:conf/spring-log-mybatis.xml;
+		classpath:conf/spring-store-predeploy.xml;classpath:conf/spring-store-mybatis.xml;
+		classpath:conf/spring-refund-predeploy.xml;classpath:conf/spring-refund-mybatis.xml;	
+		classpath:conf/spring-order-predeploy.xml;classpath:conf/spring-order-mybatis.xml;
+		classpath:conf/spring-payment-predeploy.xml;classpath:conf/spring-payment-mybatis.xml;
+		classpath:conf/spring-member-predeploy.xml;classpath:conf/spring-member-mybatis.xml;
+		classpath:conf/spring-finance-predeploy.xml;classpath:conf/spring-finance-mybatis.xml;
+		classpath:conf/spring-period-activity-predeploy.xml;classpath:conf/spring-period-activity-mybatis.xml;	
+		classpath:conf/spring-cache.xml;
+		 -->
+	     <!-- 发布 -->
+	     <!--     
+		classpath:conf/spring-store-auth-deploy.xml;classpath:conf/spring-store-auth-mybatis.xml;
+		classpath:conf/spring-config-deploy.xml;classpath:conf/spring-config-mybatis.xml;
+		classpath:conf/spring-sku-cms-deploy.xml;classpath:conf/spring-sku-cms-mybatis.xml;
+		classpath:conf/spring-sms-deploy.xml;classpath:conf/spring-sms-mybatis.xml;
+		classpath:conf/spring-sysmgr-deploy.xml;classpath:conf/spring-sysmgr-mybatis.xml;
+		classpath:conf/spring-log-deploy.xml;classpath:conf/spring-log-mybatis.xml;
+		classpath:conf/spring-store-deploy.xml;classpath:conf/spring-store-mybatis.xml;	
+		classpath:conf/spring-refund-deploy.xml;classpath:conf/spring-refund-mybatis.xml;	
+		classpath:conf/spring-order-deploy.xml;classpath:conf/spring-order-mybatis.xml;
+		classpath:conf/spring-payment-deploy.xml;classpath:conf/spring-payment-mybatis.xml;
+		classpath:conf/spring-member-deploy.xml;classpath:conf/spring-member-mybatis.xml;
+		classpath:conf/spring-finance-deploy.xml;classpath:conf/spring-finance-mybatis.xml;
+		classpath:conf/spring-period-activity-deploy.xml;classpath:conf/spring-period-activity-mybatis.xml;	
+		
+		classpath:conf/spring-cache.xml; 
+     -->
+		</param-value>	
+	</context-param>
+	<!-- 设计路径变量值 -->
+	<context-param>
+		<param-name>webAppRootKey</param-name>
+		<param-value>springmvc.store.root</param-value>
+	</context-param>
+
+
+	<!-- Spring字符集过滤器 -->
+	<filter>
+		<filter-name>SpringEncodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>SpringEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- 日志记录 -->
+	<context-param>
+		<!-- 日志配置文件路径 -->
+		<param-name>log4jConfigLocation</param-name>
+		<param-value>classpath:conf/log4j.properties</param-value>
+	</context-param>
+	<context-param>
+		<!-- 日志页面的刷新间隔 -->
+		<param-name>log4jRefreshInterval</param-name>
+		<param-value>6000</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<!-- springMVC核心配置 -->
+	<servlet>
+		<servlet-name>spring</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:conf/spring-mvc.xml</param-value>
+		</init-param>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>spring</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	<welcome-file-list>
+		<welcome-file>/WEB-INF/models/authorization/login.jsp</welcome-file>
+	</welcome-file-list>
+	
+<!--CKfinder配置 -->
+	<servlet>
+		<servlet-name>ConnectorServlet</servlet-name>
+		<servlet-class>com.aladingshop.store.config.CKFinderConnectorServlet</servlet-class>
+		<init-param>
+			<param-name>XMLConfig</param-name>
+			<param-value>/WEB-INF/ckfinderconfig.xml</param-value>
+		</init-param>
+		<init-param>
+			<param-name>debug</param-name>
+			<param-value>false</param-value>
+		</init-param>
+		<init-param>
+			<param-name>configuration</param-name>
+			<param-value>com.aladingshop.store.config.CKFinderConfig</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ConnectorServlet</servlet-name>
+		<url-pattern>/static/ckfinder/core/connector/java/connector.java</url-pattern>
+	</servlet-mapping>
+
+	<filter-mapping>
+		<filter-name>FileUploadFilter</filter-name>
+		<url-pattern>/static/ckfinder/core/connector/java/connector.java</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>FileUploadFilter</filter-name>
+		<filter-class>com.ckfinder.connector.FileUploadFilter</filter-class>
+		<init-param>
+			<param-name>sessionCookieName</param-name>
+			<param-value>JSESSIONID</param-value>
+		</init-param>
+		<init-param>
+			<param-name>sessionParameterName</param-name>
+			<param-value>jsessionid</param-value>
+		</init-param>
+	</filter>
+	<session-config>
+		<session-timeout>60</session-timeout>
+	</session-config>
+	<!-- CKfinder end -->
+
+	<!-- 错误跳转页面 -->
+	<error-page>
+		<!-- 路径不正确 -->
+		<error-code>404</error-code>
+		<location>/WEB-INF/errorpage/404.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- 没有访问权限，访问被禁止 -->
+		<error-code>405</error-code>
+		<location>/WEB-INF/errorpage/405.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- 内部错误 -->
+		<error-code>500</error-code>
+		<location>/WEB-INF/errorpage/500.jsp</location>
+	</error-page>
+	
+	
+	
+</web-app>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.sysmgr.dao.SysmgrSearchKeywordsDao">
+	<resultMap id="SysSearchKeywordsResultMap" type="sysmgrSearchKeywords">
+		<id column="id" property="id" />
+		<result column="ip" property="ip" />
+		<result column="date" property="date" />
+		<result column="keyword" property="keyword" />
+		<result column="count" property="count" />
+		<result column="source_code" property="sourceCode" />
+	</resultMap>
+	<insert id="add" parameterType="sysmgrSearchKeywords">
+		insert into
+		t_sysmgr_search_keywords (id, ip, date, keyword, count, source_code)
+		values
+		(#{id}, #{ip}, #{date}, #{keyword}, #{count}, #{sourceCode})
+	</insert>
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_sysmgr_search_keywords
+		where id = #{id}
+	</delete>
+	<select id="queryBySearchKey" resultMap="SysSearchKeywordsResultMap" resultType="list">
+		select 
+			id, ip, date, keyword, count, source_code 
+		from 
+			t_sysmgr_search_keywords  
+		where 
+				keyword = #{searchKey} 
+			and source_code =#{sourceCode}
+	</select>
+	<update id="update" parameterType="sysmgrSearchKeywords">
+		update 
+			t_sysmgr_search_keywords
+		set
+			keyword = #{keyword},
+			count = #{count},
+			source_code = #{sourceCode},
+			ip = #{ip},
+			date = now()
+		where 
+			id = #{id}
+	</update>
+</mapper>

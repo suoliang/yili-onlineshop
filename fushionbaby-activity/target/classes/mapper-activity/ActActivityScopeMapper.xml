@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.act.activity.dao.ActActivityScopeDao" >
+  <resultMap id="ActActivityScopeResultMap" type="ActActivityScope" >
+    <id column="id" property="id"/>
+    <result column="is_all_sku" property="isAllSku"/>
+    <result column="brand_list" property="brandList"/>
+    <result column="exclude_brand_list" property="excludeBrandList"/>
+    <result column="category_list" property="categoryList"/>
+    <result column="exclude_category_list" property="excludeCategoryList"/>
+    <result column="sku_list" property="skuList"/>
+    <result column="exclude_sku_list" property="excludeSkuList"/>
+  </resultMap>
+   <insert id="add" parameterType="ActActivityScope"> 
+    insert into
+        t_act_activity_scope 
+             (id,is_all_sku,brand_list,exclude_brand_list,category_list,exclude_category_list,sku_list,exclude_sku_list)
+    values 
+             (#{id},#{isAllSku},#{brandList},#{excludeBrandList},#{categoryList},#{excludeCategoryList},#{skuList},#{excludeSkuList})
+  </insert>
+  <delete id="deleteById" parameterType="java.lang.Long">
+    delete from t_act_activity_scope where id = #{id}
+  </delete>
+  
+  <update id="update" parameterType="ActActivityScope" >
+    update t_act_activity_scope    
+    set 
+          is_all_sku = #{isAllSku},
+          brand_list= #{brandList},
+          exclude_brand_list= #{excludeBrandList},
+          category_list= #{categoryList},
+          exclude_category_list= #{excludeCategoryList},
+          sku_list=#{skuList},
+          exclude_sku_list= #{excludeSkuList}
+      where id = #{id}
+  </update>
+  <select id="findAll" resultMap="ActActivityScopeResultMap" resultType="list">
+  <![CDATA[
+			select 
+			    id,is_all_sku,brand_list,exclude_brand_list,category_list,exclude_category_list,sku_list,exclude_sku_list
+			 from 
+			    t_act_activity_scope
+		 ]]>
+  </select> 
+   <select id="findById" resultMap="ActActivityScopeResultMap" parameterType="java.lang.Long">
+  <![CDATA[
+			select
+			     id,is_all_sku,brand_list,exclude_brand_list,category_list,exclude_category_list,sku_list,exclude_sku_list
+			from 
+			     t_act_activity_scope where id=#{id}
+		 ]]>
+  </select>
+
+</mapper>

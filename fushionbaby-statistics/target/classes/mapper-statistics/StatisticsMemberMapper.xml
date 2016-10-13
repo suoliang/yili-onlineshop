@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.statistics.dao.StatisticsMemberDao">
+	<resultMap id="StatisticsMemberResultMap" type="statisticsMember">
+		<id column="id" property="id" />
+		<result column="today_member_number" property="todayMemberNumber" />
+		<result column="total_number" property="totalNumber" />
+		<result column="android_code" property="androidCode" />
+		<result column="ios_code" property="iosCode" />
+		<result column="web_code" property="webCode" />
+		<result column="cms_code" property="cmsCode" />
+		<result column="default_channel" property="defaultChannel" />
+		<result column="qq_channel" property="qqChannel" />
+		<result column="wx_channel" property="wxChannel" />
+		<result column="sina_channel" property="sinaChannel" />
+		<result column="create_time" property="createTime" />
+	</resultMap>
+	<insert id="add" parameterType="statisticsMember">
+		insert into t_statistics_member (id, today_member_number, total_number, android_code, 
+		ios_code, web_code, cms_code, default_channel, qq_channel, wx_channel, sina_channel, create_time)
+		values
+		(#{id}, #{todayMemberNumber}, #{totalNumber}, #{androidCode}, 
+		#{iosCode}, #{webCode}, #{cmsCode}, #{defaultChannel}, #{qqChannel}, #{wxChannel}, #{sinaChannel}, now())
+	</insert>
+	
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) from t_statistics_member
+		<where>
+			<if test="createTimeFrom != null and createTimeFrom !=''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+				]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+		</where>
+	</select>
+	<select id="getPageList" parameterType="Map" resultType="List" resultMap="StatisticsMemberResultMap">
+		select id, today_member_number, total_number, android_code, 
+				ios_code, web_code, cms_code, default_channel, qq_channel, 
+				wx_channel, sina_channel, create_time
+		from t_statistics_member 
+		<where>
+			<if test="createTimeFrom != null and createTimeFrom !=''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+				]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+		</where>
+		order by create_time desc
+		limit #{start},#{limit}
+	</select>
+	
+</mapper>

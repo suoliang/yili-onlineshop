@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <title>DouYing - News</title>
+    <script type="text/javascript" src="js/public_head_tags.js"></script>
+    <script src="js/sco.modal.js"></script>
+    <script>
+    $(function(){
+      $.fn.fullpage({
+        verticalCentered: false,
+        loopBottom: true,//滚动到最底部后滚回顶部
+        anchors: ['page1', 'page2', 'page3'],
+        navigation: true,
+        navigationTooltips: ['首页', '新闻列表', '联系我们']
+      });
+    })
+    </script>
+  </head>
+  <body id="news">
+    <div id="fullPage">
+      <div class="section section1">
+        <div class="nav">
+          <ul>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="platform.html">自有平台</a></li>
+            <li><a href="news.html">公司新闻</a></li>
+            <li><a href="team.html">团队介绍</a></li>
+            <li><a href="http://www.fushionbaby.com/product/brand-more-list.do">代理品牌</a></li>
+            <li><a href="about.html">关于我们</a></li>
+          </ul>
+        </div>
+        <a class="scroll_btn" onclick="$.fn.fullpage.moveSectionDown();" href="javascript:void(0);"><img src="images/bottom_arrow.png"></a>
+      </div>
+      <div class="section section2">
+        <a class="scroll_btn" onclick="$.fn.fullpage.moveSectionDown();" href="javascript:void(0);"><img src="images/bottom_arrow_black.png"></a>
+        <div class="news_wrap">
+          <ul>
+            <li>
+              <a data-trigger="modal" href="news/index_news/1.html" data-src="news/index_news/1.jpg">
+                <div class="news_list_top">
+                  <span></span>
+                  <img src="images/news/1.jpg" alt="">
+                </div>
+                <div class="news_list_bottom">
+                  <h3>Fushionbaby海外母婴网站低调上线<br>缔造潮童盛宴</h3>
+                  <span>2015.01.01</span>
+                  <p>作为国内首家专攻中高端进口母婴网站，<br>Fushionbaby兜世宝官方网站www.fushionbaby.com<br>于2014年12月底低调宣布上线，网站整体风格以时尚......</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0);" data-src="news/news_news/2.jpg">
+                <div class="news_list_top">
+                  <span></span>
+                  <img src="images/news/more.jpg" alt="">
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="section section7">
+        <div class="fromLeft fromLeft_1"><img src="images/banner_7_words_1.png" alt="我们期待每一次与您交流的机会"></div>
+        <div class="fromLeft fromLeft_2"><img src="images/banner_7_img_1.jpg" alt=""></div>
+        <div class="fromRight">
+          <form action="">
+            <h1><img src="images/banner_7_words_2.png" alt="发封邮件给过我们"></h1>
+            <div class="input_wrap">
+              <div class="fl width100">
+                <label for="您的姓名">您的姓名</label>
+                <input class="required name" type="text">
+              </div>
+              <p>请输入您的姓名！(2个字符以上)</p>
+            </div>
+            <div class="input_wrap">
+              <div class="fl width100">
+                <label for="您的电子邮箱">您的电子邮箱</label>
+                <input class="required email" type="text">
+              </div>
+              <p>请输入正确的电子邮箱！(eg: 123456@qq.com)</p>
+            </div>
+            <div class="input_wrap">
+              <div class="fl width100">
+                <label for="您的留言">您的留言</label>
+                <textarea class="required message" type="text"></textarea>
+              </div>
+              <p>请输入您的留言！(4个字符以上)</p>
+            </div>
+            <a id="index_submit" class="public_btn" href="javascript:void(0);">提交</a>
+          </form>
+        </div>
+        <div class="fromBottom copyright">沪ICP备14049824号</div>
+        <!-- 对话框 开始 -->
+        <div id="Modal_index" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-show="false">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">提交成功</h3>
+          </div>
+          <div class="modal-body">
+            <p>我们已经收到您的留言，感谢您的反馈！</p>
+          </div>
+          <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+            <!-- <button class="btn btn-primary">Save changes</button> -->
+          </div>
+        </div>
+        <!-- 对话框 结束 -->
+      </div>
+    </div>
+    <script>
+    $(function(){
+      $('.news_wrap').css({'margin-top':-$('.news_wrap').outerHeight()/2});
+    })
+    </script>
+  </body>
+</html>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.sku.dao.SkuCategoryRelationDao">
+	<resultMap id="SkuCategoryRelationMap" type="SkuCategoryRelation">
+		<id column="id" property="id" />
+		<result column="category_code" property="categoryCode"/>
+		<result column="sku_code" property="skuCode"/>
+		<result column="show_order" property="showOrder" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="create_id" property="createId" />
+		<result column="update_id" property="updateId" />
+	</resultMap>
+	
+	<insert id="add"  
+		parameterType="SkuCategoryRelation">
+		insert into 
+			t_sku_category_relation(id,category_code,sku_code,show_order,create_time,create_id,update_id)
+		values
+			(#{id},#{categoryCode},#{skuCode},#{showOrder},now(),#{createId},#{updateId})
+	</insert>
+	
+	
+	<update id="update" parameterType="SkuCategoryRelation">
+		update 
+			t_sku_category_relation 
+		set
+			category_code = #{categoryCode},
+			sku_code = #{skuCode},
+			update_time = now(),
+			show_order = #{showOrder}
+		where 
+			id = #{id}
+	</update>
+	
+	<delete id="deleteById" parameterType="java.lang.Long"> 
+		delete from t_sku_category_relation where id = #{id}
+	</delete>
+	
+	<select id="findById" resultMap="SkuCategoryRelationMap" parameterType="long">
+		<![CDATA[
+			select 
+				id,category_code,sku_code,show_order,create_time,update_time,create_id,update_id
+			from 
+				t_sku_category_relation
+		 	where 
+		 		id = #{id}
+        ]]>
+	</select>
+	<select id="findAll" resultMap="SkuCategoryRelationMap" resultType="list" >
+		<![CDATA[
+			select 
+				id,category_code,sku_code,show_order,create_time,update_time,create_id,update_id
+			from 
+				t_sku_category_relation
+		 ]]>
+	</select>
+	<!-- 通过商品号查询商品和分类关联 -->
+	<select id="findBySkuCode" resultMap="SkuCategoryRelationMap" parameterType="String">
+		<![CDATA[
+			select 
+				id,category_code,sku_code,show_order,create_time,update_time,create_id,update_id
+			from 
+				t_sku_category_relation
+			where
+				sku_code = #{skuCode}
+			order by show_order desc
+		 ]]>
+	</select>
+	<select id="findByCategoryCode" resultType="list"  resultMap="SkuCategoryRelationMap" parameterType="map">
+	
+		select 
+			a.id,a.category_code,a.sku_code,a.show_order
+		from 
+			t_sku_category_relation as a
+		where
+		<if test="categoryCode!=null and categoryCode !=''">
+			a.category_code = #{categoryCode}
+		</if>
+		    order by a.show_order desc
+		<if test="limit !=null and limit !=''">
+			LIMIT #{start},#{limit}
+		</if>
+		</select>
+	
+	<!-- 条件查询 -->
+	<select id="findByCondition" resultType="list"  resultMap="SkuCategoryRelationMap" parameterType="skuCategoryRelationQueryCondition">
+	
+		select 
+			a.id,a.category_code,a.sku_code,a.show_order
+		from 
+			t_sku_category_relation as a
+		inner join
+			t_sku b 
+		on 
+			a.sku_code = b.code
+		left JOIN
+			t_sku_hot c
+		on 
+			b.code = c.sku_code
+		inner join
+			t_sku_inventory d
+		on
+			b.code = d.sku_code 
+		<where>
+			d.available_qty > 0
+			<if test="categoryCode!=null and categoryCode !=''">
+				and a.category_code = #{categoryCode}
+			</if>
+			<if test="skuId !=null and skuId !=''">
+				and a.sku_code = #{skuCode}
+			</if>
+			<if test="status !=null and status !=''">
+				and b.status = #{status}
+			</if>
+		</where>
+		<if test="sortParam == 1"> 
+			order by a.show_order asc
+		</if>
+		<if test="sortParam == 2"> 
+			order by b.onshelvestime desc , a.show_order asc
+		</if>
+		<if test="sortParam == 3"> 
+			order by c.count desc, a.show_order asc
+		</if>
+		<if test="sortParam == 4 and sortType == 5"> 
+			order by b.current_price asc, a.show_order asc
+		</if>
+		<if test="sortParam == 4 and sortType == 6"> 
+			order by b.current_price desc, a.show_order asc
+		</if>
+		
+		<if test="start >= 0 and limit !=null and limit !=''">
+			 LIMIT #{start},#{limit}
+		</if>
+		
+	</select>
+	
+	
+	
+	
+	<select id="getTotalByCategoryCode" resultType="java.lang.Integer" parameterType="String">
+		select 
+			count(a.id)
+		from 
+			t_sku_category_relation as a
+		inner join
+			t_sku as b 
+		on 
+			a.sku_code = b.code
+		inner join
+			t_sku_inventory c
+		on
+			b.code = c.sku_code
+		where
+			a.category_code = #{categoryCode}  and b.status = '2' and c.available_qty > 0
+	</select>
+	
+	<!--条件查询,根据多个sku_id,in查询、得到所有sku_id对应的,分类id-->
+	<select id="findCategoryCodesBySkuCodes" parameterType="Map" resultType="string">
+		<![CDATA[
+			select category_code from t_sku_category_relation where sku_code in('${skuCodes}')
+		]]>
+	</select>
+</mapper>

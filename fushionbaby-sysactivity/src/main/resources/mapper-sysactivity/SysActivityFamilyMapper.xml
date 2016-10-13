@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.sysactivity.dao.SysActivityFamilyDao">
+	<resultMap id="SysActivityFamilyResultMap" type="SysActivityFamily" >
+		<id column="id" property="id"  />
+		
+		<result column="title" property="title"  />
+		<result column="publish_time" property="publishTime"/>
+		<result column="click_num" property="clickNum"/>
+		<result column="family_url" property="familyUrl"/>
+		<result column="content" property="content"  />
+	
+		<result column="web_banner_url" property="webBannerUrl" />
+		<result column="app_banner_url" property="appBannerUrl" />
+	</resultMap>
+
+	<insert id="add" parameterType="SysActivityFamily"  >
+	<!-- useGeneratedKeys="true" keyProperty="id" -->
+	  	<!-- 获取数据库自动生成的主键 -->
+	   <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+		SELECT LAST_INSERT_ID() AS ID    
+        </selectKey>
+		insert into t_sysactivity_family
+		 (id, title, publish_time,click_num, family_url, content,
+		web_banner_url,app_banner_url)
+		
+		values (#{id},#{title},now(),#{clickNum},#{familyUrl},#{content},
+		#{webBannerUrl},#{appBannerUrl} )
+	</insert>
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_sysactivity_family
+		where id = #{id}
+	</delete>
+	<update id="update" parameterType="SysActivityFamily">
+		update t_sysactivity_family
+		set 
+		
+		title = #{title},
+		content = #{content},
+		click_num = #{clickNum},
+		family_url = #{familyUrl},
+		
+		web_banner_url=#{webBannerUrl},
+		app_banner_url=#{appBannerUrl}
+		where id = #{id}
+	</update>
+	<select id="findById" resultMap="SysActivityFamilyResultMap">
+    	<![CDATA[
+		    select 
+		   id,title, publish_time,click_num, family_url, content,
+		web_banner_url,app_banner_url
+		    from t_sysactivity_family
+		    where id = #{id}
+    	]]>
+	</select>
+	<select id="findAll" resultType="list" resultMap="SysActivityFamilyResultMap">
+    	<![CDATA[
+		    select 
+		  id,title, publish_time,click_num, family_url, content,
+		 web_banner_url,app_banner_url
+		    from t_sysactivity_family
+   	   ]]>
+	</select>
+
+	
+	<!-- 分页条件查询先得出所有的风尚宝贝的getListPageOne -->
+	<select id="getListPage" resultType="list" resultMap="SysActivityFamilyResultMap" parameterType="Map" >
+	     select 
+		 id,title, publish_time,click_num, family_url, content,
+		web_banner_url,app_banner_url
+		    from t_sysactivity_family
+		<where>
+	
+	        <if test="title !=null and title !=''">
+	    	   AND  title like  "%"#{title}"%" 
+	        </if>
+		</where>
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select 
+			count(id)
+		from 
+			t_sysactivity_family
+		<where>
+	        <if test="title !=null and title !=''">
+	    	   AND  title  like "%"#{title}"%"  
+	        </if>
+		</where>
+	</select>
+	<!-- 亲子课程 -->
+	<select id="getListPageTypeTwo" parameterType="java.util.Map" resultMap="SysActivityFamilyResultMap">
+		 select 
+		 		id, title, publish_time,click_num, family_url, content,
+		 web_banner_url,app_banner_url
+		 from 
+		 		t_sysactivity_family
+		 <if test="start!=null and limit!=null">
+			 limit #{start},#{limit}
+		 </if>
+	</select>
+	<!-- 条件查询 -->
+	<select id="queryByCondition" parameterType="com.fushionbaby.sysactivity.condition.SysActivityFamilyQueryCondition">
+		
+		
+		 select 
+		 		id, title, publish_time,click_num, family_url, content, web_banner_url,app_banner_url
+		 from 
+		 		t_sysactivity_family
+		 where 
+		 
+		 <if test="title !=null and title">
+		 	title = #{title}
+		 </if>
+		 <if test="start >=0 and limit!=null and limit !=''">
+			 limit #{start},#{limit}
+		 </if>
+		
+	</select>
+	
+	
+</mapper>

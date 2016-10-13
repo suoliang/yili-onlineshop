@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.alabao.dao.AlabaoAccountDao">
+	<resultMap id="AlabaoAccountResultMap" type="AlabaoAccount">
+		<id column="id" property="id" />
+		<result column="account" property="account" />
+		<result column="pay_password" property="payPassword" />
+		<result column="login_password" property="loginPassword" />
+		<result column="member_id" property="memberId" />
+		<result column="mobile_phone" property="mobilePhone" />
+		<result column="identity_card_no" property="identityCardNo" />
+		<result column="source_code" property="sourceCode" />
+		<result column="locked_balance" property="lockedBalance" />
+		<result column="balance" property="balance" />
+		<result column="yesterday_income" property="yesterdayIncome" />
+		<result column="total_income" property="totalIncome" />
+		<result column="create_time" property="createTime" />
+		<result column="status" property="status" />
+		<result column="update_time" property="updateTime" />
+	</resultMap>
+	<sql id="AlabaoAccount_column">
+		id,account,pay_password,login_password,member_id,mobile_phone,identity_card_no,source_code,
+		locked_balance,balance,yesterday_income,total_income,status,create_time,update_time
+	   
+	</sql>
+	<insert id="add" parameterType="AlabaoAccount">
+		insert into 
+			t_alabao_account
+		(id,account,pay_password,login_password,member_id,mobile_phone,identity_card_no,source_code,
+		locked_balance,balance,yesterday_income,total_income,status,create_time )
+	    values 
+	    (#{id},#{account},#{payPassword},#{loginPassword},#{memberId},#{mobilePhone},#{identityCardNo},#{sourceCode},
+	    #{lockedBalance},#{balance},#{yesterdayIncome},#{totalIncome},#{status},now())
+	</insert>
+	
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_alabao_account where id = #{id}
+	</delete>
+	<delete id="deleteByAccount" parameterType="java.lang.String">
+		delete from t_alabao_account where account = #{account}
+	</delete>
+	
+	<update id="updateByAccount">
+		update t_alabao_account
+			set
+			<if test="payPassword!=null and payPassword!=''">
+			    pay_password = #{payPassword}, 
+			</if>
+			<if test="loginPassword!=null and loginPassword!=''">
+			    login_password = #{loginPassword}, 
+			</if>
+			<if test="memberId!=null and memberId!=''">
+			    member_id = #{memberId}, 
+			</if>
+			<if test="mobilePhone!=null and mobilePhone!=''">
+			    mobile_phone = #{mobilePhone}, 
+			</if>
+			<if test="identityCardNo!=null and identityCardNo!=''">
+			    identity_card_no = #{identityCardNo}, 
+			</if>
+			<if test="lockedBalance == 0 or (lockedBalance !=null and lockedBalance !='')">
+			    locked_balance = #{lockedBalance}, 
+			</if>
+			<if test="balance == 0 or (balance !=null and balance !='')">
+			    balance = #{balance}, 
+			</if>
+			<if test="yesterdayIncome == 0 or (yesterdayIncome !=null and  yesterdayIncome !='')">
+			    yesterday_income = #{yesterdayIncome}, 
+			</if>
+			<if test="totalIncome == 0 or (totalIncome !=null and totalIncome !='')">
+			    total_income = #{totalIncome}, 
+			</if>
+			<if test="status!=null and status!=''">
+			    status = #{status}, 
+			</if>
+			update_time = now()
+			
+		<where>
+			account = #{account}
+		</where>
+	</update>
+	
+	<select id="findById" resultMap="AlabaoAccountResultMap" parameterType="java.lang.Long">
+		select  <include refid="AlabaoAccount_column"/> from t_alabao_account where id = #{id}
+	</select>
+	<select id="findByAccount" resultMap="AlabaoAccountResultMap" parameterType="java.lang.String">
+		select  <include refid="AlabaoAccount_column"/> from t_alabao_account  where account = #{account}
+	</select>
+	
+	<select id="loginByAccAndPwd" resultMap="AlabaoAccountResultMap">
+		select  <include refid="AlabaoAccount_column"/> from t_alabao_account  
+			where account = #{account} and login_password = #{loginPassword}
+	</select>
+	
+	
+	<!-- 分页条件查询 -->
+	<select id="getList" resultType="list" resultMap="AlabaoAccountResultMap" parameterType="Map" >
+		select <include refid="AlabaoAccount_column"/>
+		from t_alabao_account 
+		<where>
+			<if test="account!=null and account!=''">
+			     and account = #{account}  
+			</if>
+			<if test="payPassword!=null and payPassword!=''">
+			     and pay_password = #{payPassword}  
+			</if>
+			<if test="loginPassword!=null and loginPassword!=''">
+			     and login_password = #{loginPassword}   
+			</if>
+			<if test="memberId!=null and memberId!=''">
+			     and member_id = #{memberId}  
+			</if>
+			<if test="mobilePhone!=null and mobilePhone!=''">
+			     and mobile_phone = #{mobilePhone}  
+			</if>
+			<if test="status!=null and status!=''">
+			     and status = #{status}  
+			</if>
+			<if test="identityCardNo!=null and identityCardNo!=''">
+			     and identity_card_no = #{identityCardNo}  
+			</if>
+			<if test="lockedBalance!=null and lockedBalance!=''">
+			     and locked_balance = #{lockedBalance}  
+			</if>
+			<if test="yesterdayIncome!=null and yesterdayIncome!=''">
+			     and yesterday_income = #{yesterdayIncome} 
+			</if>
+			<if test="totalIncome!=null and totalIncome!=''">
+			     and total_income = #{totalIncome} 
+			</if>
+			<if test="balanceFrom!=null and balanceFrom!=''">
+			 <![CDATA[   
+			     and balance >= #{balanceFrom} 
+			 ]]>
+			</if>
+			<if test="balanceTo!=null and balanceTo!=''">
+		     <![CDATA[
+		     	and balance <= #{balanceTo} 
+		     ]]>
+			</if>
+			<if test="createTimeFrom != null and createTimeFrom !=''">
+	    	<![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+			]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+		</where>
+		 order by create_time desc
+		<if test="start!=null and limit!=null ">
+			limit #{start},#{limit}
+		</if>
+		 
+	</select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) from t_alabao_account 
+		<where>
+			<if test="account!=null and account!=''">
+			     and account = #{account}  
+			</if>
+			<if test="payPassword!=null and payPassword!=''">
+			     and pay_password = #{payPassword}  
+			</if>
+			<if test="loginPassword!=null and loginPassword!=''">
+			     and login_password = #{loginPassword}   
+			</if>
+			<if test="memberId!=null and memberId!=''">
+			     and member_id = #{memberId}  
+			</if>
+			<if test="mobilePhone!=null and mobilePhone!=''">
+			     and mobile_phone = #{mobilePhone}  
+			</if>
+			<if test="status!=null and status!=''">
+			     and status = #{status}  
+			</if>
+			<if test="identityCardNo!=null and identityCardNo!=''">
+			     and identity_card_no = #{identityCardNo}  
+			</if>
+			<if test="lockedBalance!=null and lockedBalance!=''">
+			     and locked_balance = #{lockedBalance}  
+			</if>
+			<if test="yesterdayIncome!=null and yesterdayIncome!=''">
+			     and yesterday_income = #{yesterdayIncome} 
+			</if>
+			<if test="totalIncome!=null and totalIncome!=''">
+			     and total_income = #{totalIncome} 
+			</if>
+			<if test="balanceFrom!=null and balanceFrom!=''">
+			 <![CDATA[   
+			     and balance >= #{balanceFrom} 
+			 ]]>
+			</if>
+			<if test="balanceTo!=null and balanceTo!=''">
+		     <![CDATA[
+		     	and balance <= #{balanceTo} 
+		     ]]>
+			</if>
+			<if test="createTimeFrom != null and createTimeFrom !=''">
+	    	<![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+			]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+		</where>
+	</select>
+	
+	<update id="updateStatusById" parameterType="Map">
+		update t_alabao_account
+			set status = #{status} 
+			
+		<where>
+			id = #{id}
+		</where>
+	</update>
+	
+	
+	
+	
+	<select id="findAll" resultMap="AlabaoAccountResultMap">
+		select  <include refid="AlabaoAccount_column"/> from t_alabao_account
+	</select>
+	
+	<select id="findByMemberId" resultMap="AlabaoAccountResultMap"  parameterType="java.lang.Long">
+		select  <include refid="AlabaoAccount_column"/> from t_alabao_account where member_id = #{memberId} 
+	</select>
+	
+	
+	<update id="updateByMemberId">
+		update t_alabao_account
+			set
+			<if test="payPassword!=null and payPassword!=''">
+			    pay_password = #{payPassword}, 
+			</if>
+			<if test="loginPassword!=null and loginPassword!=''">
+			    login_password = #{loginPassword}, 
+			</if>
+			<if test="account!=null and account!=''">
+			    account = #{account},
+			</if>
+			<if test="mobilePhone!=null and mobilePhone!=''">
+			    mobile_phone = #{mobilePhone}, 
+			</if>
+			<if test="identityCardNo!=null and identityCardNo!=''">
+			    identity_card_no = #{identityCardNo}, 
+			</if>
+			<if test="lockedBalance == 0 or (lockedBalance !=null and lockedBalance !='')">
+			    locked_balance = #{lockedBalance}, 
+			</if>
+			<if test="balance == 0 or (balance !=null and balance !='')">
+			    balance = #{balance}, 
+			</if>
+			<if test="yesterdayIncome == 0 or (yesterdayIncome !=null and  yesterdayIncome !='')">
+			    yesterday_income = #{yesterdayIncome}, 
+			</if>
+			<if test="totalIncome == 0 or (totalIncome !=null and totalIncome !='')">
+			    total_income = #{totalIncome}, 
+			</if>
+			<if test="status!=null and status!=''">
+			    status = #{status}, 
+			</if>
+			update_time = now()
+			
+		<where>
+			    member_id = #{memberId}
+		</where>
+	</update>
+	
+</mapper>

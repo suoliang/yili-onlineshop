@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.auth.dao.AuthPrivilegeDao" >
+  <resultMap id="AuthPrivilegeResultMap" type="AuthPrivilege" >
+    <id column="id" property="id" />
+    <result column="name" property="name"  />
+    <result column="parent_id" property="parentId"  />
+    <result column="sort_no" property="sortNo" />
+    <result column="url" property="url"  />
+    <result column="level" property="level"/>
+  </resultMap>
+
+   <insert id="add" parameterType="AuthPrivilege" >
+    insert into 
+    t_auth_privilege (id, name, parent_id, sort_no, url,level )
+    values (#{id},
+      #{name}, #{parentId},#{sortNo},#{url},#{level} )
+  </insert>
+  
+  <delete id="deleteById"  parameterType="java.lang.Long" >
+    delete from t_auth_privilege  where id = #{id}
+  </delete>
+    <update id="update" parameterType="AuthPrivilege" >
+    update t_auth_privilege
+  set
+      <if test="name!=null and name!=''">
+         name = #{name},
+      </if>
+      <if test="parentId!=null and parentId!=''">
+         parent_id = #{parentId},
+      </if>
+      <if test="sortNo!=null and sortNo!=''">
+         sort_no = #{sortNo},
+      </if>
+      <if test="url!=null and url!=''">
+         url = #{url},
+      </if>
+      <if test="level!=null and level!=''">
+         level = #{level}
+      </if>
+      
+ 
+    where id = #{id}
+  </update>
+    <select id="findAll" resultType="list" resultMap="AuthPrivilegeResultMap">
+		<![CDATA[
+			select id, name, parent_id,sort_no, url ,level from t_auth_privilege 
+		 ]]>
+	</select>
+  <!-- 得到所有的父菜单列表（权限） -->
+  <select id="findAllFirst" resultType="list" resultMap="AuthPrivilegeResultMap">
+		<![CDATA[
+			select id, name, parent_id,sort_no, url ,level from t_auth_privilege where level=1 order by id 
+		 ]]>
+	</select>
+    <select id="findById" resultType="AuthPrivilege" resultMap="AuthPrivilegeResultMap">
+		<![CDATA[
+			select id, name, parent_id,  sort_no, url,level from t_auth_privilege where id=#{id}
+		 ]]>
+	</select>
+	<!-- 通过parentId得到子权限的名称 -->
+    <select id="findByParentId" resultType="list" resultMap="AuthPrivilegeResultMap">
+		<![CDATA[
+			SELECT tap.id,tap.name ,tap.url from t_auth_privilege  tap where tap.parent_id=#{parentId} order by id
+		 ]]>
+	</select>
+		<!-- 获得第一层的所有分类  level=1时，第二层为level=2 -->
+    <select id="findByLevel" resultType="list" resultMap="AuthPrivilegeResultMap">
+		<![CDATA[
+			SELECT tap.id,tap.name ,tap.url from t_auth_privilege  tap where tap.level=#{level} order by id
+		 ]]>
+	</select>
+	
+	  <!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="AuthPrivilegeResultMap" parameterType="Map" >
+	    	select 
+	    	id, name, parent_id,sort_no, url ,level 
+	    	from t_auth_privilege
+		<where>
+			<if test="name !=null and name !=''">
+	    	   AND  name LIKE "%"#{name}"%"  
+	        </if>
+	        
+		</where>
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select 
+			count(id)
+		from t_auth_privilege
+		<where>
+			<if test="name !=null and name !=''">
+	    	   AND  name LIKE "%"#{name}"%"  
+	        </if>
+	       
+		</where>
+	</select>
+	
+	  <!-- 得到用户的第一层权限(id name url)，其中 level=1-->
+    <select id="listParentPrivilegeByUserId"   resultType="list" resultMap="AuthPrivilegeResultMap" parameterType="long"  >
+   <![CDATA[
+	select DISTINCT tap.id ,tap.name,tap.url from  t_auth_privilege tap where tap.id IN(
+           SELECT  DISTINCT  tarp.privilege_id from t_auth_role_privilege tarp
+          where tarp.role_id IN
+               (select DISTINCT taur.role_id  from t_auth_user_role taur  where taur.user_id=#{userId})
+            ) and tap.level=1
+		 ]]>
+  </select>
+	
+	
+	
+</mapper>

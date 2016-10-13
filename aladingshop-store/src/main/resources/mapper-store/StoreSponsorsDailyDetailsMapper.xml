@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.store.dao.StoreSponsorsDailyDetailsDao">
+	<resultMap id="StoreSponsorsDailyDetailsMap" type="StoreSponsorsDailyDetails">
+		<id column="id" property="id" />
+		<result column="store_code" property="storeCode" />
+		<result column="settle_period" property="settlePeriod" />
+		
+		<result column="settle_order_amount" property="settleOrderAmount" />
+		<result column="platform_fee" property="platformFee" />
+		
+		<result column="real_income_amount" property="realIncomeAmount" />
+		<result column="settle_order_count" property="settleOrderCount" />
+		
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		
+		<result column="update_id" property="updateId" />
+		<result column="daily_number" property="dailyNumber" />
+		
+		<result column="apply_number" property="applyNumber" />
+		<result column="settlement_status" property="settlementStatus" />
+		
+		<result column="remark" property="remark" />
+	
+	</resultMap>
+	<sql id="StoreSponsorsDailyDetails_column">
+		id, store_code, settle_period,settle_order_amount,platform_fee,real_income_amount,settle_order_count,create_time,
+		update_time,update_id,daily_number,apply_number,settlement_status,remark
+	   
+	</sql>
+	<insert id="add" parameterType="StoreSponsorsSettlementDetails">
+		insert into 
+			t_store_sponsors_daily_details
+		(id, store_code, settle_period,settle_order_amount,platform_fee,real_income_amount,settle_order_count,create_time,
+		update_time,update_id,daily_number,apply_number,settlement_status,remark)
+	    values 
+	    (#{id},#{storeCode},#{settlePeriod},#{settleOrderAmount},#{platformFee},#{realIncomeAmount},#{settleOrderCount},now(),
+	    now(),#{updateId},#{dailyNumber},#{applyNumber},#{settlementStatus},#{remark})
+	</insert>
+	
+	
+	<update id="update">
+		update t_store_sponsors_daily_details
+			set
+			<if test="storeCode != null and storeCode != ''">
+		    	store_code = #{storeCode}, 
+			</if>
+			<if test="settlePeriod != null and settlePeriod != ''">
+			    settle_period = #{settlePeriod}, 
+			</if>
+			<if test="settleOrderAmount != null and settleOrderAmount != ''">
+		    	settle_order_amount = #{settleOrderAmount}, 
+			</if>
+			<if test="platformFee != null and platformFee != ''">
+			    platform_fee = #{platformFee}, 
+			</if>
+			<if test="realIncomeAmount != null and realIncomeAmount != ''">
+			    real_income_amount = #{realIncomeAmount}, 
+			</if>
+			<if test="settleOrderCount != null and settleOrderCount != ''">
+			    settle_order_count = #{settleOrderCount}, 
+			</if>
+			<if test="updateId != null and updateId != ''">
+			    update_id = #{updateId},
+			</if>
+			<if test="dailyNumber != null and dailyNumber != ''">
+			    daily_number = #{dailyNumber},
+		    	
+			</if>
+			<if test="applyNumber != null and applyNumber != ''">
+			    apply_number = #{applyNumber}, 
+		    	
+			</if>
+			<if test="settlementStatus != null and settlementStatus != ''">
+		    settlement_status = #{settlementStatus}, 
+		    	
+			</if>
+			<if test="remark != null and remark != ''">
+			    remark = #{remark},
+			</if>
+			update_time = now()
+		 <where>   
+			id = #{id}
+		</where>
+	</update>
+	
+	<select id="findByStoreCode" resultMap="StoreSponsorsDailyDetailsMap" parameterType="java.lang.String">
+		select <include refid="StoreSponsorsDailyDetails_column"/> from t_store_sponsors_daily_details where store_code = #{storeCode}
+	</select>
+	
+	<select id="findByDailyNumber" resultMap="StoreSponsorsDailyDetailsMap" parameterType="java.lang.String">
+		select <include refid="StoreSponsorsDailyDetails_column"/> from t_store_sponsors_daily_details where daily_number = #{dailyNumber}
+	</select>
+	
+	<select id="findByApplyNumber" resultMap="StoreSponsorsDailyDetailsMap" parameterType="java.lang.String">
+		select <include refid="StoreSponsorsDailyDetails_column"/> from t_store_sponsors_daily_details where apply_number = #{applyNumber}
+	</select>
+	
+	<select id="findById" resultMap="StoreSponsorsDailyDetailsMap" parameterType="java.lang.Long">
+		select <include refid="StoreSponsorsDailyDetails_column"/> from t_store_sponsors_daily_details where id = #{id}
+	</select>
+	
+	
+	<select id="getListPage" parameterType="Map" resultType="list" resultMap="StoreSponsorsDailyDetailsMap">
+		select 
+         	<include refid="StoreSponsorsDailyDetails_column"/>  from 
+    	t_store_sponsors_daily_details
+    	<where>
+	    	<if test="storeCode !=null and storeCode !=''">
+	    		AND store_code = #{storeCode} 
+	    	</if>
+	    	<if test="applyNumber !=null and applyNumber !=''">
+	    		AND apply_number = #{applyNumber} 
+	    	</if>
+	    	
+	    	<if test="settlementStatus !=null and settlementStatus!=''">
+	    		AND settlement_status = #{settlementStatus}
+	    	</if>
+	    	<if test="createTimeFrom != null and createTimeFrom !=''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d %H:%i:%s') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d %H:%i:%s')
+				]]>
+	    	</if>
+	    
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d %H:%i:%s') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d %H:%i:%s')
+				]]>
+	    	</if>
+    	</where>
+    		LIMIT #{start},#{limit}
+	</select>
+	
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1)  from t_store_sponsors_daily_details
+    	<where>
+	    	<if test="storeCode !=null and storeCode !=''">
+	    		AND store_code = #{storeCode} 
+	    	</if>
+	    	<if test="applyNumber !=null and applyNumber !=''">
+	    		AND apply_number = #{applyNumber} 
+	    	</if>
+	    	<if test="settlementStatus !=null and settlementStatus!=''">
+	    		AND settlement_status = #{settlementStatus}
+	    	</if>
+	    	<if test="createTimeFrom != null and createTimeFrom !=''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d %H:%i:%s') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d %H:%i:%s')
+				]]>
+	    	</if>
+	    
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d %H:%i:%s') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d %H:%i:%s')
+				]]>
+	    	</if>
+    	</where>
+	</select>
+	
+	
+	
+</mapper>

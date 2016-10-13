@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fushionbaby.core.dao.OrderTraceUserDao">
+
+  <insert id="addOrderTraceUser" parameterType="OrderTraceUser">
+    insert into t_order_trace (id, order_code, member_id, 
+      order_status, order_status_des,create_time,store_code)
+    values (#{id}, #{orderCode}, #{memberId}, 
+      #{orderStatus}, #{orderStatusDes},now(),#{storeCode})
+  </insert>
+  
+  <update id="updatetTraceStatus" parameterType="OrderTraceUser">
+  	update t_order_trace  set order_status = #{orderStatus}
+  	<where>
+  		<if test="orderCode != null and orderCode !='' ">
+  			and order_code = #{orderCode}
+  		</if>
+  		<if test="memberId != null and memberId !='' ">
+  			and member_id = #{memberId}
+  		</if>
+  	</where>
+  </update>
+</mapper>

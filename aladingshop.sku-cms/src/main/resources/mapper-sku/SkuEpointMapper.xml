@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.sku.cms.dao.SkuEpointDao">
+	<resultMap id="SkuEpointResultMap" type="SkuEpoint">
+		<id column="id" property="id" />
+		<result column="sku_code" property="skuCode" />
+		<result column="need_epoint" property="needEpoint" />
+		<result column="sku_name" property="skuName" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="label_code" property="labelCode" />
+	</resultMap>
+	<sql id="SkuEpoint_column">
+		select 
+	      id,sku_code,need_epoint,sku_name,create_time,update_time,label_code
+	   from t_sku_epoint
+	</sql>
+	<insert id="add" parameterType="SkuEpoint">
+		insert into 
+			t_sku_epoint
+		(id,sku_code,need_epoint,sku_name,create_time,update_time,label_code)
+	    values 
+	    (#{id},#{skuCode},#{needEpoint},#{skuName},now(),now(),#{labelCode})
+	</insert>
+	
+	<delete id="deleteBySkuCode">
+		delete from t_sku_epoint where sku_code=#{skuCode}
+	</delete>
+	
+	<delete id="deleteById">
+		delete from t_sku_epoint where id=#{id}
+	</delete>
+	
+	<update id="update">
+		update t_sku_epoint 
+		<set>
+			<if test="needEpoint != null and needEpoint != ''">
+				need_epoint=#{needEpoint},
+			</if>
+			<if test="skuCode != null and skuCode != ''">
+				sku_code=#{skuCode},
+			</if>
+			<if test="skuName != null and skuName != ''">
+				sku_name=#{skuName},
+			</if>
+			<if test="labelCode != null and labelCode != ''">
+				label_code=#{labelCode},
+			</if>
+				update_time = now()
+		</set>
+			where id=#{id}
+	</update>
+	
+	<!-- 分页条件查询 -->
+	<select id="findBySkuCode" resultMap="SkuEpointResultMap" >
+		<include refid="SkuEpoint_column"/> where sku_code=#{skuCode}
+	</select>
+	
+	<select id="findById" resultMap="SkuEpointResultMap" >
+		<include refid="SkuEpoint_column"/> where id=#{id}
+	</select>
+	
+	<select id="getListPage" parameterType="map" resultMap="SkuEpointResultMap" resultType="list">
+		<include refid="SkuEpoint_column"/>
+		<where>
+			<if test="skuCode != null and skuCode != ''">
+				sku_code=#{skuCode}		
+			</if>
+			<if test="labelCode != null and labelCode != ''">
+				label_code=#{labelCode}		
+			</if>
+		</where>
+			order by create_time desc
+			<![CDATA[
+				LIMIT #{start},#{limit}
+			]]>
+	</select>
+	
+	<select id="getTotal" parameterType="map" resultType="Integer">
+		select count(1) from t_sku_epoint
+		<where>
+			<if test="skuCode != null and skuCode != ''">
+				sku_code=#{skuCode}		
+			</if>
+			<if test="labelCode != null and labelCode != ''">
+				label_code=#{labelCode}		
+			</if>
+		</where>
+			
+	</select>
+	
+	
+	
+	
+</mapper>

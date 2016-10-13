@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fushionbaby.core.dao.OrderLineUserDao">
+  <resultMap id="BaseResultMap" type="OrderLineUser">
+    <id column="id" property="id"  />
+    <result column="order_code" property="orderCode"  />
+    <result column="member_id" property="memberId"  />
+    <result column="sku_code" property="skuCode"  />
+    <result column="sku_name" property="skuName"  />
+    <result column="line_type" property="lineType"  />
+    <result column="size" property="size"  />
+    <result column="color" property="color"  />
+    <result column="sku_retail_price" property="skuRetailPrice"  />
+    <result column="unit_price" property="unitPrice"  />
+    <result column="quantity" property="quantity"  />
+    <result column="cost_price" property="costPrice"  />    
+    <result column="total_price" property="totalPrice"  />
+    <result column="total_actual" property="totalActual"  />
+    <result column="is_comment" property="isComment" />
+    <result column="remark" property="remark"  />
+    <result column="create_time" property="createTime"  />
+    <result column="update_time" property="updateTime" />
+    <result column="version" property="version"  />
+    <!-- 门店编号 -->
+    <result column="store_code" property="storeCode" />
+    
+  </resultMap>
+  <sql id="Line_Column_List">
+  	select
+	    id, order_code, member_id, sku_code, sku_name, line_type, size, color, sku_retail_price, 
+	    unit_price, quantity, cost_price, total_price, total_actual, is_comment, 
+	    remark, create_time, update_time, version, store_code
+	from t_order_line
+  </sql>
+  <insert id="add" parameterType="OrderLineUser">
+    insert into t_order_line (id, create_time, line_type, 
+      remark, size, color, 
+      sku_code, cost_price, sku_name, 
+      total_actual, total_price, 
+      quantity, sku_retail_price, unit_price, 
+      version, order_code, member_id, store_code)
+    values (#{id},now(), #{lineType}, 
+      #{remark}, #{size}, #{color}, 
+      #{skuCode}, #{costPrice}, #{skuName}, 
+      #{totalActual}, #{totalPrice}, 
+      #{quantity}, #{skuRetailPrice}, #{unitPrice}, 
+      now(), #{orderCode}, #{memberId}, #{storeCode})
+  </insert>
+  <delete id="deleteById" parameterType="Long">
+    delete from t_order_line
+    where id = #{id}
+  </delete>
+  <sql id="Line_where">
+  	<where>
+	  	is_comment = 'n'
+	  	<if test="orderCodes != null and orderCodes !='' ">
+			and order_code in (${orderCodes})
+		</if>
+	</where>
+  </sql>
+  <select id="getListPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	<include refid="Line_Column_List" />
+  	<include refid="Line_where" />
+  	order by create_time DESC
+	<if test="start!=null and limit!=null">
+		LIMIT ${start},${limit}
+	</if>
+  </select>
+  <select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+	select count(id) 
+ 		from t_order_line
+  	<include refid="Line_where" />
+  </select>
+  
+   <select id="findById" parameterType="Long" resultMap="BaseResultMap">
+  	<include refid="Line_Column_List"/>
+  	where id = #{id}
+  </select>
+  
+   <select id="findByParam" parameterType="java.util.Map"  resultMap="BaseResultMap">
+  	<include refid="Line_Column_List"/>
+  	where
+  		 order_code = #{orderCode}
+	  	<if test="isComment !=null and isComment !=''">
+	  		and is_comment = #{isComment}
+	  	</if>
+  </select>
+  
+  <update id="updateIsComment" parameterType="java.util.Map">
+     update t_order_line
+     set update_time = now(),
+         is_comment = #{isComment}
+     where id = #{id}
+  </update>
+</mapper>

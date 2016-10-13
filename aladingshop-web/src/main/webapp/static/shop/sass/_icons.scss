@@ -1,0 +1,198 @@
+@import "compass/utilities/sprites";
+
+$logo-sprite-dimensions:true;
+$logo-layout:smart;
+
+@import "icon/*.png";
+
+// @include all-icon-sprites();
+
+/* index.html */
+.logo {
+    width: 116px;
+    height: 86px;
+    @include icon-sprite("logo");
+}
+
+#search span {
+    width: 18px;
+    height: 20px;
+    position: absolute;
+    left: 11px;
+    top: 11px;
+    @include icon-sprite("search");
+}
+
+.cart {
+    width: 25px;
+    height: 22px;
+    position: absolute;
+    left: 12px;
+    top: 8px;
+    @include icon-sprite("cart");
+}
+
+.ws_prev {
+    @include icon-sprite("slider_btn_left");
+}
+.ws_next {
+    @include icon-sprite("slider_btn_right");
+}
+
+.daily-tit a {
+    @include icon-sprite("more");
+    &:hover {@include icon-sprite("more-hover");}
+}
+
+.daily-span {
+    width: 238px;height: 27px;
+    @include icon-sprite("daily");
+}
+.recommendation-span {
+    width: 239px;height: 24px;
+    @include icon-sprite("recommendation-span");
+}
+
+.recommendation-ul span {
+    @include icon-sprite("recommendation-circle");
+}
+
+.F1-span {
+    width: 94px;height: 73px;
+    @include icon-sprite("1-floor");
+}
+.F2-span {
+    width: 110px;height: 73px;
+    @include icon-sprite("2-floor");
+}
+.F3-span {
+    width: 95px;height: 73px;
+    @include icon-sprite("3-floor");
+}
+.F4-span {
+    width: 96px;height: 73px;
+    @include icon-sprite("4-floor");
+}
+.F5-span {
+    width: 90px;height: 73px;
+    @include icon-sprite("5-floor");
+}
+.F6-span {
+    width: 95px;height: 73px;
+    @include icon-sprite("6-floor");
+}
+.F7-span {
+    width: 115px;height: 73px;
+    @include icon-sprite("7-floor");
+}
+.F8-span {
+    width: 115px;height: 73px;
+    @include icon-sprite("7-floor");
+}
+.F9-span {
+    width: 115px;height: 73px;
+    @include icon-sprite("7-floor");
+}
+.F10-span {
+    width: 115px;height: 73px;
+    @include icon-sprite("7-floor");
+}
+.F11-span {
+    width: 115px;height: 73px;
+    @include icon-sprite("7-floor");
+}
+.F12-span {
+    width: 115px;height: 73px;
+    @include icon-sprite("7-floor");
+}
+.F13-span {
+    width: 115px;height: 73px;
+    @include icon-sprite("7-floor");
+}
+.F14-span {
+    width: 115px;height: 73px;
+    @include icon-sprite("7-floor");
+}
+
+
+.footer-top-l span {
+    width: 155px;height: 50px;
+    @include icon-sprite("phone");
+}
+.footer-top-r span {
+    width: 132px;height: 51px;
+    @include icon-sprite("map");
+}
+.f-b-icon1 span {
+    width: 100px;height: 26px;
+    @include icon-sprite("footer-1");
+}
+.f-b-icon2 span {
+    width: 137px;height: 26px;
+    @include icon-sprite("footer-2");
+}
+.f-b-icon3 span {
+    width: 70px;height: 22px;
+    @include icon-sprite("footer-3");
+}
+.f-b-icon4 span {
+    width: 79px;height: 22px;
+    @include icon-sprite("footer-4");
+}
+.f-b-icon5 span {
+    width: 115px;height: 22px;
+    @include icon-sprite("footer-5");
+}
+.f-b-bottom span {
+    width: 209px;height: 50px;
+    @include icon-sprite("logo-foot");
+}
+.close {width: 16px;height: 16px;
+    @include icon-sprite("close");
+}
+
+.f-b-bottom span {
+    width: 543px;height: 50px;
+    @include icon-sprite("logo-foot");
+}
+
+.menu-box-l span {
+    width: 118px;height: 206px;
+    @include icon-sprite("menu-box-l");
+}
+.menu-box-r span {
+    width: 202px;height: 105px;
+    @include icon-sprite("menu-box-r");
+}
+
+/* login.html */
+.login-logo span {
+    @include icon-sprite("logo");
+}
+.user span {
+    @include icon-sprite("t-icon-user");
+}
+.lock span {
+    @include icon-sprite("t-icon-lock");
+}
+.qq a {@include icon-sprite("t-qq");}
+.weichat a {@include icon-sprite("t-weichat");}
+.sina a {@include icon-sprite("t-sina");}
+.alipay a {@include icon-sprite("t-alipay");}
+
+/* 找回密码 */
+#resetPassword-wrap .tit {
+    li span {@include icon-sprite("t-tit");}
+    .active span {@include icon-sprite("t-tit-active");}
+}
+// 列表1
+.list-tit span {@include icon-sprite("u-list-tit");}
+.classification-span {width: 224px;height: 24px;@include icon-sprite("u-Classification");}
+.clock span {@include icon-sprite("u-clock");}
+.dollar span {@include icon-sprite("u-dollar");}
+.heart span {@include icon-sprite("u-heart");}
+.place span {@include icon-sprite("u-place");}
+.breakfast-span {@include icon-sprite("u-Breakfast-food");width: 224px;height: 23px}
+.pastry-span {@include icon-sprite("u-Cookies-pastry");width: 225px;height: 27px}
+.like-span {width: 174px;height: 23px;@include icon-sprite("u-Related");}
+.sellers-span {width: 207px;height: 25px;@include icon-sprite("u-BestSellers");}

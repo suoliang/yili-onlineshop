@@ -1,0 +1,21 @@
+{
+  "name": "app",
+  "description": "app use gulp",
+  "version": "0.1.0",
+  "author": "jie",
+  "devDependencies": {
+    "gulp-load-plugins":"*",
+    "browser-sync": "*",
+    "gulp": "*",
+    "gulp-compass": "^2.1.0",
+    "gulp-concat": "*",
+    "gulp-csslint": "*",
+    "gulp-htmlhint": "*",
+    "gulp-jshint": "*",
+    "gulp-sass": "*",
+    "gulp-minify-css": "*",
+    "gulp-rename": "*",
+    "gulp-uglify": "*",
+    "gulp-watch": "*"
+  }
+}

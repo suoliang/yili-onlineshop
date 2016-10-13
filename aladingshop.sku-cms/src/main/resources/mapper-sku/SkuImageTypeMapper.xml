@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.sku.cms.dao.SkuImageTypeDao">
+	<resultMap id="skuImageTypeMap" type="SkuImageType">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="code" property="code" />
+		<result column="is_multiple" property="isMultiple" />
+		<result column="disable" property="disable" />
+	</resultMap>
+	
+	<insert id="add" parameterType="SkuImageType">
+		insert into
+			t_sku_image_type(id,name,code,is_multiple,disable)
+		values
+			(#{id},#{name},#{code},#{isMultiple},#{disable})
+	</insert>
+	
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_sku_image_type where id = #{id}
+	</delete>
+	
+	<update id="update" parameterType="SkuImageType">
+	    update t_sku_image_type
+	    <set>
+		    <if test="name !=null and name!=''">  
+		         name=#{name},
+		     </if>
+		    <if test="code !=null and code!=''">  
+		         code=#{code},
+		     </if>
+		    <if test="isMultiple !=null and isMultiple!=''">  
+		        is_multiple=#{isMultiple},
+		     </if>
+		    <if test="disable !=null and disable!=''">  
+		         disable=#{disable},
+		    </if>
+		  1=1
+	    </set>
+    	where id=#{id}
+	
+	</update>
+	
+	<select id="findById" resultMap="skuImageTypeMap" parameterType="long">
+	   <include refid="base_query_sql"></include>
+		where 
+			id = #{id}
+	</select>
+	<select id="findByCode" resultMap="skuImageTypeMap" parameterType="java.lang.String">
+	   <include refid="base_query_sql"></include>
+		where 
+			code = #{code}
+	</select>
+		
+	<select id="findAll" resultMap="skuImageTypeMap" resultType="list">
+		<include refid="base_query_sql"></include>
+	</select>
+	
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+	select 
+	      count(id)
+	from 
+	        t_sku_image_type
+	       
+	  <where>
+		<if test="name !=null and name!=''">  
+			and	name like "%"#{name}"%" 
+		</if>
+		<if test="code !=null and code!=''">
+			and code=#{code}
+		</if>
+		</where>
+	</select>
+	<select id="getListPage" resultType="list" resultMap="skuImageTypeMap" parameterType="Map">
+	    <include refid="base_query_sql"></include>
+	<where>
+		<if test="name !=null and name!=''">  
+				name like "%"#{name}"%" 
+		</if>
+		<if test="code !=null and code!=''">
+			and code=#{code}
+		</if>
+		</where>
+		<![CDATA[
+			LIMIT #{start},#{limit}  
+		]]>
+	</select>
+	
+	<sql id="base_query_sql">
+	 <![CDATA[ 
+	  select 
+			  id,name,is_multiple,code,disable
+		from 
+			  t_sku_image_type
+		]]>
+	</sql>
+	
+	
+	<update id="updateStatus" parameterType="map">
+	    update 
+	        t_sku_image_type
+		    set 
+		       disable=#{status}
+    	     where id=#{id}
+	</update>
+	
+	
+	
+</mapper>

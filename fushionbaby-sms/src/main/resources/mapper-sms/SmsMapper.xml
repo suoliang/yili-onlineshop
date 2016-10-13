@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.sms.dao.SmsDao">
+	<resultMap id="SmsResultMap" type="sms">
+		<id column="id" property="id" />
+		<result column="member_name" property="memberName" />
+		<result column="mobile" property="mobile" />
+		<result column="sms_type_id" property="smsTypeId" />
+		<result column="sms_content" property="smsContent" />
+		<result column="plan_time" property="planTime" />
+		<result column="send_time" property="sendTime" />
+		<result column="status" property="status" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="create_id" property="createId" />
+		<result column="update_id" property="updateId" />
+		<result column="send_level" property="sendLevel" />
+		<result column="source_code" property="sourceCode" />
+		<result column="is_deleted" property="isDeleted" />
+		<result column="failure_reason" property="failureReason" />
+		<result column="sms_send_flag" property="smsSendFlag" />
+		<!-- 额外返回查询结果 -->
+		<!-- 短信类型表返回的查询结果 -->
+		<association property="smsTypeConfig" javaType="smsTypeConfig">
+			<result column="SMS_NAME" property="smsName"/>
+		</association>
+	</resultMap>
+	<insert id="add" parameterType="sms">
+		insert into t_sms (id, member_name, mobile,
+		sms_type_id, sms_content, plan_time,
+		send_time,
+		status, create_time,
+		update_time, create_id, update_id,
+		send_level,
+		source_code, is_deleted,
+		failure_reason, sms_send_flag)
+		values (#{id}, #{memberName}, #{mobile},
+		#{smsTypeId}, #{smsContent}, #{planTime},
+		#{sendTime}, #{status}, now(),
+		#{updateTime}, #{createId},
+		#{updateId},
+		#{sendLevel}, #{sourceCode}, 'n',
+		#{failureReason},
+		#{smsSendFlag})
+	</insert>
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_sms
+		where id
+		= #{id}
+	</delete>
+	<update id="update" parameterType="sms">
+		update t_sms
+		set
+		member_name = #{memberName},
+		mobile = #{mobile},
+		sms_type_id = #{smsTypeId},
+		sms_content = #{smsContent},
+		plan_time = #{planTime},
+		send_time = #{sendTime},
+		status = #{status},
+		create_time = #{createTime},
+		update_time = #{updateTime},
+		create_id = #{createId},
+		update_id = #{updateId},
+		send_level = #{sendLevel},
+		source_code = #{sourceCode},
+		is_deleted = #{isDeleted},
+		failure_reason = #{failureReason},
+		sms_send_flag = #{smsSendFlag}
+		where id = #{id}
+	</update>
+	<select id="findById" resultMap="SmsResultMap" parameterType="java.lang.Long">
+	  <![CDATA[
+	    select 
+		    id, member_name, mobile, sms_type_id, sms_content, plan_time, send_time, status, 
+		    create_time, update_time, create_id, update_id, send_level, source_code, is_deleted, failure_reason, 
+		    sms_send_flag
+	    from 
+	    	t_sms
+	    where 
+	    	ID = #{id}
+	  ]]>
+	</select>
+	<select id="findAll" resultType="list" resultMap="SmsResultMap">
+	 <![CDATA[
+	    select 
+	    id, member_name, mobile, sms_type_id, sms_content, plan_time, send_time, status, 
+	    create_time, update_time, create_id, update_id, send_level, source_code, is_deleted, failure_reason, 
+	    sms_send_flag
+	    from t_sms
+	 ]]>
+	</select>
+	
+	<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="SmsResultMap" parameterType="Map" >
+		select 
+		    s.id, s.member_name, s.mobile, s.sms_type_id, s.sms_content, s.plan_time, s.send_time, s.status, 
+		    s.create_time, s.update_time, s.create_id, s.update_id, s.send_level, s.source_code, s.is_deleted, s.failure_reason, 
+		    s.sms_send_flag,st.sms_name
+	    from 
+	    	t_sms s inner join t_sms_type_config st on s.sms_type_id = st.id
+		<where>
+			<if test="memberName !=null and memberName !=''">
+	    	   AND  member_name LIKE "%"#{memberName}"%"  
+	        </if>
+	        <if test="mobile !=null and mobile !=''">
+	    	   AND  mobile LIKE "%"#{mobile}"%"  
+	        </if>
+	        <if test="sourceCode !=null and sourceCode !=''">
+	    	   AND  source_code = #{sourceCode}  
+	        </if>
+	        <if test="smsTypeId !=null and smsTypeId !=''">
+	    	   AND  sms_type_id = #{smsTypeId}  
+	        </if>
+	        <if test="createTimeFrom != null and createTimeFrom !=''">
+	    		<![CDATA[
+					and DATE_FORMAT(s.send_time,'%Y-%m-%d %H:%i:%s') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d %H:%i:%s')
+				]]>
+	   		  </if>
+			  <if test="createTimeTo != null and createTimeTo != ''">
+	    		<![CDATA[
+					and DATE_FORMAT(s.send_time,'%Y-%m-%d %H:%i:%s') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d %H:%i:%s')
+				]]>
+	    		</if>
+		</where>
+		<![CDATA[
+			order by s.create_time desc
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select 
+			count(s.id)
+		from 
+			t_sms s inner join t_sms_type_config st on s.sms_type_id = st.id
+		<where>
+			<if test="memberName !=null and memberName !=''">
+	    	   AND  member_name LIKE "%"#{memberName}"%"  
+	        </if>
+	        <if test="mobile !=null and mobile !=''">
+	    	   AND  mobile LIKE "%"#{mobile}"%"  
+	        </if>
+	        <if test="sourceCode !=null and sourceCode !=''">
+	    	   AND  source_code = #{sourceCode}  
+	        </if>
+	        <if test="smsTypeId !=null and smsTypeId !=''">
+	    	   AND  sms_type_id = #{smsTypeId}  
+	        </if>
+		</where>
+	</select>
+	<select id="count" parameterType="java.util.Map" resultType="java.lang.Long">
+	    select count(1) from t_sms
+	    <where>
+			<if test="createTime != null and createTime != ''">
+			DATE_FORMAT(create_time,'%Y-%m-%d') = DATE_FORMAT(#{createTime},'%Y-%m-%d')
+			</if>
+		</where>
+	</select>
+	
+	<select id="findNumByLastTime" resultMap="SmsResultMap" parameterType="java.lang.String">
+	  <![CDATA[
+	    select 
+		    id, member_name, mobile, sms_type_id, sms_content, plan_time, send_time, status, 
+		    create_time, update_time, create_id, update_id, send_level, source_code, is_deleted, failure_reason, 
+		    sms_send_flag
+	    from 
+	    	t_sms
+	    WHERE 
+			DATE_FORMAT(create_time,'%Y-%m-%d %T') >= DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 10 MINUTE),'%Y-%m-%d %T') 
+			AND member_name = #{memberName}
+	  ]]>
+	</select>
+	
+</mapper>

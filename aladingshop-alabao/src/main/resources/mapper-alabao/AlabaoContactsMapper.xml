@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.alabao.dao.AlabaoContactsDao">
+	<resultMap id="AlabaoContactsResultMap" type="AlabaoContacts">
+			<id column="id" property="id" />
+			<result column="account" property="account" />
+			<result column="link_account" property="linkAccount" />
+			<result column="create_time" property="createTime" />
+			<result column="update_time" property="updateTime" />
+			
+	</resultMap>
+	<!-- 定义宏转换为 -->
+	<sql id="AlabaoContacts_column">
+		id,account,link_account,create_time,update_time
+	</sql>
+	<insert id="add" parameterType="AlabaoContacts">
+		insert into 
+			t_alabao_contacts
+		(account,link_account,create_time,update_time)
+	    values 
+	    (#{account},#{linkAccount},now(),now())
+	</insert>
+	
+	
+	
+	<update id="update"  parameterType="AlabaoContacts">
+		update t_alabao_contacts
+			set
+				<if test="account !=null and account !=''">
+					account=#{account},
+				</if>
+				<if test="linkAccount !=null and linkAccount !=''">
+					link_account=#{linkAccount},
+				</if>
+				update_time=now()
+		<where>
+			id = #{id} 
+		</where>
+	</update>
+	
+	
+	<sql id="alabao_where">
+		<where>
+				<if test="account !=null and account !=''">
+					and account=#{account}
+				</if>
+				<if test="linkAccount !=null and linkAccount !=''">
+					and link_account=#{linkAccount}
+				</if>
+				
+				<if test="createTimeFrom != null and createTimeFrom !=''">
+	    			<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+					]]>
+		    	</if>
+				<if test="createTimeTo != null and createTimeTo != ''">
+		    		<![CDATA[
+						and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+					]]>
+		   		 </if>
+		</where>
+	</sql>
+	
+	<select id="findByAccountAndLinkAccount" resultMap="AlabaoContactsResultMap" parameterType="Map">
+		select <include refid="AlabaoContacts_column"/>	   
+			from t_alabao_contacts 
+			<include refid="alabao_where"/>
+	</select>
+	
+	<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="AlabaoContactsResultMap" parameterType="Map" >
+		select <include refid="AlabaoContacts_column"/>	   
+			from t_alabao_contacts 
+			<include refid="alabao_where"/>
+				order by update_time desc
+		<if test="start!=null and limit!=null ">
+			limit #{start},#{limit}
+		</if>
+		 
+	</select>
+	
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) from t_alabao_contacts
+		<include refid="alabao_where"></include>
+	</select>
+	
+	
+	<select id="findById" resultMap="AlabaoContactsResultMap" parameterType="java.lang.Long">
+		select  <include refid="AlabaoContacts_column"/> from t_alabao_contacts where id=#{id}
+	</select>
+	
+	
+	
+</mapper>

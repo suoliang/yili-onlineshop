@@ -1,0 +1,19 @@
+@charset "UTF-8";
+/**
+* 404-none.css (未搜索到商品页面/404错误页面   应用于none.ftl/404.ftl)
+* @authors Your Name (you@example.org)
+* @date    2015-01-09 10:31:28
+* @version $Id$
+*/
+/* 404 */
+.not-found { height: 274px; position: relative; background-color: #F4F4F4; border-radius: 10px; margin-top: 120px; margin-bottom: 20px;}
+.not-found .content { position: absolute; font-size: 16px; right: 214px; bottom: 40px; }
+.not-found .logo-gif { width: 260px; height: 260px; display: block; position: absolute; left: 230px; bottom: 6px; background: url(../images/logo.gif) no-repeat; }
+.not-found .err {min-width:280px; position: absolute; background-color: #35A5CD; color: #fff; font-size: 20px;padding:0 10px; height: 73px; line-height: 73px; text-align: center; border-radius: 10px; left: 460px; top: -20px; }
+.not-found .err em { width: 0; height: 0; border-width: 10px; border-style: solid dashed dashed dashed; border-color: #35A5CD transparent transparent transparent; overflow: hidden; display: block; position: absolute; bottom: -18px; left: 15px; }
+.not-found .content a { color: #35A5CD; }
+.not-found .content a:hover {text-decoration: underline;}
+.not-found .content a.home-page { font-size: 22px; font-weight: bold; }
+.not-found .content p.enter { margin:15px 0 5px 0; }
+.not-found .content p.list a { color: #32C7A9; margin-right: 30px; }
+p.list a:hover {text-decoration: underline;}

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.config.dao.SysmgrDictConfigDao" >
+  <resultMap id="sysmgrDictConfigResultMap" type="sysmgrDictConfig" >
+    <id column="id" property="id" />
+    <result column="label" property="label" />
+    <result column="value" property="value" />
+    <result column="type" property="type" />
+    <result column="description" property="description" />
+     <result column="sort" property="sort" />
+  </resultMap>
+  <insert id="add" parameterType="sysmgrDictConfig" >
+    insert into t_sysmgr_dict_config (id, label, value, 
+      type,description,sort)
+    values (#{id}, #{label}, #{value}, 
+      #{type},#{description},#{sort})
+  </insert>
+  
+  <delete id="deleteById" parameterType="java.lang.Long" >
+    delete from t_sysmgr_dict_config
+    where id = #{id}
+  </delete>
+  
+  <delete id="deleteByType" parameterType="java.lang.String" >
+    delete from t_sysmgr_dict_config
+    where type = #{type}
+  </delete>
+    
+  <update id="update" parameterType="sysmgrDictConfig" >
+    update t_sysmgr_dict_config
+    set
+      label = #{label},
+      value = #{value},
+      type = #{type},
+      description=#{description},
+      sort=#{sort}
+    where id = #{id}
+  </update>
+  
+  <select id="findById" resultMap="sysmgrDictConfigResultMap" parameterType="java.lang.Long" >
+    select 
+    id, label, value,type,description,sort
+    from t_sysmgr_dict_config
+    where id = #{id}
+  </select>
+  
+  <select id="findByLabelValueType" resultMap="sysmgrDictConfigResultMap" parameterType="java.lang.String" >
+    select 
+         id, label, value,type,description,sort
+    from t_sysmgr_dict_config
+ 	  <where>
+			<if test="label!=null and label!=''">
+			   and label = #{label}
+			</if>
+			<if test="value!=null and value!=''">
+			   and value = #{value}
+			</if>
+			<if test="type!=null and type!=''">
+			   and type = #{type}
+			</if>
+	 	</where>
+  </select>
+
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select 
+			count(id)
+		from 
+	        t_sysmgr_dict_config
+		<where>
+			<if test="label !=null and label !=''">
+	    	   AND  label LIKE "%"#{label}"%"
+	        </if>
+	     	<if test="value !=null and value !=''">
+	    	   AND  value LIKE "%"#{value}"%"  
+	        </if>
+	        <if test="type !=null and type !=''">
+	    	   AND  type LIKE "%"#{type}"%"  
+	        </if>
+	        <if test="description !=null and description !=''">
+	    	   AND  description LIKE "%"#{description}"%"  
+	        </if>
+		</where>
+  	</select>	
+  
+    <!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="sysmgrDictConfigResultMap" parameterType="Map" >
+       select 
+         id, label, value, type,description,sort
+       from t_sysmgr_dict_config
+		<where>
+			<if test="label !=null and label !=''">
+	    	   AND  label LIKE "%"#{label}"%"
+	        </if>
+	     	<if test="value !=null and value !=''">
+	    	   AND  value LIKE "%"#{value}"%"  
+	        </if>
+	        <if test="type !=null and type !=''">
+	    	   AND  type LIKE "%"#{type}"%"  
+	        </if>
+	         <if test="description !=null and description !=''">
+	    	   AND  description LIKE "%"#{description}"%"  
+	        </if>
+		</where>
+		order by id desc
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+	
+  
+  
+</mapper>

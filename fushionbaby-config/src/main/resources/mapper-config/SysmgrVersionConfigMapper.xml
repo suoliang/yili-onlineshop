@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.config.dao.SysmgrVersionConfigDao">
+	<resultMap id="SysVersionResultMap" type="sysmgrVersionConfig">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="version_num" property="versionNum" />
+		<result column="source_code" property="sourceCode" />
+		<result column="is_fource" property="isFource" />
+		<result column="feature" property="feature" />
+		<result column="url" property="url" />
+		<result column="is_deleted" property="isDeleted" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="create_id" property="createId" />
+		<result column="update_id" property="updateId" />
+	</resultMap>
+	<sql id="version_base_column">
+		select 
+	 		id, name, version_num, source_code, is_fource, feature, url, is_deleted, create_time, update_time, 
+	  		create_id, update_id
+	    from t_sysmgr_version_config
+	</sql>
+	<insert id="add" parameterType="sysmgrVersionConfig">
+		insert into t_sysmgr_version_config (id,name, version_num,
+		source_code, is_fource, feature,
+		url, is_deleted, create_time,
+		update_time, create_id, update_id)
+		values (#{id}, #{name}, #{versionNum},
+		#{sourceCode}, #{isFource}, #{feature},
+		#{url}, #{isDeleted}, now(),
+		now(), #{createId}, #{updateId})
+	</insert>
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_sysmgr_version_config
+		where id = #{id}
+	</delete>
+	<update id="update" parameterType="sysmgrVersionConfig">
+		update
+		     t_sysmgr_version_config
+		set update_time = now()
+		<if test="name != null and name != ''">
+			, name = #{name}
+		</if> 
+		<if test="versionNum != null and versionNum != ''">
+			, version_num = #{versionNum}
+		</if> 
+		<if test="sourceCode != null and sourceCode != ''">
+			, source_code = #{sourceCode}
+		</if> 
+		<if test="isFource != null and isFource != ''">
+			, is_fource = #{isFource}
+		</if> 
+		<if test="feature != null and feature != ''">
+			, feature = #{feature}
+		</if> 
+		<if test="url != null and url != ''">
+			, url = #{url}
+		</if> 
+		<if test="isDeleted != null and isDeleted != ''">
+			, is_deleted = #{isDeleted}
+		</if> 
+		<if test="createId != null and createId != ''">
+			, create_id = #{createId}
+		</if> 
+		<if test="updateId != null and updateId != ''">
+			, update_id = #{updateId}
+		</if> 
+	   where id = #{id}
+	</update>
+	<select id="findById" resultMap="SysVersionResultMap">
+   		<include refid="version_base_column" />
+		 where id = #{id}
+	</select>
+	<select id="getLatestVersionNum" resultType="int" parameterType="String">
+		SELECT MAX(version_num) FROM t_sysmgr_version_config 
+			where source_code = #{sourceCode}
+	</select>
+	<select id="getLatestVersionByLatestVersionNumAndSourceCode" resultMap="SysVersionResultMap" parameterType="sysmgrVersionConfig">
+		 <include refid="version_base_column" />
+	    where source_code = #{sourceCode}  and version_num = #{versionNum}  and is_deleted = 'n' 
+	</select>
+	<select id="checkIsNeedUpdateOrNot" resultType="list" resultMap="SysVersionResultMap" parameterType="sysmgrVersionConfig">
+		<include refid="version_base_column" />
+		 where version_num between #{versionNum}+1 and (select max(version_num) from t_sysmgr_version_config where source_code = #{sourceCode}) 
+		 and is_fource = 1 and is_deleted = 'n' and source_code = #{sourceCode}
+	</select>
+	<select id="findAll" resultMap="SysVersionResultMap">
+   		<include refid="version_base_column" />
+	</select>
+	
+	   <!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="SysVersionResultMap" parameterType="Map" >
+	  <include refid="version_base_column" />
+		<where>
+			<if test="sourceCode !=null and sourceCode !=''">
+	    	   AND  source_code = #{sourceCode}
+	        </if>	
+	        <if test="versionNum !=null and versionNum !=''">
+	    	   AND  version_num = #{versionNum}
+	        </if>      
+		</where>
+		order by create_time desc 
+		limit #{start},#{limit}
+	</select>
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select 
+			count(id)
+		from 
+		t_sysmgr_version_config
+		<where>
+			<if test="sourceCode !=null and sourceCode !=''">
+	    	   AND  source_code = #{sourceCode}
+	        </if>	
+	        <if test="versionNum !=null and versionNum !=''">
+	    	   AND  version_num = #{versionNum}
+	        </if>  
+		</where>
+  </select>
+	
+</mapper>

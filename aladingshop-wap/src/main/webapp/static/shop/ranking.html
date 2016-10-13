@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>发表评论</title>
+        <!-- 通用部分 开始 -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0,user-scalable=no">
+        <link rel="shortcut icon" href="images/favicon.ico" />
+        <link rel="stylesheet" href="css/style.min.css"><!-- 通用 CSS -->
+        <script src="farmwork/jquery/jquery-2.1.3.min.js"></script><!-- 通用jQuery JS -->
+        <script src="farmwork/velocity/velocity.min.js"></script><!-- velocity JS -->
+        <script src="farmwork/velocity/velocity.ui.min.js"></script><!-- velocity JS -->
+        <script src="js/min/public.min.js"></script><!-- 通用 public JS -->
+        <!-- 通用部分 结束 -->
+    </head>
+    <body id="ranking">
+
+        <div class="container">
+
+            <div class="head mB10">
+                <a href="javascript:history.go(-1)" class="a-left">
+                    <span class="back"></span>
+                </a>
+                <p>发表评论</p>
+            </div>
+
+            <p class="ranking-tit fl wp100">发表内容评价，分享心得！</p>
+
+            <div class="cart-confirm-b fl wp100">
+                <a href="detail.html"><img src="picture/1.jpg"></a>
+                <p>舒肤佳金银花/菊花沐浴露400毫升</p>
+                <span>参数：属性</span>
+                <span>参数：属性</span>
+                <i>&yen; 29.9</i>
+                <div class="modal-c fl wp100">数量 1</div>
+            </div>
+
+            <div class="cart-confirm-a fl wp100">
+                <span class="icon-house"></span>
+                <h4>阿拉丁玛特</h4>
+                <p>共计 <i class="count-num">1</i> 件</p>
+            </div>
+
+            <div class="ranking-wrap fl wp100 radio">
+                <div class="check-box fl checked">
+                    <i></i>
+                    <label for="good">好评</label>
+                    <input id="good" class="checkItem" type="radio" checked="checked" name="ranknum">
+                </div>
+                <div class="check-box fl">
+                    <i></i>
+                    <label for="mid">中评</label>
+                    <input id="mid" class="checkItem" type="radio" name="ranknum">
+                </div>
+                <div class="check-box fl">
+                    <i></i>
+                    <label for="bad">差评</label>
+                    <input id="bad" class="checkItem" type="radio" name="ranknum">
+                </div>
+                <textarea name="" id="" placeholder="补充评价（选填）："></textarea>
+
+            </div>
+
+            <div class="cart-confirm-e fl wp100 checkbox">
+                <button>发表评价</button>
+                <div class="check-box fl checked">
+                    <i></i>
+                    <label for="niming">匿名评价</label>
+                    <input id="niming" class="checkItem" type="checkbox" checked="checked">
+                </div>
+            </div>
+
+        </div><!-- /.container -->
+
+    </body>
+</html>

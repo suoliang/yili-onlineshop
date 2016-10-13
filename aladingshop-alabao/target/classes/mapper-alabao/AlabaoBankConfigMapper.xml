@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.alabao.dao.AlabaoBankConfigDao">
+	<resultMap id="AlabaoBankConfigResultMap" type="AlabaoBankConfig">
+			<id column="id" property="id" />
+			<result column="bank_desc" property="bankDesc" />
+			<result column="update_id" property="updateId" />
+			<result column="bank_name" property="bankName" />
+			<result column="bank_icon_url" property="bankIconUrl" />
+			<result column="update_time" property="updateTime" />
+			<result column="create_time" property="createTime" />
+			<result column="bank_code" property="bankCode" />
+	</resultMap>
+	<!-- 定义宏转换为 -->
+	<sql id="AlabaoBankConfig_column">
+		id,bank_name,bank_icon_url,bank_code,bank_desc,create_time,update_time,update_id
+	</sql>
+	<insert id="add" parameterType="AlabaoBankConfig">
+		insert into 
+			baby_member.t_alabao_bank_config
+		(
+					bank_desc,
+					update_id,
+					bank_name,
+					bank_icon_url,
+					id,
+					update_time,
+					create_time,
+					bank_code
+		)
+	    values 
+	    (
+				#{bankDesc},
+				#{updateId},
+				#{bankName},
+				#{bankIconUrl},
+				#{id},
+				now(),
+				now(),
+				#{bankCode}		
+		)
+	</insert>
+	<delete id="deleteById" parameterType="java.lang.Long">
+	
+		delete from baby_member.t_alabao_bank_config where id = #{id}  
+	</delete>
+	
+	<update id="update"  parameterType="AlabaoBankConfig">
+		update baby_member.t_alabao_bank_config
+			set
+				<if test="bankDesc !=null and bankDesc !=''">
+					bank_desc=#{bankDesc},
+				</if>
+				<if test="updateId !=null and updateId !=''">
+					update_id=#{updateId},
+				</if>
+				<if test="bankName !=null and bankName !=''">
+					bank_name=#{bankName},
+				</if>
+				<if test="bankIconUrl !=null and bankIconUrl !=''">
+					bank_icon_url=#{bankIconUrl},
+				</if>
+				<if test="bankCode !=null and bankCode !=''">
+					bank_code=#{bankCode},
+				</if>
+				update_time=now()
+		<where>
+			id = #{id} 
+		</where>
+	</update>
+	
+	<select id="findById" resultMap="AlabaoBankConfigResultMap" parameterType="java.lang.Long">
+		select  <include refid="AlabaoBankConfig_column"/> from baby_member.t_alabao_bank_config where id = #{id} 
+	</select>
+	
+	<select id="findAll" resultType="list" resultMap="AlabaoBankConfigResultMap">
+		select  <include refid="AlabaoBankConfig_column"/> from baby_member.t_alabao_bank_config
+	</select>
+	
+	<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="AlabaoBankConfigResultMap" parameterType="Map" >
+		select <include refid="AlabaoBankConfig_column"/>
+		from baby_member.t_alabao_bank_config 
+		where 1=1
+				<if test="bankDesc !=null and bankDesc !=''">
+					 and bank_desc=#{bankDesc}
+				</if>
+				<if test="updateId !=null and updateId !=''">
+					 and update_id=#{updateId}
+				</if>
+				<if test="bankName !=null and bankName !=''">
+					 and bank_name=#{bankName}
+				</if>
+				<if test="bankIconUrl !=null and bankIconUrl !=''">
+					 and bank_icon_url=#{bankIconUrl}
+				</if>
+				<if test="id !=null and id !=''">
+					 and id=#{id}
+				</if>
+				<if test="updateTime !=null and updateTime !=''">
+					 and update_time=#{updateTime}
+				</if>
+				<if test="createTime !=null and createTime !=''">
+					 and create_time=#{createTime}
+				</if>
+				<if test="bankCode !=null and bankCode !=''">
+					 and bank_code=#{bankCode}
+				</if>
+		<if test="start!=null and limit!=null ">
+			limit #{start},#{limit}
+		</if>
+		 
+	</select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) from baby_member.t_alabao_bank_config
+	</select>
+	
+	
+	<select id="findByBankCode" resultType="list" resultMap="AlabaoBankConfigResultMap" parameterType="java.lang.String">
+		select  <include refid="AlabaoBankConfig_column"/> from baby_member.t_alabao_bank_config where bank_code = #{bankCode} 
+	</select>
+	
+	<select id="findByBankName" resultType="list" resultMap="AlabaoBankConfigResultMap" parameterType="java.lang.String">
+		select  <include refid="AlabaoBankConfig_column"/> from baby_member.t_alabao_bank_config where bank_name = #{bankName} 
+	</select>
+	
+</mapper>

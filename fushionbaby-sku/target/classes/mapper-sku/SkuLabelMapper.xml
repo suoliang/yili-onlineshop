@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.sku.dao.SkuLabelDao">
+	<resultMap id="SkuLabelResultMap" type="skuLabel">
+		<id column="id" property="id" />
+		<result column="code" property="code" />
+		<result column="name" property="name" />
+		<result column="disable" property="disable" />
+		<result column="max_category_num" property="maxCategoryNum" />
+		<result column="create_id" property="createId" />
+		<result column="update_id" property="updateId" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="version" property="version" />
+	</resultMap>
+	<insert id="add" parameterType="skuLabel">
+		insert into t_sku_label 
+				(id,code,name,disable,max_category_num,
+				create_id,update_id,create_time,update_time,version)
+		values 
+	    		(#{id},#{code},#{name},#{disable},#{maxCategoryNum},
+	    		#{createId},#{updateId},now(),#{updateTime},#{version})
+	</insert>
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_sku_label
+		where id = #{id}
+	</delete>
+	<update id="update" >
+		update t_sku_label
+		<set>
+			<if test="name != null and name != ''">
+       			name = #{name},
+  			</if>
+  			<if test="disable != null and disable != ''">
+       			disable = #{disable},
+  			</if>
+  			version = now()
+		</set>
+		where 
+			code = #{code}
+	</update>
+	<sql id="label_base_column">
+		select
+			 id,code,name,disable,max_category_num,
+			create_id,update_id,create_time,update_time,version
+		from
+			 t_sku_label 
+	</sql>
+	<select id="findById" resultMap="SkuLabelResultMap" >
+		<include refid="label_base_column" />
+		where 
+			 id = #{id}
+	</select>
+	<select id="findAll" resultType="list" resultMap="SkuLabelResultMap" >
+		<include refid="label_base_column" />
+	</select>
+	
+		<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="SkuLabelResultMap" parameterType="Map" >
+		<include refid="label_base_column" />
+		<where>
+			<if test="code !=null and code !=''">
+	    	    AND    code LIKE "%"#{code}"%"  
+	        </if>
+	        <if test="name !=null and name !=''">
+	    	   AND  name LIKE "%"#{name}"%"  
+	        </if>
+	         <if test="disable !=null and disable !=''">
+	    	   AND  disable = #{disable}
+	        </if>
+		</where>
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select 
+			count(id)
+		from 
+			t_sku_label
+		<where>
+			<if test="code !=null and code !=''">
+	    	   AND  code LIKE "%"#{code}"%"  
+	        </if>
+	        <if test="name !=null and name !=''">
+	    	   AND  name LIKE "%"#{name}"%"  
+	        </if>
+		</where>
+	</select>
+	<!-- 通过code获取标签信息 -->
+	<select id="getByCode" resultMap="SkuLabelResultMap">
+		<include refid="label_base_column" />
+		where code = #{code}  
+	</select>
+	
+	<delete id="deleteByCode" parameterType="java.lang.String">
+		delete from t_sku_label
+		where code = #{code}
+	</delete>
+	
+</mapper>

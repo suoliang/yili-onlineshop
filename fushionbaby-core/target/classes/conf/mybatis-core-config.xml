@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration 
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 命名空间 -->
+	<typeAliases>
+		<!-- 订单基本表信息 -->
+		<typeAlias alias="OrderBaseUser" type="com.fushionbaby.core.model.OrderBaseUser"/>
+		<!-- 购物车行记录 -->
+		<typeAlias alias="ShoppingCartSkuUser" type="com.fushionbaby.core.model.ShoppingCartSku" />
+		<!-- 销售订单收货地址记录,与订单一对一关系 -->
+		<typeAlias alias="OrderMemberAddressUser" type="com.fushionbaby.core.model.OrderMemberAddressUser" />
+		<!-- 销售订单行记录 -->
+		<typeAlias alias="OrderLineUser" type="com.fushionbaby.core.model.OrderLineUser" />
+		<!-- order跟用户Card的关联表 -->
+		<typeAlias alias="OrderCardRelationUser" type="com.fushionbaby.core.model.OrderCardRelationUser" />
+		<!-- 订单关联优惠商品组合 -->
+		<typeAlias alias="soOrderCombination" type="com.fushionbaby.core.model.SoOrderCombination" />
+		<!-- 订单费用 -->
+		<typeAlias alias="OrderFeeUser" type="com.fushionbaby.core.model.OrderFeeUser" />
+		<!-- 订单财务 -->
+		<typeAlias alias="OrderFinanceUser" type="com.fushionbaby.core.model.OrderFinanceUser" />
+		<!-- 订单跟踪 -->
+		<typeAlias alias="OrderTraceUser" type="com.fushionbaby.core.model.OrderTraceUser" />
+		<!-- 订单物流  -->
+		<typeAlias alias="OrderTransUser" type="com.fushionbaby.core.model.OrderTransUser" />
+		<!-- order发货提醒表 -->
+		<typeAlias alias="OrderRemindDelivery" type="com.fushionbaby.core.model.OrderRemindDelivery" />
+	</typeAliases>
+
+
+	<!-- 注册SQL映射文件 -->
+	<mappers>
+	</mappers>
+</configuration>

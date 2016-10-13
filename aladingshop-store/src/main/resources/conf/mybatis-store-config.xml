@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration 
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 命名空间 -->
+	<typeAliases>
+		<!-- 门店信息 -->
+		<typeAlias alias="Store" type="com.aladingshop.store.model.Store" />
+		<!-- 门店额外信息 -->
+		<typeAlias alias="StoreExtraInfo" type="com.aladingshop.store.model.StoreExtraInfo" />
+		<!-- 门店小区信息 -->
+		<typeAlias alias="StoreCell" type="com.aladingshop.store.model.StoreCell" />
+		<!-- 门店小区关联信息 -->
+		<typeAlias alias="StoreCellRelation" type="com.aladingshop.store.model.StoreCellRelation" />
+		<!-- 门店用户地址 -->
+		<typeAlias alias="StoreMemberAddress" type="com.aladingshop.store.model.StoreMemberAddress" />
+		
+		<!-- 门店信息查询条件 -->
+		<typeAlias alias="StoreQueryCondition" type="com.aladingshop.store.querycondition.StoreQueryCondition" />
+		<!-- 小区信息 -->
+		<typeAlias alias="StoreCellQueryCondition" type="com.aladingshop.store.querycondition.StoreCellQueryCondition" />
+		<!-- 门店用户地址 -->
+		<typeAlias alias="StoreMemberAddressQueryCondition" type="com.aladingshop.store.querycondition.StoreMemberAddressQueryCondition" />
+		
+		<!-- 门店结算信息 -->
+		<typeAlias alias="StoreSponsorsBank" type="com.aladingshop.store.model.StoreSponsorsBank" />
+		<!--商户结算列表明细 -->
+		<typeAlias alias="StoreSponsorsSettlementDetails" type="com.aladingshop.store.model.StoreSponsorsSettlementDetails" />
+		<!-- 商户结算列表,每日结算统计 -->
+		<typeAlias alias="StoreSponsorsDailyDetails" type="com.aladingshop.store.model.StoreSponsorsDailyDetails" />
+		<!-- 商户结算列表,结算单 -->
+		<typeAlias alias="StoreSponsorsApplySettle" type="com.aladingshop.store.model.StoreSponsorsApplySettle" />
+		<!-- 门店配置 -->
+		<typeAlias alias="StoreConfig" type="com.aladingshop.store.model.StoreConfig" />
+		
+	</typeAliases>
+
+	<!-- 注册SQL映射文件 -->
+	<mappers>
+	</mappers>
+</configuration>

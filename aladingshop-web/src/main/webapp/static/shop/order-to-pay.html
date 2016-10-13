@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8" />
+        <title>我的订单 - 待支付</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="renderer" content="webkit">
+        <meta name="description" content="阿拉丁玛特商城">
+        <meta name="keywords" content="阿拉丁玛特商城">
+        <link rel="shortcut icon" href="images/favicon.ico" />
+        <!-- styles -->
+        <link rel="stylesheet" href="css/style.min.css">
+        <!--[if IE 9 ]><html class="ie9"><![endif]-->
+        <!--[if IE 8 ]><html class="ie8"><![endif]-->
+    </head>
+    <body>
+
+        <!-- 右侧悬浮菜单 开始-->
+        <script src="public/rightMenu.js"></script>
+        <!-- 右侧悬浮菜单 结束-->
+
+        <!-- 顶部导航 开始 -->
+        <script src="public/topbar.js"></script>
+        <!-- 顶部导航 结束 -->
+
+        <!-- 头部搜索版块 开始 -->
+        <script src="public/header.js"></script>
+        <!-- 头部搜索版块 结束 -->
+
+        <!-- 菜单 开始 -->
+        <script src="public/topMenu.js"></script>
+
+        <div class="container">
+            <div class="mT20 order-wrap fl mB20">
+                <div class="order-l fl">
+                    <div class="order-user">
+                        <img src="picture/user.jpg" height="40" width="40" alt="">
+                        <p>账号：18116407567</p>
+                    </div>
+                    <ul class="order-l-list">
+                        <a class="prder-l-tit" href="javascript:void(0)">我的订单<span>-</span></a>
+                        <li><a href="order-all.html">全部订单</a></li>
+                        <li class="active"><a href="order-to-pay.html">待付款</a></li>
+                        <li><a href="order-to-deliver.html">待发货</a></li>
+                        <li><a href="order-to-recept.html">待收货</a></li>
+                        <li><a href="order-to-assess.html">待评价</a></li>
+                    </ul>
+                    <ul class="order-l-list">
+                        <a class="prder-l-tit" href="collect.html">我的收藏</a>
+                    </ul>
+                    <ul class="order-l-list">
+                        <a class="prder-l-tit" href="assess.html">我的评论</a>
+                    </ul>
+                    <ul class="order-l-list">
+                        <a class="prder-l-tit" href="address.html">收货地址</a>
+                    </ul>
+                </div>
+
+                <div class="cart-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="w380 fl">商品信息</th>
+                                <th class="w90 fl">数量</th>
+                                <th class="w120 fl">单价</th>
+                                <th class="w189 fl">状态</th>
+                                <th class="w189 fl">操作</th>
+                            </tr>
+                        </thead>
+
+                        <!-- 待支付 -->
+                        <tbody>
+                            <tr class="order-time">
+                                <td colspan="5">
+                                    <span>下单时间：2015-10-01</span>
+                                    <span>订单号：12366484515</span>
+                                    <span><b></b><s>手机订单</s></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="product fl">
+                                        <a href=""><img src="images/example.jpg" height="122" width="122" alt=""></a>
+                                        <div class="product-r">
+                                            <p>宝洁海飞丝去屑清爽去油洗发750m宝洁海飞丝去屑清爽去油洗发750m</p>
+                                            <span>品牌：潘婷</span>
+                                            <span>类型：柔顺</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="count">1</div>
+                                </td>
+                                <td>
+                                    <div class="price">
+                                        <p>&yen; 188.00</p>
+                                        <span>&yen; 108.00</span>
+                                    </div>
+                                </td>
+                                <td rowspan="2" class="rows"><!-- n个商品，添加 rowspan="n",添加 class="rows" -->
+                                    <div class="status">
+                                        <p>等待付款</p>
+                                        <a href="order-detail-top-pay.html">订单详情</a>
+                                    </div>
+                                </td>
+                                <td rowspan="2"><!-- n个商品，添加 rowspan="n" -->
+                                    <div class="action">
+                                        <a class="pay" href="javascript:void(0)">付款</a>
+                                        <a class="cancel" href="javascript:void(0)">取消订单</a>
+                                        <div class="confirm-box">
+                                            <p>您确定要取消订单吗？</p>
+                                            <a class="confirm-no" href="javascript:void(0)">取消</a>
+                                            <a href="javascript:void(0)">确定</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="product fl">
+                                        <a href=""><img src="images/example.jpg" height="122" width="122" alt=""></a>
+                                        <div class="product-r">
+                                            <p>宝洁海飞丝去屑清爽去油洗发750m宝洁海飞丝去屑清爽去油洗发750m</p>
+                                            <span>品牌：潘婷</span>
+                                            <span>类型：柔顺</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="count">1</div>
+                                </td>
+                                <td>
+                                    <div class="price">
+                                        <p>&yen; 188.00</p>
+                                        <span>&yen; 108.00</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            <tr class="order-time">
+                                <td colspan="5">
+                                    <span>下单时间：2015-10-01</span>
+                                    <span>订单号：12366484515</span>
+                                    <span><b></b><s>手机订单</s></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="product fl">
+                                        <a href=""><img src="images/example.jpg" height="122" width="122" alt=""></a>
+                                        <div class="product-r">
+                                            <p>宝洁海飞丝去屑清爽去油洗发750m宝洁海飞丝去屑清爽去油洗发750m</p>
+                                            <span>品牌：潘婷</span>
+                                            <span>类型：柔顺</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="count">1</div>
+                                </td>
+                                <td>
+                                    <div class="price">
+                                        <p>&yen; 188.00</p>
+                                        <span>&yen; 108.00</span>
+                                    </div>
+                                </td>
+                                <td rowspan="1" class="">
+                                    <div class="status">
+                                        <p>等待付款</p>
+                                        <a href="order-detail-top-pay.html">订单详情</a>
+                                    </div>
+                                </td>
+                                <td rowspan="1">
+                                    <div class="action">
+                                        <a class="pay" href="javascript:void(0)">付款</a>
+                                        <a class="cancel" href="javascript:void(0)">取消订单</a>
+                                        <div class="confirm-box">
+                                            <p>您确定要取消订单吗？</p>
+                                            <a class="confirm-no" href="javascript:void(0)">取消</a>
+                                            <a href="javascript:void(0)">确定</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="page container oh">
+            <div class="tcdPageCode fr"></div>
+        </div>
+
+        <!-- 底部 开始 -->
+        <script src="public/footer.js"></script>
+        <!-- 底部 结束 -->
+
+        <!-- javascript -->
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script src="js/public.js"></script><!-- 公共JS -->
+        <script type="text/javascript" src="js/jquery.page.js"></script><!-- 分页 -->
+        <script>
+            $(".tcdPageCode").createPage({
+                pageCount:6,
+                current:1,
+                backFn:function(p){
+                    console.log(p);
+                }
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.order.dao.SoOrderSkuDiscountRelationDao" >
+  <resultMap id="BaseResultMap" type="SoOrderSkuDiscountRelation" >
+    <id column="id" property="id" />
+    <result column="member_id" property="memberId" />
+    <result column="sku_id" property="skuId" />
+    <result column="sku_code" property="skuCode" />
+    <result column="sku_name" property="skuName" />
+    <result column="discount_money" property="discountMoney" />
+    <result column="create_time" property="createTime" />
+    <result column="quantity" property="quantity" />
+    <result column="unit_price" property="unitPrice" />
+    <result column="so_code" property="soCode" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, member_id, sku_id, sku_code, sku_name, discount_money, create_time, quantity,unit_price,so_code
+  </sql>
+  <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_so_order_sku_discount_relation
+    where id = #{id}
+  </select>
+  <select id="findByMemberIdAndOrderId" parameterType="SoOrderSkuDiscountRelation" resultType="list" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List"/>
+    from t_so_order_sku_discount_relation
+    where id = #{id} and so_code = #{soCode}
+  </select>
+  <delete id="deleteById" parameterType="java.lang.Long" >
+    delete from t_so_order_sku_discount_relation
+    where id = #{id}
+  </delete>
+  <insert id="add" parameterType="SoOrderSkuDiscountRelation" >
+    insert into t_so_order_sku_discount_relation (id, member_id, sku_id,sku_code, sku_name, discount_money,create_time, quantity, unit_price,so_code)
+    values (#{id}, #{memberId}, #{skuId},#{skuCode}, #{skuName}, #{discountMoney},now(), #{quantity}, #{unitPrice},#{soCode})
+  </insert>
+</mapper>

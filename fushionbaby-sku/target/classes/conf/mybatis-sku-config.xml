@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration 
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 命名空间 -->
+	<typeAliases>
+		<!-- 商品关键字信息 -->
+		<typeAlias alias="SkuKeyWord" type="com.fushionbaby.sku.model.SkuKeyWord"/>
+		<!-- 商品商城库存信息 -->
+		<typeAlias alias="SkuInventory" type="com.fushionbaby.sku.model.SkuInventory"/>
+		<!-- 商品搭配表 -->
+		<typeAlias alias="SkuLinkSkusRelation" type="com.fushionbaby.sku.model.SkuLinkSkusRelation" />
+		<!--商品标签表  -->
+		<typeAlias alias="SkuLabel" type="com.fushionbaby.sku.model.SkuLabel" />
+		<!--商品热销榜  -->
+		<typeAlias alias="SkuHot" type="com.fushionbaby.sku.model.SkuHot" />
+		
+		<!-- 商品额外信息 -->
+		<typeAlias alias="SkuExtraInfo" type="com.fushionbaby.sku.model.SkuExtraInfo"/>
+		<!-- 产品属性值 -->
+		<typeAlias alias="SkuProductAttr" type="com.fushionbaby.sku.model.SkuProductAttr"/>
+		
+		<!-- 商品品牌 -->
+		<typeAlias  alias="SkuBrand" type="com.fushionbaby.sku.model.SkuBrand"/>
+		<!-- 商品品牌关联 -->
+		<typeAlias alias="SkuBrandRelation" type="com.fushionbaby.sku.model.SkuBrandRelation"/>
+		<!-- 商品分类  -->
+		<typeAlias alias="SkuCategory" type="com.fushionbaby.sku.model.SkuCategory"/>
+		<!-- 分类关联 -->
+		<typeAlias alias="SkuCategoryRelation" type="com.fushionbaby.sku.model.SkuCategoryRelation"/>
+		<!-- 商品赠品 -->
+		<typeAlias alias="SkuGiftRelation" type="com.fushionbaby.sku.model.SkuGiftRelation"/>
+		<!-- 商品标签关联 -->
+		<typeAlias alias="SkuLabelRelation" type="com.fushionbaby.sku.model.SkuLabelRelation"/>	
+		<!-- 商品信息 -->
+		<typeAlias alias="Sku" type="com.fushionbaby.sku.model.Sku"/>
+		
+        <!--商品产品表  -->
+		<typeAlias alias="SkuProduct" type="com.fushionbaby.sku.model.SkuProduct" />
+		  <!--商品图片表  -->
+		<typeAlias alias="SkuImage" type="com.fushionbaby.sku.model.SkuImage" />
+		  <!--商品图片类型表  -->
+		<typeAlias alias="SkuImageTypeConfig" type="com.fushionbaby.sku.model.SkuImageTypeConfig" />
+		 <!--商品图片尺寸规格  -->
+		<typeAlias alias="skuImageStandardConfig" type="com.fushionbaby.sku.model.SkuImageStandardConfig" />
+		<!--退货原因表  -->
+		<typeAlias alias="skuRefundReason" type="com.fushionbaby.sku.model.SkuRefundReason" />
+		<!-- 产品图片 -->
+		<typeAlias alias="skuProductImage" type="com.fushionbaby.sku.model.SkuProductImage" />
+		<!-- 商品限时抢购 -->
+		<typeAlias alias="skuTimelimit" type="com.fushionbaby.sku.model.SkuTimelimit"/>
+		<!-- 优惠商品关联定义表 -->
+		<typeAlias alias="skuCombination" type="com.fushionbaby.sku.model.SkuCombination"/>
+		<!-- 优惠商品组合包含商品 -->
+		<typeAlias alias="skuCombinationItem" type="com.fushionbaby.sku.model.SkuCombinationItem"/>
+		<!-- 礼品卡 -->
+		<typeAlias alias="SkuGiftCard" type="com.fushionbaby.sku.model.SkuGiftCard"/>
+		<!-- 商品价格表 -->
+		<typeAlias alias="SkuPrice" type="com.fushionbaby.sku.model.SkuPrice" />
+		<!-- 商品分类和品牌关联表 -->
+		<typeAlias alias="SkuCategoryBrandRelation" type="com.fushionbaby.sku.model.SkuCategoryBrandRelation" />
+		<!-- 活动商品表 -->
+		<typeAlias alias="SkuPromotions" type="com.fushionbaby.sku.model.SkuPromotions" />
+		<!-- 活动信息 -->
+		<typeAlias alias="SkuPromotionsInfo" type="com.fushionbaby.sku.model.SkuPromotionsInfo" />
+		
+		<!-- 查询条件 -->
+		<typeAlias alias="baseSkuQueryCondition" type="com.fushionbaby.common.condition.sku.BaseSkuQueryCondition"/>
+		
+		<typeAlias alias="skuEntryQueryCondition" type="com.fushionbaby.common.condition.sku.SkuEntryQueryCondition"/>
+		
+		<typeAlias alias="skuBrandQueryCondition" type="com.fushionbaby.common.condition.sku.SkuBrandQueryCondition"/>
+		
+		<typeAlias alias="skuBrandRelationQueryCondition" type="com.fushionbaby.common.condition.sku.SkuBrandRelationQueryCondition"/>
+		
+		<typeAlias alias="skuCategoryQueryCondition" type="com.fushionbaby.common.condition.sku.SkuCategoryQueryCondition"/>
+		
+		<typeAlias alias="skuCategoryRelationQueryCondition" type="com.fushionbaby.common.condition.sku.SkuCategoryRelationQueryCondition"/>
+		
+		<typeAlias alias="skuGiftQueryCondition" type="com.fushionbaby.common.condition.sku.SkuGiftQueryCondition"/>
+		
+		<typeAlias alias="skuInventoryQueryCondition" type="com.fushionbaby.common.condition.sku.SkuInventoryQueryCondition"/>
+		
+		<typeAlias alias="skuLabelQueryCondition" type="com.fushionbaby.common.condition.sku.SkuLabelQueryCondition"/>
+		
+		<typeAlias alias="skuLabelRelationQueryCondition" type="com.fushionbaby.common.condition.sku.SkuLabelRelationQueryCondition"/>
+		
+		<typeAlias alias="skuLinkSkusQueryCondition" type="com.fushionbaby.common.condition.sku.SkuLinkSkusQueryCondition"/>
+		
+		<typeAlias alias="skuCombinationQueryCondition" type="com.fushionbaby.common.condition.sku.SkuCombinationQueryCondition"/>
+		
+		<typeAlias alias="skuTogether" type="com.fushionbaby.sku.model.SkuTogether"/>
+		
+		<typeAlias alias="skuTogetherStatus" type="com.fushionbaby.sku.model.SkuTogetherStatus"/>
+		
+		<typeAlias alias="skuBrowseHistories" type="com.fushionbaby.sku.model.SkuBrowseHistories"/>
+		<!-- 标签关联分类 -->
+		<typeAlias alias="SkuLabelCategoryRelation" type="com.fushionbaby.sku.model.SkuLabelCategoryRelation"/>
+		
+		
+		<typeAlias alias="labelCategoryRelationQueryCondition" type="com.fushionbaby.common.condition.sku.LabelCategoryRelationQueryCondition"/>
+		<!-- 商品分类图片 -->
+		
+		<typeAlias alias="SkuCategoryImage" type="com.fushionbaby.sku.model.SkuCategoryImage"/>
+	</typeAliases>
+	<!-- 注册SQL映射文件 -->
+	<mappers>
+	</mappers>
+</configuration>

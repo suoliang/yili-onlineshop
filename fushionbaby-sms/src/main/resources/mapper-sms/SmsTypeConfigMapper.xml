@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.sms.dao.SmsTypeConfigDao">
+	<resultMap id="SmsTypeConfigResultMap" type="smsTypeConfig">
+		<id column="id" property="id" />
+		<result column="sms_template" property="smsTemplate" />
+		<result column="sms_name" property="smsName" />
+	</resultMap>
+	<insert id="add" parameterType="smsTypeConfig">
+		insert into t_sms_type_config
+		(id,sms_template, sms_name)
+		values
+		(#{id}, #{smsTemplate}, #{smsName})
+	</insert>
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_sms_type_config
+		where id = #{id}
+	</delete>
+	<update id="update" parameterType="smsTypeConfig">
+		update t_sms_type_config
+		set
+		sms_template = #{smsTemplate},
+		sms_name = #{smsName}
+		where id = #{id}
+	</update>
+	<select id="findById" resultMap="SmsTypeConfigResultMap" parameterType="java.lang.Long">
+		<![CDATA[
+			select id, sms_template, sms_name 
+			from t_sms_type_config 
+			where id = #{id}
+		]]>
+	</select>
+	<select id="findAll" resultType="list" resultMap="SmsTypeConfigResultMap" >
+		<![CDATA[
+			select id, sms_template, sms_name from t_sms_type_config
+		]]>
+	</select>
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) from t_sms_type_config
+		<where>
+			<if test="smsName != null and smsName != ''">
+			sms_name LIKE "%"#{smsName}"%"
+			</if>
+		</where>
+	</select>
+	<select id="getPageList" parameterType="Map" resultType="List" resultMap="SmsTypeConfigResultMap">
+		select id,sms_template,sms_name from t_sms_type_config
+		<where>
+			<if test="smsName != null and smsName != ''">
+			sms_name LIKE "%"#{smsName}"%"
+			</if>
+		</where>
+		limit #{start},#{limit}
+	</select>
+</mapper>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.store.dao.StoreCellRelationDao" >
+
+  <resultMap id="StoreCellRelationResultMap" type="storeCellRelation" >
+    <id column="id" property="id" />
+    <result column="store_code" property="storeCode" />
+    <result column="cell_code" property="cellCode" />
+    <result column="create_time" property="createTime" />
+	<result column="create_id" property="createId" />
+	<result column="update_time" property="updateTime" />
+	<result column="update_id" property="updateId" />
+  </resultMap>
+ 
+   <insert id="add" parameterType="Store">
+		insert into 
+			t_store_cell_relation
+		(id, store_code,cell_code,create_time,create_id)
+	    values 
+	    (#{id},#{storeCode},#{cellCode},now(),#{createId})
+   </insert>
+	
+  <delete id="deleteById">
+  		delete from t_store_cell_relation where id=#{id}
+  </delete>		
+	
+  <select id="findByAreaCode" resultType="list"  resultMap="StoreCellRelationResultMap">
+    select store_code,cell_code ,create_time,create_id,update_time,update_id  
+    from t_store_cell_relation 
+    where cell_code = #{cellCode}
+  </select>  
+  
+  <select id="findByStoreCode" resultType="list"  resultMap="StoreCellRelationResultMap">
+    select store_code,cell_code ,create_time,create_id,update_time,update_id  
+    from t_store_cell_relation 
+    where store_code = #{storeCode}
+  </select> 
+  
+  
+</mapper>

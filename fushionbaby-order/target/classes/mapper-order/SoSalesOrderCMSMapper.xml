@@ -1,0 +1,547 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fushionbaby.order.dao.SoSalesOrderCMSDao">
+  <resultMap id="BaseResultMap" type="SoSalesOrder">
+    <id column="id" property="id"  />
+    <result column="actual_transfer_fee" property="actualTransferFee"  />
+    <result column="cancel_time" property="cancelTime"  />
+    <result column="code" property="code"  />
+    <result column="create_time" property="createTime"  />
+    <result column="finance_status" property="financeStatus"  />
+    <result column="invoice_type" property="invoiceType"  />
+    <result column="invoice_title" property="invoiceTitle"  />
+    <result column="is_refused" property="isRefused"  />
+    <result column="last_receive_time" property="lastReceiveTime"  />
+    <result column="memo" property="memo"  />
+    <result column="source_code" property="sourceCode" />
+    <result column="order_point_gained" property="orderPointGained"  />
+    <result column="payable_transfer_fee" property="payableTransferFee"  />
+    <result column="payment_complete_time" property="paymentCompleteTime"  />
+    <result column="payment_type" property="paymentType"  />
+    <result column="trans_status" property="transStatus"  />
+    <result column="sys_cancel_reason" property="sysCancelReason"  />
+    <result column="total_actual" property="totalActual"  />
+    <result column="total_af_discount" property="totalAfDiscount"  />
+    <result column="total_bf_discount" property="totalBfDiscount"  />
+    <result column="total_point_used" property="totalPointUsed"  />
+    <result column="trans_code" property="transCode"  />
+    <result column="trans_name" property="transName"  />
+    <result column="version" property="version"  />
+    <result column="order_status" property="orderStatus"  />
+    <result column="member_id" property="memberId"  />
+    <result column="is_delete" property="isDelete"  />
+	<result column="member_name" property="memberName"  />
+	<result column="is_invoice" property="isInvoice"  />
+	
+	<result column="cardno" property="cardno"  />
+    <result column="card_amount" property="cardAmount"  />
+	<result column="tax_price" property="taxPrice"  />
+	<result column="is_handle_point" property="isHandlePoint"  />
+	
+	<result column="sku_discount_total" property="skuDiscountTotal"  />
+	
+	<result column="send_date" property="sendDate"  />
+	<result column="epoints_redeem_money" property="epointsRedeemMoney"  />
+	<result column="audit_fail_reason" property="auditFailReason"  />
+	<result column="receiver" property="receiver"  />
+	<result column="receiver_mobile" property="receiverMobile"  />
+	<result column="sku_name" property="skuName"  />
+	<result column="use_wallet_money" property="useWalletMoney"  />
+	
+	<result column="province" property="province"  />
+	<result column="city" property="city"  />
+	<result column="district" property="district"  />
+	
+	
+  </resultMap>
+  <sql id="Base_Column_List">
+    a.id, a.actual_transfer_fee, a.cancel_time, a.code, a.create_time, a.finance_status, a.invoice_type, 
+    a.invoice_title, a.is_refused, a.last_receive_time, a.memo,a.source_code, a.order_point_gained, 
+  	a.payable_transfer_fee, a.payment_complete_time, a.payment_type, a.trans_status, a.sys_cancel_reason, 
+    a.total_actual, a.total_af_discount, a.total_bf_discount, a.total_point_used, a.trans_code, 
+    a.trans_name, a.version, a.order_status, a.member_id, a.is_delete,a.member_name,a.is_invoice,
+    a.cardno,a.card_amount,a.tax_price,a.is_handle_point,a.sku_discount_total,a.send_date,a.epoints_redeem_money,
+    a.audit_fail_reason,a.use_wallet_money
+  </sql>
+  
+   <insert id="add" parameterType="SoSalesOrder">
+    insert into t_so_sales_order (id, actual_transfer_fee, cancel_time, 
+      code, create_time, finance_status, 
+      invoice_type,is_invoice, invoice_title, is_refused, 
+      last_receive_time, memo, source_code, 
+      order_point_gained, payable_transfer_fee, payment_complete_time, 
+      payment_type, trans_status, sys_cancel_reason, 
+      total_actual, total_af_discount, total_bf_discount, 
+      total_point_used, trans_code, trans_name, 
+      version, order_status, member_id,
+      is_delete,cardno,card_amount,tax_price,is_handle_point,
+      sku_discount_total,use_wallet_money)
+    values (#{id}, #{actualTransferFee}, #{cancelTime}, 
+      #{code}, #{createTime}, #{financeStatus}, 
+      #{invoiceType}, #{isInvoice}, #{invoiceTitle}, #{isRefused}, 
+      #{lastReceiveTime}, #{memo}, #{sourceCode}, 
+      #{orderPointGained}, #{payableTransferFee}, #{paymentCompleteTime}, 
+      #{paymentType}, #{transStatus}, #{sysCancelReason}, 
+      #{totalActual}, #{totalAfDiscount}, #{totalBfDiscount}, 
+      #{totalPointUsed}, #{transCode}, #{transName}, 
+      #{version}, #{orderStatus}, #{memberId}, 
+      #{isDelete}, #{cardno}, #{cardAmount}, #{taxPrice}, #{isHandlePoint}, 
+      #{skuDiscountTotal},#{useWalletMoney})
+  </insert>
+  
+  <select id="findById" parameterType="long" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List"/>
+  	from t_so_sales_order a where a.id = #{id}
+  </select>
+  
+  <select id="findByCode" parameterType="String" resultMap="BaseResultMap">
+	select
+  	<include refid="Base_Column_List"/>
+  	from t_so_sales_order a where a.code = #{code}
+  </select>
+  
+  <!-- 分页查询  -->
+  <select id="findOrderListInfo" parameterType="Map" resultType="list" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List" />  
+	from t_so_sales_order a
+	<where>
+		<if test="orderCodeList !=null and orderCodeList.size() > 0 and skuCode!=null and skuCode!=''">
+			and a.code in 
+			<foreach collection="orderCodeList" index="index" item="orderCode" open="(" separator="," close=")">
+				#{orderCode.soCode}
+			</foreach>
+		</if>
+		<if test="(orderCodeList ==null or orderCodeList.size() == 0 ) and skuCode!=null and skuCode!=''">
+			and 1!=1
+		</if>
+
+		<if test="code!=null and code!=''">
+	    	<![CDATA[
+				and a.code = #{code}
+			]]>
+	    </if>
+	    <if test="memberName!=null and memberName!=''">
+			<![CDATA[	and a.member_name like "%"#{memberName}"%"]]>
+	    </if>
+	    
+		<if test="financeStatus != null and financeStatus != ''">
+	    	<![CDATA[
+				and a.finance_status = #{financeStatus}
+			]]>
+	    </if>
+		<if test="transStatus != null and transStatus != ''">
+	    	<![CDATA[
+				and a.trans_status = #{transStatus}
+			]]>
+	    </if>
+		<if test="orderStatus != null and orderStatus != ''">
+	    	<![CDATA[
+				and a.order_status = #{orderStatus}
+			]]>
+	    </if>
+		<if test="paymentType != null and paymentType != ''">
+	    	<![CDATA[
+				and a.payment_type = #{paymentType}
+			]]>
+	    </if>
+		<if test="createTimeFrom != null and createTimeFrom !=''">
+	    	<![CDATA[
+				and DATE_FORMAT(a.create_time,'%Y-%m-%d %T') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d %T')
+			]]>
+	    </if>
+		<if test="createTimeTo != null and createTimeTo != ''">
+	    	<![CDATA[
+				and DATE_FORMAT(a.create_time,'%Y-%m-%d %T') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d %T')
+			]]>
+	    </if>
+		<if test="paymentCompleteTimeFrom != null and paymentCompleteTimeFrom !=''">
+	    	<![CDATA[
+				and DATE_FORMAT(a.payment_complete_time,'%Y-%m-%d %T') >= DATE_FORMAT(#{paymentCompleteTimeFrom}, '%Y-%m-%d  %T')
+			]]>
+	    </if>
+		<if test="paymentCompleteTimeTo != null and paymentCompleteTimeTo != ''">
+	    	<![CDATA[
+				and DATE_FORMAT(a.payment_complete_time,'%Y-%m-%d %T') <= DATE_FORMAT(#{paymentCompleteTimeTo}, '%Y-%m-%d %T')
+			]]>
+	    </if>
+		<if test="lastReceiveTimeFrom != null and lastReceiveTimeFrom !=''">
+	    	<![CDATA[
+				and DATE_FORMAT(a.last_receive_time,'%Y-%m-%d %T') >= DATE_FORMAT(#{lastReceiveTimeFrom}, '%Y-%m-%d %T')
+			]]>
+	    </if>
+		<if test="lastReceiveTimeTo != null and lastReceiveTimeTo != ''">
+	    	<![CDATA[
+				and DATE_FORMAT(a.last_receive_time,'%Y-%m-%d %T') <= DATE_FORMAT(#{lastReceiveTimeTo}, '%Y-%m-%d %T')
+			]]>
+	    </if>
+	    <if test="isInvoice != null and isInvoice != ''">
+	    	<![CDATA[
+        		and a.is_invoice = #{isInvoice}
+        	]]>
+        </if>
+        <if test="cardno != null and cardno != ''">
+	    	<![CDATA[
+        		and a.cardno = #{cardno}
+        	]]>
+        </if>
+        <if test="cardAmount != null and cardAmount != ''">
+	    	<![CDATA[
+        		and a.card_amount = #{cardAmount}
+        	]]>
+        </if>
+        <if test="taxPrice != null and taxPrice != ''">
+	    	<![CDATA[
+        		and a.tax_price = #{taxPrice}
+        	]]>
+        </if>
+        <if test="totalActualStart != null and totalActualStart != ''">
+        	<![CDATA[
+        	and a.total_actual >= #{totalActualStart}
+        ]]>
+        </if>
+        <if test="totalActualEnd != null and totalActualEnd != ''">
+        	<![CDATA[
+        	and a.total_actual <= #{totalActualEnd}
+        	]]>
+        </if>
+    </where>
+    <![CDATA[
+    		group by a.code
+	]]>
+    <![CDATA[
+    		order by a.create_time DESC
+	]]>
+	<if test="exportExcel == 1">
+   		<![CDATA[
+      		LIMIT #{start},#{limit}
+      	]]>
+    </if>
+  </select>
+  
+  <!-- 查询该表的总数  -->
+  <select id="findOrderListTotal" parameterType="Map" resultType="java.lang.Integer">
+	select count(distinct a.id) from t_so_sales_order a
+	<where>
+	    <if test="orderCodeList !=null and orderCodeList.size() > 0 and skuCode!=null and skuCode!=''">
+			and a.code in 
+			<foreach collection="orderCodeList" index="index" item="orderCode" open="(" separator="," close=")">
+				#{orderCode.soCode}
+			</foreach>
+		</if>
+	    <if test="(orderCodeList ==null or orderCodeList.size() == 0 ) and skuCode!=null and skuCode!=''">
+			and 1!=1
+		</if>
+	    
+		<if test="code!=null and code!=''">
+	    	<![CDATA[
+				and a.code = #{code}
+			]]>
+	    </if>
+	    	<if test="memberName!=null and memberName!=''">
+	    	<![CDATA[
+				and a.member_name LIKE "%"#{memberName}"%"
+			]]>
+	    </if>
+		<if test="financeStatus!=null and financeStatus!=''">
+	    	<![CDATA[
+				and a.finance_status = #{financeStatus}
+			]]>
+	    </if>
+	    <if test="transStatus != null and transStatus != ''">
+	    	<![CDATA[
+				and a.trans_status = #{transStatus}
+			]]>
+	    </if>
+		<if test="orderStatus != null and orderStatus != ''">
+	    	<![CDATA[
+				and a.order_status = #{orderStatus}
+			]]>
+	    </if>
+		<if test="paymentType != null and paymentType != ''">
+	    	<![CDATA[
+				and a.payment_type = #{paymentType}
+			]]>
+	    </if>
+		<if test="createTimeFrom != null and createTimeFrom !=''">
+	    	<![CDATA[
+				and DATE_FORMAT(a.create_time,'%Y-%m-%d %T') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d %T')
+			]]>
+	    </if>
+		<if test="createTimeTo != null and createTimeTo != ''">
+	    	<![CDATA[
+				and DATE_FORMAT(a.create_time,'%Y-%m-%d %T') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d %T')
+			]]>
+	    </if>
+		<if test="paymentCompleteTimeFrom != null and paymentCompleteTimeFrom !=''">
+	    	<![CDATA[
+				and DATE_FORMAT(a.payment_complete_time,'%Y-%m-%d %T') >= DATE_FORMAT(#{paymentCompleteTimeFrom}, '%Y-%m-%d %T')
+			]]>
+	    </if>
+		<if test="paymentCompleteTimeTo != null and paymentCompleteTimeTo != ''">
+	    	<![CDATA[
+				and DATE_FORMAT(a.payment_complete_time,'%Y-%m-%d %T') <= DATE_FORMAT(#{paymentCompleteTimeTo}, '%Y-%m-%d %T')
+			]]>
+	    </if>
+		<if test="lastReceiveTimeFrom != null and lastReceiveTimeFrom !=''">
+	    	<![CDATA[
+				and DATE_FORMAT(a.last_receive_time,'%Y-%m-%d %T') >= DATE_FORMAT(#{lastReceiveTimeFrom}, '%Y-%m-%d %T')
+			]]>
+	    </if>
+		<if test="lastReceiveTimeTo != null and lastReceiveTimeTo != ''">
+	    	<![CDATA[
+				and DATE_FORMAT(a.last_receive_time,'%Y-%m-%d %T') <= DATE_FORMAT(#{lastReceiveTimeTo}, '%Y-%m-%d %T')
+			]]>
+	    </if>
+	    <if test="isInvoice != null and isInvoice != ''">
+	    	<![CDATA[
+        		and a.is_invoice = #{isInvoice}
+        	]]>
+        </if>
+        <if test="totalActualStart != null and totalActualStart != ''">
+        	<![CDATA[
+        	and a.total_actual >= #{totalActualStart}
+       		 ]]>
+        </if>
+        <if test="totalActualEnd != null and totalActualEnd != ''">
+        	<![CDATA[
+        	and a.total_actual <= #{totalActualEnd}
+       		]]>
+        </if>
+	</where>
+  </select>
+  
+  <!-- 通过条件查询订单列表 -->
+ <select id = "queryByCondition" resultMap="BaseResultMap" resultType="list" parameterType="com.fushionbaby.order.condition.SoSalesOrderQueryCondition">
+	select 
+		 <include refid="Base_Column_List" />
+	from 
+		t_so_sales_order a
+	<where>
+		<if test="code !=null and code !=''">
+			and a.code = #{code}
+		</if>
+		<if test="financeStatus!=null and financeStatus !=''" >
+			and a.finance_status = #{financeStatus}
+		</if>
+		<if test="orderStatus !=null and orderStatus !=''" >
+			and a.order_status = #{orderStatus}
+		</if>
+		<if test="paymentType !=null and paymentType !=''" >
+			and a.payment_type =#{paymentType}
+		</if>
+		<if test="isDelete != null and isDelete !=''">
+			and a.is_delete =#{isDelete}
+		</if>
+		<if test = "memberId !=null and memberId !=''" >
+			and a.member_id =#{memberId}
+		</if>
+		<if test = "memberName != null and memberName !=''">
+			and a.member_name = #{memberName}
+		</if>
+		<if test="isHandlePoint !=null and isHandlePoint !=''">
+			and a.is_handle_point = #{isHandlePoint}
+		</if>
+	</where>
+ </select>
+  
+  <update id="updateByCodeSelective" parameterType="SoSalesOrder">
+    update t_so_sales_order
+    <set>
+      <if test="actualTransferFee != null and actualTransferFee != ''">
+        actual_transfer_fee = #{actualTransferFee},
+      </if>
+   
+      <if test="cancelTime != null and cancelTime != ''">
+        cancel_time = #{cancelTime},
+      </if>
+      <if test="code != null and code != ''">
+        code = #{code},
+      </if>
+      <if test="createTime != null and createTime != ''">
+        create_time = #{createTime},
+      </if>
+      <if test="financeStatus != null and financeStatus != ''">
+        finance_status = #{financeStatus},
+      </if>
+      <if test="invoiceTitle != null and invoiceTitle != ''">
+        invoice_title = #{invoiceTitle},
+      </if>
+      <if test="isRefused != null and isRefused != ''">
+        is_refused = #{isRefused},
+      </if>
+      <if test="lastReceiveTime != null and lastReceiveTime != ''">
+        last_receive_time = #{lastReceiveTime},
+      </if>
+      <if test="memo != null and memo != ''">
+        memo = #{memo},
+      </if>
+      <if test="sourceCode != null and sourceCode != ''">
+        source_code = #{sourceCode},
+      </if>
+      <if test="orderPointGained != null and orderPointGained != ''">
+        order_point_gained = #{orderPointGained},
+      </if>
+      <if test="payableTransferFee != null and payableTransferFee != ''">
+        payable_transfer_fee = #{payableTransferFee},
+      </if>
+      <if test="paymentCompleteTime != null and paymentCompleteTime != ''">
+        payment_complete_time = #{paymentCompleteTime},
+      </if>
+      <if test="paymentType != null and paymentType != ''">
+        payment_type = #{paymentType},
+      </if>
+      <if test="sysCancelReason != null and sysCancelReason != ''">
+        sys_cancel_reason = #{sysCancelReason},
+      </if>
+      <if test="totalActual != null and totalActual != ''">
+        total_actual = #{totalActual},
+      </if>
+      <if test="totalAfDiscount != null and totalAfDiscount !=''">
+        total_af_discount = #{totalAfDiscount},
+      </if>
+      <if test="totalBfDiscount != null and totalBfDiscount != ''">
+        total_bf_discount = #{totalBfDiscount},
+      </if>
+      <if test="totalPointUsed != null and totalPointUsed != ''">
+        total_point_used = #{totalPointUsed},
+      </if>
+      <if test="transCode != null and transCode != ''">
+        trans_code = #{transCode},
+      </if>
+      <if test="transName != null and transName != ''">
+        trans_name = #{transName},
+      </if>
+      <if test="orderStatus != null and orderStatus != ''">
+        order_status = #{orderStatus},
+      </if>
+      <if test="memberId != null and memberId != ''">
+        member_id = #{memberId},
+      </if>
+      <if test="isDelete != null and isDelete != ''">
+        is_delete = #{isDelete},
+      </if>
+      <if test="isInvoice != null and isInvoice != ''">
+        is_invoice = #{isInvoice},
+      </if>
+      <if test="useWalletMoney !=null and useWalletMoney!=''">
+      	use_wallet_money=#{useWalletMoney},
+      </if>
+      version = now()
+    </set>
+    where code = #{code}
+  </update>
+  <update id="updateTransByCode" parameterType="SoSalesOrder">
+    update t_so_sales_order
+    <set>
+      <if test="transCode != null and transCode != ''">
+        trans_code = #{transCode},
+      </if>
+      <if test="transName != null and transName != ''">
+        trans_name = #{transName},
+      </if>
+    </set>
+    where code = #{code}
+  </update>
+  
+  <update id="updateTransStatusShipped" parameterType="SoSalesOrder">
+	<![CDATA[
+		update t_so_sales_order set trans_status = #{transStatus},`version`= NOW() WHERE code=#{code}
+	]]>
+  </update>
+  
+  <update id="updateOrderByCodeStatus" parameterType="SoSalesOrder">
+  	<![CDATA[
+  		update t_so_sales_order set order_status = #{orderStatus},`version`= NOW() WHERE code=#{code}
+  	]]>
+  </update>
+  <!-- 订单审核没通过设置原因  -->
+  <update id="updateAuditFailReason" parameterType="SoSalesOrder">
+  	<![CDATA[
+  		update t_so_sales_order set audit_fail_reason = #{auditFailReason} WHERE code=#{code}
+  	]]>
+  </update>
+  <!-- 用户拒收 -->
+  <update id="updateIsRefused" parameterType="SoSalesOrder">
+  	update 
+  		t_so_sales_order 
+  	set 
+  		is_refused = #{isRefused},order_status = #{orderStatus} where code = #{code}
+  </update>
+  <!-- 删除  Test测试使用 -->
+  <delete id="deleteById" parameterType="Long">
+  	DELETE FROM  t_so_sales_order WHERE id = #{id}
+  </delete>
+  
+  <!--                              分割线                                                                                                -->
+  <!-- 修改订单 积分处理状态 -->
+	<update id="modifyOrderIsHandlePoint">
+		update 
+	  		t_so_sales_order
+	  	set
+	  		is_handle_point = #{isHandlePoint}
+	  	<where>
+	  		id = #{orderId}
+	  	</where>
+	</update>
+	<!-- 系统删除订单   -->
+	<update id="delOrderBySysCancel">
+		update 
+			t_so_sales_order
+		set 
+			is_delete =#{isDelete},
+			sys_cancel_time = now()
+		<where>
+	  		id = #{orderId}
+	  	</where>		
+	</update>
+	<!-- 修改订单状态 -->
+	<update id="modifyOrderStatus">
+		update 
+			t_so_sales_order
+		set 
+			order_status = #{orderStatus}
+		<where>
+			 code = #{code}
+		</where>
+	</update>
+	
+	<!-- 修改订单状态 -->
+	<update id="updateOrdersStatus" parameterType="Map">
+		update 
+			t_so_sales_order
+		set 
+			order_status = #{orderStatus}
+		<where>
+			 code in 
+			 <foreach collection="code" item="item" open="(" close=")" separator=",">
+			 	#{item}
+			 </foreach>
+		</where>
+	</update>
+	
+	   <!-- 查询当天销售额和订单数量 --> 
+  <select id="getTotalActualByCreateTime" parameterType="java.util.Map" resultMap="BaseResultMap">
+	  	SELECT COUNT(`code`) as invoice_type ,SUM(total_actual) as total_actual
+	  	FROM 
+	  		t_so_sales_order
+	  	WHERE 
+	  	finance_status = 'y'
+	  	<if test="createTime != null">
+			AND DATE_FORMAT(create_time,'%Y-%m-%d') = DATE_FORMAT(#{createTime},'%Y-%m-%d')
+		</if>
+	  	
+  </select>
+   <!-- 查询购买超过2次用户的数量 --> 
+  <select id="getTotalBuy2ByCreateTime" parameterType="java.util.Map" resultType="java.lang.Integer">
+	  	SELECT COUNT(a) FROM 
+	  		(SELECT COUNT(s.member_id) a FROM t_so_sales_order s 
+			WHERE finance_status = 'y'  
+			<if test="createTime != null">
+				AND DATE_FORMAT(create_time,'%Y-%m-%d') = DATE_FORMAT(#{createTime},'%Y-%m-%d')
+			</if>
+			GROUP BY member_id HAVING COUNT(member_id) > 1) AS m2 
+			
+  </select>
+</mapper>

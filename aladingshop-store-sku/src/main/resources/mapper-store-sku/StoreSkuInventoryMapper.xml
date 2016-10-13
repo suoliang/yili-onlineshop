@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.store.sku.dao.StoreSkuInventoryDao">
+	<resultMap id="StoreSkuInventoryResultMap" type="StoreSkuInventory">
+		<id column="id" property="id" />
+		<result column="store_code" property="storeCode" />
+		<result column="sku_code" property="skuCode" />
+		<result column="product_code" property="productCode" />
+		<result column="available_qty" property="availableQty" />
+		<result column="sku_size" property="skuSize" />
+		<result column="sku_color" property="skuColor" />
+		<result column="update_time" property="updateTime" />
+		<result column="update_id" property="updateId" />
+	</resultMap>
+	<sql id="StoreSkuInventory_column">
+		id, store_code, sku_code ,product_code,available_qty,sku_size,sku_color,update_time,update_id 
+	   
+	</sql>
+	<insert id="add" parameterType="StoreSkuInventory">
+		insert into 
+			t_store_sku_inventory
+		(id, store_code, sku_code ,product_code,available_qty,sku_size,sku_color,update_time,update_id )
+	    values 
+	    (#{id},#{storeCode},#{skuCode},#{productCode},#{availableQty},#{skuSize},#{skuColor},now(),#{updateId})
+	</insert>
+	
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_store_sku_inventory where id = #{id}
+	</delete>
+	
+	<update id="updateById">
+		update t_store_sku_inventory
+			set
+			<if test="storeCode!=null and storeCode!=''">
+			    store_code = #{storeCode}, 
+			</if>
+			<if test="skuCode!=null and skuCode!=''">
+			    sku_code=#{skuCode}, 
+			</if>
+			<if test="productCode!=null and productCode!=''">
+			    product_code = #{productCode}, 
+			</if>
+			<if test="availableQty!=null and availableQty!=''">
+			    available_qty = #{availableQty}, 
+			</if>
+			<if test="skuSize!=null and skuSize!=''">
+			    sku_size = #{skuSize}, 
+			</if>
+			<if test="skuColor!=null and skuColor!=''">
+			    sku_color = #{skuColor}, 
+			</if>
+			<if test="updateId!=null and updateId!=''">
+			    update_id = #{updateId} ,
+			</if>
+			
+			  update_time = now()  
+			
+		<where>
+			id = #{id} 
+		</where>
+	</update>
+	
+	<select id="findById" resultMap="StoreSkuInventoryResultMap" parameterType="java.lang.Long">
+		select  <include refid="StoreSkuInventory_column"/> from t_store_sku_inventory where id = #{id}
+	</select>
+	<!-- 分页条件查询 -->
+	<select id="getList" resultType="list" resultMap="StoreSkuInventoryResultMap" parameterType="Map" >
+		select <include refid="StoreSkuInventory_column"/>
+		from t_store_sku_inventory 
+		<where>
+			<if test="storeCode!=null and storeCode!=''">
+			    store_code = #{storeCode}  and 
+			</if>
+			<if test="skuCode!=null and skuCode!=''">
+			    sku_code = #{skuCode}  and 
+			</if>
+			<if test="productCode!=null and productCode!=''">
+			    product_code = #{productCode}  and 
+			</if>
+			<if test="skuSize!=null and skuSize!=''">
+			    sku_size = #{skuSize} and 
+			</if>
+			<if test="skuColor!=null and skuColor!=''">
+			    sku_color = #{skuColor} and 
+			</if>
+			
+			<if test="availableQty!=null and availableQty!=''">
+			    available_qty = #{availableQty}  and  
+			</if>
+			<if test="updateTime!=null and updateTime!=''">
+			    update_time = #{updateTime}   and 
+			</if>
+			<if test="updateId!=null and updateId!=''">
+			    update_id = #{updateId} 
+			</if>
+		</where>
+		 order by update_time desc
+		<if test="start!=null and limit!=null ">
+			limit #{start},#{limit}
+		</if>
+		 
+	</select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) from t_store_sku_inventory 
+		<where>
+			<if test="storeCode!=null and storeCode!=''">
+			    store_code = #{storeCode}  and 
+			</if>
+			<if test="skuCode!=null and skuCode!=''">
+			    sku_code = #{skuCode}  and 
+			</if>
+			<if test="productCode!=null and productCode!=''">
+			    product_code = #{productCode}  and 
+			</if>
+			<if test="skuSize!=null and skuSize!=''">
+			    sku_size = #{skuSize} and 
+			</if>
+			<if test="skuColor!=null and skuColor!=''">
+			    sku_color = #{skuColor} and 
+			</if>
+			<if test="availableQty!=null and availableQty!=''">
+			    available_qty = #{availableQty}  and  
+			</if>
+			<if test="updateTime!=null and updateTime!=''">
+			    update_time = #{updateTime}   and 
+			</if>
+			<if test="updateId!=null and updateId!=''">
+			    update_id = #{updateId} 
+			</if>
+		</where>
+	</select>
+</mapper>

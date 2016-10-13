@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.store.sku.dao.StoreSkuDao">
+	<resultMap id="StoreSkuResultMap" type="StoreSku">
+		<id column="id" property="id" />
+		<result column="store_code" property="storeCode" />
+		<result column="sku_code" property="skuCode" />
+		<result column="is_support" property="isSupport" />
+		<result column="status" property="status" />
+		<result column="update_time" property="updateTime" />
+		<result column="update_id" property="updateId" />
+	</resultMap>
+	<sql id="StoreSku_column">
+		select id, store_code, sku_code ,is_support,status,update_time,update_id from t_store_sku
+	</sql>
+	<insert id="add" parameterType="StoreSku">
+		insert into 
+			t_store_sku
+		(id, store_code, sku_code ,is_support,status,update_time,update_id )
+	    values 
+	    (#{id},#{storeCode},#{skuCode},#{isSupport},#{status},now(),#{updateId})
+	</insert>
+	
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_store_sku where id = #{id}
+	</delete>
+	<delete id="deleteByStoreCodeAndSkuCode" parameterType="java.lang.String">
+		delete from t_store_sku where store_code = #{storeCode} and sku_code=#{skuCode}
+	</delete>
+	
+	<update id="updateByStoreCodeAndSkuCode">
+		update t_store_sku
+			set
+			<if test="isSupport!=null and isSupport!=''">
+			    is_support = #{isSupport}, 
+			</if>
+			<if test="status!=null and status!=''">
+			    status = #{status}, 
+			</if>
+			
+			<if test="updateId!=null and updateId!=''">
+			    update_id = #{updateId} ,
+			</if>
+			
+			 update_time = now()  
+			
+		<where>
+			store_code = #{storeCode} and sku_code=#{skuCode}
+		</where>
+	</update>
+	
+	<update id="updateById">
+		update t_store_sku
+			set
+			<if test="storeCode!=null and storeCode!=''">
+			    store_code = #{storeCode}, 
+			</if>
+			<if test="skuCode!=null and skuCode!=''">
+			    sku_code=#{skuCode}, 
+			</if>
+			<if test="isSupport!=null and isSupport!=''">
+			    is_support = #{isSupport}, 
+			</if>
+			<if test="status!=null and status!=''">
+			    status = #{status}, 
+			</if>
+			
+			<if test="updateId!=null and updateId!=''">
+			    update_id = #{updateId} ,
+			</if>
+			
+			  update_time = now()  
+			
+		<where>
+			id = #{id} 
+		</where>
+	</update>
+	
+	<select id="findById" resultMap="StoreSkuResultMap" parameterType="java.lang.Long">
+		<include refid="StoreSku_column"/>  where id = #{id}
+	</select>
+	<select id="findByStoreCodeAndSkuCode" resultMap="StoreSkuResultMap" >
+		  <include refid="StoreSku_column"/>  where store_code = #{storeCode} and sku_code=#{skuCode}
+	</select>
+	
+	<!-- 分页条件查询 -->
+	<select id="getList" resultType="list" resultMap="StoreSkuResultMap" parameterType="Map" >
+		<include refid="StoreSku_column"/>
+
+		<where>
+			<if test="storeCode!=null and storeCode!=''">
+			    and store_code = #{storeCode}   
+			</if>
+			<if test="skuCode!=null and skuCode!=''">
+			    and sku_code = #{skuCode}   
+			</if>
+			<if test="isSupport!=null and isSupport!=''">
+			    and is_support = #{isSupport}   
+			</if>
+			<if test="status!=null and status!=''">
+			    and status = #{status}   
+			</if>
+		</where>
+		 order by update_time desc
+		<if test="start!=null and limit!=null ">
+			limit #{start},#{limit}
+		</if>
+		 
+	</select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(id) from t_store_sku 
+		<where>
+			<if test="storeCode!=null and storeCode!=''">
+			    and store_code = #{storeCode}   
+			</if>
+			<if test="skuCode!=null and skuCode!=''">
+			    and sku_code = #{skuCode}   
+			</if>
+			<if test="isSupport!=null and isSupport!=''">
+			    and is_support = #{isSupport}   
+			</if>
+			<if test="status!=null and status!=''">
+			    and status = #{status}   
+			</if>
+		</where>
+	</select>
+	
+	<!-- 通过门店查询门店的商品列表 -->
+	<select id="findByStoreCode" resultType="list" resultMap="StoreSkuResultMap" parameterType="java.lang.String" >
+	
+		<include refid="StoreSku_column"></include>
+		<where>
+			store_code=#{storeCode}
+		</where>
+	</select>
+	
+</mapper>

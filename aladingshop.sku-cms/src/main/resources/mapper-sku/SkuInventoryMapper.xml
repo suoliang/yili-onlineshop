@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.sku.cms.dao.SkuInventoryDao">
+	<resultMap id="skuInventoryMap" type="skuInventory">
+		<id column="id" property="id" />
+		<result column="product_code" property="productCode"/>
+		<result column="available_qty" property="availableQty"/>
+		<result column="sku_color" property="skuColor"/>
+		<result column="create_time" property="createTime"/>
+		<result column="last_modify_time" property="lastModifyTime"/>
+		<result column="propertyvalues" property="propertyvalues"/>
+		<result column="sku_size" property="skuSize"/>
+		<result column="version" property="version"/>
+		<result column="sku_code" property="skuCode"/>
+		<result column="inventorytype" property="inventorytype"/>
+		<result column="name" property="skuName"/>
+		<result column="create_id" property="createId"/>
+		<result column="update_time" property="updateTime"/>
+		<result column="update_id" property="updateId"/>
+		<result column="store_code" property="storeCode"/>
+	</resultMap>
+	<insert id="add" parameterType="skuInventory">
+		insert into
+			t_sku_inventory(id,available_qty,product_code,sku_color,create_time,last_modify_time,
+							propertyvalues,sku_size,version,sku_code,inventorytype,
+							create_id,update_time,update_id,store_code)
+		values
+			(#{id},#{availableQty},#{productCode},#{skuColor},now(),now(),
+			#{propertyvalues},#{skuSize},now(),#{skuCode},#{inventorytype},
+			#{createId},now(),#{updateId},#{storeCode})
+	</insert>
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_sku_inventory where id = #{id}
+	</delete>
+	<update id="update" parameterType="skuInventory">
+		update 
+			t_sku_inventory
+		set
+			available_qty = #{availableQty},
+			sku_code = #{skuCode},
+			sku_color = #{skuColor},
+			sku_size = #{skuSize},
+		<if test="storeCode !=null and storeCode !=''">
+			 store_code=#{storeCode},
+		</if>
+			last_modify_time = now()
+		where 
+			id = #{id}
+	</update>
+	<update id="updateInventoryQuantity" parameterType="skuInventory">
+		update 
+			t_sku_inventory
+		set
+			available_qty = #{availableQty},
+			last_modify_time = now()
+		where 
+			sku_code = #{skuCode}
+	</update>
+	<update id="addInventoryQuantity" parameterType="skuInventory">
+		update 
+			t_sku_inventory
+		set
+			available_qty = available_qty + #{availableQty},
+			last_modify_time = now()
+		where 
+			sku_code = #{skuCode}
+	</update>
+	<select id="findById" resultMap="skuInventoryMap" parameterType="long">
+		<![CDATA[
+			select 
+				id,available_qty,product_code,sku_color,create_time,last_modify_time,propertyvalues,sku_size,
+				version,sku_code,inventorytype,create_id,update_time,update_id,store_code
+			from 
+				t_sku_inventory
+		 	where 
+		 		id = #{id}
+        ]]>
+	</select>
+	
+	<select id="findBySkuId" resultMap="skuInventoryMap" parameterType="String">
+		<![CDATA[
+			select 
+				id,available_qty,product_code,sku_color,create_time,last_modify_time,propertyvalues,sku_size,
+				version,sku_code,inventorytype,create_id,update_time,update_id,store_code
+			from 
+				t_sku_inventory
+		 	where 
+		 		sku_code = #{skuCode}
+        ]]>
+	</select>
+	<select id="findBySkuCode" resultMap="skuInventoryMap" parameterType="java.lang.String">
+		<![CDATA[
+			select 
+				id,available_qty,product_code,sku_color,create_time,last_modify_time,propertyvalues,sku_size,
+				version,sku_code,inventorytype,create_id,update_time,update_id,store_code
+			from 
+				t_sku_inventory
+		 	where 
+		 		sku_code = #{skuCode}
+        ]]>
+	</select>
+	
+	
+	<select id="findAll" resultMap="skuInventoryMap" resultType="list" >
+		<![CDATA[
+			select 
+				id,available_qty,product_code,sku_color,create_time,last_modify_time,propertyvalues,sku_size,
+				version,sku_code,inventorytype,create_id,update_time,update_id,store_code
+			from 
+				t_sku_inventory
+		 ]]>
+	</select>
+	
+	<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="skuInventoryMap" parameterType="Map" >
+			select 
+				t1.*, t2.name
+			from 
+				t_sku_inventory t1 inner join t_sku t2 on t1.sku_code = t2.unique_code
+		<where>
+			<if test="skuCode !=null and skuCode !=''">
+	    	    and   t2.code = #{skuCode}  
+	        </if>
+	        <if test="productCode !=null and productCode !=''">
+	        	and t1.product_code = #{productCode}
+	        </if>
+	        <if test="skuName !=null and skuName !=''">
+	        	and t2.name like "%"#{skuName}"%"
+	        </if>
+	        
+	        
+		     <if test="createTimeFrom != null and createTimeFrom !=''">
+		    	<![CDATA[
+					and DATE_FORMAT(t1.create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+				]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(t1.create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+	    
+	       <if test="storeCode==null or storeCode=='' or storeCode=='999'">
+	        	and (t1.store_code is null or t1.store_code ='' or t1.store_code='999')
+	        </if>
+	        <if test="storeCode!=null and storeCode!='' and storeCode!='999'">
+	        	and t1.store_code =#{storeCode}
+	        </if> 
+	        
+	        
+		</where>
+		
+		order by create_time desc,id
+		
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select 
+			count(1)
+		from 
+			t_sku_inventory t1 inner join t_sku t2 on t1.sku_code = t2.unique_code
+		<where>
+			<if test="skuCode !=null and skuCode !=''">
+	    	    and   t2.code = #{skuCode} 
+	        </if>
+	        <if test="productCode !=null and productCode !=''">
+	        	and t1.product_code = #{productCode}
+	        </if>
+	        <if test="skuName !=null and skuName !=''">
+	        	and t2.name like "%"#{skuName}"%"
+	        </if>
+	        
+	        
+	       <if test="createTimeFrom != null and createTimeFrom !=''">
+	    	<![CDATA[
+				and DATE_FORMAT(t1.create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+			]]>
+	    </if>
+		<if test="createTimeTo != null and createTimeTo != ''">
+	    	<![CDATA[
+				and DATE_FORMAT(t1.create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+			]]>
+	    </if>
+	       <if test="storeCode==null or storeCode=='' or storeCode=='999'">
+	        	and (t1.store_code is null or t1.store_code ='' or t1.store_code='999')
+	        </if>
+	        <if test="storeCode!=null and storeCode!='' and storeCode!='999'">
+	        	and t1.store_code =#{storeCode}
+	        </if>   
+	        
+		</where>
+	</select>
+	<!-- 查询库存数量  -->
+	<select id="getInventoryQuantity" parameterType="String" resultType="Integer">
+		select available_qty from t_sku_inventory where sku_code = #{skuCode}
+	</select>
+	
+	<!-- 根据条件查询库存信息 -->
+	<select id="queryByCondition" parameterType="skuInventoryQueryCondition" resultType="list" resultMap="skuInventoryMap">
+		select 
+			id,available_qty,product_code,sku_color,create_time,last_modify_time,propertyvalues,sku_size,
+			version,sku_code,inventorytype,create_id,update_time,update_id,store_code
+		from 
+			t_sku_inventory
+		<where>
+		 	<if test="productCode !=null and productCode !=''">
+	    	    and product_code = #{productCode} 
+	        </if>
+			<if test="skuCode !=null and skuCode !=''">
+	    	    and sku_code = #{skuCode}
+	        </if>
+			<if test="color !=null and color !=''">
+	    	    and sku_color = #{color}
+	        </if>
+			<if test="size !=null and size !=''">
+	    	    and sku_size = #{size} 
+	        </if>
+	        <if test="storeCode==null or storeCode=='' or storeCode=='999'">
+	        	and (store_code is null or store_code ='' or store_code='999')
+	        </if>
+	        <if test="storeCode!=null and storeCode!='' and storeCode!='999'">
+	        	and store_code =#{storeCode}
+	        </if>
+		</where>
+	</select>
+	
+	<!-- 根据产品号，颜色，尺寸查询库存商品 -->
+	<select id="querySkuIventory" resultMap="skuInventoryMap" >
+		select 
+			id,available_qty,product_code,sku_color,create_time,last_modify_time,propertyvalues,sku_size,
+			version,sku_code,create_id,update_time,update_id,store_code
+		from 
+			t_sku_inventory
+		<where>
+			available_qty > 0
+		 	<if test="productCode !=null and productCode !=''">
+	    	    and product_code = #{productCode} 
+	        </if>
+			<if test="color !=null and color !=''">
+	    	    and sku_color = #{color}
+	        </if>
+			<if test="size !=null and size !=''">
+	    	    and sku_size = #{size} 
+	        </if>
+	        <if test="storeCode==null or storeCode=='' or storeCode=='999'">
+	        	and (store_code is null or store_code ='' or store_code ='999')
+	        </if>
+	        <if test="storeCode!=null and storeCode!='' and storeCode!='999'">
+	        	and store_code =#{storeCode}
+	        </if>
+	       
+		</where>
+	</select>
+	
+</mapper>

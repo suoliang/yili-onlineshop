@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration 
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 命名空间 -->
+	<typeAliases>
+		<!--活动赠品  -->
+		<typeAlias alias="ActActivityGift" type="com.fushionbaby.act.activity.model.ActActivityGift" />
+		
+		<!--活动规则 -->
+		<typeAlias alias="ActActivityRule" type="com.fushionbaby.act.activity.model.ActActivityRule" />
+	
+	
+		<!-- 活动范围 -->
+		<typeAlias alias="ActActivityScope" type="com.fushionbaby.act.activity.model.ActActivityScope" />
+		<!-- 活动切入点  -->
+		<typeAlias alias="ActActivityTriggerPoint" type="com.fushionbaby.act.activity.model.ActActivityTriggerPoint" />
+		
+		<typeAlias alias="ActCardType" type="com.fushionbaby.act.activity.model.ActCardType" />  
+		
+		<typeAlias alias="ActCard" type="com.fushionbaby.act.activity.model.ActCard" />  
+		
+			
+		
+	</typeAliases>
+
+	<!-- 注册SQL映射文件 -->
+	<mappers>
+	</mappers>
+</configuration>

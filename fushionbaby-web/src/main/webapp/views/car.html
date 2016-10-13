@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>购物车 - Fushionbaby</title>
+		<script src="ftl/publicHeadTags.js"></script><!-- 公共<head>标签 -->
+		<link rel="stylesheet"  href="css/public.css">
+		<link rel="stylesheet"  href="css/car.css">
+		<link rel="stylesheet"  href="css/checkout-list.css">
+	</head>
+	<body>
+		<script type="text/javascript" src="ftl/topbar.js"></script><!-- 公共顶部 -->
+		<div class="site-header container" style="height:auto;">
+			<div class="logo">
+				<h1>
+				<a href="/index/indexList.do">
+					<img title="fushionbaby" alt="fushionbaby" src="images/logo.jpg">
+				</a>
+				</h1>
+			</div>
+			<div style="margin-bottom:40px;" class="site-header-r">
+				<ul class="progress-t">
+					<li>
+						<span>我的购物车</span>
+						<em></em>
+					</li>
+					<li style="background-color: rgb(203, 203, 203);">
+						<span>确认订单并付款</span>
+						<em class="progress-t-n"></em>
+					</li>
+					<li style="margin:0 0 0 6px;background-color:#CBCBCB">
+						<span>完成订单</span>
+						<em class="progress-t-n"></em>
+					</li>
+				</ul>
+				<div class="progress progress-start"></div>
+			</div>
+		</div>
+		<div class="car-main container">
+			<form action="">
+				<table class="order-table" id="content">
+					<tbody>
+						<tr class="title-list">
+							<th class="col0"></th>
+							<th class="t-title col1">商品</th>
+							<!-- <th class="t-title col3">编辑</th> -->
+							<th class="t-title col2">单价（元）</th>
+							<th class="t-title col3">数量</th>
+							<th class="t-title col4">小计</th>
+							<th class="t-title col3">说明</th>
+							<th class="t-title col5">操作</th>
+						</tr>
+						<tr class="order-con">
+							<td>
+								<label for="cb_1">
+									<span class="dot"><input type="checkbox" name="checkPath" id="cb_1"></span>
+								</label>
+							</td>
+							<td>
+								<div class="order-goods">
+									<a href="order-goods-item">
+										<img src="images/car_r10_c5.jpg" alt="">
+									</a>
+								</div>
+								<div class="order-tex">
+									<p><a href="javascript:void(0);">650ml玻璃饮料瓶，防烫手，天然塑胶无毒无害,外出旅游用。</a></p>
+									<div class="order-tex-bd">
+										<div class="size">颜色：天蓝色</div>
+										<div class="color">尺码：650ml</div>
+									</div>
+								</div>
+							</td>
+							<!-- 商品编辑按钮 开始  -->
+							<!-- <td>
+								<div class="car-edit" href="javascript:void(0);void(0);">
+									<i class="icon-edit"></i>
+									<div class="hide-edit">
+										<i class="arrow-top arrow-top-grey"></i>
+										<div class="hide-edit-l fl">
+											<div class="color-size fl">
+												<div class="color">
+													<p>可选择颜色：</p>
+													<div class="color-choose">
+														<a class="choose" href="javascript:void(0);">橙色<em class="gougou"></em></a>
+														<a class="choose cs-current" href="javascript:void(0);">粉色<em class="gougou"></em>
+															<input type="hidden" value="粉色" id="cs-current-color">
+														</a>
+														<a class="choose" href="javascript:void(0);">海蓝<em class="gougou"></em></a>
+														<a class="choose" href="javascript:void(0);">黄色<em class="gougou"></em></a>
+														<a class="choose" href="javascript:void(0);">玫红<em class="gougou"></em></a>
+														<a class="choose" href="javascript:void(0);">浅蓝<em class="gougou"></em></a>
+													</div>
+												</div>
+												<div class="size">
+													<p>可选择尺寸：</p>
+													<div class="size-choose">
+														<a class="choose cs-current" href="javascript:void(0);">
+															<span>S<b>(0-8个月)</b></span>
+															<em class="gougou"></em>
+														</a>
+														<a class="choose" href="javascript:void(0);">
+															<span>M<b>(0-8个月)</b></span>
+															<em class="gougou"></em>
+														</a>
+													</div>
+												</div>
+												<div class="discount-box-btn-wrap">
+													<a href="javascript:void(0);" class="discount-box-btn confirm">确认修改</a>
+													<a href="javascript:void(0);" class="discount-box-btn cancel">取消修改</a>
+												</div>
+											</div>
+										</div>
+										<div class="hide-edit-r fl">
+											<div class="verticalAlign-carEdit">
+												<img src="http://filepic.fushionbaby.com/img/sku/QG1001/QG1001_w_h_h_s_e0cee891-aa04-4220-b922-26fc29dbcf05.png" alt="">
+											</div>
+											<p>￥：140.00</p>
+										</div>
+									</div>
+								</div>
+							</td> -->
+							<!-- 商品编辑按钮 结束  -->
+							<td class="con-list pri">&yen;<span>230</span>.00</td>
+							<td class="amount">
+								<div class="amount-wrap">
+									<div class="Operate reduce_num">-</div>
+									<div class="Operate num">2</div>
+									<div class="Operate add_num">+</div>
+								</div>
+							</td>
+							<td class="con-list tot">&yen;<span>230</span>.00</td>
+							<td class="color-error textC"></td>
+							<td class="con-list">
+								<a href="javascript:void(0);void(0)" class="del-btn del-order">删除</a>
+							</td>
+						</tr>
+						<tr class="order-con">
+							<td>
+								<label for="cb_1">
+									<span class="dot"><input type="checkbox" name="checkPath" id="cb_1"></span>
+								</label>
+							</td>
+							<td>
+								<div class="order-goods">
+									<span class="icon-gift"></span>
+									<a href="order-goods-item">
+										<img src="images/car_r10_c5.jpg" alt="">
+									</a>
+								</div>
+								<div class="order-tex">
+									<p><a href="javascript:void(0);">650ml玻璃饮料瓶，防烫手，天然塑胶无毒无害,外出旅游用。</a></p>
+									<div class="order-tex-bd">
+										<div class="size">颜色：天蓝色</div>
+										<div class="color">尺码：650ml</div>
+									</div>
+								</div>
+							</td>
+							<!-- 商品编辑按钮 开始  -->
+							<!-- <td></td> -->
+							<!-- 商品编辑按钮 结束  -->
+							<td class="con-list pri">&yen;<span>230</span>.00</td>
+							<td class="amount">
+								<div class="amount-wrap">
+									<div class="Operate reduce_num">-</div>
+									<div class="Operate num">2</div>
+									<div class="Operate add_num">+</div>
+								</div>
+							</td>
+							<td class="con-list tot">&yen;<span>230</span>.00</td>
+							<td class="color-error textC">赠品<br/>优惠金额：&yen; 40</td>
+							<td class="con-list">
+								<a href="javascript:void(0);void(0)" class="del-btn del-order">删除</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="car-main-ft clearfix">
+					<div class="cmf-l-wrap">
+						<label for="all">
+							<span class="dot"><input type="checkbox" name="checkPath" id="all"></span>
+						</label>
+						<span>全选</span>
+						<a href="javascript:void(0);void(0)" class="del-btn del-order">删除</a>
+					</div>
+					<div class="cmf-r-wrap">
+						<div class="shop-cart-action clearfix">
+							<p class="total-price">
+							<span>应付总金额：</span>
+							<i>560</i> 元
+							</p>
+						</div>
+						<div class="btn-wrap clearfix">
+							<a class="btn btn-l" href="index.html">继续购物</a>
+							<a class="btn btn-r checked" href="checkout-list.html">去结算</a>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<script type="text/javascript" src="ftl/footer.js"></script><!-- 公共底部 -->
+		<script type="text/javascript" src="ftl/nav.js"></script><!-- 公共底部 -->
+
+		<script type="text/javascript" src="js/base.js"></script>
+		<script type="text/javascript" src="js/persona-order.js"></script>
+	</body>
+</html>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.sku.cms.dao.SkuPromotionsSkuDao">
+	<resultMap id="SkuPromotionsSkuResultMap" type="skuPromotionsSku">
+		<id column="id" property="id" />
+		<result column="sku_code" property="skuCode" />
+		<result column="sku_promotions_status" property="skuPromotionsStatus" />
+		<result column="special_price" property="specialPrice" />
+		<result column="pm_code" property="pmCode" />
+		<result column="sort" property="sort" />
+		<result column="create_id" property="createId" />
+		<result column="create_time" property="createTime" />
+		<result column="limit_count" property="limitCount" />
+	</resultMap>
+	<insert id="add" parameterType="skuPromotionsSku">
+		insert into t_sku_promotions_sku 
+				(id,sku_code,sku_promotions_status,special_price,pm_code,sort,
+				create_time,create_id,limit_count)
+		values 
+	    		(#{id},#{skuCode},#{skuPromotionsStatus},#{specialPrice},#{pmCode},#{sort},
+	    		now(),#{createId},#{limitCount})
+	</insert>
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_sku_promotions_sku
+		where id = #{id}
+	</delete>
+	<delete id="deleteByPmCodeAndSkuCode">
+		delete from t_sku_promotions_sku
+		where pm_code = #{pmCode}
+		and sku_code=#{skuCode}
+	</delete>
+	<delete id="deleteByPmCode">
+		delete from t_sku_promotions_sku
+		where pm_code = #{pmCode}
+	</delete>
+	<update id="updateById" >
+		update t_sku_promotions_sku
+		  <trim prefix="SET" suffixOverrides=",">   
+			<if test="skuCode != null and skuCode != ''">
+       			sku_code = #{skuCode},
+  			</if>
+  			<if test="skuPromotionsStatus != null and skuPromotionsStatus != ''">
+       			sku_promotions_status = #{skuPromotionsStatus},
+  			</if>
+  			<if test="specialPrice != null and specialPrice != ''">
+       			special_price = #{specialPrice},
+  			</if>
+  			<if test="pmCode != null and pmCode != ''">
+       			pm_code = #{pmCode},
+  			</if>
+  			<if test="limitCount != null">
+       			limit_count = #{limitCount},
+  			</if>
+  			<if test="sort != null and sort != ''">
+       			sort = #{sort}
+  			</if>
+		</trim>
+		where 
+			id = #{id}
+	</update>
+	<update id="updateByPmCodeAndSkuCode" >
+		update t_sku_promotions_sku
+		<trim prefix="SET" suffixOverrides=",">   
+  			<if test="skuPromotionsStatus != null and skuPromotionsStatus != ''">
+       			sku_promotions_status = #{skuPromotionsStatus},
+  			</if>
+  			<if test="specialPrice != null and specialPrice != ''">
+       			special_price = #{specialPrice},
+  			</if>
+  			<if test="limitCount != null and limitCount != ''">
+       			limit_count = #{limitCount},
+  			</if>
+  			<if test="sort != null and sort != ''">
+       			sort = #{sort} 
+  			</if>
+		</trim>
+		where 
+			pm_code = #{pmCode} 
+		and
+			sku_code = #{skuCode}
+	</update>
+	
+	
+	<select id="findById" resultMap="SkuPromotionsSkuResultMap" >
+		select id,sku_code,sku_promotions_status,special_price,pm_code,sort,
+				create_time,create_id,limit_count 
+		 from t_sku_promotions_sku 
+		where id = #{id}
+	</select>
+	<select id="findByPmCodeAndSkuCode" resultMap="SkuPromotionsSkuResultMap" >
+		select id,sku_code,sku_promotions_status,special_price,pm_code,sort,
+				create_time,create_id,limit_count 
+		 from t_sku_promotions_sku  
+		where pm_code = #{pmCode} and sku_code = #{skuCode}
+	</select>
+	<!-- 分页条件查询 -->
+	<select id="getList" resultType="list" resultMap="SkuPromotionsSkuResultMap" parameterType="Map" >
+		select id,sku_code,sku_promotions_status,special_price,pm_code,sort,
+				create_time,create_id,limit_count 
+		 from t_sku_promotions_sku 
+		<trim prefix="WHERE" prefixOverrides="AND|OR"> 
+			<if test="skuCode != null and skuCode != ''">
+       		 	and sku_code = #{skuCode} 
+  			</if>
+  			<if test="skuPromotionsStatus != null and skuPromotionsStatus != ''">
+       			and sku_promotions_status = #{skuPromotionsStatus}  
+  			</if>
+  			<if test="endDate != null and endDate != ''">
+       			and pm_code = #{pmCode} 
+  			</if>
+		</trim>
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select 
+			count(id)
+		from 
+			t_sku_promotions_sku
+		<trim prefix="WHERE" prefixOverrides="AND|OR"> 
+			<if test="skuCode != null and skuCode != ''">
+       		 	and sku_code = #{skuCode} 
+  			</if>
+  			<if test="skuPromotionsStatus != null and skuPromotionsStatus != ''">
+       			and sku_promotions_status = #{skuPromotionsStatus}  
+  			</if>
+  			<if test="endDate != null and endDate != ''">
+       			and pm_code = #{pmCode} 
+  			</if>
+		</trim>
+	</select>
+	
+	<select id="findSkuCodesByPmCode" resultType="string">
+		select sku_code from t_sku_promotions_sku 
+		where pm_code = #{pmCode}
+	</select>
+</mapper>

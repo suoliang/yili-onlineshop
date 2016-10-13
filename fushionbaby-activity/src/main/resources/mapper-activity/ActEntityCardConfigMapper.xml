@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.act.activity.dao.ActEntityCardConfigDao">
+	<resultMap id="ActEntityCardConfigResultMap" type="ActEntityCardConfig">
+			<id column="id" property="id" />
+			<result column="name" property="name" />
+			<result column="is_disabled" property="isDisabled" />
+			<result column="expiration" property="expiration" />
+			<result column="begin_time" property="beginTime" />
+			<result column="sell_money" property="sellMoney" />
+			<result column="face_money" property="faceMoney" />
+			<result column="create_time" property="createTime" />
+	</resultMap>
+	<!-- 定义宏转换 -->
+	<sql id="ActEntityCardConfig_column">
+		id,name,face_money,sell_money,begin_time,expiration,create_time,is_disabled
+	</sql>
+	
+	<!-- 新增方法 -->
+	<insert id="add" parameterType="ActEntityCardConfig">
+		insert into 
+			 t_act_entity_card_config
+		(
+					name,
+					is_disabled,
+					expiration,
+					begin_time,
+					id,
+					sell_money,
+					face_money,
+					create_time
+		)
+	    values 
+	    (
+						#{name},
+						#{isDisabled},
+						#{expiration},
+						#{beginTime},
+						#{id},
+						#{sellMoney},
+						#{faceMoney},
+						now()
+		)
+	</insert>
+	
+	<!-- 根据id删除-->
+	<delete id="deleteById" parameterType="java.lang.Long">
+	
+		delete from  t_act_entity_card_config where id = #{id}  
+	</delete>
+	
+	<!-- 根据id修改 -->
+	<update id="update"  parameterType="ActEntityCardConfig">
+		update  t_act_entity_card_config
+			set
+				<if test="name !=null and name !=''">
+						name=#{name},
+				</if>
+				<if test="isDisabled !=null and isDisabled !=''">
+						is_disabled=#{isDisabled},
+				</if>
+				<if test="expiration !=null and expiration !=''">
+						expiration=#{expiration},
+				</if>
+				<if test="beginTime !=null and beginTime !=''">
+						begin_time=#{beginTime},
+				</if>
+				<if test="sellMoney !=null and sellMoney !=''">
+						sell_money=#{sellMoney},
+				</if>
+				<if test="faceMoney !=null and faceMoney !=''">
+						face_money=#{faceMoney}
+				</if>
+		<where>
+			id = #{id} 
+		</where>
+	</update>
+	<!-- 根据id修改 -->
+	<update id="updateIsDisabled"  parameterType="ActEntityCardConfig">
+		update  t_act_entity_card_config set is_disabled=#{isDisabled} 
+		<where>
+			id = #{id} 
+		</where>
+	</update>
+	
+	
+	<!-- 查询所有数据 -->
+	<select id="findAll" resultType="list" resultMap="ActEntityCardConfigResultMap">
+		select  <include refid="ActEntityCardConfig_column"/> from  t_act_entity_card_config
+	</select>
+	<!-- 根据id查询 -->
+	<select id="findById" resultMap="ActEntityCardConfigResultMap" parameterType="java.lang.Long">
+		select  <include refid="ActEntityCardConfig_column"/> from  t_act_entity_card_config where id = #{id} 
+	</select>
+	
+	<!-- 根据id查询 -->
+	<select id="findByName" resultMap="ActEntityCardConfigResultMap" parameterType="java.lang.String">
+		select  <include refid="ActEntityCardConfig_column"/> from  t_act_entity_card_config where name = #{name} 
+	</select>
+	
+	
+	
+	<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="ActEntityCardConfigResultMap" parameterType="Map" >
+		select <include refid="ActEntityCardConfig_column"/>
+		from  t_act_entity_card_config 
+		<where>
+			<if test="faceMoney !=null and faceMoney !=''">
+				 and face_money=#{faceMoney}
+			</if>
+			<if test="name !=null and name !=''">
+				 and name=#{name}
+			</if>
+		</where>
+			limit #{start},#{limit}
+	</select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) from  t_act_entity_card_config 
+		<where>
+			<if test="faceMoney !=null and faceMoney !=''">
+				 and face_money=#{faceMoney}
+			</if>
+			<if test="name !=null and name !=''">
+				 and name=#{name}
+			</if>
+		</where>
+	</select>
+	
+</mapper>

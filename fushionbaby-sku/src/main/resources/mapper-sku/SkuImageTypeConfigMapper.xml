@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.sku.dao.SkuImageTypeConfigDao">
+	<resultMap id="skuImageTypeConfigMap" type="SkuImageTypeConfig">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="code" property="code" />
+		<result column="suffix" property="suffix" />
+		<result column="is_multiple" property="isMultiple" />
+		<result column="is_default" property="isDefault" />
+		<result column="disable" property="disable" />
+	</resultMap>
+	
+	<insert id="add" 
+		parameterType="SkuImageTypeConfig">
+		insert into
+			t_sku_image_type_config(id,name,code,suffix,is_multiple,is_default,disable)
+		values
+			(#{id},#{name},#{code},#{suffix},#{isMultiple},#{isDefault},#{disable})
+	</insert>
+	
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_sku_image_type_config where id = #{id}
+	</delete>
+	
+	<update id="update" parameterType="SkuImageTypeConfig">
+	update t_sku_image_type_config
+	set
+	  name=#{name},
+	  code=#{code},
+	  suffix=#{suffix},
+	  is_multiple=#{isMultiple},
+	  is_default=#{isDefault},
+	  disable=#{disable}
+	   where id=#{id}
+	
+	</update>
+	<select id="findById" resultMap="skuImageTypeConfigMap" parameterType="long">
+		select 
+			id,name,code,suffix,is_multiple,is_default ,disable
+		from 
+			t_sku_image_type_config
+		where 
+			id = #{id}
+	</select>
+			<select id="findBySuffix" resultMap="skuImageTypeConfigMap" parameterType="java.lang.String">
+	<![CDATA[	
+	select 
+			id,name,code,suffix,is_multiple,is_default ,disable
+		from 
+			t_sku_image_type_config
+		
+	    	  where 	   suffix =#{suffix}  
+	           ]]>
+	</select>
+	<select id="findAll" resultMap="skuImageTypeConfigMap" resultType="list">
+			select 
+			     id,name,code,suffix,is_multiple,is_default,disable
+		     from 
+			     t_sku_image_type_config
+			</select>
+	<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="skuImageTypeConfigMap" parameterType="Map" >
+		select 
+			id,name,code,suffix,is_multiple,is_default,disable
+		from 
+			t_sku_image_type_config 
+		<where>
+			<if test="suffix !=null and suffix !=''">
+	    	   AND  suffix =#{suffix}  
+	        </if>
+	        <if test="code !=null and code !=''">
+	    	   AND  code =#{code} 
+	        </if>
+	          <if test="name !=null and name !=''">
+	    	   AND  name like "%"#{name}"%" 
+	        </if>
+		</where>
+	
+		<![CDATA[
+			LIMIT #{start},#{limit}  
+		]]>
+	</select>
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select 
+			count(id)
+		from 
+			t_sku_image_type_config
+		<where>
+			<if test="suffix !=null and suffix !=''">
+	    	   AND  suffix =#{skuName}  
+	        </if>
+	        <if test="code !=null and code !=''">
+	    	   AND  code =#{code} 
+	        </if>
+	          <if test="name !=null and name !=''">
+	    	   AND  name like "%"#{name}"%" 
+	        </if>
+		</where>
+	</select>
+	
+</mapper>

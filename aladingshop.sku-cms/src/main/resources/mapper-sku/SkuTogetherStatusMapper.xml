@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.sku.cms.dao.SkuTogetherStatusDao">
+	<resultMap id="skuTogetherStatusMap" type="skuTogetherStatus">
+		<id column="id" property="id" />
+		<result column="sku_together_id" property="skuTogetherId" />
+		<result column="status" property="status" />
+		<result column="min_number" property="minNumber" />
+		<result column="max_number" property="maxNumber" />
+		<result column="current_actual_number" property="currentActualNumber" />	
+		<result column="show_number" property="showNumber" />		
+		<result column="create_time" property="createTime" />	
+		<result column="update_time" property="updateTime" />
+		<result column="create_id" property="createId" />	
+		<result column="update_id" property="updateId" />
+	</resultMap>
+	<insert id="add" parameterType="SkuTogetherStatus">
+	
+		insert into 
+			t_sku_together_status(id,sku_together_id,status,min_number,max_number,current_actual_number,show_number,
+			create_time,update_time,create_id,update_id)
+		values
+			(#{id},#{skuTogetherId},#{status},#{minNumber},#{maxNumber},#{currentActualNumber},#{showNumber},
+			now(),#{updateTime},#{createId},#{updateId}
+			)
+	</insert>
+	
+	<update id="updateBySkuTogetherId" parameterType="SkuTogetherStatus">
+		update 
+			t_sku_together_status
+		set
+			<if test="status != null and status !=''">
+				status = #{status},
+			</if>
+			<if test="minNumber != null and minNumber !=''">
+				min_number = #{minNumber},
+			</if>
+			<if test="maxNumber != null and maxNumber !=''">
+				max_number = #{maxNumber},
+			</if>
+			<if test="currentActualNumber != null and currentActualNumber!=''">
+				current_actual_number = #{currentActualNumber},
+			</if>
+			<if test="showNumber != null and showNumber !=''">
+				show_number = #{showNumber},
+			</if>
+			<if test="updateId != null and updateId !=''">
+				update_id = #{updateId},
+			</if>
+				update_time = now() 
+				
+			
+		 where 
+			sku_together_id = #{skuTogetherId}
+		
+	</update>
+		
+	<select id="findBySkuTogetherId" resultMap="skuTogetherStatusMap">
+		select id,sku_together_id,status,min_number,max_number,current_actual_number,show_number,
+			create_time,update_time,create_id,update_id  
+		from 
+			t_sku_together_status
+		<where>
+			<if test="skuTogetherId != null and skuTogetherId !=''">
+				sku_together_id = #{skuTogetherId} 
+			</if>
+		</where>
+	</select>
+	
+	<delete id="deleteBySkuTogetherId" parameterType="java.lang.Long">
+		delete from t_sku_together_status
+		where sku_together_id = #{skuTogetherId}
+	</delete>
+</mapper>

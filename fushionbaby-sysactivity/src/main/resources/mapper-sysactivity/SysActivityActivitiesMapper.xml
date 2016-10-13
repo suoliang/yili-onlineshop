@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.sysactivity.dao.SysActivityActivitiesDao">
+	<resultMap id="SysActivityActivitiesResultMap" type="sysActivityActivities">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="time" property="time" />
+		<result column="place" property="place" />
+		<result column="number" property="number" />
+		<result column="limit_apply_time" property="limitApplyTime" />
+		<result column="is_show" property="isShow" />
+		<result column="introduce" property="introduce" />
+		<result column="web_banner_url" property="webBannerUrl"/>
+		<result column="app_banner_url" property="appBannerUrl"/>
+		<result column="app_introduce_url" property="appIntroduceUrl"/>
+		<result column="web_introduce_url" property="webIntroduceUrl"/>
+		<result column="place_picture_url" property="placePictureUrl" />
+		<result column="introduce_url" property="introduceUrl" />
+		
+	</resultMap>
+	
+	<insert id="add" parameterType="sysActivityActivities">
+		insert into 
+		t_sysactivity_activities
+		(id, name, time,place, number, limit_apply_time,is_show, introduce,place_picture_url,
+		web_banner_url,app_banner_url,app_introduce_url,web_introduce_url,introduce_url)
+		values 
+		(#{id}, #{name},#{time},#{place}, #{number}, #{limitApplyTime},#{isShow},#{introduce},#{placePictureUrl}
+		,#{webBannerUrl},#{appBannerUrl},#{appIntroduceUrl},#{webIntroduceUrl},#{introduceUrl})
+	</insert>
+	
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_sysactivity_activities
+		where id = #{id}
+	</delete>
+	
+	<update id="update" parameterType="sysActivityActivities">
+		update t_sysactivity_activities
+		set name = #{name},
+		time = #{time},
+		place = #{place},
+		number = #{number},
+		limit_apply_time = #{limitApplyTime},
+		is_show = #{isShow},
+		introduce = #{introduce},
+		place_picture_url=#{placePictureUrl},
+		web_banner_url=#{webBannerUrl},
+		app_banner_url=#{appBannerUrl},
+		app_introduce_url=#{appIntroduceUrl},
+		web_introduce_url=#{webIntroduceUrl},
+		introduce_url=#{introduceUrl}
+		where id = #{id}
+	</update>
+	
+	<update id="changeIsOpen" parameterType="Map">
+		update t_sysactivity_activities
+		set
+		is_show = #{isShow}
+		where id = #{id}
+	</update>
+	
+	<select id="findById" resultMap="SysActivityActivitiesResultMap">
+   <include refid="activity_base_query"></include>
+   		  where id = #{id}
+	</select>
+	
+	<select id="findAll" resultType="list" resultMap="SysActivityActivitiesResultMap">
+    	<include refid="activity_base_query"></include>
+	</select>
+	
+	<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="SysActivityActivitiesResultMap" parameterType="Map" >
+	  <include refid="activity_base_query"></include>
+		<where>
+			<if test="name !=null and name !=''">
+	    	   AND  name LIKE "%"#{name}"%"  
+	        </if>
+	        <if test="place !=null and place !=''">
+	    	   AND  place like  "%"#{place}"%"  
+	        </if>
+		</where>
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select 
+			count(id)
+		from 
+			t_sysactivity_activities
+		<where>
+			<if test="name !=null and name !=''">
+	    	   AND  name LIKE "%"#{name}"%"  
+	        </if>
+	        <if test="place !=null and place !=''">
+	    	   AND  place like  "%"#{place}"%" 
+	        </if>
+		</where>
+	</select>
+	
+	<!-- 手机APP 户外活动列表 -->
+	<select id="getListPageType"  parameterType="java.util.Map" resultType="list" resultMap="SysActivityActivitiesResultMap" >
+	
+	<include refid="activity_base_query"></include>
+		
+		 where is_show = 'y'
+		
+		<if test="start!=null and limit!=null">
+			 limit #{start},#{limit}
+		</if>
+		
+		
+	</select>
+	<sql id="activity_base_query">
+	<![CDATA[
+	 select 
+		   id, name, time,place, number, limit_apply_time,is_show, introduce,place_picture_url,
+		
+		web_banner_url,app_banner_url,app_introduce_url,web_introduce_url,introduce_url
+		
+		from t_sysactivity_activities
+		]]>
+	</sql>
+	
+	
+</mapper>

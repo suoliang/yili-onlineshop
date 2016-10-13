@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.member.dao.MemberEmailDao">
+	<resultMap id="MemberEmailResultMap" type="memberEmail">
+		<id column="id" property="id" />
+		<result column="create_time" property="createTime" />
+		<result column="member_id" property="memberId" />
+		<result column="email" property="email" />
+	</resultMap>
+	<sql id="memberEmail_column">
+		select 
+		    id, create_time, member_id, email
+		from 
+			t_member_email
+	</sql>
+	<sql id="memberEmail_where">
+		<where>
+			<if test="email != null and email != ''">
+				email LIKE "%"#{email}"%"
+			</if>
+			<if test="createTimeFrom != null and createTimeFrom != ''">
+				<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom},'%Y-%m-%d')
+				]]>
+			</if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+				<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo},'%Y-%m-%d')
+				]]>
+			</if>
+		</where>
+	</sql>
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_member_email
+		where id = #{id}
+	</delete>
+	<insert id="add" parameterType="memberEmail">
+		insert into t_member_email (id,create_time, member_id,
+		email)
+		values (#{id},now(), #{memberId},
+		#{email})
+	</insert>
+	<update id="update" parameterType="memberEmail">
+		update t_member_email
+		set
+		create_time = #{createTime},
+		member_id = #{memberId},
+		email = #{email}
+		where id = #{id}
+	</update>
+	<select id="findById" resultMap="MemberEmailResultMap" parameterType="java.lang.Long">
+		<![CDATA[
+			select
+			id, create_time, member_id, email
+			from t_member_email
+			where id = #{id}
+		]]>
+	</select>
+	<select id="findAll" resultType="list" resultMap="MemberEmailResultMap">
+		<![CDATA[
+			select
+			id, create_time, member_id, email
+			from t_member_email
+		]]>
+	</select>
+	<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="MemberEmailResultMap" parameterType="Map" >
+		<include refid="memberEmail_column"/>
+		<include refid="memberEmail_where"/>
+		<![CDATA[
+			order by create_time desc
+		]]>
+		<if test="emailDistinguishExportList == 1">
+			limit #{start},#{limit}
+		</if>
+	</select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) from t_member_email
+		<include refid="memberEmail_where"/>	
+	</select>
+	
+	<delete id="deleteByMemberId" parameterType="java.lang.Long">
+		delete from t_member_email
+		where member_id = #{memberId}
+	</delete>
+</mapper>

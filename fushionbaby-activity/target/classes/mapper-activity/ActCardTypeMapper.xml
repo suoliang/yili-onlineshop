@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.act.activity.dao.ActCardTypeDao">
+	<resultMap id="ActCardTypeMap" type="ActCardType">
+		<id column="id" property="id" />
+		<result column="begin_time" property="beginTime" />
+		<result column="end_time" property="endTime" />
+		<result column="discount_money" property="discountMoney" />
+		<result column="card_type" property="cardType" />
+		<result column="name" property="name" />
+		<result column="disable" property="disable" />
+		<result column="use_type" property="useType" />
+		<result column="id_list" property="idList" />
+		<result column="use_count_limit" property="useCountLimit" />
+		
+		<result column="condition_sku_price_above" property="conditionSkuPriceAbove" />
+		
+		<!-- <result column="hint_message" property="hintMessage" /> -->
+	
+		
+		
+	</resultMap>
+
+	<insert id="add" parameterType="ActCardType">
+		insert into
+		
+		      t_act_card_type (id,begin_time, end_time,discount_money,card_type,name,disable,use_type,use_count_limit,id_list,condition_sku_price_above)
+		
+		values 
+		
+		     (#{id},#{beginTime}, #{endTime},#{discountMoney}, #{cardType},#{name},
+		          #{disable},#{useType},#{useCountLimit},#{idList},#{conditionSkuPriceAbove})
+	</insert>
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from
+		
+		     t_act_card_type
+		     
+		where 
+		      id = #{id}
+	</delete>
+
+	<update id="update" parameterType="ActCardType">
+		update
+		
+		     t_act_card_type
+		     
+		set 
+		<if test="name!=null and name!=''">
+		name = #{name},
+		</if>
+		<if test="disable!=null and disable!=''">
+		disable = #{disable},
+		</if>
+		<if test="cardType!=null and cardType!=''">
+		card_type = #{cardType},
+		</if>
+		<if test="discountMoney!=null and discountMoney!=''">
+		discount_money = #{discountMoney},
+		</if>
+		<if test="beginTime!=null">
+		begin_time =#{beginTime},
+		</if>
+		<if test="endTime!=null">
+		end_time = #{endTime},
+		</if>
+		<if test="useType!=null and useType!=''">
+		use_type = #{useType},
+		</if>
+		<if test="useCountLimit!=null">
+		use_count_limit = #{useCountLimit},
+		</if>
+		<if test="idList!=null and idList!=''">
+		id_list = #{idList},
+		</if>
+		<if test="conditionSkuPriceAbove!=null and conditionSkuPriceAbove!=''">
+		condition_sku_price_above = #{conditionSkuPriceAbove},
+		</if>
+		id = #{id}
+		where id = #{id}
+	</update>
+	<select id="findById" parameterType="java.lang.Long" resultMap="ActCardTypeMap">
+		select 
+		
+		      id, name, disable, card_type, discount_money, end_time, begin_time,use_type,use_count_limit,id_list,condition_sku_price_above
+		   
+	 from  t_act_card_type
+		
+		    where 
+		          id = #{id}
+	</select>
+	<select id="findAll"  resultType="list" resultMap="ActCardTypeMap">
+		select 
+		
+		id, name, disable, card_type, discount_money, end_time, begin_time,use_type,use_count_limit,id_list,condition_sku_price_above
+		
+		from 
+		    t_act_card_type
+	</select>
+	
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+  		select 
+			count(id)
+	  	from 
+			 t_act_card_type 
+        <where>
+			<if test="name!=null and name!=''">
+				name like "%"#{name}"%"
+			</if>
+			<if test="cardType!=null and cardType!=''">
+				 and card_type =#{cardType}
+			</if>
+			
+			<if test="timeType==1 and useTimeFrom!=null and useTimeFrom!='' and useTimeTo!='' and useTimeTo!=null">
+			<![CDATA[
+				and DATE_FORMAT(begin_time,'%Y-%m-%d') >= DATE_FORMAT(#{useTimeFrom}, '%Y-%m-%d')
+				and DATE_FORMAT(begin_time,'%Y-%m-%d') <= DATE_FORMAT(#{useTimeTo}, '%Y-%m-%d')
+			]]>
+			</if>
+			<if test="timeType==2 and useTimeFrom!=null and useTimeFrom!='' and useTimeTo!='' and useTimeTo!=null">
+			<![CDATA[
+				and DATE_FORMAT(end_time,'%Y-%m-%d') >= DATE_FORMAT(#{useTimeFrom}, '%Y-%m-%d')
+				and DATE_FORMAT(end_time,'%Y-%m-%d') <= DATE_FORMAT(#{useTimeTo}, '%Y-%m-%d')
+			]]>
+			</if>
+		</where>
+	</select>
+	<select id="getListPage"  resultType="list" resultMap="ActCardTypeMap" parameterType="Map">
+   		select 
+   		
+   		id, name, disable, card_type, discount_money, end_time, begin_time,use_type,use_count_limit,id_list,condition_sku_price_above
+		
+		from 
+		     t_act_card_type 
+		<where>
+			<if test="name!=null and name!=''">
+				name like "%"#{name}"%"
+			</if>
+			<if test="cardType!=null and cardType!=''">
+				 and card_type =#{cardType}
+			</if>
+			<if test="timeType==1 and useTimeFrom!=null and useTimeFrom!='' and useTimeTo!='' and useTimeTo!=null">
+			<![CDATA[
+				and DATE_FORMAT(begin_time,'%Y-%m-%d') >= DATE_FORMAT(#{useTimeFrom}, '%Y-%m-%d')
+				and DATE_FORMAT(begin_time,'%Y-%m-%d') <= DATE_FORMAT(#{useTimeTo}, '%Y-%m-%d')
+			]]>
+			</if>
+			<if test="timeType==2 and useTimeFrom!=null and useTimeFrom!='' and useTimeTo!='' and useTimeTo!=null">
+			<![CDATA[
+				and DATE_FORMAT(end_time,'%Y-%m-%d') >= DATE_FORMAT(#{useTimeFrom}, '%Y-%m-%d')
+				and DATE_FORMAT(end_time,'%Y-%m-%d') <= DATE_FORMAT(#{useTimeTo}, '%Y-%m-%d')
+			]]>
+			</if>
+		 </where>
+		 <![CDATA[
+			LIMIT #{start},#{limit}
+		 ]]>
+  </select>
+  
+  
+  <select id="findUsableById" parameterType="java.lang.Long" resultMap="ActCardTypeMap">
+ 
+ <![CDATA[ 
+ select 
+     id, name, disable, card_type, discount_money, end_time, begin_time,use_type,use_count_limit,id_list,condition_sku_price_above
+		
+		from t_act_card_type 
+			 where 
+                    DATE_FORMAT(begin_time,'%Y-%m-%d') 
+                        <=
+                     DATE_FORMAT(now(), '%Y-%m-%d')
+                     
+                     and 
+                      DATE_FORMAT(now(), '%Y-%m-%d')
+                        <=
+                        DATE_FORMAT(end_time,'%Y-%m-%d')
+                   and 
+                   disable='n'
+                   
+                   and id=#{id}
+            ]]>        
+  </select>
+  
+  
+</mapper>

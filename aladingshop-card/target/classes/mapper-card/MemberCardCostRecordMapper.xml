@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.card.dao.MemberCardCostRecordDao" >
+  <resultMap id="MemberCardCostRecordResultMap" type="MemberCardCostRecord" >
+    <id column="id" property="id"/>
+    <result column="cost_card_code" property="costCardCode"/>
+    <result column="cost_money" property="costMoney" />
+    <result column="cost_type" property="costType" />
+    <result column="cost_money_type" property="costMoneyType" />
+    <result column="order_code" property="orderCode" />
+    <result column="member_id" property="memberId" />
+    <result column="create_time" property="createTime" />
+  </resultMap>
+  <insert id="add" parameterType="MemberCardCostRecord"> 
+    insert into t_member_card_cost_record (id, cost_card_code, cost_money, cost_type,
+      cost_money_type,order_code, member_id, create_time)
+    values (#{id}, #{costCardCode}, #{costMoney}, 
+      #{costType},#{costMoneyType},#{orderCode},#{memberId}, 
+      now())
+  </insert>
+  <delete id="deleteById"  parameterType="java.lang.Long">
+    delete from t_member_card_cost_record where id = #{id}
+  </delete>
+  <sql id="Base_Column_List" >
+  	select id, cost_card_code, cost_money, cost_type, cost_money_type,order_code, member_id, create_time from t_member_card_cost_record
+  </sql>
+  <select id="findAll" resultMap="MemberCardCostRecordResultMap" resultType="list">
+  	<include refid="Base_Column_List" />
+  </select> 
+   <select id="findById" resultMap="MemberCardCostRecordResultMap" parameterType="java.lang.Long" >
+   		<include refid="Base_Column_List" />
+   		<where>
+   			id=#{id}
+   		</where>
+  </select>
+  
+  	  <!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="MemberCardCostRecordResultMap" parameterType="Map" >
+	    <include refid="Base_Column_List" />
+		<where>
+			<if test="costCardCode !=null and costCardCode !=''">
+	    	   AND  cost_card_code LIKE "%"#{costCardCode}"%"  
+	        </if>
+			<if test="createTimeFrom != null and createTimeFrom !=''">
+	    	<![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+			]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+		</where>
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select  count(id) from t_member_card_cost_record
+		<where>
+			<if test="costCardCode !=null and costCardCode !=''">
+	    	   AND  cost_card_code LIKE "%"#{costCardCode}"%"  
+	        </if>
+			<if test="createTimeFrom != null and createTimeFrom !=''">
+	    	<![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+			]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+		</where>
+	</select>
+</mapper>

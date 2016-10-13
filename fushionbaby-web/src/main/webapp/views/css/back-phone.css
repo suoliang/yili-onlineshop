@@ -1,0 +1,44 @@
+@charset "utf-8";
+/* CSS Document */
+*{ padding:0; margin:0;}
+img,input{border:0 none;outline: none;}
+img{display:block;border: 0;}
+button{outline: none;}
+ul,ol{ list-style:none;}
+a{text-decoration:none; color:#767676;}
+a:hover{ color:#f40; }
+body{color:#3C3C3C;font:12px/1.5 "Microsoft Yahei",tahoma,arial,"Hiragino Sans GB",宋体,sans-serif;color:#767676;}
+.clearfix:after,.clearfix:before
+{ content:""; display:table;}
+.clearfix:after{ clear:both;}
+.clearfix:after{zoom:1;}
+.container:after,.container:before{content:""; display:table;}
+.container:after{clear: both;}
+.container:after{zoom:1;}
+
+
+/* css begin */
+.container{width: 392px;margin: 0 auto;}
+.logo img{margin: 80px auto;}
+.list{margin-top: 52px;}
+.list h3{font-size: 15px;font-weight: bold;padding-bottom: 25px;text-align: center;}
+.retrieve{position: relative;border: 1px solid #CDCDCD;width: 374px;padding: 8px;cursor: pointer;}
+.retrieve:hover{border-color: #7BDFF5;}
+.retrieve .arrow{position: absolute;right: 12px;top: 15px;}
+.phone-retrieve{font-size: 16px;color: #757575;height: 19px;line-height: 19px;}
+.drop{width: 390px;height: 71px;border: 1px solid #CDCDCD;background-color: #F5F5F5;margin-top: -1px;display: none;cursor: pointer;}
+.phone{border-bottom: 1px dashed #CDCDCD;height: 19px;line-height: 19px;padding: 8px;font-size: 14;}
+.post{height: 19px;line-height: 19px;padding: 8px;font-size: 14;}
+
+
+
+.num{margin: 20px 0 0 8px;font-size: 16px;color: #757575;}
+.list-item{padding-top: 22px;height: 37px;position: relative;}
+.list-item .code{width: 128px;height: 26px;border: 1px solid #FEDD9E;border-radius: 5px;display: block;color: #FDD17D;font-size: 12px;float: right;text-align: center;line-height: 26px;margin: 5px 18px 0 0;}
+
+
+.textshort{width: 143px;height: 15px;border: 1px solid #CDCDCD;padding: 10px;font-size: 16px;color: #CBCBCB;line-height: 18px;float: left;margin-right: 18px;}
+.textshort:hover{border-color: #7BDFF5;}
+.list-item-btn{width: 160px;height: 36px;background-color: #fff;border: 1px solid #7BDFF5;border-radius: 5px;color: #7BDFF5;font-size: 16px;font-weight: bold;position: absolute;left: 50%;margin-left: -81px;cursor: pointer;}
+.list-item-btn:hover{background-color: #7BDFF5;color: #fff;}
+.choose{font-size: 16px;color: #757575;line-height: 18px;height: 21px;padding-left: 8px;}

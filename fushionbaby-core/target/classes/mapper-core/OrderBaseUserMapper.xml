@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.core.dao.OrderBaseUserDao" >
+  <resultMap id="BaseResultMap" type="OrderBaseUser" >
+    <id column="id" property="id" />
+    <result column="order_code" property="orderCode" />
+    <result column="member_id" property="memberId" />
+    <result column="member_name" property="memberName" />
+    <result column="order_status" property="orderStatus" />
+    <result column="is_refused" property="isRefused" />
+    <result column="last_receive_time" property="lastReceiveTime" />
+    <result column="cancel_time" property="cancelTime" />
+    <result column="sys_cancel_time" property="sysCancelTime" />
+    <result column="sys_cancel_reason" property="sysCancelReason" />
+    <result column="is_delete" property="isDelete" />
+    <result column="source_code" property="sourceCode" />
+    <result column="total_point_used" property="totalPointUsed" />
+    <result column="order_point_gained" property="orderPointGained" />
+    <result column="is_handle_point" property="isHandlePoint" />
+    <result column="memo" property="memo" />
+    <result column="audit_fail_reason" property="auditFailReason" />
+    <result column="create_time" property="createTime" />
+    <result column="update_time" property="updateTime" />
+    <result column="update_id" property="updateId" />
+    <result column="is_group_buy" property="isGroupBuy" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+  	select
+	    id, order_code, member_id, member_name, order_status, is_refused, last_receive_time, 
+	    cancel_time, sys_cancel_time, sys_cancel_reason, is_delete, source_code, total_point_used, order_point_gained, 
+	    is_handle_point, memo, audit_fail_reason, create_time, update_time, update_id, is_group_buy
+	from t_order_base
+  </sql>
+  <insert id="addOrderBase" parameterType="OrderBaseUser" >
+    insert into t_order_base (id, order_code, member_id, 
+      member_name, order_status, is_refused, 
+      last_receive_time, cancel_time, sys_cancel_time, 
+      sys_cancel_reason, is_delete, source_code, 
+      total_point_used, order_point_gained, is_handle_point, memo, 
+      audit_fail_reason, create_time, update_time, update_id, is_group_buy)
+    values (#{id}, #{orderCode}, #{memberId}, 
+      #{memberName}, #{orderStatus}, #{isRefused}, 
+      #{lastReceiveTime}, #{cancelTime}, #{sysCancelTime}, 
+      #{sysCancelReason}, #{isDelete}, #{sourceCode}, #{totalPointUsed},
+      #{orderPointGained}, #{isHandlePoint}, #{memo}, 
+      #{auditFailReason}, now(), #{updateTime}, #{updateId}, #{isGroupBuy})
+  </insert>
+  <sql id="orderBase_where">
+  	<where>
+  		is_delete ='n'
+  		<if test="orderCode != null and orderCode !='' ">
+  			and order_code = #{orderCode}
+  		</if>
+  		<if test="memberId != null and memberId !='' ">
+  			and member_id = #{memberId}
+  		</if>
+  		<if test="orderStatus != null and orderStatus !='' ">
+  			and order_status = #{orderStatus}
+  		</if>
+  		<if test="evaluateStatus != null and evaluateStatus !='' ">
+  			and order_status in (6,8)
+  		</if>
+  	</where>
+  </sql>
+  <select id="getListPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	<include refid="Base_Column_List" />
+  	<include refid="orderBase_where" />
+  	order by create_time DESC
+	<if test="start!=null and limit!=null">
+		LIMIT ${start},${limit}
+	</if>
+  </select>
+  <select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+	select count(id) 
+ 		from t_order_base
+  	<include refid="orderBase_where" />
+  </select>
+  
+  <select id="findObjectByMemIdAndOrdCode" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	<include refid="Base_Column_List" />
+  	<where>
+  		 member_id = #{memberId}
+  		and order_code = #{orderCode}
+  	</where>
+  </select>
+  
+  <select id="getWaitingListByMemberId" parameterType="Long" resultMap="BaseResultMap">
+  	<include refid="Base_Column_List" />
+  	<where>
+  		 member_id = #{memberId}
+  		and order_status = '1'
+  	</where>
+  </select>
+  
+  <select id="calcCountByParam" parameterType="java.util.Map" resultType="java.lang.Integer">
+  	select count(*) from t_order_base
+  	<where>
+  		<if test="orderCode != null and orderCode !='' ">
+  			and order_code = #{orderCode}
+  		</if>
+  		<if test="memberId != null and memberId !='' ">
+  			and member_id = #{memberId}
+  		</if>
+  		<if test="orderStatus != null and orderStatus !='' ">
+  			and order_status = #{orderStatus}
+  		</if>
+  	</where>
+  </select>
+  
+  <update id="updateOrderStatus" parameterType="OrderBaseUser">
+  	update t_order_base 
+  		set update_time = now()
+  		<if test="orderStatus!=null and orderStatus!=''">
+			, order_status = #{orderStatus}
+		</if>
+  		<if test="cancelTime!=null and cancelTime!=''">
+			, cancel_time = #{cancelTime}
+		</if>
+  		<if test="lastReceiveTime !=null and lastReceiveTime !=''">
+			, last_receive_time = #{lastReceiveTime}
+		</if>
+  		<if test="isDelete!=null and isDelete!=''">
+			, is_delete = #{isDelete}
+		</if>
+  	<where>
+  		order_code = #{orderCode}
+  		and member_id = #{memberId}
+  	</where>
+  </update>
+ 
+</mapper>

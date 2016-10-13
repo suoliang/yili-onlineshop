@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fushionbaby.order.dao.OrderTraceDao">
+  <resultMap id="BaseResultMap" type="OrderTrace">
+    <id column="id"  property="id" />
+    <result column="member_id"  property="memberId" />
+    <result column="order_code"  property="orderCode" />
+    <result column="order_status"  property="orderStatus" />
+    <result column="order_status_des"  property="orderStatusDes" />
+    <result column="create_time"  property="createTime" />
+    <!-- 门店编号 -->
+    <result column="store_code" property="storeCode" />
+    
+  </resultMap>
+  <sql id="Base_Column_List">
+    id,member_id,order_code,order_status,order_status_des,create_time,store_code
+  </sql>
+  <!-- 用于测试 -->
+  <insert id="add" parameterType="OrderTrace">
+    insert into t_order_trace (id,member_id,order_code,order_status,order_status_des,create_time,store_code)
+    values (#{id},#{memberId}, #{orderCode}, #{orderStatus}, #{orderStatusDes}, now(), #{storeCode})
+  </insert>
+  
+  <select id="findByOrderCode" parameterType="String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_order_trace
+    where order_code = #{orderCode}
+  </select>
+  
+  <select id="findByOrderTraceId" parameterType="long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_order_trace
+    where id = #{id}
+  </select>
+  
+  <update id="updateByMemberIdAndOrderCode" parameterType="OrderTrace">
+    update t_order_trace 
+    <set>
+      <if test="orderStatus != null and orderStatus != ''">
+        order_status = #{orderStatus},
+      </if>
+      <if test="orderStatusDes != null and orderStatusDes != ''">
+        order_status_des = #{orderStatusDes},
+      </if>
+    </set>
+    where order_code = #{orderCode} 
+    	and member_id= #{memberId}
+  </update>
+
+	<delete id="deleteByOrderCodeAndMemberId">
+		delete from t_order_trace where order_code=#{orderCode} and member_id=#{memberId}
+	</delete>
+
+</mapper>

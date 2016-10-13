@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>礼品卡详情 - Fushionbaby</title>
+		<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico"><!-- 浏览器标签图标 -->
+		<link rel="stylesheet"  href="css/public.css">
+		<script src="ftl/publicHeadTags.js"></script><!-- 公共<head>标签 -->
+		<link rel="stylesheet"  href="css/details.css">
+		<style>
+			.cards_detil_ul {color: #444;}
+			.cards_detil_ul p {font-weight: bold;font-size: 16px;margin-bottom: 5px;}
+			.cards_detil_ul li {font-size: 14px;line-height: 26px;}
+		</style>
+	</head>
+	<body>
+		<script type="text/javascript" src="ftl/topbar.js"></script><!-- 公共顶部JS -->
+		<script type="text/javascript" src="ftl/header.js"></script><!-- 公共头部JS -->
+		<!-- detail begin -->
+		<div class="detail container">
+			<div class="detail-meta">
+				<div class="tb-property">
+					<div class="pass-check" id="not_login">
+						<div class="close"></div>
+						<p class="desc-info">您好，请<a href="login.html">登录</a></p>
+						<!-- <button class="pay-btn con-ec pass-change">确定</button> -->
+					</div>
+					<div class="pass-checked" id="has-add">
+						<div class="close"></div>
+						<p class="desc-info">您好，已<a href="persona-order.html?true">收藏</a></p>
+						<!-- <button class="pay-btn con-ec pass-change">确定</button> -->
+					</div>
+					<div class="tb-wrap-l">
+						<ul class="top">
+							<li><a href="javascript:"><div class="verticalAlign_detail_top"><img src="images/card_100.png" alt=""></div></a></li>
+						</ul>
+						<ul class="bottom">
+							<li><a href="javascript:"><div class="verticalAlign_detail_bottom"><img src="images/card_100.png" alt=""></div></a></li>
+						</ul>
+					</div>
+					<div class="tb-wrap-r">
+						<div class="tb-detail-hd">
+							<h2>兜世宝 100元礼品卡</h2>
+						</div>
+						<div class="price">
+							<em class="present-price">&yen:100.00</em>
+						</div>
+						<div class="color-size fl"></div>
+						<div class="buy fl">
+							<p>
+							<h3>购买数量：</h3>
+							</p>
+							<div class="amountent">
+								<span class="amount">
+								<a href="javascript:" class="left goods_cut" onclick="goods_cut();changePrice();">-</a>
+								<input type="text" class="num amount-num" value="1" onblur="changePrice()" name="number" id="number" >
+								<a href="javascript:" class="right goods_add" onclick="goods_add();changePrice();">+</a>
+								</span>
+								<em>库存:571件</em>
+								<!-- 加减商品数量 -->
+								<script type="text/javascript">
+								function goods_cut(){
+								var num_val=document.getElementById('number');
+								var new_num=num_val.value;
+								var Num = parseInt(new_num);
+								if(Num>1)Num=Num-1;
+								num_val.value=Num;
+								}
+								function goods_add(){
+								var num_val=document.getElementById('number');
+								var new_num=num_val.value;
+								var Num = parseInt(new_num);
+								Num=Num+1;
+								num_val.value=Num;
+								}
+								</script>
+							</div>
+							<div class="btn">
+								<span class="cart">
+								<img src="images/cart.png" alt="" class="bcar">
+								</span>
+								<span class="buy-now"></span>
+								<span class="collect">
+								</span>
+							</div>
+						</div>
+						<div class="share fl">
+							<span>分享到：</span>
+							<a href="#" title="新浪微博">
+								<img src="images/xl.png" >
+							</a>
+							<a href="#" title="QQ">
+								<img src="images/qq.png" >
+							</a>
+							<a href="#" title="QQ空间">
+								<img src="images/qk.png" >
+							</a>
+							<a href="#" title="微信">
+								<img src="images/wx.png" >
+							</a>
+							<a href="#" title="微信朋友圈">
+								<img src="images/wp.png" >
+							</a>
+							<a href="#" title="短信">
+								<img src="images/dx.png" >
+							</a>
+							<a href="#" title="邮箱">
+								<img src="images/yx.png" >
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="main-wrap">
+				<div class="tabbarbox" id="tabbarbox">
+					<ul class="tabbar">
+						<li class="tab selected ggcs"><a href="javascript:">详情与使用</a></li>
+						<li class="last">
+							<div class="buycar">
+								<span>&yen:100.00</span>
+								<img src="images/bcar.png" alt="" class="car">
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="attributes">
+					<div class="attributes-list">
+						<ul class="cards_detil_ul">
+							<p>商品名称：</p>
+							<li>兜世宝 100元礼品卡</li>
+							<p>使用方法：</p>
+							<li></li>
+							<li>...</li>
+							<p>使用条件：</p>
+							<li>使用条件1</li>
+							<li>使用条件2</li>
+							<li>使用条件3</li>
+							<li>...</li>
+							<p>注意事项</p>
+							<li>...</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- footer begin -->
+		<script type="text/javascript" src="ftl/footer.js"></script><!-- 公共底部JS -->
+		<script type="text/javascript" src="ftl/nav.js"></script><!-- 公共右侧导航JS -->
+
+		<script type="text/javascript" src="js/base.js"></script>
+		<script type="text/javascript" src="js/details.js"></script>
+		<script type="text/javascript" src="js/car-fly.js"></script>
+	</body>
+</html>

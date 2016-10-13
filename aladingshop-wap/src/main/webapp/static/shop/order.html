@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>我的订单</title>
+        <!-- 通用部分 开始 -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0,user-scalable=no">
+        <link rel="shortcut icon" href="images/favicon.ico" />
+        <link rel="stylesheet" href="css/style.min.css"><!-- 通用 CSS -->
+        <script src="farmwork/jquery/jquery-2.1.3.min.js"></script><!-- 通用jQuery JS -->
+        <script src="farmwork/velocity/velocity.min.js"></script><!-- velocity JS -->
+        <script src="farmwork/velocity/velocity.ui.min.js"></script><!-- velocity JS -->
+        <script src="js/min/public.min.js"></script><!-- 通用 public JS -->
+        <!-- 通用部分 结束 -->
+
+        <link rel="stylesheet" href="farmwork/swiper/swiper.min.css"><!-- swiper CSS-->
+    </head>
+    <body id="order">
+
+        <div class="container">
+
+            <div class="head">
+                <a href="javascript:history.go(-1)" class="a-left">
+                    <span class="back"></span>
+                </a>
+                <p>我的订单</p>
+            </div>
+
+            <ul class="rank-ul fl wp100">
+              <li class="active first">
+                <p>全部</p>
+                <span>（5）</span>
+                <i></i>
+              </li>
+              <li>
+                <p>待付款</p>
+                <span>（1）</span>
+                <i></i>
+              </li>
+              <li>
+                <p>待发货</p>
+                <span>（0）</span>
+                <i></i>
+              </li>
+              <li>
+                <p>待收货</p>
+                <span>（2）</span>
+                <i></i>
+              </li>
+              <li>
+                <p>待评价</p>
+                <span>（2）</span>
+                <i></i>
+              </li>
+            </ul>
+
+            <!-- .order-wrap 为一种状态 -->
+            <div class="order-wrap fl wp100">
+                <!-- .order-box 为一个订单 -->
+                <div class="order-box fl wp100 mB10">
+                    <div class="order-tit fl wp100">
+                        <p>下单时间：2015-12-12 12:00:00</p>
+                        <span>共计 3 件</span>
+                    </div>
+                    <span class="right"></span>
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            <a href="detail.html" class="swiper-slide">
+                                <img src="picture/1.jpg">
+                            </a>
+                            <a href="detail.html" class="swiper-slide">
+                                <img src="picture/2.jpg">
+                            </a>
+                        </div>
+                    </div><!-- /.swiper-container -->
+                    <div class="order-wrap-b fl wp100">
+                        <p>合计：<i class="red">&yen;299.00</i></p>
+                        <a href="pay.html"><button>待付款</button></a>
+                        <button class="cancel-order">取消订单</button>
+                    </div>
+                </div>
+
+                <div class="order-box fl wp100 mB10">
+                    <div class="order-tit fl wp100">
+                        <p>下单时间：2015-12-12 12:00:00</p>
+                        <span>共计 3 件</span>
+                    </div>
+                    <span class="right"></span>
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            <a href="detail.html" class="swiper-slide">
+                                <img src="picture/1.jpg">
+                            </a>
+                            <a href="detail.html" class="swiper-slide">
+                                <img src="picture/2.jpg">
+                            </a>
+                            <a href="detail.html" class="swiper-slide">
+                                <img src="picture/3.jpg">
+                            </a>
+                            <a href="detail.html" class="swiper-slide">
+                                <img src="picture/4.jpg">
+                            </a>
+                            <a href="detail.html" class="swiper-slide">
+                                <img src="picture/6.jpg">
+                            </a>
+                            <a href="detail.html" class="swiper-slide">
+                                <img src="picture/5.jpg">
+                            </a>
+                        </div>
+                    </div><!-- /.swiper-container -->
+                    <div class="order-wrap-b fl wp100">
+                        <!-- <span>共计 3 件</span> -->
+                        <p>合计：<i class="red">&yen;299.00</i></p>
+                        <button>待发货</button>
+                    </div>
+                </div>
+
+                <div class="order-box fl wp100 mB10">
+                    <div class="order-tit fl wp100">
+                        <p>下单时间：2015-12-12 12:00:00</p>
+                        <span>共计 3 件</span>
+                    </div>
+                    <a href="order-detail.html" class="cart-confirm-b fl wp100">
+                        <img src="picture/1.jpg">
+                        <p>舒肤佳金银花/菊花沐浴露400毫升</p>
+                        <span>参数：属性</span>
+                        <span>参数：属性</span>
+                        <i>&yen; 29.9</i>
+                        <div class="modal-c fl wp100">数量 1</div>
+                    </a>
+                    <div class="order-wrap-b fl wp100">
+                        <p>合计：<i class="red">&yen;299.00</i></p>
+                        <button>待收货</button>
+                        <a href="logistics.html">
+                            <button>查看物流</button>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="order-wrap fl wp100" style="display:none">
+                <!-- .order-box 为一个订单 -->
+                <div class="order-box fl wp100 mB10">
+                    <div class="order-tit fl wp100">
+                        <p>下单时间：2015-12-12 12:00:00</p>
+                        <span>共计 3 件</span>
+                    </div>
+                    <a href="order-detail.html" class="cart-confirm-b fl wp100">
+                        <img src="picture/1.jpg">
+                        <p>舒肤佳金银花/菊花沐浴露400毫升</p>
+                        <span>参数：属性</span>
+                        <span>参数：属性</span>
+                        <i>&yen; 29.9</i>
+                        <div class="modal-c fl wp100">数量 1</div>
+                    </a>
+                    <div class="order-wrap-b fl wp100">
+                        <p>合计：<i class="red">&yen;299.00</i></p>
+                        <button class="disabled">审核中</button>
+                        <button class="cancel-order">取消订单</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="order-wrap fl wp100" style="display:none"></div>
+
+            <div class="order-wrap fl wp100" style="display:none">
+                <!-- .order-box 为一个订单 -->
+                <div class="order-box fl wp100 mB10">
+                    <div class="order-tit fl wp100">
+                        <p>下单时间：2015-12-12 12:00:00</p>
+                        <span>共计 3 件</span>
+                    </div>
+                    <span class="right"></span>
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            <a href="detail.html" class="swiper-slide">
+                                <img src="picture/1.jpg">
+                            </a>
+                            <a href="detail.html" class="swiper-slide">
+                                <img src="picture/2.jpg">
+                            </a>
+                            <a href="detail.html" class="swiper-slide">
+                                <img src="picture/3.jpg">
+                            </a>
+                            <a href="detail.html" class="swiper-slide">
+                                <img src="picture/4.jpg">
+                            </a>
+                            <a href="detail.html" class="swiper-slide">
+                                <img src="picture/6.jpg">
+                            </a>
+                            <a href="detail.html" class="swiper-slide">
+                                <img src="picture/5.jpg">
+                            </a>
+                        </div>
+                    </div><!-- /.swiper-container -->
+                    <div class="order-wrap-b fl wp100">
+                        <p>合计：<i class="red">&yen;299.00</i></p>
+                        <button>待收货</button>
+                        <a href="logistics.html">
+                            <button>查看物流</button>
+                        </a>
+                    </div>
+                </div>
+                <div class="order-box fl wp100 mB10">
+                    <div class="order-tit fl wp100">
+                        <p>下单时间：2015-12-12 12:00:00</p>
+                        <span>共计 3 件</span>
+                    </div>
+                    <a href="order-detail.html" class="cart-confirm-b fl wp100">
+                        <img src="picture/1.jpg">
+                        <p>舒肤佳金银花/菊花沐浴露400毫升</p>
+                        <span>参数：属性</span>
+                        <span>参数：属性</span>
+                        <i>&yen; 29.9</i>
+                        <div class="modal-c fl wp100">数量 1</div>
+                    </a>
+                    <div class="order-wrap-b fl wp100">
+                        <p>合计：<i class="red">&yen;299.00</i></p>
+                        <button>待收货</button>
+                        <a href="logistics.html">
+                            <button>查看物流</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="order-wrap fl wp100" style="display:none">
+                <!-- .order-box 为一个订单 -->
+                <div class="order-box fl wp100 mB10">
+                    <div class="order-tit fl wp100">
+                        <p>下单时间：2015-12-12 12:00:00</p>
+                        <span>共计 3 件</span>
+                    </div>
+                    <a href="order-detail.html" class="cart-confirm-b fl wp100">
+                        <img src="picture/7.jpg">
+                        <p>舒肤佳金银花/菊花沐浴露400毫升</p>
+                        <span>参数：属性</span>
+                        <span>参数：属性</span>
+                        <i>&yen; 29.9</i>
+                        <div class="modal-c fl wp100">数量 1</div>
+                    </a>
+                    <div class="order-wrap-b fl wp100">
+                        <p>合计：<i class="red">&yen;299.00</i></p>
+                        <button>待评价</button>
+                    </div>
+                </div>
+                <div class="order-box fl wp100 mB10">
+                    <div class="order-tit fl wp100">
+                        <p>下单时间：2015-12-12 12:00:00</p>
+                        <span>共计 3 件</span>
+                    </div>
+                    <span class="right"></span>
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            <a href="detail.html" class="swiper-slide">
+                                <img src="picture/1.jpg">
+                            </a>
+                            <a href="detail.html" class="swiper-slide">
+                                <img src="picture/2.jpg">
+                            </a>
+                            <a href="detail.html" class="swiper-slide">
+                                <img src="picture/3.jpg">
+                            </a>
+                            <a href="detail.html" class="swiper-slide">
+                                <img src="picture/4.jpg">
+                            </a>
+                            <a href="detail.html" class="swiper-slide">
+                                <img src="picture/6.jpg">
+                            </a>
+                            <a href="detail.html" class="swiper-slide">
+                                <img src="picture/5.jpg">
+                            </a>
+                        </div>
+                    </div><!-- /.swiper-container -->
+                    <div class="order-wrap-b fl wp100">
+                        <p>合计：<i class="red">&yen;299.00</i></p>
+                        <button>待评价</button>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /.container -->
+
+        <div class="modal-wrap" id="cancelOrderModal">
+            <div class="modal">
+                <p>确认取消该订单吗？</p>
+                <div class="btn-wrap">
+                    <a class="cancel" href="javascript:void(0)">取消</a>
+                    <a class="confirm" href="javascript:void(0)">确定</a>
+                </div>
+            </div>
+        </div>
+
+        <script src="farmwork/swiper/swiper.jquery.min.js"></script><!-- swiper JS -->
+        <script>
+        $(function(){
+            var status=GetQueryString("status");
+            if(status !=null && status.toString().length>0) {
+                $('.order-wrap').eq(status).show().siblings('.order-wrap').hide();
+                $('.rank-ul').find('li').eq(status).addClass('active').siblings('li').removeClass('active');
+            }
+
+            $('.rank-ul').find('li').click(function(event) {
+                var thisIndex = $(this).index();
+                $(this).addClass('active').siblings().removeClass('active');
+                $('.order-wrap').eq(thisIndex).show().siblings('.order-wrap').hide();
+                var swiper = new Swiper('.swiper-container',{
+                    grabCursor: true,
+                    slidesPerView: 'auto'
+                });
+            });
+
+            /*取消订单*/
+            $('.cancel-order').click(function(event) {
+                $('#cancelOrderModal').fadeIn();
+            });
+            $('#cancelOrderModal').find('.confirm').click(function(event) {
+                $('#cancelOrderModal').fadeOut();
+                alert('订单取消成功');
+            });
+
+            /*订单列表 滚动初始化*/
+            var swiper = new Swiper('.swiper-container',{
+                grabCursor: true,
+                slidesPerView: 'auto'
+            });
+        })
+
+        </script>
+
+    </body>
+</html>

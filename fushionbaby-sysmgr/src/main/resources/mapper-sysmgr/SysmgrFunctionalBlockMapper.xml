@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.sysmgr.dao.SysmgrFunctionalBlockDao">
+	<resultMap id="sysmgrFunctionalBlockMap" type="sysmgrFunctionalBlock">
+		<id column="id" property="id" />
+		<result column="code" property="code" />
+		<result column="name" property="name" />
+		<result column="icon" property="icon" />
+		<result column="use_type" property="useType" />
+		<result column="link_url" property="linkUrl" />
+		<result column="sort_order" property="sortOrder" />
+		<result column="start_time" property="startTime" />
+		<result column="end_time" property="endTime" />
+		<result column="disable" property="disable" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+	</resultMap>
+	<insert id="add" parameterType="sysmgrFunctionalBlock">
+		insert into
+		t_sysmgr_functional_block (id, use_type,code, name, icon, link_url, sort_order,start_time,end_time,disable,create_time,update_time)
+		values
+		(#{id}, #{useType},#{code}, #{name}, #{icon}, #{linkUrl}, #{sortOrder},#{startTime},#{endTime},#{disable},now(),now());
+	</insert>
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_sysmgr_functional_block
+		where id = #{id}
+	</delete>
+	
+	
+	
+	<select id="findAllByDisable" resultMap="sysmgrFunctionalBlockMap" resultType="list" parameterType="java.lang.String">
+		select 
+			id,use_type, code, name, icon, link_url, sort_order,start_time,end_time,disable,create_time,update_time
+		from 
+			t_sysmgr_functional_block  
+		<where>
+			<if test="disable!=null and disable!=''">
+				disable = #{disable}
+			</if>
+				
+		</where> 
+		order by case when  sort_order=0 or sort_order is null then 9999999 else sort_order end asc
+	</select>
+	
+	
+	
+	<select id="findByCode" resultMap="sysmgrFunctionalBlockMap" parameterType="java.lang.String">
+		select 
+			id,use_type, code, name, icon, link_url, sort_order,start_time,end_time,disable,create_time,update_time
+		from 
+			t_sysmgr_functional_block  
+		<where>
+			code=#{code}
+		</where>
+		
+	</select>
+	<update id="update" parameterType="sysmgrFunctionalBlock">
+		update 
+			t_sysmgr_functional_block
+		<set>
+			name=#{name},
+			icon = #{icon},
+			use_type=#{useType},
+			link_url=#{linkUrl},
+			sort_order=#{sortOrder},
+			start_time=#{startTime},
+			end_time=#{endTime},
+			disable=#{disable},
+			update_time=#{updateTime}
+		</set>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+</mapper>

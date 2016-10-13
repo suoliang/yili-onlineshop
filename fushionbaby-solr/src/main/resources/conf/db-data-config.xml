@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataConfig>
+	<dataSource type="JdbcDataSource"
+
+	driver="com.mysql.jdbc.Driver"
+	
+	url="jdbc:mysql://10.10.100.201:3306/baby_sku?useUnicode=true&amp;characterEncoding=utf-8"
+	
+	user="root" password="root"/>
+	
+	<document>
+	
+	<entity name="t_sku" pk="ID"
+	
+	query="select t.id, t.unique_code, t.name, t.color, t.size, t.description from t_sku t"
+	
+	deltaImportQuery="select t.id, t.unique_code, t.name, t.color, t.size, t.description from t_sku t where t.id='${dataimporter.delta.ID}'"
+	
+	deltaQuery="select t.id, t.unique_code, t.name, t.color, t.size, t.description from t_sku t where t.id='${dataimporter.delta.ID}'">
+	
+	<field column="ID" name="id"/>
+	
+	</entity>
+	
+	</document>
+	
+</dataConfig>
+
+
+

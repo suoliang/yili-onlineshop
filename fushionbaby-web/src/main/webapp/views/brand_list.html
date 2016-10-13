@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>品牌列表 - Fushionbaby</title>
+    <script src="ftl/publicHeadTags.js"></script><!-- 公共<head>标签 -->
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/brand_list.css">
+  </head>
+  <body>
+    <script type="text/javascript" src="ftl/topbar.js"></script><!-- 公共顶部 -->
+    <script type="text/javascript" src="ftl/header.js"></script><!-- 公共头部 -->
+    <div class="container" id="brand_list">
+      <div class="brand_left fl">
+        <!-- 字母导航 -->
+        <div class="brand_left_nav">
+          <ul>
+            <li>A</li>
+          </ul>
+        </div>
+        <!-- 品牌 -->
+        <div class="brand_wrap">
+          <div class="h3_wrap"><h3>A</h3></div>
+          <ul>
+            <li>
+              <a href="" target="_blank">
+                <div class="verticalAlign_brand">
+                  <img src="images/02.jpg" alt="品牌名" title="品牌名">
+                </div>
+              </a>
+              <p>品牌名</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- 热销商品 -->
+      <div class="brand_right fr">
+        <div class="newpro-bd-r">
+          <dl class="hot-seniority">
+            <dt class="hot-title">
+              <h3>热销商品<span class="hot"> Hot</span></h3>
+            </dt>
+            <div class="dd_wrap">
+              <dd class="hot-list" title="妮飘婴儿纸尿裤（小）">
+                <span class="item-num">1</span>
+                <span class="item-info">
+                  <a target="_blank" href="">妮飘婴儿纸尿裤（小）</a>
+                </span>
+                <span class="item-thumb">
+                <a target="_blank" href="" class="item-img">
+                  <div class="verticalAlign_hot">
+                    <img alt="妮飘婴儿纸尿裤（小）" src="http://filepic.fushionbaby.com/img/sku/100212/100212_w_h_h_s_f9d27d1e-0a31-48d6-8016-229e73a1144d.JPG">
+                  </div>
+                </a>
+                </span>
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+    <!-- js -->
+    <script src="js/brand_list_beifen.js"></script>
+    <script src="js/base.js"></script>
+    <script type="text/javascript" src="ftl/footer.js"></script><!-- 公共底部 -->
+    <script type="text/javascript" src="ftl/nav.js"></script><!-- 公共导航 -->
+    <script>
+      $(function(){
+        /*  循环 .brand_wrap  */
+        var brand_wrap_num = 26;
+        for(i=1;i<=brand_wrap_num-1;i++){
+          $('.brand_left').append($('.brand_wrap:first').clone());
+        }
+
+        var array_num = new Array(26);
+        array_num = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+        for(i=0;i<=26;i++){
+          $('.brand_wrap').eq(i).addClass(array_num[i]).children().children('h3').html(array_num[i]);
+        }
+
+
+        /*  循环 .brand_wrap li  */
+        var num = 10;
+        for(i=1;i<=num-1;i++){
+          $('.brand_wrap ul').append($('.brand_wrap ul li:first').clone());
+        }
+
+        /*  循环 热销  */
+        var hot_num = 10;
+        for(i=1;i<=hot_num-1;i++){
+          $('.dd_wrap').append($('.hot-list:first').clone());
+        }
+        for(i=0;i<10;i++){
+            $('.item-num').eq(i).html(i+1);
+        }
+
+      })
+    </script>
+  </body>
+</html>

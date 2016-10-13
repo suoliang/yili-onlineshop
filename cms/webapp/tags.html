@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8" />
+        <title>DEMO - 添加标签</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="renderer" content="webkit">
+        <meta name="description" content="阿拉丁后台管理系统">
+        <meta name="keywords" content="阿拉丁后台管理系统">
+        <link rel="shortcut icon" href="images/favicon.ico" />
+        <!-- styles -->
+        <link rel="stylesheet" href="css/bootstrap.min.css" />
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/font-awesome.min.css" />
+        <link rel="stylesheet" href="css/style.min.css">
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+
+                <div class="col-md-12 content">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-cog"></i> 添加标签</h3>
+                        </div>
+                        <div class="panel-body">
+
+
+                            <form class="form-horizontal" id="addRoleForm" action="javascript:void(0)">
+
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">标签：</label>
+                                    <div class="col-sm-5">
+                                        <div class="tags-wrap">
+                                            <div class="tag">
+                                                <span>修身</span>
+                                                <a class="tags-close" href="javascript:void(0)"><i class="fa fa-times"></i></a>
+                                            </div>
+                                            <div class="tag">
+                                                <span>欧美</span>
+                                                <a class="tags-close" href="javascript:void(0)"><i class="fa fa-times"></i></a>
+                                            </div>
+                                            <div class="tag">
+                                                <span>时尚</span>
+                                                <a class="tags-close" href="javascript:void(0)"><i class="fa fa-times"></i></a>
+                                            </div>
+                                            <div class="input-group tags-input">
+                                                <input type="text" class="form-control" maxlength="6">
+                                                <div id="tagsBtn" class="input-group-addon">Enter</div>
+                                            </div>
+
+                                            <a id="tagsRemove" class="btn btn-warning" href="javascript:void(0)">删除全部</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </form>
+
+
+                        </div>
+                    </div>
+                </div>
+                <!-- /.content -->
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+        <!-- javascript -->
+        <script src="js/jquery.min.js"></script>
+        <script>
+        $(function(){
+            var tagsBtn = $('#tagsBtn');
+            var tagsInput = $('.tags-input');
+            var tagsClose = $('.tags-close');
+
+            /*添加按钮*/
+            tagsBtn.click(function(event) {
+                addTag();
+            });
+
+            /*回车执行添加*/
+            tagsInput.find('input').bind('keyup', function(event) {
+                if (event.keyCode == "13") {
+                    tagsBtn.click();
+                }
+            });
+
+            /*删除按钮*/
+            removeTagsRemoveBtn();
+            $('.tags-close').bind('click', function(event) {
+                $(this).parents('.tag').remove();
+                removeTagsRemoveBtn();
+            });
+
+            /*删除全部*/
+            $('#tagsRemove').click(function(event) {
+                $('.tag').remove();
+            });
+
+            function removeTagsRemoveBtn(){
+                if ($('.tag').length==0) {
+                    $('#tagsRemove').hide();
+                } else {
+                    $('#tagsRemove').show();
+                }
+            }
+
+            function addTag() {
+                var inputValue = $.trim(tagsInput.find('input').val());
+                if (inputValue!=="") {
+                    var tag = '<div class="tag"><span>' + inputValue + '</span><a class="tags-close" href="javascript:void(0)"><i class="fa fa-times"></i></a></div>';
+                    /*添加标签*/
+                    tagsInput.before(tag);
+                    /*清空 value*/
+                    tagsInput.find('input').val("");
+
+                    /*绑定删除事件*/
+                    $('.tags-close').bind('click', function(event) {
+                        $(this).parents('.tag').remove();
+                        removeTagsRemoveBtn();
+                    });
+                    removeTagsRemoveBtn();
+                };
+            };
+        })
+        </script>
+    </body>
+</html>

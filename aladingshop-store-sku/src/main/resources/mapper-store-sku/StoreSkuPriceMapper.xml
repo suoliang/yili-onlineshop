@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.store.sku.dao.StoreSkuPriceDao">
+	<resultMap id="StoreSkuPriceResultMap" type="StoreSkuPrice">
+		<id column="id" property="id" />
+		<result column="store_code" property="storeCode" />
+		<result column="sku_code" property="skuCode" />
+		<result column="cost_price" property="costPrice" />
+		<result column="market_price" property="marketPrice" />
+		<result column="retail_price" property="retailPrice" />
+		<result column="alading_price" property="aladingPrice" />
+		<result column="current_price" property="currentPrice" />
+		<result column="update_time" property="updateTime" />
+		<result column="update_id" property="updateId" />
+	</resultMap>
+	<sql id="StoreSkuPrice_column">
+		id, store_code, sku_code ,cost_price,market_price,retail_price,alading_price,current_price,update_time,update_id 
+	</sql>
+	<insert id="add" parameterType="StoreSkuPrice">
+		insert into 
+			t_store_sku_price
+		(id, store_code, sku_code ,cost_price,market_price,retail_price,alading_price,current_price,update_time,update_id  )
+	    values 
+	    (#{id},#{storeCode},#{skuCode},#{costPrice},#{marketPrice},#{retailPrice},#{aladingPrice},#{currentPrice},now(),#{updateId})
+	</insert>
+	
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_store_sku_price where id = #{id}
+	</delete>
+	<delete id="deleteByStoreCodeAndSkuCode" parameterType="java.lang.String">
+		delete from t_store_sku_price where store_code = #{storeCode} and sku_code=#{skuCode}
+	</delete>
+	
+	<update id="updateByStoreCodeAndSkuCode">
+		update t_store_sku_price
+			set
+			<if test="costPrice!=null and costPrice!=''">
+			    cost_price = #{costPrice}, 
+			</if>
+			<if test="marketPrice!=null and marketPrice!=''">
+			    market_price = #{marketPrice}, 
+			</if>
+			<if test="retailPrice!=null and retailPrice!=''">
+			    retail_price = #{retailPrice}, 
+			</if>
+			<if test="aladingPrice!=null and aladingPrice!=''">
+			    alading_price = #{aladingPrice}, 
+			</if>
+			<if test="currentPrice!=null and currentPrice!=''">
+			    current_price = #{currentPrice}, 
+			</if>
+			<if test="updateId!=null and updateId!=''">
+			    update_id = #{updateId} ,
+			</if>
+			
+			 update_time = now()  
+			
+		<where>
+			store_code = #{storeCode} and sku_code=#{skuCode}
+		</where>
+	</update>
+	
+	<update id="updateById">
+		update t_store_sku_price
+			set
+			<if test="storeCode!=null and storeCode!=''">
+			    store_code = #{storeCode}, 
+			</if>
+			<if test="skuCode!=null and skuCode!=''">
+			    sku_code=#{skuCode}, 
+			</if>
+			<if test="costPrice!=null and costPrice!=''">
+			    cost_price = #{costPrice}, 
+			</if>
+			<if test="marketPrice!=null and marketPrice!=''">
+			    market_price = #{marketPrice}, 
+			</if>
+			<if test="retailPrice!=null and retailPrice!=''">
+			    retail_price = #{retailPrice}, 
+			</if>
+			<if test="aladingPrice!=null and aladingPrice!=''">
+			    alading_price = #{aladingPrice}, 
+			</if>
+			<if test="currentPrice!=null and currentPrice!=''">
+			    current_price = #{currentPrice}, 
+			</if>
+			
+			<if test="updateId!=null and updateId!=''">
+			    update_id = #{updateId} ,
+			</if>
+			
+			  update_time = now()  
+			
+		<where>
+			id = #{id} 
+		</where>
+	</update>
+	
+	<select id="findById" resultMap="StoreSkuPriceResultMap" parameterType="java.lang.Long">
+		select  <include refid="StoreSkuPrice_column"/> from t_store_sku_price where id = #{id}
+	</select>
+	<select id="findByStoreCodeAndSkuCode" resultMap="StoreSkuPriceResultMap" >
+		select  <include refid="StoreSkuPrice_column"/> from t_store_sku_price where store_code = #{storeCode} and sku_code=#{skuCode}
+	</select>
+	
+	<!-- 分页条件查询 -->
+	<select id="getList" resultType="list" resultMap="StoreSkuPriceResultMap" parameterType="Map" >
+		select <include refid="StoreSkuPrice_column"/>
+		from t_store_sku_price 
+		<where>
+			<if test="storeCode!=null and storeCode!=''">
+			    store_code = #{storeCode}  and 
+			</if>
+			<if test="skuCode!=null and skuCode!=''">
+			    sku_code = #{skuCode}  and 
+			</if>
+			<if test="costPrice!=null and costPrice!=''">
+			    cost_price = #{costPrice} and 
+			</if>
+			<if test="marketPrice!=null and marketPrice!=''">
+			    market_price = #{marketPrice} and  
+			</if>
+			<if test="retailPrice!=null and retailPrice!=''">
+			    retail_price = #{retailPrice} and  
+			</if>
+			<if test="aladingPrice!=null and aladingPrice!=''">
+			    alading_price = #{aladingPrice} and  
+			</if>
+			<if test="currentPrice!=null and currentPrice!=''">
+			    current_price = #{currentPrice} and  
+			</if>
+			<if test="updateTime!=null and updateTime!=''">
+			    update_time = #{updateTime}   and 
+			</if>
+			<if test="updateId!=null and updateId!=''">
+			    update_id = #{updateId} 
+			</if>
+		</where>
+		 order by update_time desc
+		<if test="start!=null and limit!=null ">
+			limit #{start},#{limit}
+		</if>
+		 
+	</select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) from t_store_sku_price 
+		<where>
+			<if test="storeCode!=null and storeCode!=''">
+			    store_code = #{storeCode}  and 
+			</if>
+			<if test="skuCode!=null and skuCode!=''">
+			    sku_code = #{skuCode}  and 
+			</if>
+			<if test="costPrice!=null and costPrice!=''">
+			    cost_price = #{costPrice} and 
+			</if>
+			<if test="marketPrice!=null and marketPrice!=''">
+			    market_price = #{marketPrice} and  
+			</if>
+			<if test="retailPrice!=null and retailPrice!=''">
+			    retail_price = #{retailPrice} and  
+			</if>
+			<if test="aladingPrice!=null and aladingPrice!=''">
+			    alading_price = #{aladingPrice} and  
+			</if>
+			<if test="currentPrice!=null and currentPrice!=''">
+			    current_price = #{currentPrice} and  
+			</if>
+			<if test="updateTime!=null and updateTime!=''">
+			    update_time = #{updateTime}   and 
+			</if>
+			<if test="updateId!=null and updateId!=''">
+			    update_id = #{updateId} 
+			</if>
+		</where>
+	</select>
+</mapper>

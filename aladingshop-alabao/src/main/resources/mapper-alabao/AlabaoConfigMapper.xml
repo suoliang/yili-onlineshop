@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.alabao.dao.AlabaoConfigDao">
+	<resultMap id="AlabaoConfigResultMap" type="AlabaoConfig">
+		<id column="id" property="id" />
+		<result column="rate" property="rate" />
+		<result column="rebate_time" property="rebateTime" />
+		<result column="update_id" property="updateId" />
+		<result column="update_time" property="updateTime" />
+		<result column="rate_code" property="rateCode" />
+	</resultMap>
+	<sql id="AlabaoConfig_column">
+		id,rate,rebate_time,update_id,update_time,rate_code
+	   
+	</sql>
+	<insert id="add" parameterType="AlabaoConfig">
+		insert into 
+			t_alabao_config
+		(id,rate,rebate_time,update_id,update_time,rate_code)
+	    values 
+	    (#{id},#{rate},#{rebateTime},#{updateId},#{updateTime},#{rateCode})
+	</insert>
+	
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_alabao_config where id = #{id}
+	</delete>
+	
+	<update id="updateById">
+		update t_alabao_config
+			set
+			<if test="rate !=null and rate !=''">
+			    rate = #{rate}, 
+			</if>
+			<if test="rebateTime!=null and rebateTime!=''">
+			    rebate_time = #{rebateTime}, 
+			</if>
+			<if test="updateId!=null and updateId!=''">
+			    update_id = #{updateId}, 
+			</if>
+			update_time = now()
+		<where>
+			id = #{id}
+		</where>
+	</update>
+	
+	<select id="findById" resultMap="AlabaoConfigResultMap" parameterType="java.lang.Long">
+		select  <include refid="AlabaoConfig_column"/> from t_alabao_config where id = #{id}
+	</select>
+	
+	<select id="findByRateCode" resultMap="AlabaoConfigResultMap" parameterType="java.lang.String">
+		select  <include refid="AlabaoConfig_column"/> from t_alabao_config where rate_code = #{rateCode}
+	</select>
+	
+	<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="AlabaoConfigResultMap" parameterType="Map" >
+		select <include refid="AlabaoConfig_column"/>
+		from t_alabao_config 
+		<where>
+			<if test="createTimeFrom != null and createTimeFrom !=''">
+	    	<![CDATA[
+				and DATE_FORMAT(update_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+			]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(update_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+		   </where>
+		<if test="start!=null and limit!=null ">
+			limit #{start},#{limit}
+		</if>
+		 
+	</select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) from t_alabao_config
+		<where>
+			<if test="createTimeFrom != null and createTimeFrom !=''">
+	    	<![CDATA[
+				and DATE_FORMAT(update_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+			]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(update_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+		   </where>
+	</select>
+	
+</mapper>

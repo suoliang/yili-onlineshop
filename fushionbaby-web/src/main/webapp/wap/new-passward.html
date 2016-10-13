@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <title>Fushionbaby触屏版-新密码设置</title>
+    <meta name="apple-mobile-web-app-title" content="兜士宝-新密码设置">
+    <script type="text/javascript" src="js/public-headTag.js"></script><!-- 公共头部便签，css -->
+  </head>
+  <body id="new-passward">
+    <div class="container">
+      <div class="public_header fl width100">
+        <div class="public_header_wrap fl width100">
+          <a class="public_back" href="javascript:void(0);"  onclick="history.go(-1);">返回</a>
+          新密码设置
+          <a class="public_btn_r disabled" href="javascript:void(0);"></a>
+        </div>
+      </div>
+      <div class="public_form_wrap">
+        <form action="">
+          <div class="public_input_wrap">
+            <input id="passwards_repeat" class="passwards_input passwards_repeat required" type="password" name="passwards_repeat" placeholder="请输入新密码" data-toggle="tooltip" title="请输入新密码">
+          </div>
+          <div class="public_input_wrap">
+            <input id="passwards_repeat_2" class="passwards_repeat_2 required" type="password" name="passwards_repeat_2" placeholder="确认密码" data-toggle="tooltip" title="确认密码">
+          </div>
+          <button id="new_passward_btn" class="public_button" type="button">确定</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- 对话框 -->
+    <div class="public_modal_backup">
+      <div class="public_modal">
+        <div class="modal_body">修改成功</div>
+        <div class="modal_foot">
+          <button class="modal_confirm only_confirm">好</button>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="js/footer.js"></script>
+    <script type="text/javascript" src="js/iPass.packed.js"></script>
+    <script>
+    $(function(){
+      /*  表单提交，最终验证  */
+      $("#new_passward_btn").click(function() {
+        $(".required").trigger('blur');
+        var numError = $('form .has-error').length;
+        if (numError) {
+          return false;
+        }
+        /*  alert("成功.");  */
+        $(this).addClass('public_loading');
+
+        /*  成功后的操作 开始  */
+        $('.public_modal_backup').fadeIn();/* 显示对话框  */
+        /*  确定按钮  */
+          $(".modal_confirm").click(function() {
+            /*  do something  */
+            $('.public_modal_backup').fadeOut();
+            $("#new_passward_btn").removeClass('public_loading');
+          });
+        /*  成功后的操作 结束  */
+      })
+    })
+    </script>
+  </body>
+</html>

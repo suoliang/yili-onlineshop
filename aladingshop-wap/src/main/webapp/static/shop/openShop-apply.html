@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>openShop-start</title>
+		<meta name="description" content="阿拉丁玛特商城">
+        <meta name="keywords" content="阿拉丁玛特商城">
+        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0,user-scalable=no">
+        <link rel="shortcut icon" href="images/favicon.ico" />
+        <link rel="stylesheet" href="css/style.min.css"><!-- 通用 CSS -->
+        <style type="text/css">
+        	body{background:#f6f6f6;font-family: "微软雅黑","arial black";}
+        	.head{float:none;}
+        	.head .a-right{width:13%;font-size:1.57rem;height:100%;display:table;} 
+        	.head .a-right span{display:table-cell;vertical-align:middle;height:100%;line-height:1.6rem;}       	
+        	.head .header-input-wrap{ float: left; margin-top: 5px; width: 72%; color: #ccc; height: 34px; border-radius: 4px; background: #fff;}
+        	.head .header-input-wrap p { float: left; line-height: 38px;}
+        	.head .header-input-wrap .search { margin: 9px 10px 0; height: 18px; width: 18px; background-image: url(images/retina-version/sprites-sfcc2a413ba.png); background-position: 0 -1667px; background-repeat: no-repeat; float: left }
+        	.head p{width:auto;color:#ccc;font-size:2rem;line-height:34px;}       	
+        	.noLocation{width:100%;height:7rem;line-height:7rem;text-align: center;background:#fff;margin:1rem 0;}
+        	.noLocation span{height:100%;position:relative;padding-left:3rem;display:inline-block;font-size:2rem;color:#333;}
+        	.noLocation span:before{
+        		content:"";
+        		width:2rem;
+        		height:3rem;
+        		position:absolute;
+        		top:50%;
+        		left:0;
+        		margin-top:-1.5rem;
+        		background: url(images/location_icon.png) no-repeat left center;
+        		background-size:contain;
+        		}
+        	.btn-wrap a{height:42px;font-size:2.4rem;line-height:42px;width:80%;}
+        	.form-group>.btn-wrap:nth-child(1) a{background-color:#fff;border:1px solid #f40;color:#FF5100;}
+        	.form-group{
+        		position:absolute;
+        		bottom:8rem;
+        	}
+        </style>
+	</head>
+	<body id="openShop-start">
+		<div class="head">
+            <a href="javascript:history.go(-1)" class="a-left">
+                <span class="back"></span>
+            </a>
+            <a href="javascript:void(0)" class="header-input-wrap">
+                    <span class="search"></span>
+                    <p>请输入小区名称</p>
+                </a>
+            <a href="javascript:void(0)" class="a-right" onclick="">
+                	<span>手动<br/>选择</span>
+            </a>
+        </div>
+        <div class="noLocation">
+        	<span>无法定位到小区，请手动选择</span>
+        </div>
+        <form class="form-group" >
+        	<div class="btn-wrap ">
+                <a href="index.html">去商城逛逛</a>
+            </div>
+            <div class="btn-wrap">
+                <a href="openShop.html">申请开店</a>
+            </div>
+        </form>
+	</body>
+	<script>
+		// 获取html标签
+	    var Ohtml = document.documentElement;
+	    // 页面加载完执行一次
+	    getSize();
+		    function getSize(){
+		    	// 获取屏幕的宽度
+		    		var screenWidth = Ohtml.clientWidth;
+		    	/* 当屏幕宽度小于等于320的情况下  我们就让font-size固定在4px */
+		    	if(screenWidth <= 320){
+		    			Ohtml.style.fontSize = '7px';
+		    	// 当屏幕宽度大于等于640的情况下  我们就让font-size固定在14px 
+		    		}else if(screenWidth >= 640){
+		    			Ohtml.style.fontSize = '14px';
+		    	/* 当屏幕宽度在我们区间之间  我们就让font-size对应这个屏幕的font-size */
+		    	}else{
+		    			Ohtml.style.fontSize = screenWidth/(640/14) +'px';
+		    	}
+		    }
+		    window.onresize = function(){
+		    		getSize();
+		    }
+	</script>
+</html>

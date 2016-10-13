@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.log.dao.LogPromotionsRecordDao" >
+  <resultMap id="LogPromotionsRecordMap" type="LogPromotionsRecord" >
+    <id column="id" property="id" />
+    <result column="member_id" property="memberId" />
+    <result column="sku_code" property="skuCode" />
+    <result column="order_code" property="orderCode" />
+    <result column="pm_code" property="pmCode" />
+    <result column="record_status" property="recordStatus" />
+    <result column="create_time" property="createTime" />
+   </resultMap>
+   
+   <insert id="add" parameterType="LogPromotionsRecord" >
+    insert into t_log_promotions_record (id, member_id,sku_code,order_code,pm_code,record_status,create_time)
+    values (#{id}, #{memberId}, #{skuCode}, #{orderCode}, #{pmCode},#{recordStatus},now())
+  </insert>
+  
+  
+   <select id="queryByCondition" resultMap="LogPromotionsRecordMap" resultType="list"
+  	parameterType="LogPromotionsRecordQueryConditon">
+ 		select 
+  			id, member_id,sku_code ,order_code,pm_code,record_status,create_time
+		from
+  			t_log_promotions_record
+	 <where>
+	 	<if test="memberId!=null and memberId!=''">
+	 		and member_id = #{memberId}
+	 	</if>
+	 	<if test="skuCode!=null and skuCode!=''">
+	 		and sku_code = #{skuCode}
+	 	</if>
+	 	<if test="orderCode!=null and orderCode!=''">
+	 		and order_code = #{orderCode}
+	 	</if>
+	 	<if test="pmCode!=null and pmCode!=''">
+	 		and pm_code = #{pmCode}
+	 	</if>
+	 	<if test="isToDay!=null and isToDay!=''">
+	 		and (TO_DAYS(create_time) = TO_DAYS(NOW())) 
+	 	</if>
+	 </where>
+  </select>
+  
+  <update id="update" >
+  	update t_log_promotions_record 
+  	<set>
+  		record_status = #{recordStatus}
+  	</set>
+  	where member_id = #{memberId} and sku_code = #{skuCode}  and order_code = #{orderCode} and pm_code = #{pmCode}
+  
+  </update>
+  
+  <delete id="deleteById">
+  	delete from t_log_promotions_record where id=#{id}
+  </delete>
+  
+  <!-- 分页条件查询 -->
+	<select id="getList" resultType="list" resultMap="LogPromotionsRecordMap" parameterType="Map" >
+		select * from t_log_promotions_record 
+		<where>
+			<if test="orderCode != null and orderCode != ''">
+       		 	and order_code = #{orderCode} 
+  			</if>
+  			<if test="memberId != null and memberId != ''">
+       		 	and member_id = #{memberId} 
+  			</if>
+  			<if test="pmCode != null and pmCode != ''">
+       		 	and pm_code = #{pmCode} 
+  			</if>
+  			<if test="includeSkuCodes !=null and includeSkuCodes !=''">
+	    	   AND  sku_code in (${includeSkuCodes})  
+	        </if>
+	        <if test="createTimeFrom != null and createTimeFrom !=''">
+	    	<![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+			]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+		</where>
+		order by create_time desc 
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select 
+			count(id)
+		from 
+			t_log_promotions_record
+		<where>
+			<if test="orderCode != null and orderCode != ''">
+       		 	and order_code = #{orderCode} 
+  			</if>
+  			<if test="memberId != null and memberId != ''">
+       		 	and member_id = #{memberId} 
+  			</if>
+  			<if test="pmCode != null and pmCode != ''">
+       		 	and pm_code = #{pmCode} 
+  			</if>
+  			<if test="includeSkuCodes !=null and includeSkuCodes !=''">
+	    	   AND  sku_code in (${includeSkuCodes})  
+	        </if>
+	        <if test="createTimeFrom != null and createTimeFrom !=''">
+	    	<![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+			]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+		</where>
+	</select>
+  
+</mapper>

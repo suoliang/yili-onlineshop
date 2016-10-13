@@ -1,0 +1,205 @@
+@mixin caret($position,$caret-width,$border-width,$direction,$border-color,$background-color){
+  position: $position;
+
+  &:before,
+  &:after {
+    content:"";
+    position: absolute;
+  }
+  @if $direction == top {
+    &:before {
+      top:0;
+      left: 0;
+      border-bottom: $caret-width solid $border-color;
+      border-left: $caret-width solid transparent;
+      border-right: $caret-width solid transparent;
+    }
+    &:after {
+      left: $border-width;
+      top: $border-width;
+      border-bottom: ($caret-width - $border-width) solid $background-color;
+      border-left: ($caret-width - $border-width) solid transparent;
+      border-right: ($caret-width - $border-width) solid transparent;
+    }
+  }
+  @else if $direction == right {
+    &:before {
+      top:0;
+      left: 0;
+      border-left: $caret-width solid $border-color;
+      border-top: $caret-width solid transparent;
+      border-bottom: $caret-width solid transparent;
+    }
+    &:after {
+      left: 0;
+      top: $border-width;
+      border-left: ($caret-width - $border-width) solid $background-color;
+      border-top: ($caret-width - $border-width) solid transparent;
+      border-bottom: ($caret-width - $border-width) solid transparent;
+    }
+  }
+  @else if $direction == bottom {
+    &:before {
+      top:0;
+      left: 0;
+      border-top: $caret-width solid $border-color;
+      border-left: $caret-width solid transparent;
+      border-right: $caret-width solid transparent;
+    }
+    &:after {
+      left: $border-width;
+      top: 0;
+      border-top: ($caret-width - $border-width) solid $background-color;
+      border-left: ($caret-width - $border-width) solid transparent;
+      border-right: ($caret-width - $border-width) solid transparent;
+    }
+  }
+  @else if $direction == left {
+    &:before {
+      top:0;
+      left: 0;
+      border-right: $caret-width solid $border-color;
+      border-top: $caret-width solid transparent;
+      border-bottom: $caret-width solid transparent;
+    }
+    &:after {
+      left: $border-width;
+      top: $border-width;
+      border-right: ($caret-width - $border-width) solid $background-color;
+      border-top: ($caret-width - $border-width) solid transparent;
+      border-bottom: ($caret-width - $border-width) solid transparent;
+    }
+  }
+}
+// .caret {
+//   top: -10px;
+//   left: 10px;
+//   @include caret(absolute,10px,1px,top,orange,#fff);
+// }
+
+@mixin opacity($opacity:0.8) {
+  opacity: $opacity;
+  $opa :$opacity*100;
+  filter: alpha(opacity=$opa);
+}
+// .opacity {
+//   @include opacity(0.8);
+// }
+
+@mixin transition($property:all,$duration:0.25s,$animation_type:ease-out,$delay:0s) {
+  -webkit-transition: $property $duration $animation_type $delay;
+  -moz-transition: $property $duration $animation_type $delay;
+  -o-transition: $property $duration $animation_type $delay;
+  transition: $property $duration $animation_type $delay;
+}
+// .transition {
+//     @include transition();
+// }
+
+@mixin origin($x:50%,$y:50%) {
+  -webkit-transform-origin:$x $y;
+  -moz-transform-origin:$x $y;
+  -o-transform-origin:$x $y;
+  -ms-transform-origin:$x $y;
+  transform-origin:$x $y;
+}
+// .origin {
+//     @include origin();
+// }
+
+@mixin rotate($rotate) {
+  -webkit-transform: rotate($rotate);
+  -ms-transform: rotate($rotate);
+  transform: rotate($rotate);
+}
+
+@mixin scale($scaleX) {
+  -webkit-transform: scale($scaleX);
+  -ms-transform: scale($scaleX);
+  transform: scale($scaleX);
+}
+
+@mixin translate($x,$y) {
+  -webkit-translate:translate($x $y);
+  -ms-translate:translate($x $y);
+  translate:translate($x $y);
+}
+
+@mixin skew($x,$y) {
+  -webkit-translate:skew($x $y);
+  -ms-translate:skew($x $y);
+  translate:skew($x $y);
+}
+
+@mixin rotate360($speed:40s){
+  -webkit-animation: rotate $speed linear infinite;
+  -moz-animation: rotate $speed linear infinite;
+  -o-animation: rotate $speed linear infinite;
+  animation: rotate $speed linear infinite;
+}
+
+// @-webkit-keyframes rotate{from{-webkit-transform: rotate(0deg)}
+//   to{-webkit-transform: rotate(360deg)}
+// }
+// @-moz-keyframes rotate{from{-moz-transform: rotate(0deg)}
+//   to{-moz-transform: rotate(360deg)}
+// }
+// @-o-keyframes rotate{from{-o-transform: rotate(0deg)}
+//   to{-o-transform: rotate(360deg)}
+// }
+// @keyframes rotate{from{transform: rotate(0deg)}
+//   to{transform: rotate(360deg)}
+// }
+
+@mixin positionC($width,$height) {
+  width:$width;
+  height:$height;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -$width/2;
+  margin-top: -$height/2;
+}
+
+@mixin nowrap($width:98%) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: $width;
+  display:inline-block;
+}
+
+@mixin img_c ($width,$height) {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  width:$width;
+  height:$height;
+  img {
+    max-width: $width;
+    max-height: $height;
+  }
+}
+
+@mixin box ($box-sizing:border-box) {
+  -webkit-box-sizing: $box-sizing;
+  -moz-box-sizing: $box-sizing;
+  -o-box-sizing: $box-sizing;
+  -ms-box-sizing: $box-sizing;
+  box-sizing: $box-sizing;
+}
+*, *:before, *:after { -webkit-box-sizing: inherit; -moz-box-sizing: inherit; -ms-box-sizing: inherit;box-sizing: inherit; }
+
+@mixin semi-transparent-colors($attribute,$color,$background){
+    $percent: alpha($color) * 100%;
+    $opaque: opacify($color,1);
+    $solid-color: mix($opaque,$background,$percent);
+    #{$attribute}: $solid-color;
+    #{$attribute}: $color;
+}
+
+// .button {
+//     @include semi-transparent-colors("background-color",rgba(black,.5),white);
+//     @include semi-transparent-colors("color",rgba(white,.8),#393);
+//     @include semi-transparent-colors("border-color",rgba(black,.7),gray);
+// }

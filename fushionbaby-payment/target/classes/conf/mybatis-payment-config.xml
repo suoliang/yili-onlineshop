@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration 
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 命名空间 -->
+	<typeAliases>
+		<!-- 银联支付状态信息 -->
+		<typeAlias alias="PaymentAppUnion" type="com.fushionbaby.payment.model.PaymentAppUnion" />
+		<!-- 微信支付状态信息 -->
+		<typeAlias alias="PaymentAppWx" type="com.fushionbaby.payment.model.PaymentAppWx" />
+		<!-- 支付宝支付状态信息 -->
+		<typeAlias alias="PaymentAppZfb" type="com.fushionbaby.payment.model.PaymentAppZfb" />
+		<typeAlias alias="PaymentWebUnion" type="com.fushionbaby.payment.model.PaymentWebUnion" />
+	
+		<!-- web端微信支付状态信息 -->
+		<typeAlias alias="PaymentWebWx" type="com.fushionbaby.payment.model.PaymentWebWx" />
+	
+		<!-- 支付宝支付状态信息 -->
+		<typeAlias alias="PaymentWebZfbDbjy" type="com.fushionbaby.payment.model.PaymentWebZfbDbjy" />
+	
+		<!-- 支付宝支付状态信息 -->
+		<typeAlias alias="PaymentWebZfbJsdz" type="com.fushionbaby.payment.model.PaymentWebZfbJsdz" />
+	
+	</typeAliases>
+
+	<!-- 注册SQL映射文件 -->
+	<mappers>
+	</mappers>
+</configuration>

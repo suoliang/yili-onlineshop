@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fushionbaby.order.dao.OrderFeeDao">
+  <resultMap id="BaseResultMap" type="OrderFee">
+    <id column="id"  property="id" />
+    <result column="member_id"  property="memberId" />
+    <result column="order_code"  property="orderCode" />
+    <result column="cardno"  property="cardno" />
+    <result column="card_amount"  property="cardAmount" />
+    <result column="total_actual"  property="totalActual" />
+    <result column="total_af_discount"  property="totalAfDiscount" />
+    <result column="total_bf_discount"  property="totalBfDiscount" />
+    <result column="epoints_redeem_money"  property="epointsRedeemMoney" />
+    <result column="tax_price"  property="taxPrice" />
+    <result column="use_wallet_money"  property="useWalletMoney" />
+    <result column="payable_transfer_fee"  property="payableTransferFee" />
+    <result column="actual_transfer_fee"  property="actualTransferFee" />
+    <result column="create_time"  property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id,member_id,order_code,cardno,card_amount,total_actual,total_af_discount,
+    total_bf_discount,epoints_redeem_money,tax_price,use_wallet_money,payable_transfer_fee,
+    actual_transfer_fee,create_time
+  </sql>
+  <!-- 用于测试 -->
+  <insert id="add" parameterType="OrderFee">
+    insert into t_order_fee
+    (<include refid="Base_Column_List" />)
+    values (#{id},#{memberId}, #{orderCode}, #{cardno}, #{cardAmount}, 
+    #{totalActual},#{totalAfDiscount},#{totalBfDiscount},#{epointsRedeemMoney},
+    #{taxPrice},#{useWalletMoney},#{payableTransferFee},#{actualTransferFee},now())
+  </insert>
+  
+  <select id="findByOrderCode" parameterType="String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_order_fee
+    where order_code = #{orderCode}
+  </select>
+  
+  <select id="findByOrderFeeId" parameterType="long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_order_fee
+    where id = #{id}
+  </select>
+
+  <select id="findByMemberIdAndOrderCode" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_order_fee
+    where member_id = #{memberId} and
+    	order_code = #{orderCode}
+  </select>
+
+</mapper>

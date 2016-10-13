@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <title>Fushionbaby-个人中心</title>
+    <meta name="apple-mobile-web-app-title" content="兜士宝-个人中心">
+    <script type="text/javascript" src="js/public-headTag-local.js"></script><!-- 公共头部便签，css,js等 -->
+  </head>
+  <body id="personal-center">
+    <div class="container">
+      <div class="public_header fl width100">
+        <div class="public_header_wrap fl width100">
+          <a class="public_back" href="javascript:void(0);"  onclick="history.go(-1);">返回</a>
+          个人中心
+          <a class="public_btn_r disabled" href="javascript:void(0);"></a>
+        </div>
+      </div>
+      <div class="personal">
+        <div class="personal_l">
+          <img src="css/images/default.png" alt="头像">
+          <span>幼儿园大班</span>
+        </div>
+        <div class="personal_r">
+          <p>REBECCA LUCAS</p>
+          <span id="Doumi_num">兜米：<i>3000</i></span>
+          <a id="DoumiBtn" href="javascript:void(0);">签到送兜米</a>
+        </div>
+      </div>
+      <div class="public_list">
+        <ul>
+          <li>
+            <a href="orderAll.html" class="public_icons">全部订单<i class="icon-angle-right"></i></a>
+          </li>
+          <li>
+            <a href="mymoney.html" class="public_icons">我的余额和充值<i class="icon-angle-right"></i></a>
+          </li>
+          <li>
+            <a href="address.html" class="public_icons">地址管理<i class="icon-angle-right"></i></a>
+          </li>
+          <li>
+            <a href="collect.html" class="public_icons">我的收藏<i class="icon-angle-right"></i></a>
+          </li>
+          <li>
+            <a href="change-passward.html" class="public_icons">修改密码<i class="icon-angle-right"></i></a>
+          </li>
+          <li>
+            <a href="tel:400-888-8888" class="public_icons">联系客服<i class="icon-angle-right"></i></a>
+          </li>
+          <li>
+            <a href="setting.html" class="public_icons">设置<i class="icon-angle-right"></i></a>
+          </li>
+        </ul>
+      </div>
+      <div class="public_form_wrap">
+        <form action="#">
+          <!-- 未登录显示登录按钮，已登录显示退出登录按钮 -->
+          <button id="loginOut" class="public_button marginT0" type="button" style="display:none;">退出登录</button>
+          <a href="login.html"><button id="loginIn" class="public_button marginT0" type="button" style="display:none;">登录</button></a>
+        </form>
+      </div>
+    </div>
+    <!-- 底部悬浮菜单 -->
+    <div class="nav_home">
+      <a href="index.html">
+        <span class="home"></span>
+        <p>首页</p>
+      </a>
+      <a class="open_menu" href="menu.html">
+        <span class="menu"></span>
+        <p>分类</p>
+      </a>
+      <a class="nav_home_on" href="car.html">
+        <span class="car"><i>10</i></span>
+        <p>购物车</p>
+      </a>
+      <a href="person-center.html">
+        <span class="my"></span>
+        <p>我的</p>
+      </a>
+    </div>
+
+    <!-- 对话框 -->
+    <div id="" class="public_modal_backup">
+      <div class="public_modal">
+        <div class="modal_body">请先登录</div>
+        <div class="modal_foot">
+          </a><button class="modal_confirm">登录</button>
+          <button class="modal_cancel">取消</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+    $(function(){
+      var login = true;/*判断是否已经登录*/
+      if (login) {
+        $("#loginOut").show();/*显示退出登录按钮*/
+        /*若登录可点击签到按钮*/
+        $("#DoumiBtn").one("click",function(){
+          var Addnum = 10;/*签到增加的兜米数量*/
+          /*点击签到后的动画提示*/
+          var AddI = '<i>+'+Addnum+'</i>';
+          $(this)
+          .addClass("DoumiBtn_disabled")
+          .html("已签到")
+          .append(AddI)
+          .find("i")
+          .fadeIn()
+          .animate({"top":"-30px"})
+          .fadeOut();
+          /*增加兜米数量*/
+          setTimeout(function(){
+            var Doumi_num = $("#Doumi_num i").html();
+            $("#Doumi_num i").html(parseInt(Doumi_num)+Addnum);
+          },600);
+        })
+      }
+      else {
+        $("#loginIn").show();/*显示登录按钮*/
+        /*禁止链接，点击链接显示登录弹窗*/
+        $("a").not(".public_header a").not(".public_form_wrap a").not(".nav_home a").attr("href","javascript:void(0);");
+        $("a").not(".public_header a").not(".public_form_wrap a").not(".nav_home a").click(function(){
+          $(".public_modal_backup").fadeIn();
+        })
+        /*  取消按钮：隐藏弹出窗  */
+        $(".modal_cancel").click(function() {
+          $('.public_modal_backup').fadeOut();
+        });
+        /*  确定收货按钮  */
+        $(".modal_confirm").click(function() {
+          window.location='login.html';
+        });
+      }
+    })
+    </script>
+  </body>
+</html>

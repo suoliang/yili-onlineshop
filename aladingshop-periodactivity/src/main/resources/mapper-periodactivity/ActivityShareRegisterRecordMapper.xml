@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.periodactivity.dao.ActivityShareRegisterRecordDao">
+	<resultMap id="ActivityShareRegisterRecordMap" type="ActivityShareRegisterRecord">
+		<id column="id" property="id" />
+		<result column="member_shares_id" property="memberSharesId" />
+		<result column="member_register_id" property="memberRegisterId" />
+		<result column="gain_red_envelope" property="gainRedEnvelope" />
+		<result column="sign_id" property="signId" />
+		<result column="create_time" property="createTime" />
+
+	</resultMap>
+	<sql id="select_column">
+		select 
+			a.id, a.member_shares_id, a.member_register_id ,a.gain_red_envelope,sign_id,a.create_time
+		from alading_activity.t_activity_share_register_record as a
+	   
+	</sql>
+	<insert id="add" parameterType="ActivityShareRegisterRecord">
+		insert into 
+			t_activity_share_register_record
+		(id, member_shares_id, member_register_id ,gain_red_envelope,create_time)
+	    values 
+	    (#{id},#{memberSharesId},#{memberRegisterId},#{gainRedEnvelope},now())
+	</insert>
+	
+	
+	<select id="getTotalBySignId"  resultType="java.lang.Integer" parameterType="java.lang.String">
+		 <include refid="select_column"/>  
+		 <where>a.sign_id = #{signId}</where> 
+		  order by a.create_time desc
+	</select>
+
+	
+	<select id="findByMemberSharesId"  resultType="list" resultMap="ActivityShareRegisterRecordMap" parameterType="java.lang.Long">
+		 <include refid="select_column"/>  
+		 <where>a.member_shares_id = #{memberId}</where> 
+		  order by a.create_time desc
+	</select>
+	
+	<select id="findBymemberRegisterId" resultMap="ActivityShareRegisterRecordMap" parameterType="java.lang.Long">
+		 <include refid="select_column"/>  
+		 <where>a.member_register_id = #{memberRegisterId}</where> 
+		  order by a.create_time desc
+	</select>
+	
+	<select id="getListPage" resultMap="ActivityShareRegisterRecordMap" resultType="list" parameterType="Map">
+	 	 <include refid="select_column"/>   
+		INNER JOIN baby_member.t_member b ON a.member_shares_id = b.id
+
+		 <where>
+		 	<if test="memberShareIdList !=null and memberShareIdList!=''">
+		 		and a.member_shares_id in (${memberShareIdList})
+		 	</if>
+		 	<if test="memberRegisterIdList !=null and memberRegisterIdList!=''">
+		 		and a.member_register_id in (${memberRegisterIdList})
+		 	</if>
+		 	<if test="memberRegisterPwd !=null and memberRegisterPwd !=''">
+		 		and b.password = #{memberRegisterPwd}
+		 	</if>
+		 	
+		 	<if test="createStartTime != null and createStartTime !=''">
+		    	<![CDATA[
+					and DATE_FORMAT(a.create_time,'%Y-%m-%d %H:%i:%s') >= DATE_FORMAT(#{createStartTime}, '%Y-%m-%d %H:%i:%s')
+				]]>
+		    </if>
+			<if test="createEndTime != null and createEndTime != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(a.create_time,'%Y-%m-%d %H:%i:%s') <= DATE_FORMAT(#{createEndTime}, '%Y-%m-%d %H:%i:%s')
+				]]>
+		    </if>
+	    
+		 </where>
+		 
+		order by a.create_time desc
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]> 
+		 
+	</select>
+	
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select 
+			count(id)
+		from 
+			t_activity_share_register_record as a
+			
+		<where>
+		 	<if test="memberShareIdList !=null and memberShareIdList!=''">
+		 		and a.member_shares_id in (${memberShareIdList})
+		 	</if>
+		 	<if test="memberRegisterIdList !=null and memberRegisterIdList!=''">
+		 		and a.member_register_id in (${memberRegisterIdList})
+		 	</if>
+		 	
+		 	<if test="createStartTime != null and createStartTime !=''">
+		    	<![CDATA[
+					and DATE_FORMAT(a.create_time,'%Y-%m-%d %H:%i:%s') >= DATE_FORMAT(#{createStartTime}, '%Y-%m-%d %H:%i:%s')
+				]]>
+		    </if>
+			<if test="createEndTime != null and createEndTime != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(a.create_time,'%Y-%m-%d %H:%i:%s') <= DATE_FORMAT(#{createEndTime}, '%Y-%m-%d %H:%i:%s')
+				]]>
+		    </if>
+	    
+		 </where>	
+	</select>
+</mapper>

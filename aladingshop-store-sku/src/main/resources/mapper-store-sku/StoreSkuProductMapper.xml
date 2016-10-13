@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.store.sku.dao.StoreSkuProductDao">
+	<resultMap id="StoreSkuProductResultMap" type="StoreSkuProduct">
+		<id column="id" property="id" />
+		<result column="store_code" property="storeCode" />
+		<result column="product_code" property="productCode" />
+		<result column="is_support" property="isSupport" />
+		<result column="update_time" property="updateTime" />
+		<result column="update_id" property="updateId" />
+	</resultMap>
+	<sql id="StoreSkuProduct_column">
+		id, store_code, product_code ,is_support,update_time,update_id 
+	   
+	</sql>
+	<insert id="add" parameterType="StoreSku">
+		insert into 
+			t_store_sku_product
+		(id, store_code, product_code ,is_support,update_time,update_id )
+	    values 
+	    (#{id},#{storeCode},#{productCode},#{isSupport},now(),#{updateId})
+	</insert>
+	
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_store_sku_product where id = #{id}
+	</delete>
+	<delete id="deleteByStoreCodeAndProductCode" parameterType="java.lang.String">
+		delete from t_store_sku_product where store_code = #{storeCode} and product_code=#{productCode}
+	</delete>
+	
+	<update id="updateByStoreCodeAndProductCode">
+		update t_store_sku_product
+			set
+			<if test="isSupport!=null and isSupport!=''">
+			    is_support = #{isSupport}, 
+			</if>
+			
+			<if test="updateId!=null and updateId!=''">
+			    update_id = #{updateId} ,
+			</if>
+			
+			 update_time = now()  
+			
+		<where>
+			store_code = #{storeCode} and product_code=#{productCode}
+		</where>
+	</update>
+	
+	<update id="updateById">
+		update t_store_sku_product
+			set
+			<if test="storeCode!=null and storeCode!=''">
+			    store_code = #{storeCode}, 
+			</if>
+			<if test="productCode!=null and productCode!=''">
+			    product_code=#{productCode}, 
+			</if>
+			<if test="isSupport!=null and isSupport!=''">
+			    is_support = #{isSupport}, 
+			</if>
+			<if test="updateId!=null and updateId!=''">
+			    update_id = #{updateId} ,
+			</if>
+			
+			  update_time = now()  
+			
+		<where>
+			id = #{id} 
+		</where>
+	</update>
+	
+	<select id="findById" resultMap="StoreSkuProductResultMap" parameterType="java.lang.Long">
+		select  <include refid="StoreSkuProduct_column"/> from t_store_sku_product where id = #{id}
+	</select>
+	<select id="findByStoreCodeAndProductCode" resultMap="StoreSkuProductResultMap" >
+		select  <include refid="StoreSkuProduct_column"/> from t_store_sku_product where store_code = #{storeCode} and product_code=#{productCode}
+	</select>
+	
+	<!-- 分页条件查询 -->
+	<select id="getList" resultType="list" resultMap="StoreSkuProductResultMap" parameterType="Map" >
+		select <include refid="StoreSkuProduct_column"/>
+		from t_store_sku_product 
+		<where>
+			<if test="storeCode!=null and storeCode!=''">
+			    store_code = #{storeCode}  and 
+			</if>
+			<if test="productCode!=null and productCode!=''">
+			    product_code = #{productCode}  and 
+			</if>
+			<if test="isSupport!=null and isSupport!=''">
+			    is_support = #{isSupport}  and 
+			</if>
+			<if test="status!=null and status!=''">
+			    status = #{status}  and  
+			</if>
+			<if test="updateTime!=null and updateTime!=''">
+			    update_time = #{updateTime}   and 
+			</if>
+			<if test="updateId!=null and updateId!=''">
+			    update_id = #{updateId} 
+			</if>
+		</where>
+		 order by update_time desc
+		<if test="start!=null and limit!=null ">
+			limit #{start},#{limit}
+		</if>
+		 
+	</select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) from t_store_sku_product 
+		<where>
+			<if test="storeCode!=null and storeCode!=''">
+			    store_code = #{storeCode}  and 
+			</if>
+			<if test="productCode!=null and productCode!=''">
+			    product_code = #{productCode}  and 
+			</if>
+			<if test="isSupport!=null and isSupport!=''">
+			    is_support = #{isSupport}  and 
+			</if>
+			<if test="status!=null and status!=''">
+			    status = #{status}  and  
+			</if>
+			<if test="updateTime!=null and updateTime!=''">
+			    update_time = #{updateTime}   and 
+			</if>
+			<if test="updateId!=null and updateId!=''">
+			    update_id = #{updateId} 
+			</if>
+		</where>
+	</select>
+</mapper>

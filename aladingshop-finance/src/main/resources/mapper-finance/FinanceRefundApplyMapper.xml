@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.finance.dao.FinanceRefundApplyDao" >
+  <resultMap id="FinanceRefundApplyResultMap" type="FinanceRefundApply" >
+    <id column="id" property="id" />
+    <result column="member_id" property="memberId"/>
+    <result column="order_code" property="orderCode" />
+    <result column="order_source" property="orderSource" />
+    <result column="order_pay_type" property="orderPayType" />
+    <result column="deal_time" property="dealTime" />
+    <result column="refund_reason" property="refundReason" />
+    <result column="status" property="status" />
+    <result column="deal_id" property="dealId" />
+    <result column="create_time" property="createTime" />
+    <result column="update_time" property="updateTime" />
+  </resultMap>
+  <insert id="add" parameterType="FinanceRefundApply"> 
+    insert into t_finance_refund_apply (id, member_id, order_code, 
+      order_source,order_pay_type, deal_time,  refund_reason, create_time,update_time,deal_id,status)
+    values (#{id}, #{memberId}, #{orderCode}, 
+      #{orderSource}, #{orderPayType}, #{dealTime}, #{refundReason},now(),now(),#{dealId},#{status})
+  </insert>
+
+  <sql id="Base_Column_List" >
+  	select id, member_id, order_code, order_source,order_pay_type,  deal_time,refund_reason,create_time, update_time, deal_id,status
+		 from t_finance_refund_apply
+  </sql>
+  <select id="findAll" resultMap="FinanceRefundApplyResultMap" resultType="list">
+  	<include refid="Base_Column_List" /> ORDER BY create_time desc
+  </select> 
+  <select id="findByMemberIdAndOrderCode" resultMap="FinanceRefundApplyResultMap" parameterType="Map">
+  	<include refid="Base_Column_List" /> 
+  	<where>
+  	      <if test="memberId !=null and memberId !=''">
+	    	   AND  member_id =#{memberId} 
+	        </if>
+	        <if test="orderCode!=null and orderCode!=''">
+	    	   AND  order_code =#{orderCode} 
+	        </if>
+  	</where>
+  
+  </select> 
+  
+  	  <!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="FinanceRefundApplyResultMap" parameterType="Map" >
+	    <include refid="Base_Column_List" />
+		<where>
+			<if test="memberId !=null and memberId !=''">
+	    	   AND  member_id =#{memberId} 
+	        </if>
+			<if test="orderCode!=null and orderCode!=''">
+	    	   AND  order_code =#{orderCode} 
+	        </if>
+			<if test="orderSource!=null and orderSource!=''">
+	    	   AND  order_source=#{orderSource}  
+	        </if>
+	        <if test="orderPayType!=null and orderPayType!=''">
+	    	   AND  order_pay_type=#{orderPayType}  
+	        </if>
+			<if test="refundReason!=null and refundReason!=''">
+	    	   AND  refund_reason=#{refundReason}  
+	        </if>
+			<if test="status!=null and status!=''">
+	    	   AND  status=#{status}  
+	        </if>
+	        <if test="createTimeFrom!= null and createTimeFrom!=''">
+	    	<![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+			]]>
+		    </if>
+			<if test="createTimeTo!= null and createTimeTo!= ''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+	        
+	        
+		</where>
+		ORDER BY create_time desc
+		<if test="start!=null and limit!=null ">
+			limit #{start},#{limit}
+		</if>
+	</select>
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select  count(id) from t_finance_refund_apply
+		<where>
+			<if test="memberId !=null and memberId !=''">
+	    	   AND  member_id =#{memberId} 
+	        </if>
+		    <if test="orderCode!=null and orderCode!=''">
+	    	   AND  order_code =#{orderCode}  
+	        </if>
+	        <if test="refundReason!=null and refundReason!=''">
+	    	   AND  refund_reason=#{refundReason}  
+	        </if>
+			<if test="orderSource!=null and orderSource!=''">
+	    	   AND  order_source=#{orderSource}  
+	        </if>
+	        <if test="orderPayType!=null and orderPayType!=''">
+	    	   AND  order_pay_type=#{orderPayType}  
+	        </if>
+			<if test="status!=null and status!=''">
+	    	   AND  status=#{status}  
+	        </if>
+	        <if test="createTimeFrom!= null and createTimeFrom!=''">
+	    	<![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+			]]>
+		    </if>
+			<if test="createTimeTo!= null and createTimeTo!= ''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+		</where>
+	</select>
+	
+	<update id="updateByMemberIdAndOrderCode">
+		update t_finance_refund_apply 
+		set
+			<if test="orderSource !=null and orderSource !=''">
+				order_source=#{orderSource},
+			</if>
+			<if test="orderPayType !=null and orderPayType !=''">
+				order_pay_type=#{orderPayType},
+			</if>
+			<if test="status !=null and status !=''">
+				status=#{status},
+			</if>
+			<if test="dealId !=null and dealId !=''">
+				deal_id=#{dealId},
+			</if>
+			<if test="dealTime !=null and dealTime !=''">
+				deal_time=#{dealTime},
+			</if>
+			update_time=now()
+		<where>
+			member_id=#{memberId} and order_code=#{orderCode} 
+		</where>
+		
+	</update>
+</mapper>

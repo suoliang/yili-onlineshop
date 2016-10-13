@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <title>Fushionbaby-待评价</title>
+    <meta name="apple-mobile-web-app-title" content="兜士宝-待评价">
+    <script type="text/javascript" src="js/public-headTag-local.js"></script>
+    <!-- 公共头部便签，css,js等 -->
+  </head>
+  <body id="collect" class="orderAll">
+    <div class="container">
+      <div class="public_header fl width100 marginB0">
+        <div class="public_header_wrap fl width100">
+          <a class="public_back" href="javascript:void(0);"  onclick="history.go(-1);">返回</a>
+          待评价
+          <a class="public_btn_r disabled" href="javascript:void(0);"></a>
+        </div>
+      </div>
+      <div class="order_tit">
+        <a href="orderAll.html">全部订单</a>
+        <a href="orderToPay.html">待付款</a>
+        <a href="orderToConfirm.html">待收货</a>
+        <a class="order_tit_on" href="orderToEvaluation.html">待评价</a>
+      </div>
+      <!-- 列表  开始-->
+      <div class="public_products_wrap">
+        <ul class="list_view_ul OH padding0 margin0">
+          <li>
+            <div class="public_products_item list_view_item">
+              <a href="orderDetail.html">
+                <div class="item_picture">
+                  <div class="img_c">
+                    <img class="bttrlazyloading" data-bttrlazyloading-lg-src="css/images/example.jpg" alt="">
+                  </div>
+                </div>
+                <div class="item_name">
+                  <p>订单号：1236548897</p>
+                  <p>金额：<i>&yen; 68</i></p>
+                  <p>交易状态：<i>待评价</i></p>
+                  <p>订单日期：2014/09/28 15:00</p>
+                </div>
+              </a>
+              <a class="order_btn" href="evaluation.html">立即评价</a>
+            </div>
+          </li>
+          <li>
+            <div class="public_products_item list_view_item">
+              <a href="orderDetail.html">
+                <div class="item_picture">
+                  <div class="img_c">
+                    <img class="bttrlazyloading" data-bttrlazyloading-lg-src="css/images/example.jpg" alt="">
+                  </div>
+                </div>
+                <div class="item_name">
+                  <p>订单号：1236548897</p>
+                  <p>金额：<i>&yen; 68</i></p>
+                  <p>交易状态：<i>待评价</i></p>
+                  <p>订单日期：2014/09/28 15:00</p>
+                </div>
+              </a>
+              <a class="order_btn" href="evaluation.html">立即评价</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <!-- 收藏列表  结束-->
+    </div>
+
+    <!-- 收藏列表为空提示 -->
+    <section class="car-none">
+      <img src="css/images/collect.png">
+      <p>待评价 空！空！空！</p>
+      <p>赶快去逛逛吧！</p>
+      <a href="index.html">去商城逛逛</a>
+    </section>
+    <script type="text/javascript" src="js/footer-local.js"></script>
+    <script type="text/javascript" src="js/jquery.bttrlazyloading.min.js"></script>
+    <script type="text/javascript">
+      $(".bttrlazyloading").bttrlazyloading({placeholder:'images/lazyload.gif'});
+    </script>
+  </body>
+</html>

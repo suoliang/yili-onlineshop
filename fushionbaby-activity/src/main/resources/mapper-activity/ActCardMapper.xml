@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.act.activity.dao.ActCardDao">
+	<resultMap id="ActCardMap" type="ActCard">
+		<id column="id" property="id" />
+		<result column="card_no" property="cardNo" />
+		<result column="password" property="password" />
+		<result column="used_time" property="usedTime" />
+		<result column="card_type_id" property="cardTypeId" />
+		<result column="use_type" property="useType" />
+		<result column="use_count" property="useCount" />
+
+		<result column="start_time" property="startTime" />
+		<result column="stop_time" property="stopTime" />
+		<result column="member_id" property="memberId" />
+		
+	</resultMap>
+
+	<insert id="add" parameterType="ActCard">
+		insert 
+		  into t_act_card 
+		     (id,card_no,password,used_time,card_type_id,use_type,use_count,start_time,stop_time,member_id)
+		 values (#{id},	#{cardNo},#{password}, #{usedTime},#{cardTypeId},#{useType},#{useCount},#{startTime},#{stopTime},#{memberId})
+	</insert>
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete 
+		      from   t_act_card
+		where 
+		      id = #{id}
+	</delete>
+	
+	
+	<sql id="base_select_sql">
+	select     id,card_no,password, used_time,card_type_id,use_type,use_count,start_time,stop_time,member_id
+	      from 	    t_act_card 
+	</sql>
+	
+ <delete id="deleteByTypeId" parameterType="java.lang.Long">
+		delete 
+		      from   t_act_card
+		where 
+		      card_type_id = #{cardTypeId}
+	</delete>
+	
+
+	<update id="update" parameterType="ActCard">
+		update		
+		      t_act_card
+		set 
+		   <if test="cardNo!=null and cardNo!=''">
+             card_no	= #{cardNo},
+           </if>
+		   <if test="password!=null and password!=''">
+             password = #{password},
+           </if>
+		   <if test="usedTime!=null and usedTime!=''">
+             used_time = #{usedTime},
+           </if>
+		   <if test="cardTypeId!=null and cardTypeId!=''">
+             card_type_id = #{cardTypeId},
+           </if>
+		   <if test="useType!=null and useType!=''">
+             use_type = #{useType},
+           </if>
+		   <if test="useCount!=null and useCount!=''">
+             use_count = #{useCount},
+           </if>
+		   <if test="startTime !=null and startTime !=''">
+             start_time = #{startTime},
+           </if>
+		   <if test="stopTime !=null and stopTime !=''">
+             stop_time = #{stopTime},
+           </if>
+		   <if test="memberId !=null and memberId !=''">
+             member_id = #{memberId},
+           </if>
+           id =#{id}
+		where
+		      id =#{id}
+	</update>
+	
+    <select id="findById" parameterType="java.lang.Long" resultMap="ActCardMap">
+         <include refid="base_select_sql"/>  where id=#{id}  
+	</select>
+	
+	
+	<select id="findAll" resultType="list" resultMap="ActCardMap">
+         <include refid="base_select_sql"/>
+	</select>
+	
+	<select id="findActCardByCardNo" parameterType="string" resultMap="ActCardMap">
+	    <include refid="base_select_sql"/>   where card_no=#{cardNo}
+	</select>
+	
+	<select id="findByCardNoAndPassword" parameterType="Map" resultMap="ActCardMap">
+	    <include refid="base_select_sql"/>  
+	    <where>
+			card_no =#{cardNo} 
+			<if test="password!=null and password!=''">
+				AND password =#{password}
+			</if>
+	    </where>
+	</select>
+	
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+  	select 
+	     count(id)
+	from 
+	    t_act_card 
+        <where>
+			<if test="cardNo!=null and cardNo!=''">
+			  AND    card_no =#{cardNo}
+			</if>
+			<if test="password!=null and password!=''">
+			  AND    password =#{password}
+			</if>
+			<if test="useType!=null and useType!=''">
+			  AND    use_type =#{useType}
+			</if>
+			  <if test="useTimeFrom != null and useTimeFrom !=''">
+	    	<![CDATA[
+				and DATE_FORMAT(used_time,'%Y-%m-%d') >= DATE_FORMAT(#{useTimeFrom}, '%Y-%m-%d')
+			]]>
+	    </if>
+		<if test="useTimeTo != null and useTimeTo != ''">
+	    	<![CDATA[
+				and DATE_FORMAT(used_time,'%Y-%m-%d') <= DATE_FORMAT(#{useTimeTo}, '%Y-%m-%d')
+			]]>
+	    </if>
+		</where>
+	</select>
+	<select id="getListPage"  resultType="list" resultMap="ActCardMap" parameterType="Map">
+       	<include refid="base_select_sql"/>
+		<where>
+			<if test="cardNo!=null and cardNo!=''">
+			   AND	card_no =#{cardNo}
+			</if>
+			<if test="password!=null and password!=''">
+			  AND    password =#{password}
+			</if>
+			<if test="useType!=null and useType!=''">
+			  AND    use_type =#{useType}
+			</if>
+			  <if test="useTimeFrom != null and useTimeFrom !=''">
+	    	<![CDATA[
+				and DATE_FORMAT(used_time,'%Y-%m-%d') >= DATE_FORMAT(#{useTimeFrom}, '%Y-%m-%d')
+			]]>
+	    </if>
+		<if test="useTimeTo != null and useTimeTo != ''">
+	    	<![CDATA[
+				and DATE_FORMAT(used_time,'%Y-%m-%d') <= DATE_FORMAT(#{useTimeTo}, '%Y-%m-%d')
+			]]>
+	    </if>
+			
+		 </where>
+		 <![CDATA[
+			LIMIT #{start},#{limit}
+		 ]]>
+  </select>
+     <select id="findByMemberId" parameterType="java.lang.Long" resultMap="ActCardMap">
+         <include refid="base_select_sql"/>  where member_id=#{memberId}   order by stop_time asc
+	</select>
+	
+</mapper>

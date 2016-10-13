@@ -1,0 +1,48 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.fushionbaby.act.activity</groupId>
+	<artifactId>fushionbaby-activity</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>fushionbaby-activity</name>
+	
+
+	<parent>
+		<groupId>com.fushionbaby.parent</groupId>
+		<artifactId>fushionbaby-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+
+	<url>http://maven.apache.org</url>
+	<distributionManagement>
+		<repository>
+			<id>Yili-maven-releases</id>
+			<name>Yili-maven-releases</name>
+			<url>http://192.168.1.39:8081/nexus/content/repositories/Yili-maven-releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>Yili-maven-snapshots</id>
+			<name>Yili-maven-snapshots</name>
+			<url>http://192.168.1.39:8081/nexus/content/repositories/Yili-maven-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement> 
+	<dependencies>
+	
+		<dependency>
+			<groupId>com.fushionbaby.common</groupId>
+			<artifactId>fushionbaby-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+	
+	</dependencies>
+
+
+</project>

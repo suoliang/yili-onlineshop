@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.sms.dao.EmailDao">
+	<resultMap id="EmailMap" type="email">
+		<id column="id" property="id" />
+		<id column="member_name" property="memberName" />
+		<id column="receiver_email" property="receiverEmail" />
+		<id column="email_content" property="emailContent" />
+		<id column="email_type" property="emailType" />
+		<id column="create_time" property="createTime" />
+		<id column="source_code" property="sourceCode" />
+	</resultMap>
+	<insert id="add" parameterType="email">
+		insert into t_email (id, member_name, receiver_email,
+		email_content, email_type, create_time,source_code)
+		values ( #{id}, #{memberName}, #{receiverEmail},
+		#{emailContent}, #{emailType}, now(),#{sourceCode})
+	</insert>
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_email
+		where id
+		= #{id}
+	</delete>
+	<update id="update" parameterType="email">
+		update t_email
+		set
+		member_name = #{memberName},
+		receiver_email = #{receiverEmail},
+		email_content = #{emailContent},
+		email_type = #{emailType},
+		source_code = #{sourceCode},
+		where id = #{id}
+	</update>
+	
+</mapper>

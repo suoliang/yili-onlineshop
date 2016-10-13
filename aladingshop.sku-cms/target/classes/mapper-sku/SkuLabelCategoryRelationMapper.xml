@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.sku.cms.dao.SkuLabelCategoryRelationDao">
+	<resultMap id="SkuLabelCategoryRelationMap" type="SkuLabelCategoryRelation">
+		<id column="id" property="id" />
+		<result column="label_code" property="labelCode" />
+		<result column="category_code" property="categoryCode" />
+		<result column="create_time" property="createTime" />	
+		<result column="update_time" property="updateTime" />
+		<result column="sort_order" property="sortOrder" />
+		<result column="disable" property="disable" />	
+		<result column="create_id" property="createId" />	
+		<result column="update_id" property="updateId" />
+		<!-- 额外信息显示 -->
+		<result column="label_name" property="labelName" />
+		<result column="category_name" property="categoryName" />
+	</resultMap>
+	<insert id="add" parameterType="SkuLabelCategoryRelation">
+		insert into 
+			t_sku_label_category_relation
+			(id,label_code,category_code,create_time,
+			update_time,sort_order,disable,create_id,update_id)
+		values
+			(#{id},#{labelCode},#{categoryCode},now(),
+			#{updateTime},#{sortOrder},#{disable},#{createId},#{updateId})
+	</insert>
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_sku_label_category_relation
+			where id = #{id}
+	</delete>
+	<delete id="delete" parameterType="SkuLabelCategoryRelation">
+		delete from t_sku_label_category_relation
+			where label_code = #{labelCode} and category_code = #{categoryCode}
+	</delete>
+	<update id="update" parameterType="SkuLabelCategoryRelation">
+		update 
+			t_sku_label_category_relation
+		set
+			<if test="labelCode != null and labelCode !=''">
+				label_code = #{labelCode},
+			</if>
+			<if test="categoryCode != null and categoryCode !=''">
+				category_code = #{categoryCode},
+			</if>
+			<if test="disable != null and disable !=''">
+				disable = #{disable},
+			</if>
+			<if test="updateId != null and updateId !=''">
+				update_id = #{updateId},
+			</if>
+			<if test="sortOrder != null and sortOrder !=''">
+				sort_order = #{sortOrder},
+			</if>
+				update_time = now() 
+		 where 
+			id = #{id}
+	</update>
+	<sql id="labelCategory_base_column">
+		select 	id,label_code,category_code,create_time,
+				update_time,sort_order,disable,create_id,update_id
+		from 
+			t_sku_label_category_relation
+	</sql>
+	
+	<sql id="where_labelCategory">
+		<where>
+			<if test="labelCode !=null and labelCode !=''">
+	    	    AND label_code = #{labelCode} 
+	        </if>
+	        <if test="categoryCode !=null and categoryCode !=''">
+	    	    AND category_code = #{categoryCode}  
+	        </if>
+	         <if test="disable !=null and disable !=''">
+	    	    AND disable = #{disable}
+	        </if>
+		</where>
+	</sql>
+	<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="SkuLabelCategoryRelationMap" parameterType="Map" >
+		<include refid="labelCategory_base_column" />
+		<include refid="where_labelCategory" />
+		order by create_time DESC
+		<if test="start !=null and limit !=null">
+			limit #{start},#{limit}
+		</if>
+	</select>
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select 
+			count(id)
+		from t_sku_label_category_relation
+		<include refid="where_labelCategory" />
+	</select>
+	
+	<select id="findObjectById" resultMap="SkuLabelCategoryRelationMap">
+		<include refid="labelCategory_base_column" />
+		<where>
+			id = #{id} 
+		</where>
+	</select>
+	
+	<select id="findListByLabelCode" resultMap="SkuLabelCategoryRelationMap">
+		<include refid="labelCategory_base_column" />
+		<where>
+			label_code = #{labelCode}
+		</where>
+	</select>
+	
+</mapper>

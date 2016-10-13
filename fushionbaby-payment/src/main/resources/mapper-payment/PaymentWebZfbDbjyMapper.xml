@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.payment.dao.PaymentWebZfbDbjyDao">
+	<resultMap id="PaymentWebZfbDbjyResultMap" type="PaymentWebZfbDbjy">
+		<id column="id" property="id" />
+		<result column="order_number" property="orderNumber" />
+		<result column="so_code" property="soCode" />
+		<result column="member_id" property="memberId" />
+		<result column="total_amount" property="totalAmount" />
+		<result column="trade_time" property="tradeTime" />
+		<result column="so_des" property="soDes" />
+		<result column="logistics_type" property="logisticsType" />
+		<result column="logistics_payment" property="logisticsPayment" />
+		<result column="logistics_fee" property="logisticsFee" />
+		<result column="no_freight_amount" property="noFreightAmount" />
+		<result column="zfb_status" property="zfbStatus" />
+		<result column="create_time" property="createtime" />
+		<result column="update_time" property="updateTime" />
+		<result column="zfb_trade_no" property="zfbTradeNo" />
+		<result column="remote_addr" property="remoteAddr" />
+	</resultMap>
+	<sql id="PaymentWebZfbDbjy_column">
+		select 
+	      id,order_number,so_code,member_id,total_amount,trade_time,so_des,logistics_type,
+	      logistics_payment,logistics_fee,no_freight_amount,
+	      zfb_status,create_time,update_time,zfb_trade_no,remote_addr
+	   from t_payment_web_zfb_dbjy
+	</sql>
+	<insert id="add" parameterType="PaymentWebZfbDbjy">
+		insert into 
+			t_payment_web_zfb_dbjy
+		(id,order_number,so_code,member_id,total_amount,trade_time,so_des,logistics_type,
+	      logistics_payment,logistics_fee,no_freight_amount,
+	      zfb_status,create_time,update_time,zfb_trade_no,remote_addr)
+	    values 
+	    (#{id},#{orderNumber},#{soCode},#{memberId},#{totalAmount},#{tradeTime},#{soDes},
+	    #{logisticsType},#{logisticsPayment},#{logisticsFee},#{noFreightAmount},
+	    #{zfbStatus},now(),now(),#{zfbTradeNo},#{remoteAddr})
+	</insert>
+
+	<update id="update">
+		update t_payment_web_zfb_dbjy
+			set update_time = now()
+			<if test="orderNumber!=null and orderNumber!=''">
+			   , order_number = #{orderNumber}
+			</if>
+			<if test="tradeTime!=null and tradeTime!=''">
+			   , trade_time = #{tradeTime}
+			</if>
+			<if test="soDes!=null and soDes!=''">
+			   , so_des = #{soDes}
+			</if>
+			<if test="zfbStatus!=null and zfbStatus!=''">
+			   , zfb_status = #{zfbStatus}
+			</if>
+			<if test="zfbTradeNo!=null and zfbTradeNo!=''">
+			   , zfb_trade_no = #{zfbTradeNo}
+			</if>
+			<if test="remoteAddr!=null and remoteAddr!=''">
+			   , remote_addr = #{remoteAddr}
+			</if>
+			<if test="logisticsType and logisticsType!=''">
+			   , logistics_type = #{logisticsType}
+			</if>
+			<if test="logisticsPayment!=null and logisticsPayment!=''">
+			   , logistics_payment = #{logisticsPayment}
+			</if>
+			<if test="noFreightAmount!=null and noFreightAmount!=''">
+			   , no_freight_amount = #{noFreightAmount}
+			</if>
+		<where>
+			so_code = #{soCode}
+		</where>
+	</update>
+	
+	<update id="updateByOrderNumberAndMemberId"  parameterType="PaymentWebZfbDbjy">
+		update t_payment_web_zfb_dbjy
+			set update_time = now()
+			<if test="orderNumber!=null and orderNumber!=''">
+			   , order_number = #{orderNumber}
+			</if>
+			<if test="tradeTime!=null and tradeTime!=''">
+			   , trade_time = #{tradeTime}
+			</if>
+			<if test="soDes!=null and soDes!=''">
+			   , so_des = #{soDes}
+			</if>
+			<if test="zfbStatus!=null and zfbStatus!=''">
+			   , zfb_status = #{zfbStatus}
+			</if>
+			<if test="zfbTradeNo!=null and zfbTradeNo!=''">
+			   , zfb_trade_no = #{zfbTradeNo}
+			</if>
+			<if test="remoteAddr!=null and remoteAddr!=''">
+			   , remote_addr = #{remoteAddr}
+			</if>
+			<if test="logisticsType and logisticsType!=''">
+			   , logistics_type = #{logisticsType}
+			</if>
+			<if test="logisticsPayment!=null and logisticsPayment!=''">
+			   , logistics_payment = #{logisticsPayment}
+			</if>
+			<if test="noFreightAmount!=null and noFreightAmount!=''">
+			   , no_freight_amount = #{noFreightAmount}
+			</if>
+		<where>
+		order_number = #{orderNumber} and
+		member_id = #{memberId}
+		</where>
+	</update>
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_payment_web_zfb_dbjy where id = #{id}
+	</delete>
+	<select id="queryBySoCode" resultMap="PaymentWebZfbDbjyResultMap" parameterType="java.lang.String">
+		<include refid="PaymentWebZfbDbjy_column"/> where so_code = #{soCode}
+	</select>
+	<select id="queryByOrderNumber" resultMap="PaymentWebZfbDbjyResultMap" parameterType="java.lang.String">
+		<include refid="PaymentWebZfbDbjy_column"/> where order_number = #{orderNumber}
+	</select>
+	<delete id="deleteByOrderCodeAndMemberId">
+		delete from t_payment_web_zfb_dbjy where member_id = #{memberId} and order_code = #{orderCode}
+	</delete>
+</mapper>

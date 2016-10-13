@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>商品评价 - Fushionbaby</title>
+		<script src="ftl/publicHeadTags.js"></script><!-- 公共<head>标签 -->
+		<link rel="stylesheet"  href="css/public.css">
+		<link rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+		<link rel="stylesheet"  href="css/envaluting.css">
+	</head>
+	<body>
+		<script type="text/javascript" src="ftl/topbar.js"></script><!-- 公共顶部JS -->
+		<script type="text/javascript" src="ftl/header.js"></script><!-- 公共头部JS -->
+		<div class="container">
+			<!-- 面包屑导航 开始 -->
+			<div class="breadcrumb_nav">
+				<a href="">首页</a>
+				<i class="fa fa-angle-double-right"></i>
+				<a href="">个人中心</a>
+				<i class="fa fa-angle-double-right"></i>
+				<a href="">我的订单</a>
+				<i class="fa fa-angle-double-right"></i>
+				<a href="">商品评价</a>
+			</div>
+			<!-- 面包屑导航 结束 -->
+			<!-- 评价 开始 -->
+			<div class="envaluating_wrap fl">
+				<div class="envaluating_left fl">
+					<div class="verticalAlign_envaluating">
+						<img src="http://filepic.fushionbaby.com/img/sku/100247d/100247d_w_p_l_19818e2c-da46-443f-97a7-c76cba7ffabf.jpg" alt="">
+					</div>
+					<p>某品牌120ml玻璃奶瓶（进口）</p>
+					<span>已有369人评论</span>
+				</div>
+				<div class="envaluating_right fr">
+					<h3>某品牌120ml玻璃奶瓶某品牌120ml玻璃奶瓶（进口）</h3>
+					<div class="envaluating_rank width100 fl">
+						<span>评星：</span>
+						<input id="envaluating_rank_num" type="hidden" value="0">
+						<ul class="rank_ul">
+							<li class="unstar"></li>
+							<li class="unstar"></li>
+							<li class="unstar"></li>
+							<li class="unstar"></li>
+							<li class="unstar"></li>
+						</ul>
+					</div>
+					<div class="envaluating_textarea width100 fl">
+						<span>评论：</span>
+						<textarea name="" id="" cols="30" rows="4" placeholder="亲，请分享此商品的使用感受"></textarea>
+					</div>
+					<div class="envaluating_share width100 fl">
+						<span>晒图：</span>
+						<div id="filelist" class="fl"></div>
+				    <a href="javascript:selectImage()" class="envaluating_share_btn"><i></i><b></b></a>
+				    <div class="img_wrap">
+				    	<input type="file" onchange="previewImage(this)" />
+				    	<input type="file" onchange="previewImage(this)" />
+				    	<input type="file" onchange="previewImage(this)" />
+				    	<input type="file" onchange="previewImage(this)" />
+				    	<input type="file" onchange="previewImage(this)" />
+				    </div>
+					</div>
+					<button class="envaluating_btn">发表评价</button>
+					<!-- <label for="匿名？">匿名：<input type="checkbox"></label> -->
+				</div>
+			</div>
+			<!-- 评价 结束 -->
+		</div>
+		<script src="js/jqthumb.min.js"></script>
+		<script type="text/javascript" src="js/envaluating.js"></script>
+		<script>
+		$(function(){
+			$('.envaluating_btn').click(function(){
+				for (i=0;i<$('.img_wrap input').length;i++){
+					// console.log($('.img_wrap input').eq(i).val());
+					$('.img_wrap input').eq(i).attr({'name':'file'+i});
+				}
+				if ($('#envaluating_rank_num').val() == 0) {
+					alert('请先给此商品评分');
+				} else if ($('.envaluating_textarea textarea').val()=="") {
+					alert('请填写您的使用感受');
+				} else {
+					/*验证通过后的操作*/
+				};
+			});
+		});
+		</script>
+		<script type="text/javascript" src="ftl/footer.js"></script><!-- 公共底部JS -->
+		<script type="text/javascript" src="ftl/nav.js"></script><!-- 公共右侧导航JS -->
+
+		<script type="text/javascript" src="js/base.js"></script>
+	</body>
+</html>

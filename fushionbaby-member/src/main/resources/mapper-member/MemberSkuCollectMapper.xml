@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.member.dao.MemberSkuCollectDao">
+	<resultMap id="MemberSkuCollectResultMap" type="MemberSkuCollect">
+		<id column="id" property="id" />
+		<result column="member_id" property="memberId" />
+		<result column="sku_code" property="skuCode" />
+		<result column="add_time" property="addTime" />
+		<result column="is_attention" property="isAttention" />
+		<result column="current_price" property="currentPrice" />
+		<result column="retail_price" property="retailPrice" />
+	</resultMap>
+	<insert id="add" parameterType="MemberSkuCollect">
+		insert 
+			into 
+		t_member_sku_collect (member_id,sku_code,add_time,is_attention,current_price,retail_price)
+		values 
+			(#{memberId}, #{skuCode},now(), #{isAttention}, #{currentPrice}, #{retailPrice})
+	</insert>
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_member_sku_collect
+		where id = #{id}
+	</delete>
+	<update id="update" parameterType="MemberSkuCollect">
+		update 
+			t_member_sku_collect
+		set
+			member_id = #{memberId},
+			sku_code = #{skuCode},  
+			add_time = #{addTime},
+			is_attention = #{isAttention},
+			current_price = #{currentPrice},
+			retail_price = #{retailPrice}
+		where 
+			id = #{id}
+	</update>
+	<select id="findById" resultMap="MemberSkuCollectResultMap">
+		select
+			id, member_id, sku_code, add_time, is_attention, current_price, retail_price
+		from 
+			t_member_sku_collect
+		where 
+			id = #{id}
+	</select>
+	
+	<select id="findBySkuIdAndMemberId" resultMap="MemberSkuCollectResultMap" resultType="list" parameterType="MemberSkuCollect">
+		select
+			id, member_id, sku_code, add_time, is_attention, current_price, retail_price
+		from 
+			t_member_sku_collect
+		where 
+			member_id = #{memberId} and sku_code = #{skuCode}
+	</select>
+	<select id="findAll" resultType="list" resultMap="MemberSkuCollectResultMap">
+		select
+			id, member_id, sku_code, add_time, is_attention, current_price, retail_price
+		from 
+			t_member_sku_collect
+	</select>
+	
+	<select id="queryByCondition"  resultType="list" resultMap="MemberSkuCollectResultMap" parameterType="skuCollectQueryCondition">
+		select
+			id, member_id, sku_code, add_time, is_attention, current_price, retail_price
+		from 
+			t_member_sku_collect
+		<where>
+			<if test="memberId !=null and memberId !=''">
+				and member_id =#{memberId} 
+			</if>
+			<if test="skuCode !=null and skuCode !=''">
+				and sku_code=#{skuCode}
+			</if>
+			<if test="isAttention !=null and isAttention !=''">
+				and is_attention = #{isAttention}
+			</if>
+		</where>
+		order by add_time desc
+		<if test="limit !=null and limit !=''">
+			<![CDATA[
+				LIMIT #{start},#{limit}
+			]]>
+		</if>
+	</select>
+	<select id="getTotalByCondition" resultType="java.lang.Integer" parameterType="skuCollectQueryCondition">
+		select
+			count(id)
+		from 
+			t_member_sku_collect
+		<where>
+			<if test="memberId !=null and memberId !=''">
+				and member_id =#{memberId} 
+			</if>
+			<if test="skuCode !=null and skuCode !=''">
+				and sku_code=#{skuCode}
+			</if>
+			<if test="isAttention !=null and isAttention !=''">
+				and is_attention = #{isAttention}
+			</if>
+		</where>
+	</select>
+	
+	
+	
+</mapper>

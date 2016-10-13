@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.sku.cms.dao.SkuPromotionsInfoDao">
+	<resultMap id="SkuPromotionsInfoResultMap" type="skuPromotionsInfo">
+		<id column="pmid" property="pmid" />
+		<result column="promotions_code" property="promotionsCode" />
+		<result column="promotions_name" property="promotionsName" />
+		<result column="start_date" property="startDate" />
+		<result column="end_date" property="endDate" />
+		<result column="time_range" property="timeRange" />
+		<result column="is_repeat_buy" property="isRepeatBuy" />
+		<result column="sales_price" property="salesPrice" />
+		<result column="create_id" property="createId" />
+		<result column="update_id" property="updateId" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+	</resultMap>
+	<insert id="add" parameterType="skuPromotionsInfo">
+		insert into t_sku_promotions_info 
+				(pmid,promotions_code,promotions_name,start_date,end_date,time_range,is_repeat_buy,
+				sales_price,create_id,create_time)
+		values 
+	    		(#{pmid},#{promotionsCode},#{promotionsName},#{startDate},#{endDate},#{timeRange},#{isRepeatBuy},
+	    		#{salesPrice},#{createId},now())
+	</insert>
+	<delete id="deleteByPmid" parameterType="java.lang.Long">
+		delete from t_sku_promotions_info
+		where pmid = #{pmid}
+	</delete>
+	<delete id="deleteByPromotionsCode" parameterType="java.lang.String">
+		delete from t_sku_promotions_info
+		where promotions_code = #{promotionsCode}
+	</delete>
+	<update id="updateByPmid" >
+		update t_sku_promotions_info
+		<set>
+			<if test="promotionsCode != null and promotionsCode != ''">
+       			promotions_code = #{promotionsCode},
+  			</if>
+  			<if test="promotionsName != null and promotionsName != ''">
+       			promotions_name = #{promotionsName},
+  			</if>
+  			<if test="startDate != null and startDate != ''">
+       			start_date = #{startDate},
+  			</if>
+  			<if test="endDate != null and endDate != ''">
+       			end_date = #{endDate},
+  			</if>
+  			<if test="timeRange != null and timeRange != ''">
+       			time_range = #{timeRange},
+  			</if>
+  			<if test="isRepeatBuy != null and isRepeatBuy != ''">
+       			is_repeat_buy = #{isRepeatBuy},
+  			</if>
+  			<if test="salesPrice != null and salesPrice != ''">
+       			sales_price = #{salesPrice},
+  			</if>
+  			<if test="updateId != null and updateId != ''">
+       			update_id = #{updateId},
+  			</if>
+  			update_time = now()
+		</set>
+		where 
+			pmid = #{pmid}
+	</update>
+	<update id="updateByPromotionsCode" >
+		update t_sku_promotions_info
+		<set>
+  			<if test="promotionsName != null and promotionsName != ''">
+       			promotions_name = #{promotionsName},
+  			</if>
+  			<if test="startDate != null and startDate != ''">
+       			start_date = #{startDate},
+  			</if>
+  			<if test="endDate != null and endDate != ''">
+       			end_date = #{endDate},
+  			</if>
+  			<if test="timeRange != null and timeRange != ''">
+       			time_range = #{timeRange},
+  			</if>
+  			<if test="isRepeatBuy != null and isRepeatBuy != ''">
+       			is_repeat_buy = #{isRepeatBuy},
+  			</if>
+  			<if test="salesPrice != null and salesPrice != ''">
+       			sales_price = #{salesPrice},
+  			</if>
+  			<if test="updateId != null and updateId != ''">
+       			update_id = #{updateId},
+  			</if>
+  			update_time = now()
+		</set>
+		where 
+			promotions_code = #{promotionsCode}
+	</update>
+	
+	
+	<select id="findByPmid" resultMap="SkuPromotionsInfoResultMap" >
+		select pmid,promotions_code,promotions_name,start_date,end_date,time_range,is_repeat_buy,
+			   sales_price,create_id,create_time ,update_time,update_id  
+		from t_sku_promotions_info 
+		where pmid = #{pmid}
+	</select>
+	<select id="findByPromotionsCode" resultMap="SkuPromotionsInfoResultMap" >
+		select 
+			   pmid,promotions_code,promotions_name,start_date,end_date,time_range,is_repeat_buy,
+			   sales_price,create_id,create_time ,update_time,update_id  
+		 from t_sku_promotions_info 
+		where promotions_code = #{promotionsCode}
+	</select>
+	<select id="findByPromotionsName" resultMap="SkuPromotionsInfoResultMap" >
+		select 
+			   pmid,promotions_code,promotions_name,start_date,end_date,time_range,is_repeat_buy,
+			   sales_price,create_id,create_time ,update_time,update_id  
+		 from t_sku_promotions_info 
+		where promotions_name = #{promotionsName}
+	</select>
+	
+	
+	<!-- 分页条件查询 -->
+	<select id="getList" resultType="list" resultMap="SkuPromotionsInfoResultMap" parameterType="Map" >
+		select 
+			   pmid,promotions_code,promotions_name,start_date,end_date,time_range,is_repeat_buy,
+			   sales_price,create_id,create_time ,update_time,update_id   
+		 from t_sku_promotions_info 
+		<where>
+			<if test="promotionsCode != null and promotionsCode != ''">
+       		 	and promotions_code = #{promotionsCode} 
+  			</if>
+			<if test="promotionsName != null and promotionsName != ''">
+       		 	and promotions_name = #{promotionsName} 
+  			</if>
+  			<if test="startDate != null and startDate != ''">
+       			and start_date = #{startDate}  
+  			</if>
+  			<if test="endDate != null and endDate != ''">
+       			and end_date = #{endDate} 
+  			</if>
+		</where>
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select 
+			count(pmid)
+		from 
+			t_sku_promotions_info
+		<where>
+			<if test="promotionsCode != null and promotionsCode != ''">
+       		 	and promotions_code = #{promotionsCode} 
+  			</if>
+			<if test="promotionsName != null and promotionsName != ''">
+       		 	and promotions_name = #{promotionsName} 
+  			</if>
+  			<if test="startDate != null and startDate != ''">
+       			and start_date = #{startDate}  
+  			</if>
+  			<if test="endDate != null and endDate != ''">
+       			and end_date = #{endDate} 
+  			</if>
+		</where>
+	</select>
+	
+</mapper>

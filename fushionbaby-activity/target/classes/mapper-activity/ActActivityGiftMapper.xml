@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.act.activity.dao.ActActivityGiftDao" >
+  <resultMap id="ActActivityGiftResultMap" type="ActActivityGift" >
+    <id column="id" property="id"/>
+    <result column="num" property="num"/>
+    <result column="sku_list" property="skuList"/>
+  </resultMap>
+   <insert id="add" parameterType="ActActivityGift"> 
+    insert into t_act_activity_gift (id,num,sku_list)
+    values (#{id},#{num},#{skuList})
+  </insert>
+  <delete id="deleteById"  parameterType="java.lang.Long">
+    delete from t_act_activity_gift where id = #{id}
+  </delete>
+  
+  <update id="update" parameterType="ActActivityGift" >
+    update t_act_activity_gift    
+    set 
+          num = #{num},
+          sku_list=#{skuList}
+          
+      where id = #{id}
+  </update>
+  <select id="findAll" resultMap="ActActivityGiftResultMap" resultType="list">
+  <![CDATA[
+			select id, num,sku_list from t_act_activity_gift
+		 ]]>
+  </select> 
+   <select id="findById" resultMap="ActActivityGiftResultMap" parameterType="java.lang.Long" >
+  <![CDATA[
+			select id, num, sku_list from t_act_activity_gift where id=#{id}
+		 ]]>
+  </select>
+
+</mapper>

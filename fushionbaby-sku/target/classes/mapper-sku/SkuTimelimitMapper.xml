@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.sku.dao.SkuTimelimitDao">
+	<resultMap id="skuTimelimitMap" type="skuTimelimit">
+		<id column="id" property="id" />
+		<result column="sku_code" property="skuCode" />
+		<result column="sku_name" property="skuName" />
+		<result column="sku_status" property="skuStatus" />
+		<result column="place_num" property="placeNum" />
+		<result column="offshelvestime" property="offshelvestime" />
+		<result column="onshelvestime" property="onshelvestime" />	
+		<result column="limit_price" property="limitPrice" />		
+		<result column="create_time" property="createTime" />	
+		<result column="update_time" property="updateTime" />
+		<result column="create_id" property="createId" />
+		<result column="update_id" property="updateId" />	
+
+	</resultMap>
+	
+	<insert id="add" parameterType="skuTimelimit">
+		insert into t_sku_timelimit(id,sku_code,sku_name,sku_status,place_num,offshelvestime,onshelvestime,limit_price,create_time,update_time,create_id,update_id)
+		values(#{id},#{skuCode},#{skuName},#{skuStatus},#{placeNum},#{offshelvestime},#{onshelvestime},#{limitPrice},now(),now(),#{createId},#{updateId});	
+	</insert>
+	<update id="update" parameterType="skuTimelimit">
+		UPDATE 
+			t_sku_timelimit
+		SET
+			sku_code = #{skuCode},
+			sku_name = #{skuName},
+			sku_status = #{skuStatus},
+			place_num = #{placeNum},
+			offshelvestime = #{offshelvestime},
+			onshelvestime = #{onshelvestime},
+			limit_price = #{limitPrice},
+			update_time = now(),
+			update_id = #{updateId}
+		WHERE
+			id = #{id}
+	</update>
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_sku_timelimit where id=#{id}
+	</delete>
+	
+	<select id="getBySkuCode" resultMap="skuTimelimitMap">
+		select 
+			id,sku_code,sku_name,sku_status,place_num,offshelvestime,onshelvestime,limit_price,create_time,update_time,create_id,update_id
+		from
+			t_sku_timelimit
+		where 
+			sku_code = #{skuCode}
+	</select>
+	<select id="findByStatus" resultMap="skuTimelimitMap" resultType="list">
+		select 
+			id,sku_code,sku_name,sku_status,place_num,offshelvestime,onshelvestime,limit_price,create_time,update_time,create_id,update_id
+		from
+			t_sku_timelimit
+		where 
+			sku_status = #{status}
+	</select>
+	<select id="findAll" resultMap="skuTimelimitMap" resultType="list">
+		select 
+			id,sku_code,sku_name,sku_status,place_num,offshelvestime,onshelvestime,limit_price,create_time,update_time,create_id,update_id
+		from
+			t_sku_timelimit
+	</select>
+	
+	<select id="getPageList" resultMap="skuTimelimitMap" resultType="list">
+		select 
+			id,sku_code,sku_name,sku_status,place_num,offshelvestime,onshelvestime,limit_price,create_time,update_time,create_id,update_id
+		from
+			t_sku_timelimit
+		<where>
+			<if test="skuName!=null and skuName!=''">
+				sku_name like "%"#{skuName}"%"
+			</if>
+			<if test="skuCode!=null and skuCode!=''">
+				sku_code = #{skuCode}
+			</if>
+		</where>	
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+	<select id="getTotal" resultType="java.lang.Integer" parameterType="Map">
+		select 
+			count(id)
+		from
+			t_sku_timelimit
+		<where>
+			<if test="skuName!=null and skuName!=''">
+				sku_name like "%"#{skuName}"%"
+			</if>
+			<if test="skuCode!=null and skuCode!=''">
+				sku_code = #{skuCode}
+			</if>
+		</where>	
+	</select>
+	<select id="findByTop" resultType="list" resultMap="skuTimelimitMap" >
+
+		select 
+			id,sku_code,sku_name,sku_status,place_num,offshelvestime,onshelvestime,limit_price,create_time,update_time,create_id,update_id
+		from
+			t_sku_timelimit
+		where
+			sku_status = '2' 
+			<![CDATA[
+				and DATE_FORMAT(onshelvestime,'%Y-%m-%d') <= DATE_FORMAT(#{currentTime}, '%Y-%m-%d')
+			]]>
+		order by update_time asc
+		<if test="size !=null and size !=''">
+			<![CDATA[ 
+				LIMIT 0,#{size}
+			]]>
+		</if>
+	</select>
+</mapper>

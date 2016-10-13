@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.sku.cms.dao.SkuLabelRelationDao">
+	<resultMap id="SkuLabelRelationMap" type="SkuLabelRelation">
+		<id column="id" property="id" />
+		<result column="label_code" property="labelCode"/>
+		<result column="sku_code" property="skuCode"/>
+		<result column="disabled" property="disabled"/>
+		<result column="show_order" property="showOrder" />
+		<result column="create_time" property="createTime" />
+	</resultMap>
+	
+	<insert id="add"  parameterType="SkuLabelRelation">
+		insert into  
+			t_sku_label_relation(id,label_code,sku_code, disabled, show_order, create_time)
+		values(#{id},#{labelCode},#{skuCode},#{disabled}, #{showOrder}, now())
+	</insert>
+	
+	<delete id="deleteBySkuLabelRelation" parameterType="SkuLabelRelation">
+		delete from t_sku_label_relation where sku_Code = #{skuCode} and label_code = #{labelCode}
+	</delete>
+	
+	<update id="update"  parameterType="SkuLabelRelation">
+		update t_sku_label_relation
+		<set>
+			<if test="labelCode != null and labelCode != ''">
+       			label_code = #{labelCode},
+  			</if>
+  			<if test="skuCode != null and skuCode != ''">
+       			sku_code = #{skuCode},
+  			</if>
+  			<if test="disabled != null and disabled != ''">
+       			disabled = #{disabled},
+  			</if>
+  			<if test="showOrder != null and showOrder != ''">
+       			show_order = #{showOrder},
+  			</if>
+		</set>
+		where 
+			id = #{id}
+	</update>
+	
+	<select id="findById" resultMap="SkuLabelRelationMap" parameterType="long">
+		<![CDATA[
+			select 
+				id,label_code,sku_code , disabled, show_order, create_time
+			from 
+				t_sku_label_relation
+			where id = #{id}
+		 ]]>
+	</select>
+	<select id="findAll" resultMap="SkuLabelRelationMap" resultType="list" >
+		<![CDATA[
+		
+			select 
+				id,label_code,sku_code , disabled, show_order, create_time
+			from 
+				t_sku_label_relation
+		 ]]>
+	</select>
+	<select id="findBySkuCode" resultMap="SkuLabelRelationMap" parameterType="java.lang.String" >
+		<![CDATA[
+		
+			select 
+				id,label_code,sku_code , disabled, show_order, create_time
+			from 
+				t_sku_label_relation 
+			where 
+				sku_code = #{skuCode}
+		 ]]>
+	</select>
+	
+	<!--  根据标签编号查询便签关联-->
+	<select id="queryByLabelCode" resultMap="SkuLabelRelationMap" parameterType="java.lang.String">
+		<![CDATA[
+			select 
+				id,label_code,sku_code , disabled, show_order, create_time
+			from 
+				t_sku_label_relation
+			where
+				label_code = #{labelCode}
+		 ]]>
+	</select>
+	
+	<!-- 通过查询条件查询标签关联信息 -->
+	<select id="querySkuLabelRelationByCondition" resultMap="SkuLabelRelationMap" parameterType="skuLabelRelationQueryCondition">
+		
+			select 
+				a.id,a.label_code,a.sku_code , disabled, a.show_order, create_time
+			from 
+				t_sku_label_relation a 
+			<where>
+				<if test="labelCode !=null and labelCode !=''">
+					and a.label_code = #{labelCode}
+				</if>
+				<if test="skuCode !=null and skuCode !=''">
+					and a.sku_code = #{skuCode}
+				</if>
+				<if test="disabled !=null and disabled !=''">
+					and a.disabled = #{disabled}
+				</if>
+				
+			</where>
+			order by case when  a.show_order=0 or a.show_order is null then 9999999 else a.show_order end
+			<if test="start !=null and start>-1">
+				LIMIT #{start}
+			</if>
+			<if test="start !=null and start>-1 and limit !=null and limit !=''">
+				,#{limit}
+			</if>
+			
+	</select>
+	
+	
+	<!--通过条件查询商品关联总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+			select 
+				count(a.id)
+			from 
+				t_sku_label_relation as a
+			<where>
+				<if test="skuId !=null and skuId !=''">
+					and a.sku_code = #{skuCode}
+				</if>
+				<if test="labelId !=null and labelId !=''">
+					and a.label_code = #{labelCode}
+				</if>
+				<if test="disabled !=null and disabled !=''">
+					and a.disabled = #{disabled}
+				</if>
+			</where>
+	</select>
+	<!-- 通过条件查询商品关联 分页 -->
+	<select id="getListPage" resultType="list" resultMap="SkuLabelRelationMap" parameterType="Map" >
+		select 
+			id,label_code,sku_code , disabled, show_order, create_time
+		from 
+			t_sku_label_relation a
+		<where>	
+			<if test="skuCode !=null and skuCode !=''">
+				and a.sku_code = #{skuCode}
+			</if>
+			<if test="labelCode !=null and labelCode !=''">
+				and a.label_code = #{labelCode}
+			</if>
+			<if test="disabled !=null and disabled !=''">
+				and a.disabled = #{disabled}
+			</if>
+		</where>	
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+	
+	<delete id="deleteByLabelCode" parameterType="java.lang.String">
+	
+	delete from t_sku_label_relation where label_code = #{labelCode}
+	
+	</delete>
+	
+	<!--条件查询,根据多个sku_id,in查询、得到所有sku_id对应的,去重lable_id-->
+	<select id="findLabelCodesBySkuCodes" parameterType="Map" resultType="string">
+		<![CDATA[
+			SELECT DISTINCT `label_code` FROM `t_sku_label_relation` WHERE sku_code IN('${skuCodes}')
+		]]>
+	</select>	
+	
+	<select id="findSkuCodesByLabelCode"  resultType="string">
+		SELECT t.sku_code   FROM t_sku_label_relation t WHERE label_Code = #{labelCode}
+	</select>
+	
+	
+	<select id="queryBySameDayOperateing" parameterType="java.util.List" resultType="string">
+		SELECT DISTINCT `sku_code` FROM `t_sku_label_relation` 
+		WHERE disabled = 'y'	AND  (TO_DAYS(create_time) = TO_DAYS(NOW())) 
+	</select>
+</mapper>

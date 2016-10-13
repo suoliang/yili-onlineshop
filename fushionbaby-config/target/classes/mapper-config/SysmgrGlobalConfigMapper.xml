@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.config.dao.SysmgrGlobalConfigDao">
+	<resultMap id="sysmgrGlobalConfigResultMap" type="sysmgrGlobalConfig">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="code" property="code" />
+		<result column="value" property="value" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="remark" property="remark" />
+	</resultMap>
+	
+	<sql id="sysmgrGlobalConfig_column">
+	    select id,name,code,value,create_time,update_time,remark
+	   from t_sysmgr_global_config
+	</sql>
+	
+	<sql id="sysmgrGlobalConfig_where">
+	  <where>
+			<if test="id!=null and id!=''">
+			   and id = #{id}
+			</if>
+			<if test="name!=null and name!=''">
+			   and name = #{name}
+			</if>
+			<if test="code!=null and code!=''">
+			   and code = #{code}
+			</if>
+			<if test="value!=null and value!=''">
+			   and value = #{value}
+			</if>
+			<if test="createTime!=null and createTime!=''">
+			   and create_time = #{createTime}
+			</if>
+			<if test="updateTime!=null and updateTime!=''">
+			   and update_time = #{updateTime}
+			</if>
+			<if test="remark!=null and remark!=''">
+			   and remark = #{remark}
+			</if>
+	  </where>
+	</sql>
+	
+	<insert id="add" parameterType="sysmgrGlobalConfig">
+		insert into t_sysmgr_global_config 
+		(id,name,code,value,create_time,update_time,remark)
+		values 
+		(#{id},#{name},#{code},#{value},now(),#{updateTime},#{remark})
+	</insert>
+	
+	<update id="update" parameterType="sysmgrGlobalConfig">
+		update t_sysmgr_global_config
+		set update_time = now()
+			<if test="id!=null and id!=''">
+			   , id = #{id}
+			</if>
+			<if test="name!=null and name!=''">
+			   , name = #{name}
+			</if>
+			<if test="code!=null and code!=''">
+			   , code = #{code}
+			</if>
+			<if test="value!=null and value!=''">
+			   , value = #{value}
+			</if>
+			<if test="createTime!=null and createTime!=''">
+			   , create_time = #{createTime}
+			</if>
+			<if test="remark!=null and remark!=''">
+			   , remark = #{remark}
+			</if>
+		where id = #{id}
+	</update>
+	
+	<delete id="deleteSysmgrGlobalConfigById" parameterType="long">
+		delete from t_sysmgr_global_config where id = #{id}		
+	</delete>
+	<!-- 通过code拿到全局对象 -->
+	<select id="findByCode" resultMap="sysmgrGlobalConfigResultMap">
+		<include refid="sysmgrGlobalConfig_column"/> where code = #{code}
+	</select>
+	<select id="getSysmgrGlobalConfigById" resultMap="sysmgrGlobalConfigResultMap" parameterType="long" >
+	   <include refid="sysmgrGlobalConfig_column"/>  where id = #{id}	   
+	</select>
+	
+	<select id="getSysmgrGlobalConfigByPage" resultMap="sysmgrGlobalConfigResultMap" >
+		<include refid="sysmgrGlobalConfig_column"/>
+		<include refid="sysmgrGlobalConfig_where"/>
+		<if test="offset!=null and limit!=null">
+			limit #{offset},#{limit}
+		</if>
+	</select>
+	
+	<select id="getCount" resultType="int" >
+		select count(1) from t_sysmgr_global_config
+		<include refid="sysmgrGlobalConfig_where"/>	
+	</select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select 
+			count(id)
+		from 
+	        t_sysmgr_global_config
+		<where>
+			<if test="name !=null and name !=''">
+	    	   AND  name LIKE "%"#{name}"%"
+	        </if>
+	     	<if test="value !=null and value !=''">
+	    	   AND  value LIKE "%"#{value}"%"  
+	        </if>
+	        <if test="code !=null and code !=''">
+	    	   AND  code LIKE "%"#{code}"%"  
+	        </if>
+	        <if test="remark !=null and remark !=''">
+	    	   AND  remark LIKE "%"#{remark}"%"  
+	        </if>
+	         <if test="createTime !=null and createTime !=''">
+	    	   AND  create_time LIKE "%"#{createTime}"%"  
+	        </if>
+	         <if test="updateTime !=null and updateTime !=''">
+	    	   AND  update_time LIKE "%"#{updateTime}"%"  
+	        </if>
+		</where>
+  	</select>	
+  
+    <!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="sysmgrGlobalConfigResultMap" parameterType="Map" >
+       select  
+        id,name,code,value,create_time,update_time,remark
+       from t_sysmgr_global_config
+		<where>
+			<if test="name !=null and name !=''">
+	    	   AND  name LIKE "%"#{name}"%"
+	        </if>
+	     	<if test="value !=null and value !=''">
+	    	   AND  value LIKE "%"#{value}"%"  
+	        </if>
+	        <if test="code !=null and code !=''">
+	    	   AND  code LIKE "%"#{code}"%"  
+	        </if>
+	        <if test="remark !=null and remark !=''">
+	    	   AND  remark LIKE "%"#{remark}"%"  
+	        </if>
+	         <if test="createTime !=null and createTime !=''">
+	    	   AND  create_time LIKE "%"#{createTime}"%"  
+	        </if>
+	         <if test="updateTime !=null and updateTime !=''">
+	    	   AND  update_time LIKE "%"#{updateTime}"%"  
+	        </if>
+		</where>
+		order by id desc
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+</mapper>

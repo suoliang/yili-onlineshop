@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>红包</title>
+        <!-- 通用部分 开始 -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0,user-scalable=no">
+        <link rel="shortcut icon" href="images/favicon.ico" />
+        <link rel="stylesheet" href="css/style.min.css"><!-- 通用 CSS -->
+        <script src="farmwork/jquery/jquery-2.1.3.min.js"></script><!-- 通用jQuery JS -->
+        <script src="farmwork/velocity/velocity.min.js"></script><!-- velocity JS -->
+        <script src="farmwork/velocity/velocity.ui.min.js"></script><!-- velocity JS -->
+        <script src="js/min/public.min.js"></script><!-- 通用 public JS -->
+        <!-- 通用部分 结束 -->
+    </head>
+    <body id="">
+
+        <div class="container">
+
+            <div class="head mB10">
+                <a href="javascript:history.go(-1)" class="a-left">
+                    <span class="back"></span>
+                </a>
+                <p>我的红包</p>
+                <a href="spe-bonus-detail.html" class="a-right">
+                    <span>详情</span>
+                </a>
+            </div>
+
+            <div class="spe-bonus-wrap fl wp100">
+                <a href="spe-bonus-earn.html">
+                    <h1>邀好友，赚红包</h1>
+                    <div class="spe-bonus-box fl wp100">
+                        <span>8元</span>
+                    </div>
+                    <button>点我赚红包</button>
+                </a>
+                <p>
+                    <button class="withdraw">提现</button>
+                </p>
+            </div>
+
+        </div><!-- /.container -->
+
+        <div class="modal-wrap" id="withdrawModal">
+            <div class="modal">
+                <p>红包提现需要您开通如意消费卡并转入，如您已经开通，请直接登录。如未开通，需要您注册。</p>
+                <div class="btn-wrap">
+                    <a class="" href="spe-ruyi-login.html">登录</a>
+                    <a class="" href="spe-ruyi-registering.html">注册</a>
+                </div>
+            </div>
+        </div>
+
+        <script>
+        $(function(){
+            /*提现按钮*/
+            var withdrawModal = $('#withdrawModal');
+            var withdrawBtn = $('.withdraw');
+            withdrawBtn.click(function(event) {
+                withdrawModal.fadeIn();
+            });
+
+            $('.modal-wrap').click(function() {
+                $('.modal-wrap').fadeOut();
+            });
+        })
+        </script>
+
+    </body>
+</html>

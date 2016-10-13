@@ -1,0 +1,21 @@
+var a = "<base target='_self'></base><meta name='keywords' content=''><meta name='description' content=''>";
+	a+= "<meta name='description' content=''><link rel='apple-touch-icon' href='"+_ContextPath+"/wap/touch-icon.png'>";
+	a+="<link rel='apple-touch-icon-precomposed' href='"+_ContextPath+"/wap/touch-icon.png'>";
+	a+="<link rel='apple-touch-icon' sizes='72x72' href='"+_ContextPath+"/wap/touch-icon-iphone.png'>";
+	a+="<link rel='apple-touch-icon' sizes='114x114' href='"+_ContextPath+"/wap/touch-icon-ipad.png'>";
+	a+="<link rel='apple-touch-startup-image' href='"+_ContextPath+"/wap/startup.png'>";
+	a+="<meta content='black' name='apple-mobile-web-app-status-bar-style'>";
+	a+="<meta content='yes' name='apple-mobile-web-app-capable'>";
+	a+="<meta content='yes' name='apple-touch-fullscreen'>";
+	a+="<meta content='telephone=no' name='format-detection'>";
+	a+="<meta content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' name='viewport'>";
+	a+="<link rel='stylesheet' type='text/css' href='"+_ContextPath+"/wap/css/base.css'>";
+	a+="<link rel='stylesheet' type='text/css' href='"+_ContextPath+"/wap/css/bootstrap.min.css'>";
+	a+="<link href='"+_ContextPath+"/wap/css/bootstrap-responsive.min.css' rel='stylesheet'>";
+	a+="<link rel='stylesheet' href='"+_ContextPath+"/wap/css/font-awesome/font-awesome.min.css'>";
+	a+="<link rel='stylesheet' type='text/css' href='"+_ContextPath+"/wap/css/style-jie.css'>";
+	a+="<script src='http://cdn.bootcss.com/jquery/2.1.3/jquery.min.js'></script>";
+	a+="<script type='text/javascript' src='"+_ContextPath+"/wap/js/bootstrap.min.js'></script>";
+	a+="<script type='text/javascript' src='"+_ContextPath+"/wap/js/public.js'></script>";
+document.write(a);
+

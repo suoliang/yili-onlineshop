@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.config.dao.SysmgrSfFreightConfigDao">
+	<resultMap id="SysmgrSfFreightConfigMap" type="SysmgrSfFreightConfig">
+		<id column="id" property="id" />
+		<result column="city" property="city" />
+		<result column="area_code" property="areaCode" />
+		<result column="amount" property="amount" />
+		
+	</resultMap>
+	<insert id="add" parameterType="SysmgrSfFreightConfig">
+		insert into t_sysmgr_sf_freight_config (id,city, area_code,
+		amount)
+		values (#{id}, #{city}, #{areaCode},#{amount})
+	</insert>
+	<select id="findByAreaCode" resultMap="SysmgrSfFreightConfigMap">
+   		<![CDATA[
+		    select 
+		   id, city, area_code, amount
+		    from t_sysmgr_sf_freight_config
+		    where area_code = #{areaCode}
+    	]]>
+	</select>
+	<update id="updateByAreaCode">
+		update t_sysmgr_sf_freight_config 
+			set amount=#{amount} 
+		    where area_code = #{areaCode}
+	</update>
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select 
+			count(id)
+		from 
+	        t_sysmgr_sf_freight_config
+		
+  	</select>	
+  
+    <!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="SysmgrSfFreightConfigMap" parameterType="Map" >
+       select 
+		   id, city, area_code, amount
+		    from t_sysmgr_sf_freight_config
+		order by id 
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+</mapper>

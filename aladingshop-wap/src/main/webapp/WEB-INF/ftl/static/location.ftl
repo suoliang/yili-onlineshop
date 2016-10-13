@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>身边阿拉丁</title>
+        <!-- 公共样式js引用-->
+        <#include "/common/common.ftl" />
+         <script type="text/javascript" language="javascript">
+		    var _ContextPath = "${rc.contextPath}";
+	    </script>
+        <!-- 通用部分 结束 -->
+    </head>
+    <body id="">
+
+        <div class="container">
+
+            <div class="head mB10">
+                <a href="javascript:history.go(-1)" class="a-left">
+                    <span class="back"></span>
+                </a>
+                <p>身边阿拉丁</p>
+            </div>
+
+            <div class="bonus-wrap fl wp100 mB10">
+                <p class="textC mT20"><img src="${rc.contextPath}/static/shop/images/location.png"></p>
+                <h4>阿拉丁玛特 震撼来袭</h4>
+                <p>&emsp;&emsp;“ 阿拉丁玛特网络便利店”是一里网络科技有限公司旗下品牌，将互联网思维与传统零售业营销特点相结合，服务社区、商圈，提供商品服务、便民服务的新型O2O商业模式，打造中国本土社区便民服务的综合性O2O服务平台及快消品零售业平台，打破传统零售业现状，开启全新零售业新格局。</p>
+                <p></p>
+                <p>&emsp;&emsp;公司本着为消费者实际解决网上购物"配送难"、"维权难"问题的宗旨，以直营及加盟的方式在全国范围内铺设社区配送网点，以期使公司电子商城的消费者真正享受到"极速配送"、"即订即送"、"实体售后"的全方位服务，实现网上购物最后一公里的迅速送达。同时，为杜绝假冒伪劣产品，确保公司电子商城所有销售商品的优良品质，公司统一接洽供货企业，严格筛选把关。</p>
+                <p></p>
+                <p class="mB10">&emsp;&emsp;公司现已合作的供货企业全部为拥有合法合规资质、在业内享有广泛知名度的品牌生产厂商。公司直接接洽供货企业，最大程度上免去了商品在销售,物流中转环节产生的成本，真正让利于消费者。基于此，我们郑重承诺：本公司打造的全新电子商城联盟能够让消费者真正体验到互联网购物的方便、实惠、快捷的同时，也能买得放心、买得安心，实现公司与消费者的双赢。</p>
+            </div>
+
+        </div><!-- /.container -->
+		<script src="${rc.contextPath}/static/shop/js/menu.js"></script><!-- 公共底部菜单 -->
+    </body>
+</html>

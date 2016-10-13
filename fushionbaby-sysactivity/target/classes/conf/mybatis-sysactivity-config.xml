@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration 
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 命名空间 -->
+	<typeAliases>
+		
+		<!-- 户外活动 -->
+		<typeAlias alias="sysActivityActivities" type="com.fushionbaby.sysactivity.model.SysActivityActivities" />
+		 
+		<!-- 户外活动报名 -->
+		<typeAlias alias="SysActivitiesApply" type="com.fushionbaby.sysactivity.model.SysActivityActivitiesApply" />  
+		
+		
+		<!-- 文章分类管理  现在只有亲子课程的 -->
+		<typeAlias alias="SysActivityFamily" type="com.fushionbaby.sysactivity.model.SysActivityFamily" />  
+		
+		<!-- 亲子课程(文章)有评论,评论表 -->
+		<typeAlias alias="SysActivityFamilyComment" type="com.fushionbaby.sysactivity.model.SysActivityFamilyComment" />  
+		<!-- 文章关联商品 -->
+		<typeAlias alias="SysActivityArticleSku" type="com.fushionbaby.sysactivity.model.SysActivityArticleSku" />   
+		
+		<typeAlias alias="sysactivityWill" type="com.fushionbaby.sysactivity.model.SysActivityWill" /> 
+		<!-- 抽奖配置表 -->
+		<typeAlias alias="LotteryConfig" type="com.fushionbaby.sysactivity.model.LotteryConfig" /> 
+		
+		<typeAlias alias="LotteryInfo" type="com.fushionbaby.sysactivity.model.LotteryInfo" /> 
+		<typeAlias alias="LotteryPrize" type="com.fushionbaby.sysactivity.model.LotteryPrize" /> 
+		<!--抽奖明细  -->
+		<typeAlias alias="LotteryDetail" type="com.fushionbaby.sysactivity.model.LotteryDetail" /> 
+	</typeAliases>
+
+
+
+
+
+	<!-- 注册SQL映射文件 -->
+	<mappers>
+	</mappers>
+</configuration>

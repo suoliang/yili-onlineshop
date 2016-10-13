@@ -1,0 +1,190 @@
+@charset "UTF-8";
+/**
+* header.css(公共导航条 应用于header.ftl)
+* @date    2015-03-27 11:00:00;
+* @version $1.2$
+*/
+#index #index-drap-down { display: block; }
+#index #nav-drap-other { display: none !important; }
+.site-header { height: 145px; background-color: #fff; position: relative; z-index: 3; }
+/* logo begin */
+.logo { padding-top: 11px; height: auto; float: left; }
+.logo-txt { font-size: 0; overflow: hidden; zoom: 1; width: 0; height: 0; display: none; }
+.header-info { width: 416px; float: right; margin: 35px 0 33px; position: relative; display: inline; height: 32px; z-index: 3; }
+/* search begin */
+.search { margin-right: 32px; float: left; overflow: hidden; height: 32px; margin-top: 3px; }
+.search-form { width: 268px; height: 32px; background-color: #6AE0FF; position: relative; overflow: hidden; }
+.search-text { width: 220px; margin: 2px; padding: 6px 0 6px 5px; background-color: #fff; border: 1px solid #6AE0FF; color: #BBB; display: inline-block; font-size: 12px; outline: none; overflow: hidden; vertical-align: middle; }
+.search-btn { position: absolute; width: 40px; height: 31px; top: 0; right: 0; cursor: pointer; background-color: #6AE0FF; color: #fff; font-size: 18px; transition: all 0.3s ease 0s; line-height: 30px; border: none !important; }
+.search-btn:hover { color: #F40; }
+/* shop begin */
+.shop { width: 114px; float: right; position: relative; z-index: 3; border: 1px solid #fff; cursor: pointer; -webkit-border-radius: 4px 4px 0 0; -moz-border-radius: 4px 4px 0 0; -o-border-radius: 4px 4px 0 0; border-radius: 4px 4px 0 0; height: 36px; }
+.shop:hover { border-color: #ccc !important; border-bottom: none !important }
+.shop-car { font-size: 24px; color: #C3C3C3; }
+.shop-info { font-size: 14px; color: #7B7B7B; }
+#lot { display: none; }
+.mini-cart-list { position: absolute; top: 33px; right: -1px; width: 328px; display: none; z-index: 6800; background-color: #fff; z-index: 4; margin-top: 3px; border: 1px solid #ccc; -webkit-border-radius: 4px 0 4px 4px; -moz-border-radius: 4px 0 4px 4px; -o-border-radius: 4px 0 4px 4px; border-radius: 4px 0 4px 4px; border-bottom: 2px solid #999; }
+.white { position: absolute; top: -1px; right: 1px; width: 113px; height: 2px; overflow: hidden; background-color: #fff; z-index: 5; }
+.mini-cart-wrapper { position: relative; padding: 0 10px; z-index: 4; }
+.mini-cart-wrapper li { float: left; }
+.car-module div { float: left; }
+.car-module .none-buy { text-align: center; line-height: 58px; }
+.car-module-l { font-size: 0; margin: 0 auto; padding-top: 10px; }
+.car-module-l img { display: inline-block; width: 46px; height: 46px; vertical-align: middle; }
+.car-module-m { padding-left: 12px; width: 210px; }
+.car-module-m p { overflow: hidden; }
+.cmm-title { padding-top: 10px; width: 200px; }
+.ct-txt { float: left; }
+.ct-txt a { color: #000; overflow: hidden; text-overflow: ellipsis; width: 160px; display: block; }
+.ct-txt a:hover { color: #7cdff6; }
+.ct-num { float: right; }
+.ct-num em.num { font-style: normal; padding-left: 5px; }
+.desc-color { color: #CCC; margin-top: -5px; }
+.shop-num { width: 16px; height: 16px; position: absolute; top: -9px; left: 23px; background: url(../images/shop-num.png) 0 0 no-repeat; text-align: center; line-height: 16px; color: #fff; }
+.car-module-r { padding-left: 14px; }
+.car-module-r .dele { width: 19px; height: 19px; margin: 10px auto; background-position: -1px -101px; display: block; }
+.car-line { width: 100%; height: 0; border-bottom: 1px solid #ccc; overflow: hidden; margin: 8px auto; float: left; }
+.add-up { height: 45px; }
+.add-up-l { float: left; width: 125px; height: 45px; }
+.add-up-l p { color: #757577; }
+.add-up-r { float: right; width: 142px; height: 29px; text-align: center; color: #fff; margin-top: 2px; border-radius: 5px; background-color: #E9C56F; line-height: 31px; cursor: pointer; }
+/* header-nav begin */
+.nav-category, .nav-main, .nav-brand { height: 46px; float: left; }
+.nc-arrow i { display: block; width: 14px; height: 8px; background: url(../images/arrow-img.fw.png) no-repeat; }
+.header-nav .nc-arrow i { -webkit-transition: -webkit-transform 0.3s ease-in 0s; -o-transition: -o-transform 0.3s ease-in 0s; -moz-transition: -moz-transform 0.3s ease-in 0s; -ms-transition: -ms-transform 0.3s ease-in 0s; transition: transform 0.3s ease-in 0s; }
+.nav-category:hover .nc-arrow i { -webkit-transform: rotate(180deg); -o-transform: rotate(180deg); -moz-transform: rotate(180deg); -ms-transform: rotate(180deg); transform: rotate(180deg); }
+.nav-category-text { font-size: 16px; color: #fff; }
+.nc-arrow { position: absolute; top: 19px; right: 28px; }
+.arrow { position: relative; }
+.arrow em, .arrow s { width: 0; height: 0; border-width: 6px; border-style: solid dashed dashed dashed; border-color: #fff transparent transparent transparent; overflow: hidden; display: block; position: absolute; top: 0; left: 0; }
+.arrow .behind { border-color: #35A6CE transparent transparent transparent; top: -1px; }
+.nav-drop-down { position: absolute; top: 46px; left: 0; width: 222px; background-color: #fff; z-index: 2; display: none; box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.2); height: auto !important; }
+.nav-drop-down-list { background-color: #fff; border-bottom: 1px solid #eaeaea; }
+.current { background-color: #35A6CD; }
+.nav-drop-down-list a { display: block; height: 46px; padding-left: 9px; position: relative; }
+.sprite-img { width: 45px; height: 46px; display: block; float: left; }
+.sprite-img img { margin: 0 auto; }
+.sprite-img .sprite-img1 { margin-top: -3px; }
+.sprite-img .sprite-img2 { margin-top: -2px; }
+.subnav-desc { font-size: 14px; float: left; margin-top: 12px; color: #35A6CD; }
+.subnav-arrow { position: absolute; right: 37px; top: 50%; margin-top: -6px; }
+.nav-drop-down-list .arrow { display: block; float: right; }
+.nav-drop-down-list .arrow em, .nav-drop-down-list .arrow s { border-style: dashed dashed dashed solid; border-color: transparent transparent transparent #35A6CD; }
+.nav-drop-down-list .arrow .behind { border-color: transparent transparent transparent #fff; top: 0; left: -1px; }
+/* nav mian */
+.nav-main .nav-drop-down-list { float: none; }
+.nav-main .sprite-img { background-position: 0 0; }
+.nav-main-list li { float: left; overflow: visible; position: relative; }
+.nav-main-item { display: block; height: 46px; line-height: 46px; width: 100%; font-size: 16px; font-weight: 400; color: #115B87; float: left; width: 100px; text-align: center; }
+.nav-main-item:hover { color: #fff; background-color: #35A6CD; }
+/* nav brand */
+.nav-brand { width: 148px; height: 46px; float: right; background-color: #fed27e; position: relative; }
+.nav-brand a { display: block; }
+.nav-brand .nc-arrow { right: 102px; top: 12px; }
+.nav-brand-title { line-height: 46px; margin-left: 55px; font-size: 16px; color: #FEFEFE; font-weight: 700; }
+.nav-brand .nc-arrow i { background: url(../images/arrow-img.fw.gif) 0 0 no-repeat; width: 27px; height: 19px; }
+.site-header { height: 100px; }
+.navall { width: 100%; height: auto; background-color: #ffc531; }
+.header-nav { height: 38px; position: relative; clear: both; z-index: 1; width: 1140px; margin: 0 auto; }
+.nav-category:hover .nc-arrow i { -webkit-transform: rotate(180deg); -o-transform: rotate(180deg); -moz-transform: rotate(180deg); -ms-transform: rotate(180deg); transform: rotate(180deg); }
+.nav-category { width: 258px; height: 38px; background-color: #ff953f; }
+.nav-main { width: 882px; background-color: #ffc531; height: 38px; }
+.nav-drop-down1 { display: none; width: 179px; background-color: #fff; height: 106px; }
+.nav-main-list .nav-drop-down1 li { width: 157px; height: 29px; background: #a1dddf; margin-bottom: 1px; padding: 6px 0 0 18px; font-size: 15px; font-family: "微软雅黑"; color: #1c797b; border-left: 4px solid #a1dddf; -webkit-transition: all 0.25s ease-out 0s; transition: all 0.25s ease-out 0s; }
+.nav-main-list .nav-drop-down1 .navimg { background: #a1dddf url(../images/1-index2hover_r2_c3.gif) no-repeat 0 0; }
+.new-nav-drop-down { position: absolute; top: 38px; left: 0; z-index: 2; height: 671px; display: none; }
+.new-nav-drop-down li:hover { border-left: 4px solid #ff953f; }
+.new-nav-drop-down .navla { color: #1c797b; }
+/* 首页分类导航 开始 */
+#index-drap-down { float: left; width: 258px; position: relative; }
+#index-drap-down, #index-drap-down * { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box; }
+#index-drap-down ul { width: 100%; overflow: hidden; position: relative; z-index: 999; }
+#index-drap-down li.navl { float: left; width: 100%; border-bottom: 1px solid #fff; background-color: #a1dddf; font-size: 15px; font-family: "微软雅黑"; padding: 12px 0 6px 10px; position: relative; border-left: 4px solid #a1dddf; -webkit-transition: all 0.25s ease-out 0s; transition: all 0.25s ease-out 0s; cursor: pointer; }
+#index-drap-down .navlp { font-size: 12px; color: #389698; margin-right: 8px; line-height: 22px; float: left; -webkit-transition: all 0.25s ease-out 0s; transition: all 0.25s ease-out 0s; }
+#index-drap-down li.navl_last { height: 117px; +height:95px;}
+#index-drap-down .navlp:hover { color: #c39085; }
+#index-drap-down .navlast { margin: 0; }
+#index-drap-down .navla { width: 100%; float: left; margin-bottom: 5px; color: #1c797b; }
+#index-drap-down .navla:hover { color: #c39085; }
+#index-drap-down .hide_nav { position: absolute; left: 0; top: 0; width: 882px; padding: 5px 20px; left: 0; z-index: 998; visibility: hidden; background-color: rgba(255, 255, 255, 0.9);+background-color: #fff;}
+.ie8 .hide_nav {background-color: #fff;}
+.hide_nav ul { width: 100%; overflow: hidden;  display: none; margin-left: -100px; opacity: 0; filter: alpha(opacity=00);}
+.hide_nav ul li { width: 100%; float: left; }
+.hide_nav ul li a { float: left; margin-right: 20px; line-height: 22px; font-size: 12px; color: #444; }
+.hide_nav ul li a:hover { text-decoration: underline; }
+.hide_nav ul li a.hide_nav_tit { width: 20%; margin: 5px 80% 0 0; font-size: 14px; color: #1c797b; }
+.hide_brand { float: left; width: 100%; margin-top: 21px; }
+.hide_brand a { border: 1px solid #ccc; border-radius: 2px; float: left; width: 18%;+width:17.5%; margin: 0 2% 2% 0; overflow: hidden; height: 52px; text-align: center; position: relative; }
+.hide_brand a img { max-width: 100%; max-height: 50px; display: inline; }
+.hide_brand a span { position: absolute; left: 0;bottom:-22px; text-align: center; width: 100%; color: #fff; background-color: rgba(195, 144, 133, 0.8); filter: progid:DXImageTransform.Microsoft.gradient(startcolorstr=#ccc39085, endcolorstr=#ccc39085);}
+.hide_brand a:hover { border-color: #c39085; }
+/* 首页分类导航 结束 */
+.nav-main-item { height: 38px; line-height: 38px; color: #fff; width: 110px; }
+.nav-main-item:hover { color: #fff; background-color: #ff953f; }
+.nav-main .crown span { background: url(../images/crown.png) no-repeat 0px center; float: left; width: 23px; height: 100%; margin: 0 8px 0 8px; }
+.nav-main .crown a { text-align: left; }
+.nav-category-text { line-height: 38px; padding: 0 0 0 28px; cursor: pointer; }
+.nav-main-list ul { width: 100%; overflow: hidden; }
+.nav-main-list ul li { padding: 0px !important; width: 100% !important; height: auto !important; float: left; }
+.nav-main-list ul li a { display: inline-block; width: 100%; height: 100%; padding: 6px 0 6px 58px; }
+/* 菜单：会员增值按钮 */
+#vip-ul { display: none; height: auto; }
+#vip-button:hover #vip-ul { display: block; }
+#vip-ul ul li { background-image: url(../images/vip-icon.png); background-repeat: no-repeat; }
+.vip-icon1 { background-position: 20px 8px !important; }
+.vip-icon2 { background-position: 20px -34px !important; }
+.vip-icon3 { background-position: 20px -74px !important; }
+.vip-icon4 { background-position: 20px -112px !important; }
+/* 首页banner下方轮显 */
+#scroll_box { width: 882px; float: right; position: relative; }
+#scroll_box h3 { font-size: 16px; color: #000; padding: 15px; }
+#scroll_box h3 span { color: #dc3535; }
+.box_163css { border: 1px solid #dadada; position: relative; overflow: hidden; border-left: none; }
+.box_163css img { display: block; }
+.box_163css  li { float: left; display: inline; width: 882px; }
+.scroll_nav { width: 844px; margin-left: -1px; position: absolute; text-align: center; bottom: 0; }
+.scroll_nav li { width: 210px; height: 30px; margin-right: 1px; line-height: 30px; cursor: pointer; background-color: #000; background: rgba(0, 0, 0, 0.5); filter: alpha(opacity=50); }
+.scroll_nav li.current { background: rgba(0, 0, 0, 0.9); filter: alpha(opacity=90); }
+.scroll_nav li p { position: relative; color: #fff; }
+.prev, .next { cursor: pointer; width: 30px; height: 100%; position: absolute; top: 0; text-align: center; line-height: 154px; background: url(../images/banner-box-button.png) no-repeat; -webkit-transition: all 0.25s ease-out 0s; transition: all 0.25s ease-out 0s; }
+.prev { left: 0; background-position: 0 62px; }
+.prev:hover { background-position: -30px 62px; }
+.next { right: 0; background-position: -90px 62px; }
+.next:hover { background-position: -60px 62px; }
+#scroll_box * { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; box-sizing: border-box; }
+.banner-box { float: left; width: 293px; position: relative; font-size: 12px; height: 145px; border-left: 1px solid #dadada; }
+.banner-box .banner-box-l { float: left; width: 130px; text-align: center; height: 100%; }
+.banner-box .banner-box-r { float: left; width: 162px; padding: 22px 0; height: 100%; }
+.banner-box-r span { width: 100%; float: left; line-height: 26px; }
+.banner-box-l .banner-box-img { display: inline; max-width: 110px; max-height: 110px; }
+.banner-box-r .banner-box-name { color: #000; }
+.banner-box-r .banner-box-price { color: #dc3535; font-weight: bold; }
+.banner-box .hide-a { position: absolute; left: 0; top: 0; width: 100%; height: 100; text-align: center; background-color: rgb(208, 238, 239); filter: progid:DXImageTransform.Microsoft.Alpha(opacity=80); background-color: rgba(208, 238, 239, 0.8); display: none; font-size: 20px; color: #1c797b; line-height: 154px; height: 100%; }
+.banner-box:hover .hide-a { display: block; }
+.endtime { color: #dc3535; float: left; font-size: 13px; }
+/* 新首页幻灯片 样式修改 */
+#all { width: 1140px; height: 671px; margin: 0px auto; overflow: hidden; }
+#all #chuantong { width: 882px; height: 458px; float: right; position: relative; overflow: hidden; }
+#all #chuantong .dianul { list-style: none; position: absolute; right: 26px; bottom: 20px; }
+#all #chuantong .dianul li { float: left; width: 10px; height: 10px; margin-right: 8px; background: #fff; cursor: pointer; border-radius: 50%; }
+#all #chuantong .dianul li.cur { background: #7adff5; }
+#all #chuantong .tuul img { width: 882px; height: 458px; }
+.new-nav-drop-down .navlp:hover { color: #ff953f; }
+/* 首页外其他页面导航下拉菜单 */
+#nav-drap-other * { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; box-sizing: border-box; }
+#nav-drap-other { background: #fff; overflow: hidden; float: left; display: none; }
+.nav-category-text:hover #nav-drap-other { display: block; }
+#nav-drap-other ul { }
+#nav-drap-other ul li { width: 100%; float: left; margin-bottom: 1px; }
+#nav-drap-other ul li a { float: left; width: 100%; background: #a1dddf; border-left: 4px solid #a1dddf; color: #1c797b; font-size: 15px; height: 35px; line-height: 34px; padding-left: 57px; background-image: url(../images/icon-nav.png); background-repeat: no-repeat; -webkit-transition: all 0.25s ease-out 0s; transition: all 0.25s ease-out 0s; }
+#nav-drap-other ul li a:hover { border-left-color: #ff953f; }
+#nav-drap-other ul li .icon-nav1 { background-position: 19px 7px; }
+#nav-drap-other ul li .icon-nav2 { background-position: 19px -31px; }
+#nav-drap-other ul li .icon-nav3 { background-position: 19px -65px; }
+#nav-drap-other ul li .icon-nav4 { background-position: 19px -102px; }
+#nav-drap-other ul li .icon-nav5 { background-position: 19px -138px; }
+#nav-drap-other ul li .icon-nav6 { background-position: 19px -170px; }
+#nav-drap-other ul li .icon-nav7 { background-position: 19px -204px; }
+#nav-drap-other ul li .icon-nav8 { background-position: 19px -238px; }
+#nav-drap-other ul li .icon-nav9 { background-position: 19px -273px; }
+#nav-drap-other ul li .icon-nav10 { background-position: 19px -311px; }

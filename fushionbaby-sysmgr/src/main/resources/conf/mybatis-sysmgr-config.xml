@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration 
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 命名空间 -->
+	<typeAliases>
+		
+		<!-- 关键字搜索记录 -->
+		<typeAlias alias="SysmgrSearchKeywords" type="com.fushionbaby.sysmgr.model.SysmgrSearchKeywords" />  
+		<!-- 广告 -->
+		<typeAlias alias="SysmgrAdvertisement" type="com.fushionbaby.sysmgr.model.SysmgrAdvertisement" />  
+		<!-- 退货原因表 -->
+		<typeAlias alias="SysmgrRefundReason" type="com.fushionbaby.sysmgr.model.SysmgrRefundReason" />    
+		<!-- 产品对比表 -->
+		<typeAlias alias="sysmgrProductCompare" type="com.fushionbaby.sysmgr.model.SysmgrProductCompare" /> 
+		<!-- 功能栏表 -->
+		<typeAlias alias="sysmgrFunctionalBlock" type="com.fushionbaby.sysmgr.model.SysmgrFunctionalBlock" />
+		<!-- 开店申请表 --> 
+		<typeAlias alias="sysmgrStoreApply" type="com.fushionbaby.sysmgr.model.SysmgrStoreApply" /> 
+		<!-- 首页配置 -->
+		<typeAlias alias="SysmgrAppHomeConfig" type="com.fushionbaby.sysmgr.model.SysmgrAppHomeConfig" />
+		
+	</typeAliases>
+
+
+	<!-- 注册SQL映射文件 -->
+	<mappers>
+	</mappers>
+</configuration>

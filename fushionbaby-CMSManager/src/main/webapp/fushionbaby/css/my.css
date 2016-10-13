@@ -1,0 +1,84 @@
+
+.footer{background-color: #3D3D3D !important;float:right;width:100%;padding-left:240px;-webkit-box-sizing:border-box;box-sizing:border-box;}
+.footer-inner{color: #fff;}
+.iframe-page .page-content{margin-left: 0;}
+.nav-collapse.collapse{height: 100% !important;box-sizing:border-box;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;}
+.main-r{padding: 20px 20px 0 20px;}
+.main-r .form-horizontal{overflow: hidden;}
+.main-r .form-horizontal .control-label{font-size: 12px;color:#373737;}
+.main-r input.m-wrap[class*="span"]{height: 20px !important;}
+.main-r input.span6, textarea.span6, .uneditable-input.span6{width: 150px;}
+.main-r .form-horizontal .control-group{float: left;}
+.main-r .control-group-2 .control-label{width: 80px;}
+.main-r .form-horizontal .control-group-2 .controls{margin-left: 100px;}
+.main-r .form-horizontal .control-label{width: 100px;}
+.main-r .form-horizontal .controls {margin-left: 100px;}
+.main-r .form-horizontal .form-actions{float: left;}
+.main-r .form-horizontal .form-actions{padding:0;margin-left:20px;}
+.form-actions{background:none;}
+.main-r .form-actions{margin: 0;} 
+.main-r .btn{margin-left: 10px;background-color: #35AA47;color: #fff;}
+.main-r .btn:hover{background-color: #35AA47 !important;}
+.btn:hover, .btn:focus, .btn:active, .btn.active, .btn[disabled], .btn.disabled{background-color: #35AA47 !important;}
+.main-r .portlet-body{margin-bottom: 20px;overflow: auto;}
+.main-r .pagination{margin: 0;}
+.main-r .pagination ul{float: right;}
+.mr-operfram-wrap,.br-operfram-wrap{position: absolute;top:0;left:0;height: 100%;width: 100%;background-color:rgba(0,0,0,0.3);*background:#f00; *filter:alpha(opacity=30);display: none;}
+.mr-operfram{position: absolute;height: auto;width: 576px;top: 50%;margin-top:-200px;left: 50%;margin-left: -300px;}
+.mr-operfram-wrap .ui-id-6{font-size: 12px !important;padding: 2px;float: left;}
+.mr-operfram-wrap .my-btn{height: 12px;margin: 2px 0 0 470px !important;width: 15px;position: absolute;right: 2px;top: 4px;}
+.my-icon{margin-left: 10px;font-size: 14px;}
+.mr-operfram-wrap .my-title{overflow: hidden;position: relative;}
+.mr-operfram-wrap .m-wrap{width: 200px;background-color: #fff !important;}
+.mr-operfram-wrap .dialog_confirm{padding: 10px 2px;}
+.mr-operfram-wrap .control-group{margin-bottom: 10px;}
+.mr-operfram-wrap .control-label{width: auto;font-size: 12px;float: left;}
+.mr-operfram-wrap .controls{margin-left: 0;}
+.mr-operfram-wrap input.m-wrap[class*="span"]{height: 14px !important;}
+select.m-wrap[class*="span"]{height: 36px !important;font-size: 12px;}
+.line{line-height: 36px;}
+.mr-operfram-wrap .ui-dialog-buttonset button{font-size: 12px;}
+.form-actions{border:0 none !important;}
+#my-del .mr-operfram{width: 300px;}
+.sub-first{text-align: left;}
+.sub-first p{padding-left: 30px !important;height: 14px;margin: 8px 0; color: #fff;font-size: 14px;}
+
+
+/*order-zhang*/
+.mr-operfram-wrap .fix-width{width: 100px;text-align: right;}
+.my-order .table-left{text-align: right !important;}
+.my-order input[type="text"]{margin-bottom:0;}
+.my-order .table th,.my-order .table td{line-height: 35px;}
+.my-order .info-wrap{height: 35px;}
+.my-order #sample_editable_1 td{height: 50px;}
+
+/*add-meng*/
+.add-oper-wrap{width:800px;margin-left: -400px;}
+.add-oper-wrap .con-wrap{height: 500px;overflow-y: auto;}
+.add-oper-wrap .control-group.error input{border:1px solid #999; color: #333;}
+.add-oper-wrap .control-group.error .control-label{color: #333;}
+.add-oper-wrap select.m-wrap[class*="span"]{height: 30px !important;}
+.add-oper-wrap .control-label{width: 100px; text-align: right;padding-right: 5px;}
+.add-oper-wrap .caption{font-size: 12px;}
+.add-oper-wrap .portlet-title{margin-bottom: 0;border: 0 none;}
+.control-group-midd{margin: 0 auto;width:500px;}
+.mr-operfram-wrap .control-group-midd .m-wrap {width: 350px;}
+
+/*checked*/
+div.checker input{opacity:1;}
+
+/*商品分类详情*/
+.main-page{width: 225px;height:800px;float: left;margin-right: -225px;position: relative;}
+.main{float: right;width: 100%;}
+.gate{margin-left: 235px;}
+textarea{resize: none;}
+
+
+
+.portlet-body{position: relative;}
+.pic-big{position: absolute;right: -10px;top: -10px;width: 500px;height: 300px;background-color: #f40;overflow:hidden;}
+.pic-big img{width: 250px;float:left;}
+
+/*��ʽ�޸�  flyer*/
+.page-header-fixed .page-container{margin-top:22px;}
+.btn{margin-left:20px !important;}

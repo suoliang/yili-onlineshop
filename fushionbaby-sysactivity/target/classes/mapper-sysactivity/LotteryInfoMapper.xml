@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.sysactivity.dao.LotteryInfoDao">
+	<resultMap id="LotteryInfoResultMap" type="LotteryInfo">
+		<id column="id" property="id" />
+		<result column="member_id" property="memberId" />
+		<result column="login_name" property="loginName" />
+		<result column="num" property="num" />
+		<result column="create_id" property="createId"/>
+		<result column="update_id" property="updateId"/>
+		<result column="create_time" property="createTime"/>
+		<result column="update_time" property="updateTime"/>
+	</resultMap>
+	<sql id="Base_Column_List" >
+		id, member_id, login_name,num,create_id,update_id,create_time,update_time
+	</sql>
+	
+	<insert id="add" parameterType="LotteryInfo">
+		insert into t_lottery_info(id,member_id,login_name,num,create_id,update_id,create_time,update_time)
+		values (#{id},#{memberId},#{loginName},#{num},#{createId},#{updateId},now(),now())
+	</insert>
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_lottery_info
+		where id = #{id}
+	</delete>
+	<select id="findByMemberId" parameterType="java.lang.Long" resultMap="LotteryInfoResultMap">
+		select 
+			<include refid="Base_Column_List" />
+		from 
+			t_lottery_info
+		where member_id = #{memberId}
+	</select>
+	<select id="findByLoginName" parameterType="java.lang.String" resultMap="LotteryInfoResultMap">
+		select 
+			<include refid="Base_Column_List" />
+		from 
+			t_lottery_info
+		where login_name = #{loginName}
+	</select>
+	<update id="updateLotteryInfoNum" parameterType="LotteryInfo" >
+		update t_lottery_info set num = #{num},update_time=NOW() where member_id = #{memberId}
+	</update>
+</mapper>

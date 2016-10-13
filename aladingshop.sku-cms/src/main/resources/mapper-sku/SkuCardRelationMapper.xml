@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.sku.cms.dao.SkuCardRelationDao">
+	<resultMap id="SkuCardRelationMap" type="SkuCardRelation">
+		<id column="id" property="id" />
+		<result column="sku_code" property="skuCode" />
+		<result column="card_code" property="cardCode" />
+		<result column="create_time" property="createTime" />
+		<result column="create_id" property="createId" />
+	</resultMap>
+		<!-- 自动生成id策略 -->
+	<insert id="add" 	parameterType="SkuCardRelation">
+		insert into 
+			t_sku_card_relation(id,sku_code,card_code,create_time,create_id)
+		values
+			(#{id},#{skuCode},#{cardCode},now(),#{createId})
+	</insert>
+	
+	<update id="update" parameterType="SkuCardRelation">
+		update 
+			t_sku_card_relation 
+		set
+			sku_code = #{skuCode},
+			card_code = #{cardCode}
+		where 
+			id = #{id}
+	
+	</update>
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_sku_card_relation where id =#{id}
+	</delete>
+	
+	<select id="findAll" resultType="list" resultMap="SkuCardRelationMap">
+		<![CDATA[
+			select 
+				id,sku_code,card_code,create_time,create_id
+			from 
+				t_sku_card_relation
+		 ]]>
+	</select>
+	<select id="findById" resultMap="SkuCardRelationMap" parameterType="long">
+		<![CDATA[
+			select 
+				id,sku_code,card_code,create_time,create_id
+			from 
+				t_sku_card_relation
+		 	where 
+		 		id = #{id}
+        ]]>
+	</select>
+	
+</mapper>

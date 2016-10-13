@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.sku.cms.dao.SkuExtraInfoDao">
+	<resultMap id="SkuExtraInfoResultMap" type="skuExtraInfo">
+		<id column="id" property="id" />
+		<result column="sku_code" property="skuCode" />
+		<result column="onshelvestime" property="onshelvestime" />
+		<result column="offshelvestime" property="offshelvestime" />
+		<result column="has_gift" property="hasGift" />
+		<result column="has_discount" property="hasDiscount" />
+		<result column="is_gift" property="isGift" />
+		<result column="is_video" property="isVideo" />
+		<result column="video_url" property="videoUrl" />
+		<result column="sales_volume" property="salesVolume" />
+		<result column="actual_sales_volume" property="actualSalesVolume" />
+		<result column="comment_count" property="commentCount" />		
+		
+		<result column="is_member_sku" property="isMemberSku" />		
+		<result column="version" property="version" />
+		<result column="create_id" property="createId" />
+		<result column="create_time" property="createTime" />
+		<result column="update_id" property="updateId" />
+		<result column="update_time" property="updateTime" />
+		<result column="store_code" property="storeCode" />
+	</resultMap>
+	
+	<insert id="add"
+		parameterType="skuExtraInfo">
+		insert into 
+			t_sku_extra_info(id,
+			sku_code,
+			onshelvestime,
+			offshelvestime,
+			has_gift,
+			has_discount,
+			is_gift,
+			is_video,
+			video_url, 
+			sales_volume,
+			actual_sales_volume,
+			comment_count,
+			is_member_sku,
+            version,
+            create_id,
+            create_time,
+            update_id,
+            update_time,store_code) 
+		values
+			(#{id}, #{skuCode}, #{onshelvestime}, #{offshelvestime}, #{hasGift}, #{hasDiscount}, #{isGift}, #{isVideo},
+			#{videoUrl},#{salesVolume},#{actualSalesVolume},#{commentCount},#{isMemberSku},now(),
+			 #{createId}, now(), #{updateId}, #{updateTime},#{storeCode})
+	</insert>
+
+
+	<select id="findBySkuCode" resultMap="SkuExtraInfoResultMap" parameterType="java.lang.String">
+		<![CDATA[
+			select 
+			id,
+			sku_code,
+			onshelvestime,
+			offshelvestime,
+			has_gift,
+			has_discount,
+			is_gift,
+			is_video,
+			video_url, 
+			sales_volume,
+			actual_sales_volume,
+			comment_count,
+			is_member_sku,
+            version,
+            create_id,
+            create_time,
+            update_id,
+            update_time,store_code
+			from 
+				t_sku_extra_info
+		 	where 
+		 		sku_code = #{skuCode}
+        ]]>
+	</select>
+	
+	<update id="update" parameterType="skuExtraInfo">
+		UPDATE 
+			t_sku_extra_info
+		SET
+		<if test="skuCode !=null and skuCode !=''">
+			sku_code = #{skuCode}, 
+		</if>
+		<if test="onshelvestime !=null and onshelvestime !=''">
+			onshelvestime = #{onshelvestime}, 
+		</if>
+		<if test="offshelvestime !=null and offshelvestime !=''">
+			offshelvestime = #{offshelvestime}, 
+		</if>
+		<if test="hasGift !=null and hasGift !=''">
+			has_gift = #{hasGift}, 
+		</if>
+		<if test="hasDiscount !=null and hasDiscount !=''">
+			has_discount = #{hasDiscount}, 
+		</if>
+		<if test="isGift !=null and isGift !=''">
+			is_gift = #{isGift}, 
+		</if>
+		<if test="isVideo !=null and isVideo !=''">
+			is_video = #{isVideo}, 
+		</if>
+		<if test="videoUrl !=null and videoUrl !=''">
+			video_url = #{videoUrl}, 
+		</if>
+		<if test="salesVolume !=null and salesVolume !=''">
+			sales_volume = #{salesVolume}, 
+		</if>
+		<if test="actualSalesVolume !=null and actualSalesVolume !=''">
+			actual_sales_volume = #{actualSalesVolume}, 
+		</if>
+		<if test="commentCount !=null and commentCount !=''">
+			comment_count = #{commentCount}, 
+		</if>
+		<if test="version !=null and version !=''">
+			version = now(), 
+		</if>
+		<if test="isMemberSku !=null and isMemberSku!=''">
+			is_member_sku=#{isMemberSku},
+		</if>
+		<if test="updateId !=null and updateId !=''">
+			update_id = #{updateId}, 
+		</if>
+		
+		<if test="storeCode !=null and storeCode !=''">
+			store_code = #{storeCode}, 
+		</if>
+		update_time=now() 
+		WHERE
+			id = #{id}
+	</update>
+	
+	<select id="getPageList" resultType="list" resultMap="SkuExtraInfoResultMap" parameterType="Map">
+			select 
+				a.id,
+				a.sku_code,
+				a.onshelvestime,
+				a.offshelvestime,
+				a.has_gift,
+				a.has_discount,
+				a.is_gift,
+				a.is_video,
+				a.video_url, 
+				a.sales_volume,
+				a.actual_sales_volume,
+				a.comment_count,
+				a.is_member_sku,
+	            a.version,
+	            a.create_id,
+	            a.create_time,
+	            a.update_id,
+	            a.update_time,a.store_code
+			from 
+				t_sku_extra_info a inner join t_sku b on a.sku_code=b.unique_code
+		<where>
+		
+			<if test="skuCodes !=null and skuCodes !=''">
+				and b.unique_code in  (${skuCodes})
+			</if>
+			<if test="noSkuCodes !=null and noSkuCodes !=''">
+				and b.unique_code not in  (${noSkuCodes})
+			</if>
+			<if test="uniqueCode !=null and uniqueCode!=''">
+				and b.unique_code = #{uniqueCode}
+			</if>
+			<if test="brandCode !=null and brandCode !=''">
+				and b.brand_code = #{brandCode}
+			</if>
+			<if test="categoryCode !=null and categoryCode !=''">
+				and b.category_code = #{categoryCode}
+			</if>
+			<if test="grandCategoryCode !=null and grandCategoryCode!=''">
+				and b.category_code  like #{grandCategoryCode}"%"
+			</if>
+			<if test="barCode !=null and barCode != ''">
+				and b.bar_code = #{barCode}
+			</if>
+			<if test="skuNo !=null and skuNo != ''">
+				and b.sku_no = #{skuNo}
+			</if>
+			<if test="productCode !=null and productCode !=''">
+				and b.product_code = #{productCode}
+			</if>
+			<if test="name !=null and name != ''">
+				and b.name like "%"#{name}"%"
+			</if>
+			<if test="status !=null and status!=''">
+				and b.status = #{status}
+			</if>
+			<if test="isMemberSku!=null and isMemberSku!=''">
+				and a.is_member_sku = #{isMemberSku}
+			</if>
+			<if test="createTimeFrom != null and createTimeFrom !=''">
+		    	<![CDATA[
+					and DATE_FORMAT(b.create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+				]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(b.create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+	   		 </if>
+	   		<if test="storeCode ==null or storeCode =='' or storeCode=='999'">
+			   and   (a.store_code is null or a.store_code='' or a.store_code='999')
+		    </if>
+	   		<if test="storeCode !=null and storeCode !='' and storeCode!='999'">
+			  and    a.store_code = #{storeCode}
+		    </if>
+	</where>
+		order by b.create_time desc,b.sku_no
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+	
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">	
+		select 
+			count(1)
+		from 
+			t_sku_extra_info a inner join t_sku b on a.sku_code=b.unique_code
+		<where>
+			<if test="skuCodes !=null and skuCodes !=''">
+				and b.unique_code in  (${skuCodes})
+			</if>
+			<if test="noSkuCodes !=null and noSkuCodes !=''">
+				and b.unique_code not in  (${noSkuCodes})
+			</if>
+			<if test="uniqueCode !=null and uniqueCode!=''">
+				and b.unique_code = #{uniqueCode}
+			</if>
+			<if test="brandCode !=null and brandCode !=''">
+				and b.brand_code = #{brandCode}
+			</if>
+			<if test="categoryCode !=null and categoryCode !=''">
+				and b.category_code = #{categoryCode}
+			</if>
+			<if test="grandCategoryCode !=null and grandCategoryCode!=''">
+				and b.category_code  like #{grandCategoryCode}"%"
+			</if>
+			<if test="barCode !=null and barCode != ''">
+				and b.bar_code = #{barCode}
+			</if>
+			<if test="skuNo !=null and skuNo != ''">
+				and b.sku_no = #{skuNo}
+			</if>
+			<if test="productCode !=null and productCode !=''">
+				and b.product_code = #{productCode}
+			</if>
+			<if test="name !=null and name != ''">
+				and b.name like "%"#{name}"%"
+			</if>
+			<if test="status !=null and status!=''">
+				and b.status = #{status}
+			</if>
+			<if test="isMemberSku!=null and isMemberSku!=''">
+				and a.is_member_sku = #{isMemberSku}
+			</if>
+			<if test="createTimeFrom != null and createTimeFrom !=''">
+		    	<![CDATA[
+					and DATE_FORMAT(b.create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+				]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(b.create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+	   		</if>
+	   		<if test="storeCode ==null or storeCode=='' or storeCode=='999'">
+	   			and     (a.store_code is null or a.store_code ='' or a.store_code='999')
+	   		</if>
+	   		<if test="storeCode !=null and storeCode !='' and storeCode!='999'">
+			    and    a.store_code = #{storeCode}
+		    </if>
+		</where>
+	
+	</select>
+
+	<delete id="deleteBySkuCode" parameterType="java.lang.String">
+		DELETE FROM t_sku_extra_info WHERE sku_code = #{skuCode}
+	</delete>
+</mapper>

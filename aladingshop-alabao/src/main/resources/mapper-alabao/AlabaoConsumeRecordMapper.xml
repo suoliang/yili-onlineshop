@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.alabao.dao.AlabaoConsumeRecordDao">
+	<resultMap id="AlabaoConsumeRecordResultMap" type="AlabaoConsumeRecord">
+		<id column="id" property="id" />
+		<result column="account" property="account" />
+		<result column="member_id" property="memberId" />
+		<result column="order_code" property="orderCode" />
+		<result column="consume_money" property="consumeMoney" />
+		<result column="is_success" property="isSuccess" />
+		<result column="create_time" property="createTime" />
+		
+		<result column="before_change_money" property="beforeChangeMoney" />
+		<result column="after_change_money" property="afterChangeMoney" />
+	</resultMap>
+	<sql id="AlabaoConsumeRecord_column">
+		id,account,member_id,order_code,consume_money,is_success,create_time,before_change_money,after_change_money
+	   
+	</sql>
+	<insert id="add" parameterType="AlabaoConfig">
+		insert into 
+			t_alabao_consume_record
+		(id,account,member_id,order_code,consume_money,is_success,create_time,before_change_money,after_change_money)
+	    values 
+	    (#{id},#{account},#{memberId},#{orderCode},#{consumeMoney},#{isSuccess},now(),#{beforeChangeMoney},#{afterChangeMoney})
+	</insert>
+	
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_alabao_consume_record where id = #{id}
+	</delete>
+	
+	<update id="updateById">
+		update t_alabao_consume_record
+			set
+			<if test="account !=null and account !=''">
+			    account = #{account}, 
+			</if>
+			<if test="memberId!=null and memberId!=''">
+			    member_id = #{memberId}, 
+			</if>
+			<if test="orderCode!=null and orderCode!=''">
+			    order_code = #{orderCode}, 
+			</if>
+			<if test="consumeMoney!=null and consumeMoney!=''">
+			    consume_money = #{consumeMoney}, 
+			</if>
+			<if test="beforeChangeMoney !=null and beforeChangeMoney !=''">
+			    before_change_money = #{beforeChangeMoney}, 
+			</if>
+			<if test="afterChangeMoney !=null and afterChangeMoney !=''">
+			    after_change_money = #{afterChangeMoney}, 
+			</if>
+			
+			<if test="isSuccess !=null and isSuccess !=''">
+			    is_success = #{isSuccess}
+			</if>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+	
+	<update id="updateByAccount">
+		update t_alabao_consume_record
+			set
+			<if test="memberId!=null and memberId!=''">
+			    member_id = #{memberId}, 
+			</if>
+			<if test="orderCode!=null and orderCode!=''">
+			    order_code = #{orderCode}, 
+			</if>
+			<if test="consumeMoney!=null and consumeMoney!=''">
+			    consume_money = #{consumeMoney}, 
+			</if>
+			<if test="beforeChangeMoney !=null and beforeChangeMoney !=''">
+			    before_change_money = #{beforeChangeMoney}, 
+			</if>
+			<if test="afterChangeMoney !=null and afterChangeMoney !=''">
+			    after_change_money = #{afterChangeMoney}, 
+			</if>
+			<if test="isSuccess !=null and isSuccess !=''">
+			    is_success = #{isSuccess} 
+			</if>
+			
+		<where>
+			account = #{account}
+		</where>
+	</update>
+	
+	<select id="findById" resultMap="AlabaoConsumeRecordResultMap" parameterType="java.lang.Long">
+		select  <include refid="AlabaoConsumeRecord_column"/> from t_alabao_consume_record where id = #{id}
+	</select>
+	
+	
+	<select id="findByAccount" resultMap="AlabaoConsumeRecordResultMap" >
+		select  <include refid="AlabaoConsumeRecord_column"/> from t_alabao_consume_record where account = #{account}
+	</select>
+	
+	<!-- 分页条件查询 -->
+	<select id="getList" resultType="list" resultMap="AlabaoConsumeRecordResultMap" parameterType="Map" >
+		select <include refid="AlabaoConsumeRecord_column"/>
+		from t_alabao_consume_record 
+		<where>
+			<if test="account !=null and account !=''">
+			    account = #{account} and 
+			</if>
+			<if test="memberId!=null and memberId!=''">
+			    member_id = #{memberId} and 
+			</if>
+			<if test="orderCode!=null and orderCode!=''">
+			    order_code = #{orderCode} and 
+			</if>
+			<if test="consumeMoney!=null and consumeMoney!=''">
+			    consume_money = #{consumeMoney} and 
+			</if>
+			<if test="isSuccess !=null and isSuccess !=''">
+			    is_success = #{isSuccess} and  
+			</if>
+			<if test="createTimeFrom != null and createTimeFrom !=''">
+		    	<![CDATA[
+					DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d') and 
+				]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d') and 
+				]]>
+		    </if>
+			1=1 
+		</where>
+			
+		 order by create_time desc
+			<if test="start!=null and limit!=null">
+				limit #{start},#{limit}
+			</if> 
+	</select>
+	
+  	<!-- 分页条件查询统计 -->
+	<select id="getListPageMoney" resultType="java.util.HashMap"  parameterType="Map" >
+		select  sum(consume_money)  as total_income_money 
+		from t_alabao_consume_record 
+		<where>
+			<if test="account !=null and account !=''">
+			    account = #{account} and 
+			</if>
+			<if test="memberId!=null and memberId!=''">
+			    member_id = #{memberId} and 
+			</if>
+			<if test="orderCode!=null and orderCode!=''">
+			    order_code = #{orderCode} and 
+			</if>
+			<if test="consumeMoney!=null and consumeMoney!=''">
+			    consume_money = #{consumeMoney} and 
+			</if>
+			<if test="isSuccess !=null and isSuccess !=''">
+			    is_success = #{isSuccess} and  
+			</if>
+			<if test="createTimeFrom != null and createTimeFrom !=''">
+		    	<![CDATA[
+					DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d') and 
+				]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d') and 
+				]]>
+		    </if>
+			1=1 
+		</where>
+	</select>
+
+	
+	
+	
+	<!-- 查询该表的总数  -->
+	
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) from t_alabao_consume_record 
+		<where>
+			<if test="account !=null and account !=''">
+			    account = #{account} and 
+			</if>
+			<if test="memberId!=null and memberId!=''">
+			    member_id = #{memberId} and 
+			</if>
+			<if test="orderCode!=null and orderCode!=''">
+			    order_code = #{orderCode} and 
+			</if>
+			<if test="consumeMoney!=null and consumeMoney!=''">
+			    consume_money = #{consumeMoney} and 
+			</if>
+			<if test="isSuccess !=null and isSuccess !=''">
+			    is_success = #{isSuccess} and 
+			</if>
+			<if test="createTimeFrom != null and createTimeFrom !=''">
+		    	<![CDATA[
+					DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d') and 
+				]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d') and 
+				]]>
+		    </if>
+			1=1 
+		</where>
+	</select>
+	
+	<select id="findAllByMemberId" resultMap="AlabaoConsumeRecordResultMap" parameterType="java.lang.Long">
+		select  <include refid="AlabaoConsumeRecord_column"/> from t_alabao_consume_record where member_id = #{memberId}  ORDER BY create_time DESC
+	</select>
+	
+	<select id="findAllByAccount" resultMap="AlabaoConsumeRecordResultMap" parameterType="java.lang.String">
+		select  <include refid="AlabaoConsumeRecord_column"/> from t_alabao_consume_record where  account = #{account}  ORDER BY create_time DESC
+	</select>
+	
+	<select id="findByMemberIdAndOrderCode" resultMap="AlabaoConsumeRecordResultMap">
+		select  <include refid="AlabaoConsumeRecord_column"/> from t_alabao_consume_record where member_id = #{memberId} and order_code = #{orderCode}
+	</select>
+	
+	<delete id="deleteByOrderCodeAndMemberId">
+		delete from t_alabao_consume_record where member_id = #{memberId} and order_code = #{orderCode}
+	</delete>
+	
+	<select id="findByOrderCode" resultMap="AlabaoConsumeRecordResultMap">
+		select  <include refid="AlabaoConsumeRecord_column"/> from t_alabao_consume_record where order_code = #{orderCode}
+	</select>
+	
+	<!-- 查询最近的交易记录 -->
+	<select id="findBillRecordByTime" resultMap="AlabaoConsumeRecordResultMap" >
+		select  <include refid="AlabaoConsumeRecord_column"/> from t_alabao_consume_record 
+		where account=#{account} AND
+			DATE_FORMAT(create_time,'%Y-%m') > DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 4 MONTH),'%Y-%m')
+			ORDER BY create_time DESC
+	</select>
+	
+</mapper>

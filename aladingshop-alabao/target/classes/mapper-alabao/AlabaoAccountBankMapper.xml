@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.alabao.dao.AlabaoAccountBankDao">
+	<resultMap id="AlabaoAccountBankResultMap" type="AlabaoAccountBank">
+			<id column="id" property="id" />
+			<result column="member_id" property="memberId" />
+			<result column="is_delete" property="isDelete" />
+			<result column="card_holder" property="cardHolder" />
+			<result column="bank_name" property="bankName" />
+			<result column="update_time" property="updateTime" />
+			<result column="card_no" property="cardNo" />
+			<result column="account" property="account" />
+			<result column="create_time" property="createTime" />
+	</resultMap>
+	<!-- 定义宏转换为 -->
+	<sql id="AlabaoAccountBank_column">
+		id,member_id,account,bank_name,card_no,card_holder,create_time,update_time,is_delete
+	</sql>
+	<insert id="add" parameterType="AlabaoAccountBank">
+		insert into 
+			baby_member.t_alabao_account_bank
+		(
+					member_id,
+					is_delete,
+					card_holder,
+					bank_name,
+					id,
+					update_time,
+					card_no,
+					account,
+					create_time
+		)
+	    values 
+	    (
+				#{memberId},
+				#{isDelete},
+				#{cardHolder},
+				#{bankName},
+				#{id},
+				#{updateTime},
+				#{cardNo},
+				#{account},
+				now()
+		)
+	</insert>
+	<delete id="deleteById" parameterType="java.lang.Long">
+	
+		delete from baby_member.t_alabao_account_bank where id = #{id}  
+	</delete>
+	
+	<update id="update"  parameterType="AlabaoAccountBank">
+		update baby_member.t_alabao_account_bank
+			set
+				<if test="memberId !=null and memberId !=''">
+					member_id=#{memberId},
+				</if>
+				<if test="isDelete !=null and isDelete !=''">
+					is_delete=#{isDelete},
+				</if>
+				<if test="cardHolder !=null and cardHolder !=''">
+					card_holder=#{cardHolder},
+				</if>
+				<if test="bankName !=null and bankName !=''">
+					bank_name=#{bankName},
+				</if>
+				<if test="cardNo !=null and cardNo !=''">
+					card_no=#{cardNo},
+				</if>
+				<if test="account !=null and account !=''">
+					account=#{account},
+				</if>
+				update_time=now()
+		<where>
+			id = #{id} 
+		</where>
+	</update>
+	
+	<select id="findById" resultMap="AlabaoAccountBankResultMap" parameterType="java.lang.Long">
+		select  <include refid="AlabaoAccountBank_column"/> from baby_member.t_alabao_account_bank where id = #{id} 
+	</select>
+	
+	<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="AlabaoAccountBankResultMap" parameterType="Map" >
+		select <include refid="AlabaoAccountBank_column"/>
+		from baby_member.t_alabao_account_bank 
+		where 1=1
+				<if test="memberId !=null and memberId !=''">
+					 and member_id=#{memberId}
+				</if>
+				<if test="isDelete !=null and isDelete !=''">
+					 and is_delete=#{isDelete}
+				</if>
+				<if test="cardHolder !=null and cardHolder !=''">
+					 and card_holder=#{cardHolder}
+				</if>
+				<if test="bankName !=null and bankName !=''">
+					 and bank_name=#{bankName}
+				</if>
+				<if test="id !=null and id !=''">
+					 and id=#{id}
+				</if>
+				<if test="updateTime !=null and updateTime !=''">
+					 and update_time=#{updateTime}
+				</if>
+				<if test="cardNo !=null and cardNo !=''">
+					 and card_no=#{cardNo}
+				</if>
+				<if test="account !=null and account !=''">
+					 and account=#{account}
+				</if>
+				<if test="createTime !=null and createTime !=''">
+					 and create_time=#{createTime}
+				</if>
+		<if test="start!=null and limit!=null ">
+			limit #{start},#{limit}
+		</if>
+		 
+	</select>
+	
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) from baby_member.t_alabao_account_bank
+	</select>
+	
+	
+	<select id="findByMemberId" resultType="list" resultMap="AlabaoAccountBankResultMap" parameterType="java.lang.Long">
+		select  <include refid="AlabaoAccountBank_column"/> from baby_member.t_alabao_account_bank where member_id=#{memberId}
+	</select>
+	
+	<select id="findByAccount" resultType="list" resultMap="AlabaoAccountBankResultMap" parameterType="java.lang.String">
+		select  <include refid="AlabaoAccountBank_column"/> from baby_member.t_alabao_account_bank where account=#{account} 
+	</select>
+	
+</mapper>

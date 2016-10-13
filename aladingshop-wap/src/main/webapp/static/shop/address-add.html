@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>新增地址</title>
+        <!-- 通用部分 开始 -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0,user-scalable=no">
+        <link rel="shortcut icon" href="images/favicon.ico" />
+        <link rel="stylesheet" href="css/style.min.css"><!-- 通用 CSS -->
+        <script src="farmwork/jquery/jquery-2.1.3.min.js"></script><!-- 通用jQuery JS -->
+        <script src="farmwork/velocity/velocity.min.js"></script><!-- velocity JS -->
+        <script src="farmwork/velocity/velocity.ui.min.js"></script><!-- velocity JS -->
+        <script src="js/min/public.min.js"></script><!-- 通用 public JS -->
+        <!-- 通用部分 结束 -->
+    </head>
+    <body id="">
+
+        <div class="container">
+
+            <div class="head mB10">
+                <a href="javascript:history.go(-1)" class="a-left">
+                    <span class="back"></span>
+                </a>
+                <p>新增地址</p>
+                <a href="javascript:void(0)" class="a-right">
+                    <span>保存</span>
+                </a>
+            </div>
+
+            <form id="addressAddForm" class="form-group">
+                <div class="input-group key-btn-wrap">
+                    <label for="name">收货人姓名：</label>
+                    <input name="name" type="text" autocomplete="off">
+                </div>
+                <div class="input-group">
+                    <label for="name">手机号码：</label>
+                    <input name="phone" type="number" autocomplete="off">
+                </div>
+                <div class="input-group" id="area">
+                    <label for="name">所在地区：</label>
+                    <input name="area" type="text" autocomplete="off">
+                    <i class="right"></i>
+                    <s></s>
+                </div>
+                <div class="input-group">
+                    <label for="name">详细地址：</label>
+                    <input name="areaDetail" type="text" autocomplete="off">
+                </div>
+                <div class="input-group">
+                    <label for="name">设置默认地址</label>
+                    <input name="setDefault" type="text" autocomplete="off">
+                    <div class="ios-btn-wrap">
+                        <div class="ios-btn">
+                            <input type="checkbox">
+                            <i></i>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <ul class="province address-ul"></ul>
+            <ul class="city address-ul"></ul>
+            <ul class="county address-ul"></ul>
+
+        </div><!-- /.container -->
+
+        <script>
+        $(function(){
+            /*选择地址*/
+            // var address = "";
+
+            $('#area').click(function() {
+                showProvince();
+            });
+
+        })
+
+        function showAddressAddForm() {
+            var item = $('#addressAddForm, .province, .city, .county');
+            var addressAddForm = $('#addressAddForm');
+            item.hide();
+            addressAddForm.show();
+        }
+        function showProvince() {
+            var item = $('#addressAddForm, .province, .city, .county');
+            var province = $('.province');
+            item.hide();
+            var list = '<li>上海市<i class="right"></i><input type="hidden" value="0"></li><li>北京市<i class="right"></i><input type="hidden" value="1"></li>';
+            province.empty().append(list);
+            $('.province').find('li').bind('click',function() {
+                // address += $(this).text();
+                showCity();
+            });
+            province.show();
+        }
+        function showCity() {
+            var item = $('#addressAddForm, .province, .city, .county');
+            var city = $('.city');
+            item.hide();
+            var list = '<li>上海市<i class="right"></i><input type="hidden" value="10"></li>';
+            city.empty().append(list);
+            $('.city').find('li').bind('click',function() {
+                // address += $(this).text();
+                showCounty();
+            });
+            city.show();
+        }
+        function showCounty() {
+            var item = $('#addressAddForm, .province, .city, .county');
+            var county = $('.county');
+            item.hide();
+            var list = '<li>闵行区<input type="hidden" value="100"></li><li>宝山区<input type="hidden" value="101"></li>';
+            county.empty().append(list);
+            $('.county').find('li').bind('click',function() {
+                // address += $(this).text();
+                $('#area').find('input').val($(this).find('input').val());
+                showAddressAddForm();
+                // address ="";
+            });
+            county.show();
+        }
+        </script>
+
+    </body>
+</html>

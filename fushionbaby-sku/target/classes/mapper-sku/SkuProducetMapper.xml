@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.sku.dao.SkuProductDao">
+	<resultMap id="skuProductMap" type="SkuProduct">
+		<id column="id" property="id" />
+		<result column="code" property="code" />
+		<result column="name" property="name" />
+		<result column="disable" property="disable" />
+		<result column="create_time" property="createTime" />
+    	<result column="update_time" property="updateTime" />
+    	<result column="create_id" property="createId" />
+    	<result column="update_id" property="updateId" />
+	</resultMap>
+	
+	<insert id="add" parameterType="SkuProduct">
+	    <selectKey keyProperty="id" resultType="long" order="AFTER">    
+           SELECT LAST_INSERT_ID() AS ID      
+        </selectKey>
+		insert into t_sku_product			
+			(code,name,disable,create_time,update_time,create_id)
+		values
+			(#{code},#{name},#{disable},now(),now(),#{createId})
+	</insert>
+	
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_sku_product where id = #{id}
+	</delete>
+	
+	<update id="update" parameterType="SkuProduct">
+		update 
+			t_sku_product
+		set 
+		  
+			<if test="code !=null and code !=''">
+				 code = #{code},
+			</if>
+			<if test="name !=null and name !=''">
+				 name = #{name},
+			</if>
+			<if test="disable !=null and disable !=''">
+				 disable = #{disable},
+			</if>
+			<if test="updateId!=null and updateId!=''">
+				update_id = #{updateId},
+			</if>		
+			  update_time = now()
+		where id = #{id}
+	</update>
+	
+	<select id="findAll" resultType="list" resultMap="skuProductMap">
+		select 
+			id,code,name,disable,create_time,update_time,create_id,update_id
+		from 
+			t_sku_product
+	</select>
+	
+	
+	<select id="queryBySameDayOperateing" resultType="list" resultMap="skuProductMap">
+		select 
+			id,code,name,disable,create_time,update_time,create_id,update_id
+		from 
+			t_sku_product
+		where 
+			TO_DAYS(create_time) = TO_DAYS(NOW()) or TO_DAYS(update_time) = TO_DAYS(NOW())
+	</select>
+	
+	
+	<select id="findById" resultMap="skuProductMap" parameterType="long">
+		select 
+			id,code,name,disable,create_time,update_time,create_id,update_id
+		from 
+			t_sku_product
+		where id = #{id}	
+	</select>
+	
+	<select id="getListPage" resultType="list" resultMap="skuProductMap" parameterType="Map" >
+			select 
+				id,code,name,disable,create_time,update_time,create_id,update_id
+			from 
+				t_sku_product
+		<where>
+			<if test="code !=null and code !=''">
+	    	    and code like "%"#{code}"%"  
+	        </if>
+	        <if test="name !=null and name !=''">
+	    	    and name like "%"#{name}"%"  
+	        </if>
+	        <if test="disable !=null and disable !=''">
+				and disable = #{disable}
+			</if>
+			    <if test="createTimeFrom != null and createTimeFrom !=''">
+	    	<![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+			]]>
+	    </if>
+		<if test="createTimeTo != null and createTimeTo != ''">
+	    	<![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+			]]>
+	    </if>
+		</where>
+		order by create_time desc
+		<if test="start !=null and limit !=null">
+			limit #{start},#{limit}
+		 </if>
+	</select>
+	
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select 
+			count(id)
+		from 
+			t_sku_product
+		<where>
+		    <if test="code !=null and code !=''">
+	    	    and code like "%"#{code}"%"  
+	        </if>
+	        <if test="name !=null and name !=''">
+	    	    and name like "%"#{name}"%"  
+	        </if>
+	        <if test="disable !=null and disable !=''">
+				and disable = #{disable}
+			</if>
+			  <if test="createTimeFrom != null and createTimeFrom !=''">
+	    	<![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+			]]>
+	    </if>
+		<if test="createTimeTo != null and createTimeTo != ''">
+	    	<![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+			]]>
+	    </if>
+			
+			
+		</where>
+	</select>
+	
+	<select id="findByCode" resultMap="skuProductMap" parameterType="java.lang.String">
+			select 
+				id,code,name,disable,create_time,update_time,create_id,update_id
+			from 
+				t_sku_product
+			where 
+				code = #{code} 
+	
+	</select>
+	
+	<select id="existByCode" resultMap="skuProductMap" parameterType="java.lang.String">
+			select 
+				id,code,name,disable,create_time,update_time,create_id,update_id
+			from 
+				t_sku_product
+			where 
+				code = #{code} 
+	</select>
+</mapper>

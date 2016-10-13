@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.store.dao.StoreExtraInfoDao">
+	<resultMap id="StoreExtraInfoResultMap" type="StoreExtraInfo">
+		<id column="id" property="id" />
+		<result column="store_code" property="storeCode" />
+		<result column="link_man" property="linkMan" />
+		<result column="zip" property="zip" />
+		<result column="telephone" property="telephone" />
+		<result column="mobile" property="mobile" />
+		<result column="address" property="address" />
+		<result column="picture" property="picture" />
+		<result column="traffic_routes" property="trafficRoutes" />
+		<result column="description" property="description" />
+		<result column="update_time" property="updateTime" />
+		<result column="update_id" property="updateId" />
+		<result column="identity_card_no" property="identityCardNo" />
+	</resultMap>
+	<sql id="StoreExtraInfo_column">
+		id, store_code,link_man,zip,telephone,mobile,address,
+		picture,traffic_routes,description,update_time,update_id,
+		identity_card_no
+	   
+	</sql>
+	<insert id="add" parameterType="StoreExtraInfo">
+		insert into 
+			t_store_extra_info
+		(
+			<include refid="StoreExtraInfo_column"/>
+		 )
+	    values 
+	    (#{id},#{storeCode},#{linkMan},#{zip},#{telephone},#{mobile},#{address},
+	    #{picture},#{trafficRoutes},#{description},now(),#{updateId})
+	</insert>
+	
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_store_extra_info where id = #{id}
+	</delete>
+	<delete id="deleteByStoreCode" parameterType="java.lang.String">
+		delete from t_store_extra_info where store_code = #{StoreCode}
+	</delete>
+	
+	<update id="updateByStoreCode">
+		update t_store_extra_info
+			set
+			<if test="linkMan!=null and linkMan!=''">
+			    link_man = #{linkMan}, 
+			</if>
+			<if test="zip!=null and zip!=''">
+			    zip = #{zip}, 
+			</if>
+			<if test="telephone!=null and telephone!=''">
+			    telephone = #{telephone}, 
+			</if>
+			<if test="mobile!=null and mobile!=''">
+			    mobile = #{mobile}, 
+			</if>
+			<if test="address!=null and address!=''">
+			    address = #{address}, 
+			</if>
+			<if test="picture!=null and picture!=''">
+			    picture = #{picture}, 
+			</if>
+			<if test="trafficRoutes!=null and trafficRoutes!=''">
+			    traffic_routes = #{trafficRoutes}, 
+			</if>
+			<if test="description!=null and description!=''">
+			    description = #{description}, 
+			</if>
+			<if test="updateTime!=null and updateTime!=''">
+			    update_time = now(), 
+			</if>
+			<if test="updateId!=null and updateId!=''">
+			    update_id = #{updateId} 
+			</if>
+			<if test="identityCardNo!=null and identityCardNo!=''">
+			    identity_card_no = #{identityCardNo} 
+			</if>
+			
+		<where>
+			store_code = #{storeCode}
+		</where>
+	</update>
+	
+	<update id="update">
+		update t_store_extra_info
+			set
+			<if test="linkMan!=null and linkMan!=''">
+			    link_man = #{linkMan}, 
+			</if>
+			<if test="zip!=null and zip!=''">
+			    zip = #{zip}, 
+			</if>
+			<if test="telephone!=null and telephone!=''">
+			    telephone = #{telephone}, 
+			</if>
+			<if test="mobile!=null and mobile!=''">
+			    mobile = #{mobile}, 
+			</if>
+			<if test="address!=null and address!=''">
+			    address = #{address}, 
+			</if>
+			<if test="picture!=null and picture!=''">
+			    picture = #{picture}, 
+			</if>
+			<if test="trafficRoutes!=null and trafficRoutes!=''">
+			    traffic_routes = #{trafficRoutes}, 
+			</if>
+			<if test="description!=null and description!=''">
+			    description = #{description}, 
+			</if>
+			<if test="updateTime!=null and updateTime!=''">
+			    update_time = now(), 
+			</if>
+			<if test="updateId!=null and updateId!=''">
+			    update_id = #{updateId}, 
+			</if>
+			<if test="identityCardNo!=null and identityCardNo!=''">
+			    identity_card_no = #{identityCardNo} 
+			</if>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+	
+	<select id="findById" resultMap="StoreExtraInfoResultMap" parameterType="java.lang.Long">
+		select  <include refid="StoreExtraInfo_column"/> from t_store_extra_info where id = #{id}
+	</select>
+	<select id="findByStoreCode" resultMap="StoreExtraInfoResultMap" parameterType="java.lang.String">
+		select  <include refid="StoreExtraInfo_column"/> from t_store_extra_info where store_code = #{storeCode}
+	</select>
+	
+	<select id="getPageList" parameterType="Map" resultType="List" resultMap="StoreExtraInfoResultMap">
+		select <include refid="StoreExtraInfo_column"/> from t_store_extra_info
+		<where>
+			<if test="linkMan != null and linkMan != ''">
+				AND link_man like  "%"#{linkMan}"%"		
+			</if>
+			<if test="telephone != null and telephone != ''">
+				AND telephone = #{telephone}		
+			</if>
+		</where>
+		order by update_time desc
+		limit #{start},#{limit}
+	</select>
+	
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) from t_store_extra_info
+		<where>
+			<if test="linkMan != null and linkMan != ''">
+				AND link_man like  "%"#{linkMan}"%"			
+			</if>
+			<if test="telephone != null and telephone != ''">
+				AND telephone = #{telephone}		
+			</if>
+		</where>
+	</select>
+	
+	
+</mapper>

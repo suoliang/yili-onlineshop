@@ -1,0 +1,49 @@
+@charset "UTF-8";
+/**
+* 注册页面CSS
+* @authors Your Name (you@example.org)
+* @date    2015-01-09 15:10:09
+* @version $Id$
+*/
+/* css begin */
+.logo img{margin:80px auto 83px;}
+.password .logo{padding:10px 33% 0;}
+.list{float:left;}
+.list h3{font-size:12px;font-weight:normal;padding-bottom:25px;text-align:center;}
+.list .hav{margin-right:15px;font-size:14px;}
+.list .land{background-color:#fdd17d;border-radius:4px;color:#fff;display:inline-block;font-size:14px;font-weight:normal;padding:4px;width:72px;border:1px solid #FDD17D;-webkit-transition:all 0.25s ease-out 0s;transition:all 0.25s ease-out 0s;}
+.list .land:hover{background-color:#fff;color:#FDD17D;}
+.enroll{border-bottom:1px solid #ACACAC;margin-top:23px;padding-left:33%;width:auto;}
+.enroll .enroll-now{width:100px;background-color:#fff;border-radius:4px 4px 0 0;border:1px solid #ACACAC;display:inline-block;text-align:center;font-size:12px;color:#ABABAB;margin:0 0 -1px 60px;position:relative;padding:6px;-webkit-transition:all 0.25s ease-out 0s;transition:all 0.25s ease-out 0s;}
+.enroll .enroll-now:hover{border-color:#7BDFF5;}
+.enroll .yx:hover{color:#7BDFF5;}
+.enroll .current{background-color:#7BDFF5;border-color:#7BDFF5;color:#fff;}
+.enroll .enroll-now em{position:absolute;bottom:-6px;left:50%;margin-left:-5px;width:11px;height:6px;display:none;}
+.enroll .current em{display:block;}
+.list-item{margin-top:22px;position:relative;padding:0 32.8%;}
+.list-item span{height:37px;line-height:37px;font-size:16px;color:#767676;}
+.list-item .error{margin-left:72px;font-size:14px;color:#b93437;clear:both;display:none}
+.error em{font-style:normal;margin-right:2px;line-height:20px;height:19px;float:left;padding-top:3px;}
+.error span{float:left;}
+.list-item .list-label{float:left;color:#767676;font-size:16px;width:64px;text-align:left;display:block;}
+.textshort{width:298px;height:15px;border:1px solid #CDCDCD;padding:10px;font-size:14px;color:#999;line-height:15px;float:left;margin-left:8px;}
+.textshort:hover{border-color:#7BDFF5;}
+.list-item-btn{background-color:#7bdff5;-webkit-transition:all 0.25s ease-out 0s;transition:all 0.25s ease-out 0s;border:1px solid #7bdff5;border-radius:4px;color:#fff;cursor:pointer;font-size:16px;height:36px;left:50%;margin-left:-80px;position:absolute;width:160px;margin-top:20px;}
+.list-item-btn:hover{background-color:#fff;color:#7BDFF5;}
+.item-all{margin-bottom:20px;height:37px;position:relative;}
+.ph .code{width:86px;padding:8px;border:1px solid #FEDD9E;border-radius:5px;display:block;color:#FDD17D;font-size:14px;float:right;background-color:#fff;margin-right:1px;}
+.yzm{width:141px;margin-left:8px;float:left;}
+.protocol{width:1140px;margin:80px auto 0;text-align:center;}
+.protocol a{color:#7BDFF5;margin:0 5px;}
+.po .item-all img{vertical-align:middle;width:64px;float:left;margin-right:25px;_margin-right:24px;height:37px;}
+.po .item-all a{color:#7BDFF5;font-size:12px;line-height:18px;height:37px;line-height:37px;}
+.po .yzm{width:141px;margin-right:18px;_margin-right:8px;}
+/* 弹出框 */
+.pay-btn{float:right;width:78px;border:1px solid #7DDFF5;line-height:28px;font-size:14px;color:#fff;text-align:center;border-radius:5px;background-color:#7DDFF5;margin-left:33px;cursor:default;font-family:"Microsoft Yahei";display:block;}
+.pop-up{position:fixed;top:355px;left:50%;margin-left:-212px;width:424px;height:174px;background-color:#fff;border:1px solid #D9D9D9;text-align:center;display:none;_position:absolute;_top:expression(eval(document.documentElement.scrollTop));}
+.close{width:22px;height:23px;float:right;margin:4px 6px;cursor:default;background-position:-1px -274px;}
+.pop-up .desc-info{font-size:20px;color:#373737;margin:56px auto 32px;text-align:center;}
+.pop-up .pay-btn{float:none;margin:0 auto;}
+.ord-det{margin-top:30px;}
+.pop-up .desc-info-btn .pay-btn{float:left;margin-left:90px;}
+.ar-wrap{width:600px;margin-left:-300px;}

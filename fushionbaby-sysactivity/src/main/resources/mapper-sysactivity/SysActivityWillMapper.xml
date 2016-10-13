@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.sysactivity.dao.SysActivityWillDao">
+	<resultMap id="SysactivityWildMap" type="sysactivityWill">
+		<id column="id" property="id" />
+		<result column="web_banner_url" property="webBannerUrl" />
+		<result column="app_banner_url" property="appBannerUrl" />
+		<result column="web_article_url" property="webArticleUrl" />
+		<result column="app_article_url" property="appArticleUrl" />
+		<result column="show_order" property="showOrder" />
+		<result column="disable" property="disable" />
+	</resultMap>
+
+	<insert id="add" parameterType="sysactivityWill">
+		insert into t_sysactivity_will
+		(id,
+		web_banner_url, app_banner_url,web_article_url,app_article_url,show_order,disable)
+		values (#{id},
+		#{webBannerUrl},
+		#{appBannerUrl},#{webArticleUrl},#{appArticleUrl},#{showOrder},#{disable})
+	</insert>
+	
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from
+		t_sysactivity_will
+		where id = #{id}
+	</delete>
+
+	<update id="update" parameterType="sysactivityWill">
+		update
+		t_sysactivity_will
+		set
+		web_banner_url= #{webBannerUrl},
+		app_banner_url = #{appBannerUrl},
+		web_article_url =#{webArticleUrl},
+		app_article_url = #{appArticleUrl},
+		show_order = #{showOrder},
+		disable = #{disable}
+		where id =#{id}
+	</update>
+	
+	<select id="findById" resultMap="SysactivityWildMap">
+		select 
+		   id,web_banner_url, app_banner_url,web_article_url,app_article_url,show_order,disable 
+		from 
+			t_sysactivity_will	 
+		where id= #{id}	 
+	</select>
+	
+	<select id="findAll" resultType="list" resultMap="SysactivityWildMap">
+		select 
+		    id,web_banner_url, app_banner_url,web_article_url,app_article_url,show_order,disable 
+		from 
+			t_sysactivity_will
+	</select>
+	
+	<select id="findWillShowList" resultType="list" resultMap="SysactivityWildMap">
+		select 
+		    id,web_banner_url, app_banner_url,web_article_url,app_article_url,show_order,disable 
+		from 
+			t_sysactivity_will where disable ='n' order by show_order desc 
+	</select>
+
+    <select id="getListPage" resultType="list" resultMap="SysactivityWildMap" parameterType="Map" >
+	    select 
+		    id,web_banner_url, app_banner_url,web_article_url,app_article_url,show_order,disable 
+		from 
+			t_sysactivity_will
+		<if test="start!=null and limit!=null">
+		 	limit #{start},#{limit}
+		</if>
+	</select>
+
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select 
+			count(id)
+		from 
+			t_sysactivity_will
+	</select>
+</mapper>

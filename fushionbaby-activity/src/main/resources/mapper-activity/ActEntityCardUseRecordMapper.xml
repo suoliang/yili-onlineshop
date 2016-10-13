@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.act.activity.dao.ActEntityCardUseRecordDao">
+	<resultMap id="ActEntityCardUseRecordResultMap" type="ActEntityCardUseRecord">
+			<id column="id" property="id" />
+			<result column="card_no" property="cardNo" />
+			<result column="use_type" property="useType" />
+			<result column="money" property="money" />
+			<result column="use_source" property="useSource" />
+			<result column="order_code" property="orderCode" />
+			<result column="create_time" property="createTime" />
+			<result column="update_id" property="updateId" />
+			<result column="serial_no" property="serialNo" />
+			<result column="memo" property="memo" />
+			<result column="store_code" property="storeCode" />
+	</resultMap>
+	<!-- 定义宏转换 -->
+	<sql id="ActEntityCardUseRecord_column">
+		id,card_no,use_type,money,use_source,order_code,create_time,update_id,serial_no,memo,store_code
+	</sql>
+	
+	<!-- 新增方法 -->
+	<insert id="add" parameterType="ActEntityCardUseRecord">
+		insert into t_act_entity_card_use_record
+		(order_code,use_source,money,update_id,id,card_no,use_type,create_time,serial_no,memo,store_code)
+	    values 
+	    (#{orderCode},#{useSource},#{money},#{updateId},#{id},#{cardNo},#{useType},now(),#{serialNo},#{memo},#{storeCode})
+	</insert>
+	
+	<!-- 根据id删除-->
+	<delete id="deleteById" parameterType="java.lang.Long">
+	
+		delete from t_act_entity_card_use_record where id = #{id}  
+	</delete>
+	
+	<!-- 根据id修改 -->
+	<update id="update"  parameterType="ActEntityCardUseRecord">
+		update t_act_entity_card_use_record
+			set
+				<if test="orderCode !=null and orderCode !=''">
+						order_code=#{orderCode},
+				</if>
+				<if test="useSource !=null and useSource !=''">
+						use_source=#{useSource},
+				</if>
+				<if test="money !=null and money !=''">
+						money=#{money},
+				</if>
+				<if test="updateId !=null and updateId !=''">
+						update_id=#{updateId},
+				</if>
+				<if test="id !=null and id !=''">
+						id=#{id},
+				</if>
+				<if test="cardNo !=null and cardNo !=''">
+						card_no=#{cardNo},
+				</if>
+				<if test="useType !=null and useType !=''">
+						use_type=#{useType}
+				</if>
+				<if test="serialNo !=null and serialNo !=''">
+						serial_no=#{serialNo}
+				</if>
+				<if test="memo !=null and memo !=''">
+						memo=#{memo}
+				</if>
+		<where>
+			id = #{id} 
+		</where>
+	</update>
+	
+	<!-- 查询所有数据 -->
+	<select id="findAll" resultType="list" resultMap="ActEntityCardUseRecordResultMap">
+		select  <include refid="ActEntityCardUseRecord_column"/> from t_act_entity_card_use_record order by create_time desc
+	</select>
+	<!-- 根据id查询 -->
+	<select id="findById" resultMap="ActEntityCardUseRecordResultMap" parameterType="java.lang.Long">
+		select  <include refid="ActEntityCardUseRecord_column"/> from t_act_entity_card_use_record where id = #{id} 
+	</select>
+	<!-- 根据code查询 -->
+	<select id="findByCode" resultMap="ActEntityCardUseRecordResultMap" parameterType="java.lang.String" resultType="list">
+		select  <include refid="ActEntityCardUseRecord_column"/> from t_act_entity_card_use_record where  card_no= #{cardNo} order by create_time desc
+	</select>
+	
+	<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="ActEntityCardUseRecordResultMap" parameterType="Map" >
+		select <include refid="ActEntityCardUseRecord_column"/>
+		from t_act_entity_card_use_record 
+		
+		<where>
+			<if test="useType !=null and useType !=''">
+					 and use_type=#{useType} 
+				</if>
+				<if test="cardNo !=null and cardNo !=''">
+					 and card_no=#{cardNo} 
+				</if>
+				<if test="orderCode !=null and orderCode !=''">
+					 and order_code=#{orderCode} 
+				</if>
+				<if test="useSource !=null and useSource !=''">
+					 and use_source=#{useSource} 
+				</if>
+				<if test="serialNo !=null and serialNo !=''">
+					and	serial_no=#{serialNo}
+				</if>
+				<if test="storeCode !=null and storeCode !=''">
+					and	store_code=#{storeCode}
+				</if>
+		</where>
+		order by create_time desc
+				limit #{start},#{limit}
+			
+	</select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) from t_act_entity_card_use_record 
+		<where>
+		   <if test="useType !=null and useType !=''">
+				 and use_type=#{useType} 
+			</if>
+			<if test="cardNo !=null and cardNo !=''">
+				 and card_no=#{cardNo} 
+			</if>
+			<if test="orderCode !=null and orderCode !=''">
+				 and order_code=#{orderCode} 
+			</if>
+			<if test="useSource !=null and useSource !=''">
+				 and use_source=#{useSource} 
+			</if>
+			<if test="serialNo !=null and serialNo !=''">
+				and serial_no=#{serialNo}
+			</if>
+			<if test="storeCode !=null and storeCode !=''">
+				and store_code=#{storeCode}
+			</if>
+		</where>
+		order by create_time desc
+	</select>
+	
+</mapper>

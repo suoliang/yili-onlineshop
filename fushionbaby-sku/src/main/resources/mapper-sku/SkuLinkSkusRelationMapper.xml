@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.sku.dao.SkuLinkSkusRelationDao" >
+  <resultMap id="SkuLinkSkusRelationMap" type="skuLinkSkusRelation" >
+    <id column="id" property="id" />
+    <result column="sku_code" property="skuCode" />
+    <result column="link_sku_code" property="linkSkuCode" />
+    <result column="admin_id" property="adminId" />
+    <result column="create_time" property="createTime" />
+  </resultMap>
+  <insert id="add" parameterType="skuLinkSkusRelation" >
+    insert into t_sku_link_skus_relation (id, sku_code, link_sku_code, admin_id, create_time)
+    values (#{id}, #{skuCode}, #{linkSkuCode}, #{adminId}, now())
+  </insert>
+  <delete id="deleteById" parameterType="java.lang.Long" >
+    delete from t_sku_link_skus_relation
+    where id = #{id}
+  </delete>
+  <update id="update" parameterType="skuLinkSkusRelation" >
+    update t_sku_link_skus_relation
+    set sku_code = #{skuCode},
+      link_sku_code = #{linkSkuCode},
+      admin_id = #{adminId},
+      create_time = now()
+    where id = #{id}
+  </update>
+  <select id="findById" resultMap="SkuLinkSkusRelationMap" parameterType="java.lang.Long" >
+    select 
+   	 	id, sku_code, link_sku_code, admin_id, create_time
+    from 
+    	t_sku_link_skus_relation
+    where id = #{id}
+  </select>
+  <select id="findAll" resultMap="SkuLinkSkusRelationMap" resultType="list" >
+    select 
+    	id, sku_code, link_sku_code, admin_id, create_time
+    from
+		t_sku_link_skus_relation
+  </select>
+  <select id="queryByCondition" resultMap="SkuLinkSkusRelationMap" resultType="list" parameterType="skuLinkSkusQueryCondition">
+  	select 
+    	id, sku_code, link_sku_code, admin_id, create_time
+    from
+		t_sku_link_skus_relation
+	<where>
+		<if test="skuCode !=null and skuCode !=''">
+			and sku_code = #{skuCode}
+		</if>
+		<if test="linkSkuCode !=null and linkSkuCode !=''">
+			and link_sku_code = #{linkSkuCode}
+		</if>
+		<if test="adminId !=null and adminId !=''">
+			and admin_id = #{adminId}
+		</if>
+	</where>
+	
+	<if test="limit!=null and limit!=''">
+		limit #{start},#{limit}		
+	</if>
+  </select> 
+  <!-- 分页查询得到总数 -->
+  <select id="getTotal"  parameterType="Map" resultType="java.lang.Integer" >
+  	select 
+    	count(id)
+    from
+		t_sku_link_skus_relation
+	<where>
+		<if test="skuCode !=null and skuCode !=''">
+			and sku_code = #{skuCode}
+		</if>
+		<if test="linkSkuCode !=null and linkSkuCode !=''">
+			and link_sku_code = #{linkSkuCode}
+		</if>
+		<if test="adminId !=null and adminId !=''">
+			and admin_id = #{adminId}
+		</if>
+	</where>
+  </select>
+  <!-- 分页查询 -->
+  <select id="getListPage" resultType="list" resultMap="SkuLinkSkusRelationMap" parameterType="Map">
+  		select 
+    		id, sku_code, link_sku_code, admin_id, create_time
+	    from
+			t_sku_link_skus_relation
+		<where>
+			<if test="skuCode !=null and skuCode !=''">
+				and sku_code = #{skuCode}
+			</if>
+			<if test="linkSkuCode !=null and linkSkuCode !=''">
+				and link_sku_code = #{linkSkuCode}
+			</if>
+			<if test="adminId !=null and adminId !=''">
+				and admin_id = #{adminId}
+			</if>
+		</where>
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+   </select>
+</mapper>

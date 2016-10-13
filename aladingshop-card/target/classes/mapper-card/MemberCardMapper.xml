@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.card.dao.MemberCardDao" >
+  <resultMap id="MemberCardResultMap" type="MemberCard" >
+    <id column="id" property="id" />
+    <result column="member_id" property="memberId"/>
+    <result column="code" property="code"/>
+    <result column="card_no" property="cardNo" />
+    <result column="password" property="password" />
+    <result column="card_config_id" property="cardConfigId" />
+    <result column="total_corpus" property="totalCorpus" />
+    <result column="total_interest" property="totalInterest" />
+    <result column="total_rebate" property="totalRebate" />
+    <result column="create_time" property="createTime" />
+    <result column="update_time" property="updateTime" />
+  </resultMap>
+  <insert id="add" parameterType="MemberCard"> 
+    insert into t_member_card (id, member_id, code, 
+      card_no, password, card_config_id, 
+      total_corpus, total_interest,total_rebate,create_time, 
+      update_time)
+    values (#{id}, #{memberId}, #{code}, 
+      #{cardNo}, #{password}, #{cardConfigId}, 
+      #{totalCorpus}, #{totalInterest},#{totalRebate},
+      now(),now())
+  </insert>
+  <delete id="deleteById"  parameterType="java.lang.Long">
+    delete from t_member_card where id = #{id}
+  </delete>
+  
+  <update id="update" parameterType="MemberCard">
+    update t_member_card
+    <set>
+    	<if test="memberId!=null and memberId!=''">
+    		member_id = #{memberId},
+    	</if>
+    	<if test="cardNo!=null and cardNo!=''">
+    		card_no = #{cardNo},
+    	</if>
+    	<if test="password!=null and password!=''">
+    		password = #{password},
+    	</if>
+    	<if test="cardConfigId!=null and cardConfigId!=''">
+    		card_config_id = #{cardConfigId},
+    	</if>
+    	<if test="totalCorpus!=null and totalCorpus!=''">
+    		total_corpus = #{totalCorpus},
+    	</if>
+    	<if test="totalInterest == 0 or (totalInterest!=null and totalInterest!='')">
+    		total_interest = #{totalInterest},
+    	</if>
+    	<if test="totalRebate == 0 or (totalRebate!=null and totalRebate!='')">
+    		total_rebate = #{totalRebate},
+    	</if>
+    	update_time = now()
+    </set>
+    <where>
+    	id = #{id}
+    </where>
+  </update>
+  <sql id="Base_Column_List" >
+  	select id, member_id, code, card_no, password, card_config_id, total_corpus, total_interest,
+		 total_rebate,create_time, update_time
+		 from t_member_card
+  </sql>
+  <select id="findAll" resultMap="MemberCardResultMap" resultType="list">
+  	<include refid="Base_Column_List" />
+  </select> 
+   <select id="findById" resultMap="MemberCardResultMap" parameterType="java.lang.Long" >
+	   <include refid="Base_Column_List" />
+	   <where>
+	   		id=#{id}
+	   </where>
+  </select>
+  
+  	  <!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="MemberCardResultMap" parameterType="Map" >
+	    <include refid="Base_Column_List" />
+		<where>
+			<if test="cardNo !=null and cardNo !=''">
+	    	   AND  card_no LIKE "%"#{cardNo}"%"  
+	        </if>
+			<if test="memberId !=null and memberId!=''">
+	    	   AND  member_id=#{memberId} 
+	        </if>
+			<if test="createTimeFrom != null and createTimeFrom !=''">
+	    	<![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+			]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+		</where>
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select  count(id) from t_member_card
+		<where>
+			<if test="codeNo !=null and codeNo !=''">
+	    	   AND  card_no LIKE "%"#{codeNo}"%"  
+	        </if>
+			<if test="memberId !=null and memberId!=''">
+	    	   AND  member_id=#{memberId} 
+	        </if>
+			<if test="createTimeFrom != null and createTimeFrom !=''">
+	    	<![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+			]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+		</where>
+	</select>
+   
+   <!-- 获取当前用户卡列表已经筛选掉锁卡 -->	
+   <select id="findByMemberId" resultType="list" resultMap="MemberCardResultMap" parameterType="java.lang.Long" >
+  		<include refid="Base_Column_List" />
+  			<where>
+  				member_id=#{memberId} and (total_interest>0 or total_rebate>0)
+  			</where>
+  </select>
+  
+   <!-- 获取当前用户卡列表已经筛选掉锁卡 -->	
+   <select id="findAllByMemberId" resultType="list" resultMap="MemberCardResultMap" parameterType="java.lang.Long" >
+  		<include refid="Base_Column_List" />
+  			<where>
+  				member_id=#{memberId} 
+  			</where>
+  </select>
+ 
+ <!--  根据用户id和储值卡编号查询储值卡信息 -->
+  <select id="findByMemberIdCardNo" resultMap="MemberCardResultMap" parameterType="MemberCard">
+  	<include refid="Base_Column_List" />
+  	<where>
+  		code = #{code} and member_id = #{memberId}
+  	</where>
+  </select>
+  
+   <!--  根据用户id和储值卡编号查询储值卡信息 -->
+  <select id="findTaskCardList" resultMap="MemberCardResultMap"  >
+     <include refid="Base_Column_List" />
+     <where>
+     	total_corpus>0
+     </where>     
+  </select>
+  
+	
+   <select id="findByCardCode" resultMap="MemberCardResultMap" parameterType="java.lang.String" >
+   		<include refid="Base_Column_List" />
+   		<where>
+   			code=#{cardCode}  
+   		</where>
+  </select>
+</mapper>

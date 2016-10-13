@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.auth.dao.AuthUserRoleDao" >
+  <resultMap id="AuthUserRoleResultMap" type="AuthUserRole" >
+    <id column="id" property="id" />
+    <result column="user_id" property="userId"  />
+    <result column="role_id" property="roleId"  />
+    <result column="version" property="version"/>
+  </resultMap>
+   <insert id="add" parameterType="AuthUserRole"> 
+    insert into 
+            t_auth_user_role 
+                     (id,user_id,role_id,version)
+            values 
+                     (#{id},#{userId},#{roleId},#{version})
+  </insert>
+  
+  <delete id="deleteById" parameterType="long">
+    delete from t_auth_user_role where id = #{id}
+  </delete>
+  
+   <delete id="deleteByUserId"  parameterType="long">
+    delete from t_auth_user_role where user_id = #{userId}
+  </delete>
+  
+  <update id="update" parameterType="AuthUserRole" >
+    update t_auth_role  
+    <set>
+      <if test="roleId!=null and roleId!=''">
+        role_id = #{roleId},
+      </if>
+      <if test="userId!=null and userId!=''">
+        user_id = #{userId},
+      </if>
+      version = now()
+    </set>  
+      where id = #{id}
+  </update>
+  
+  <select id="findAll" resultMap="AuthUserRoleResultMap" resultType="list">
+  <![CDATA[
+			select id,user_id, role_id, version from t_auth_user_role
+		 ]]>
+  </select> 
+   <select id="findById" resultMap="AuthUserRoleResultMap" parameterType="long" >
+  <![CDATA[
+			select id,user_id, role_id, version from t_auth_user_role where id=#{id}
+		 ]]>
+  </select>
+   <select id="findByRoleId" resultMap="AuthUserRoleResultMap" resultType="list" >
+  <![CDATA[
+			select id,user_id, version from t_auth_user_role where role_id=#{roleId}
+		 ]]>
+  </select>
+  
+     <select id="findByUserId" resultMap="AuthUserRoleResultMap" resultType="list" >
+  <![CDATA[
+			select id, role_id,version from t_auth_user_role where user_id =#{userId}
+		 ]]>
+  </select>
+  
+  
+</mapper>

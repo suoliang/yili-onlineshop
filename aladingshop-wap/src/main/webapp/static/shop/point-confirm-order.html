@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>确认订单</title>
+    <script src="js/min/mui.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="css/style1.css"/>
+    <link rel="stylesheet" type="text/css" href="fonts/iconfont.css"/>
+    <script type="text/javascript" charset="UTF-8">
+      	mui.init();
+    </script>
+</head>
+<body id="point-confirm-order">
+	<header class="mui-bar mui-bar-nav">
+	    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	    <h1 class="mui-title">确认订单</h1>
+	</header>
+	<div class="mui-content mB100">
+		<ul class="mui-table-view">
+		 	<li class="mui-table-view-cell">
+		 		<span class="iconfont icon-center hot"></span>
+	            <span class="name mR20">紫菱</span>
+	            <span class="iconfont icon-shouji hot"></span>
+               	<span>13012341234</span>
+                <p class="mT10">上海市 闵行区 某某街道  某某公寓1820号</p>
+	        </li>
+		</ul>
+       	<ul class="mui-table-view">
+        	<li class="mui-table-view-cell ">
+        		<span class="iconfont icon-p-shop hot"></span>&nbsp;阿拉丁商品
+        		<span class="mui-pull-right">共计1件</span>
+        	</li>
+        	<li>
+	        	<ul class=" mui-table-view">
+	        		<li class="mui-table-view-cell">
+						<div class="mui-pull-left mR20">
+							<img class="mui-media-object " src="picture/shangpin_03.png">
+						</div>
+						<div class="mui-media-body">
+							<p class="color-black">Five Plus2015新女夏装拼接镂空提花无袖针织连衣裙2152084040</p>
+							<p class="m10">
+								<small>颜色：蓝色  </small>
+								<small class="mui-pull-right">尺码：S</small>
+							</p>
+							<div class="mB10">
+								<del class="color-gray">￥:399.00</del>
+								<span class="color-red mui-pull-right">积分:500</span>
+							</div>
+						</div>
+					</li>
+
+	        	</ul>
+        	</li>
+        	<li>
+        		<form class="mui-input-group mui-table-view-divider">
+					<div class="mui-input-row">
+						<label>留言:</label>
+						<input type="text" placeholder="">
+					</div>
+					<div class="mui-input-row">
+						<label>配送时间:</label>
+						<input type="date" class="mui-input-clear" min="">
+					</div>
+				</form>
+        	</li>
+		</ul>
+	</div>
+	<div class="mui-bar mui-bar-tab">
+		<div class="mui-table-view-cell">
+			<div class="mui-pull-left">
+				合计：<span class="color-red">￥399.00</span><br/>
+				<p>免运费</p>
+			</div>
+			<button class="mui-btn mui-pull-right mui-btn-red">提交订单</button>
+		</div>
+	</div>
+</body>
+</html>

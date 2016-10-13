@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.sku.cms.dao.SkuProductAttrDao">
+	<resultMap id="skuProductAttrMap" type="SkuProductAttr">
+		<id column="id" property="id" />
+		<result column="attr_name" property="attrName" />
+		<result column="attr_value" property="attrValue" />
+		<result column="show_order" property="showOrder" />
+		<result column="product_code" property="productCode" />
+		<result column="create_id" property="createId" />
+		<result column="create_time" property="createTime" />
+		<result column="update_id" property="updateId" />
+		<result column="create_time" property="createTime" />
+	</resultMap>
+	
+		<!-- 自动生成id策略 -->
+	<insert id="add" 
+		parameterType="SkuProductAttr">
+		insert into 
+			t_sku_product_attr(id,attr_name,attr_value,show_order,product_code,create_id,create_time,update_id,update_time)
+		values
+			(#{id},#{attrName},#{attrValue},#{showOrder},#{productCode},#{createId},now(),#{updateId},#{updateTime})
+	</insert>
+	
+	<delete id="deleteById" parameterType="java.lang.Long">
+		DELETE FROM t_sku_product_attr WHERE id = #{id}
+	</delete>
+	
+	<update id="update" parameterType="SkuProductAttr">
+		UPDATE 
+			t_sku_product_attr
+		SET
+		<if test="attrName !=null and attrName !=''">
+			attr_name = #{attrName},
+		</if>
+		<if test="showOrder !=null and showOrder !=''">
+			show_order = #{showOrder}, 
+		</if>
+		<if test="productCode !=null and productCode !=''">
+			product_code = #{productCode}, 
+		</if>
+		<if test="updateId !=null and updateId !=''">
+			update_id = #{updateId}, 
+		</if>
+		<if test="attrValue !=null and attrValue !=''">
+			attr_value = #{attrValue},
+		</if>
+		update_time=now() 
+		WHERE
+			id = #{id}
+	</update>
+	
+	<select id="findAll" resultType="list" resultMap="skuProductAttrMap">
+		<![CDATA[
+			select 
+				id,attr_name,attr_value,show_order,product_code,create_id,create_time,update_id,update_time
+			from 
+				t_sku_product_attr
+		 ]]>
+	</select>
+	
+	
+	<select id="findById" resultMap="skuProductAttrMap" parameterType="long">
+		<![CDATA[
+			select 
+				id,attr_name,attr_value,show_order,product_code,create_id,create_time,update_id,update_time
+			from 
+				t_sku_product_attr
+		 	where 
+		 		id = #{id}
+        ]]>
+	</select>
+
+	
+	<select id="findByProductCode" resultType="list" resultMap="skuProductAttrMap" parameterType="java.lang.String">
+		<![CDATA[
+			select 
+				id,attr_name,attr_value,show_order,product_code,create_id,create_time,update_id,update_time
+			from 
+				t_sku_product_attr
+			where 
+				product_code = #{productCode}
+		 ]]>
+	</select>
+	
+	<delete id="delProductAttrByProductCode" parameterType="java.lang.String">
+		DELETE FROM t_sku_product_attr WHERE product_code = #{productCode}
+	</delete>
+	
+	
+</mapper>

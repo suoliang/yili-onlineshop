@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.core.dao.OrderEpointDao">
+	<resultMap id="OrderEpointResultMap" type="OrderEpoint">
+		<id column="id" property="id" />
+		<result column="order_code" property="orderCode" />
+		<result column="member_id" property="memberId" />
+		<result column="member_name" property="memberName" />
+		<result column="sku_name" property="skuName"/>
+		<result column="sku_code" property="skuCode"/>
+		<result column="size" property="size"/>
+		<result column="color" property="color"/>
+		<result column="quantity" property="quantity"/>
+		<result column="order_status" property="orderStatus"/>
+		<result column="source_code" property="sourceCode"/>
+		<result column="total_epoint_used" property="totalEpointUsed"/>
+		<result column="memo" property="memo"/>
+		<result column="create_time" property="createTime"/>
+		<result column="update_time" property="updateTime"/>
+		<result column="update_id" property="updateId"/>
+		<result column="order_type" property="orderType"/>
+	</resultMap>
+
+	<insert id="add" parameterType="OrderEpoint">
+		insert into 
+			t_epoint_order_base
+		(id,order_code,member_id,member_name,sku_code,sku_name,size,color,quantity,order_status,source_code,
+		total_epoint_used,memo,create_time,update_time,update_id,order_type)
+	    values
+	    (#{id},#{orderCode},#{memberId},#{memberName},#{skuCode},#{skuName},#{size},#{color},#{quantity},
+	    #{orderStatus},#{sourceCode},#{totalEpointUsed},#{memo},now(),now(),#{updateId},#{orderType})
+	</insert>
+	
+	<select id="findByMemberId" parameterType="Long" resultMap="OrderEpointResultMap" >
+  		SELECT id,order_code,member_id,member_name,sku_code,sku_name,size,color,quantity,order_status,source_code,
+			total_epoint_used,memo,create_time,update_time,update_id,order_type
+		FROM t_epoint_order_base 
+		WHERE member_id = #{memberId} ORDER BY create_time DESC
+  	</select>
+	
+</mapper>

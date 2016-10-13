@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.alabao.dao.AlabaoTurnOutDao">
+	<resultMap id="AlabaoTurnOutResultMap" type="AlabaoTurnOut">
+			<id column="id" property="id" />
+			<result column="transfer_money" property="transferMoney" />
+			<result column="member_id" property="memberId" />
+			<result column="card_holder" property="cardHolder" />
+			<result column="update_id" property="updateId" />
+			<result column="bank_name" property="bankName" />
+			<result column="update_time" property="updateTime" />
+			<result column="turn_out_status" property="turnOutStatus" />
+			<result column="card_no" property="cardNo" />
+			<result column="account" property="account" />
+			<result column="create_time" property="createTime" />
+	</resultMap>
+	<!-- 定义宏转换为 -->
+	<sql id="AlabaoTurnOut_column">
+		id,member_id,account,transfer_money,bank_name,card_no,card_holder,turn_out_status,create_time,update_time,update_id
+	</sql>
+	<insert id="add" parameterType="AlabaoTurnOut">
+		insert into 
+			baby_member.t_alabao_turn_out
+		(
+					transfer_money,
+					member_id,
+					card_holder,
+					update_id,
+					bank_name,
+					id,
+					update_time,
+					turn_out_status,
+					card_no,
+					account,
+					create_time
+		)
+	    values 
+	    (
+				#{transferMoney},
+				#{memberId},
+				#{cardHolder},
+				#{updateId},
+				#{bankName},
+				#{id},
+				#{updateTime},
+				#{turnOutStatus},
+				#{cardNo},
+				#{account},
+				now()
+			)
+	</insert>
+	<delete id="deleteById" parameterType="java.lang.Long">
+	
+		delete from baby_member.t_alabao_turn_out where id = #{id}  
+	</delete>
+	
+	
+	<update id="updateStatus"  parameterType="Map">
+		update baby_member.t_alabao_turn_out set turn_out_status=#{turnOutStatus} where id = #{id}
+	</update>
+	
+	<update id="update"  parameterType="AlabaoTurnOut">
+		update baby_member.t_alabao_turn_out
+			set
+				<if test="transferMoney !=null and transferMoney !=''">
+					transfer_money=#{transferMoney},
+				</if>
+				<if test="cardHolder !=null and cardHolder !=''">
+					card_holder=#{cardHolder},
+				</if>
+				<if test="updateId !=null and updateId !=''">
+					update_id=#{updateId},
+				</if>
+				<if test="bankName !=null and bankName !=''">
+					bank_name=#{bankName},
+				</if>
+				<if test="turnOutStatus !=null and turnOutStatus !=''">
+					turn_out_status=#{turnOutStatus},
+				</if>
+				<if test="cardNo !=null and cardNo !=''">
+					card_no=#{cardNo},
+				</if>
+				<if test="account !=null and account !=''">
+					account=#{account},
+				</if>
+				update_time=now()
+		<where>
+			id = #{id} 
+		</where>
+	</update>
+	
+	<select id="findById" resultMap="AlabaoTurnOutResultMap" parameterType="java.lang.Long">
+		select  <include refid="AlabaoTurnOut_column"/> from baby_member.t_alabao_turn_out where id = #{id} 
+	</select>
+	<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="AlabaoTurnOutResultMap" parameterType="Map" >
+		select <include refid="AlabaoTurnOut_column"/>
+		from baby_member.t_alabao_turn_out 
+		where 1=1
+				<if test="cardHolder !=null and cardHolder !=''">
+					 and card_holder=#{cardHolder}
+				</if>
+				<if test="bankName !=null and bankName !=''">
+					 and bank_name=#{bankName}
+				</if>
+				<if test="turnOutStatus !=null and turnOutStatus !=''">
+					 and turn_out_status=#{turnOutStatus}
+				</if>
+				<if test="cardNo !=null and cardNo !=''">
+					 and card_no=#{cardNo}
+				</if>
+				<if test="account !=null and account !=''">
+					 and account=#{account}
+				</if>
+				<if test="createTimeFrom != null and createTimeFrom !=''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+				]]>
+			    </if>
+				<if test="createTimeTo != null and createTimeTo != ''">
+			    	<![CDATA[
+						and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+					]]>
+			    </if>
+		<if test="start!=null and limit!=null ">
+			limit #{start},#{limit}
+		</if>
+		 
+	</select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) from baby_member.t_alabao_turn_out
+		<where>
+				<if test="cardHolder !=null and cardHolder !=''">
+					 and card_holder=#{cardHolder}
+				</if>
+				<if test="bankName !=null and bankName !=''">
+					 and bank_name=#{bankName}
+				</if>
+				<if test="turnOutStatus !=null and turnOutStatus !=''">
+					 and turn_out_status=#{turnOutStatus}
+				</if>
+				<if test="cardNo !=null and cardNo !=''">
+					 and card_no=#{cardNo}
+				</if>
+				<if test="account !=null and account !=''">
+					 and account=#{account}
+				</if>
+				<if test="createTimeFrom != null and createTimeFrom !=''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+				]]>
+			    </if>
+				<if test="createTimeTo != null and createTimeTo != ''">
+			    	<![CDATA[
+						and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+					]]>
+			    </if>
+		</where>
+	</select>
+	
+</mapper>

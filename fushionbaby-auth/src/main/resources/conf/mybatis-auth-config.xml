@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration 
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 命名空间 -->
+	<typeAliases>
+		<!--  角色 -->
+		<typeAlias alias="AuthRole" type="com.fushionbaby.auth.model.AuthRole" />
+		<!-- 权限-->
+		<typeAlias alias="AuthPrivilege" type="com.fushionbaby.auth.model.AuthPrivilege" />
+		<!-- 后台用户  -->
+		<typeAlias alias="AuthUser" type="com.fushionbaby.auth.model.AuthUser" />
+		<!-- 后台角色权限中间表  -->
+		<typeAlias alias="AuthRolePrivilege" type="com.fushionbaby.auth.model.AuthRolePrivilege" />
+		<!-- 后台用户角色中间表  -->
+		<typeAlias alias="AuthUserRole" type="com.fushionbaby.auth.model.AuthUserRole" />
+		<!-- 后台用户订单关联  -->
+		<typeAlias alias="AuthUserOrderRelation" type="com.fushionbaby.auth.model.AuthUserOrderRelation" />
+	</typeAliases>
+
+	<!-- 注册SQL映射文件 -->
+	<mappers>
+	</mappers>
+</configuration>

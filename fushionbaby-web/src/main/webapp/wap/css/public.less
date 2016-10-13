@@ -1,0 +1,98 @@
+@charset "UTF-8";
+ // * public.less  基础公共less，用于引用，谨慎修改
+ // * @import "public.less";
+ // * @authors 揭志勇
+ // * @date    2015-02-06 09:45:05
+ // * @version $1.0$
+
+@color-base : #767676;
+@color-primary : #286090;
+@color-success : #5cb85c;
+@color-info : #5bc0de;
+@color-warning : #f0ad4e;
+@color-danger : #d9534f;
+
+.darken(@color) {
+  background-color:darken(@color,10%);
+  color:darken(@color,10%);
+}
+.lighten(@color) {
+  background-color:lighten(@color,10%);
+  color:lighten(@color,10%);
+}
+
+.radius (@lt: 4px,@rt:4px,@rb:4px,@lb:4px) {
+  -webkit-border-radius: @arguments;
+  -moz-border-radius: @arguments;
+  -ms-border-radius: @arguments;
+  -o-border-radius: @arguments;
+  border-radius: @arguments;
+}
+
+.box-shadow (@x: 2px, @y: 2px, @blur: 2px, @color: #333) {
+  -webkit-box-shadow: @arguments;
+  -moz-box-shadow: @arguments;
+  box-shadow: @arguments;
+}
+
+.text-shadow (@x: 2px, @y: 2px, @blur: 2px, @color: #333) {
+  -webkit-text-shadow: @arguments;
+  -moz-text-shadow: @arguments;
+  text-shadow: @arguments;
+}
+
+.opacity(@opacity:0.8) {
+  opacity: @opacity;
+  @opa : @opacity*100;
+  filter: ~"alpha(opacity=@{opa})";
+}
+
+.rgba(@r:0,@g:0,@b:0,@a:0.8) {
+  @color-rgba : rgba(@r,@g,@b,@a);
+  @AA :alpha(@color-rgba);
+  @RR : red(@color-rgba);
+  @GG : green(@color-rgba);
+  @BB : blue(@color-rgba);
+  background-color: @color-rgba;
+  @argb : argb(@color-rgba);
+  filter: ~"progid:DXImageTransform.Microsoft.gradient(startcolorstr=@{argb},endcolorstr=@{argb})";
+}
+.filter(@color:#000,@a:0.8) {
+  @RR : red(@color);
+  @GG : green(@color);
+  @BB : blue(@color);
+  @color-rgba : rgba(@RR,@GG,@BB,@a);
+  background-color:@color-rgba;
+  @argb : argb(@color-rgba);
+  filter: ~"progid:DXImageTransform.Microsoft.gradient(startcolorstr=@{argb},endcolorstr=@{argb})";
+}
+
+.img_c (@width,@height) {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  width:@width;
+  height:@height;
+  img {
+    max-width: @width;
+    max-height: @height;
+  }
+}
+
+.nowrap(@width) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: @width;
+  display:inline-block;
+}
+
+.positionC(@width,@height) {
+  width:@width;
+  height:@height;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -@width/2;
+  margin-top: -@height/2;
+}

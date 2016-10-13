@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.config.dao.SysmgrAdvertisementConfigDao" >
+  <resultMap id="SACResultMap" type="sysmgrAdvertisementConfig" >
+    <id column="id" property="id" />
+    <result column="ad_code" property="adCode" />
+    <result column="source_code" property="sourceCode" />
+    <result column="is_use" property="isUse" />
+    <result column="remark" property="remark" />
+     <result column="ad_name" property="adName" />
+  </resultMap>
+  <insert id="add" parameterType="sysmgrAdvertisementConfig" >
+    insert into t_sysmgr_advertisement_config (id, ad_code, source_code, 
+      is_use,remark,ad_name)
+    values (#{id}, #{adCode}, #{sourceCode}, 
+      #{isUse},#{remark},#{adName})
+  </insert>
+  
+  <delete id="deleteById" parameterType="java.lang.Long" >
+    delete from t_sysmgr_advertisement_config
+    where id = #{id}
+  </delete>
+  
+  <update id="updateIsUse" parameterType="java.util.Map" >
+    update t_sysmgr_advertisement_config
+    set
+      is_use = #{isUse}
+    where id = #{id}
+  </update>
+    
+  <update id="update" parameterType="sysmgrAdvertisementConfig" >
+    update t_sysmgr_advertisement_config
+    set
+      ad_code = #{adCode},
+      source_code = #{sourceCode},
+      is_use = #{isUse},
+      remark=#{remark},
+      ad_name=#{adName}
+    where id = #{id}
+  </update>
+  
+  <select id="findById" resultMap="SACResultMap" parameterType="java.lang.Long" >
+    select 
+    id, ad_code, source_code,is_use,remark,ad_name
+    from t_sysmgr_advertisement_config
+    where id = #{id}
+  </select>
+  
+  <select id="findByAdCode" resultMap="SACResultMap" parameterType="java.lang.String" >
+    select 
+         id, ad_code, source_code,is_use,remark,ad_name
+    from t_sysmgr_advertisement_config
+    where ad_code = #{adCode}
+  </select>
+  
+  <select id="findAll" resultMap="SACResultMap" resultType="list" >
+    select 
+    id, ad_code, source_code, is_use,remark,ad_name
+    from t_sysmgr_advertisement_config
+  </select>
+  
+    <!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="SACResultMap" parameterType="Map" >
+       select 
+         id, ad_code, source_code, is_use,remark,ad_name
+       from t_sysmgr_advertisement_config
+		<where>
+			<if test="adCode !=null and adCode !=''">
+	    	   AND  ad_code LIKE "%"#{adCode}"%" 
+	        </if>
+	        	<if test="adName !=null and adName !=''">
+	    	   AND  ad_name LIKE "%"#{adName}"%"  
+	        </if>
+		</where>
+		order by id desc
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select 
+			count(id)
+		from 
+	        t_sysmgr_advertisement_config
+		<where>
+			<if test="adCode !=null and adCode !=''">
+	    	   AND  ad_code LIKE "%"#{adCode}"%"
+	        </if>
+	     <if test="adName !=null and adName !=''">
+	    	   AND  ad_name LIKE "%"#{adName}"%"  
+	        </if>
+		</where>
+  </select>
+  
+  
+</mapper>

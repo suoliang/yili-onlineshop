@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.sku.dao.SkuLabelRelationDao">
+	<resultMap id="SkuLabelRelationMap" type="SkuLabelRelation">
+		<id column="id" property="id" />
+		<result column="label_code" property="labelCode"/>
+		<result column="sku_code" property="skuCode"/>
+		<result column="disabled" property="disabled"/>
+		<result column="show_order" property="showOrder" />
+		<result column="create_time" property="createTime" />
+	</resultMap>
+	
+	<select id="querySkuUnCodeListByLabel" resultType="string" parameterType="skuLabelRelationQueryCondition">
+		select 
+			a.sku_code
+		from 
+			t_sku_label_relation a  inner join t_sku b on a.sku_code = b.unique_code 
+		<where>
+			<if test="labelCode !=null and labelCode !=''">
+				and a.label_code = #{labelCode}
+			</if>
+			<if test="skuCode !=null and skuCode !=''">
+				and a.sku_code = #{skuCode}
+			</if>
+			<if test="disabled !=null and disabled !=''">
+				and a.disabled = #{disabled}
+			</if>
+			<if test="status !=null and status !=''">
+				and b.status = #{status}
+			</if>
+			<if test="storeCode==null or storeCode=='' or storeCode=='999'">
+				and (b.store_code is null or b.store_code = '' or b.store_code='999')
+			</if>
+			<if test="storeCode!=null and  storeCode!='' and storeCode!='999'">
+				and b.store_code =#{storeCode}
+			</if>
+		</where>
+		order by case when  a.show_order=0 or a.show_order is null then 9999999 else a.show_order end
+		<if test="start !=null and start>-1">
+			LIMIT #{start}
+		</if>
+		<if test="start !=null and start>-1 and limit !=null and limit !=''">
+			,#{limit}
+		</if>
+	</select>
+	
+	
+	
+	<!--条件查询,根据多个商品编号,in查询、得到所有商品对应的（去重标签编号）-->
+	<select id="findLabelCodesBySkuCodes" parameterType="java.util.List" resultType="string">
+			SELECT DISTINCT `label_code` FROM `t_sku_label_relation` 
+			WHERE	sku_code IN 
+			<foreach collection="skuCodes" index="index" item="skuCode" open="(" separator="," close=")">
+				#{skuCode}
+			</foreach>
+			
+	</select>	
+	
+	
+	<select id="queryBySameDayOperateing" parameterType="java.util.List" resultType="string">
+		SELECT DISTINCT `sku_code` FROM `t_sku_label_relation` 
+		WHERE disabled = 'y'	AND  (TO_DAYS(create_time) = TO_DAYS(NOW())) 
+	</select>
+	
+</mapper>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.member.dao.MemberSkuCommentImageDao">
+
+	<resultMap id="MemberSkuCommentImageMap" type="memberSkuCommentImage">
+		<id column="id" property="id" />
+		<result column="comment_id" property="commentId" />
+		<result column="img_url" property="imgUrl" />
+		<result column="`index`" property="index" />
+		<result column="source_code" property="sourceCode" />
+		<result column="create_time" property="createTime" />
+	</resultMap>
+	
+	<insert id="add" parameterType="memberSkuCommentImage">
+		<!-- 获取添加进数据库的id值 -->
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+		SELECT LAST_INSERT_ID() AS ID    
+		</selectKey>
+		insert into t_member_sku_comment_image (id, comment_id, img_url,`index`,source_code,create_time) 
+		values (#{id}, #{commentId}, #{imgUrl},#{index}, #{sourceCode}, now())
+	</insert>
+	
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_member_sku_comment_image where id = #{id}		
+	</delete>
+	
+	<update id="update" parameterType="memberSkuCommentImage">
+		update t_member_sku_comment_image
+		set comment_id=#{commentId},
+		img_url=#{imgUrl},
+		`index`=#{index},
+		source_code=#{sourceCode},
+		create_time = #{createTime} 
+		where id = #{id}
+	</update>
+	
+	
+	
+	<sql id="memberSkuCommentImage_column">
+	    select 
+	    id, comment_id,img_url,
+		`index`,
+		source_code,
+		create_time 
+	    from t_member_sku_comment_image
+	</sql>
+	
+	<select id="findById" resultMap="MemberSkuCommentImageMap" parameterType="java.lang.Long">
+	   <include refid="memberSkuCommentImage_column"/>  where id = #{id}	   
+	</select>
+	  
+	<select id="findAll" resultType="list" resultMap="MemberSkuCommentImageMap">
+	    <include refid="memberSkuCommentImage_column"/>
+	</select>
+	
+	<sql id="memberSkuCommentImage_where">
+	   <where>
+			<if test="commentId !=null and commentId !=''">
+	    	    AND comment_id = #{commentId}  
+		    </if>
+		    <if test="imgUrl !=null and imgUrl !=''">
+				AND img_url=#{imgUrl}
+		    </if>
+		    <if test="imgUrl !=null and imgUrl !=''">
+		    	AND `index`=#{imgUrl}  
+		    </if>
+		    <if test="sourceCode !=null and sourceCode !=''">
+		    	AND source_code=#{sourceCode} 
+		    </if>
+		    <if test="createTimeFrom != null and createTimeFrom !=''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+				]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+		    
+		    
+		</where>
+	</sql>
+	
+	<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="MemberSkuCommentImageMap" parameterType="Map" >
+		<include refid="memberSkuCommentImage_column"/>
+		<include refid="memberSkuCommentImage_where"/>
+		<if test="start!=null and limit!=null">
+			order by create_time desc
+			limit #{start},#{limit}
+		</if>
+	</select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) from t_member_sku_comment_image
+		<include refid="memberSkuCommentImage_where"/>	
+		
+	</select>
+	
+	<select id="findByCommentId" resultType="list" resultMap="MemberSkuCommentImageMap" parameterType="java.lang.Long">
+	    <include refid="memberSkuCommentImage_column"/> where comment_id=#{commentId}
+	</select>
+</mapper>

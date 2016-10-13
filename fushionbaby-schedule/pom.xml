@@ -1,0 +1,125 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.fushionbaby.schedule</groupId>
+	<artifactId>fushionbaby-schedule</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<name>fushionbaby-schedule</name>
+
+	<parent>
+		<groupId>com.fushionbaby.parent</groupId>
+		<artifactId>fushionbaby-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	 <distributionManagement>
+		<repository>
+			<id>fushionbaby-maven-releases</id>
+			<name>fushionbaby-maven-releases</name>
+			<url>http://192.168.1.39:8081/nexus/content/repositories/Yili-maven-releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>fushionbaby-maven-snapshots</id>
+			<name>fushionbaby-maven-snapshots</name>
+			<url>http://192.168.1.39:8081/nexus/content/repositories/Yili-maven-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement> 
+	
+
+	<dependencies>
+		<dependency>
+			<groupId>com.fushionbaby.common</groupId>
+			<artifactId>fushionbaby-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fushionbaby.order</groupId>
+			<artifactId>fushionbaby-order</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fushionbaby.member</groupId>
+			<artifactId>fushionbaby-member</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.aladingshop.sku.cms</groupId>
+			<artifactId>aladingshop.sku-cms</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fushionbaby.sms</groupId>
+			<artifactId>fushionbaby-sms</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fushionbaby.sysactivity</groupId>
+			<artifactId>fushionbaby-sysactivity</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fushionbaby.log</groupId>
+			<artifactId>fushionbaby-log</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.fushionbaby.statistics</groupId>
+  			<artifactId>fushionbaby-statistics</artifactId>
+  			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.fushionbaby.act.activity</groupId>
+			<artifactId>fushionbaby-activity</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.aladingshop.alabao</groupId>
+			<artifactId>aladingshop-alabao</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.aladingshop.card</groupId>
+			<artifactId>aladingshop-card</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.aladingshop.period-activity</groupId>
+		    <artifactId>aladingshop-periodactivity</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.fushionbaby.config</groupId>
+			<artifactId>fushionbaby-config</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.fushionbaby.payment</groupId>
+			<artifactId>fushionbaby-payment</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.aladingshop.store</groupId>
+			<artifactId>aladingshop-store</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.aspectj</groupId>
+		    <artifactId>aspectjweaver</artifactId>
+		    <version>1.6.8</version>
+		</dependency>
+		
+	</dependencies>
+
+</project>

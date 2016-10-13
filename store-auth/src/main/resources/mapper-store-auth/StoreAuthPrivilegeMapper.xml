@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.store.auth.dao.StoreAuthPrivilegeDao" >
+  <resultMap id="StoreAuthPrivilegeResultMap" type="StoreAuthPrivilege" >
+    <id column="id" property="id" />
+    <result column="name" property="name"  />
+    <result column="parent_id" property="parentId"  />
+    <result column="sort_no" property="sortNo" />
+    <result column="url" property="url"  />
+    <result column="level" property="level"/>
+    
+    
+    <result column="create_time" property="createTime"/>
+    <result column="update_time" property="updateTime"/>
+    <result column="create_id" property="createId"/>
+    <result column="update_id" property="updateId"/>
+    <result column="store_code" property="storeCode"  />
+    
+    
+  </resultMap>
+
+   <insert id="add" parameterType="StoreAuthPrivilege" >
+      <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+		SELECT LAST_INSERT_ID() AS ID    
+       </selectKey>
+    insert into 
+        t_store_auth_privilege (id, name, parent_id, sort_no, url,level,create_time,update_time,create_id,update_id,store_code )
+    values (#{id}, #{name}, #{parentId},#{sortNo},#{url},#{level},now(),now(),#{createId},#{updateId},#{storeCode} )
+  </insert>
+  
+  <delete id="deleteById"  parameterType="java.lang.Long" >
+    delete from t_store_auth_privilege  where id = #{id}
+  </delete>
+  
+   <update id="update" parameterType="StoreAuthPrivilege" >
+    update 
+    
+         t_store_auth_privilege
+         
+     set
+    <if test="name!=null and name!=''">
+			name = #{name} ,
+	</if>
+    <if test="parentId!=null and parentId!=''">
+			parent_id = #{parentId},
+	</if>
+    <if test="sortNo!=null and sortNo!=''">
+			sort_no = #{sortNo},
+	</if>
+    <if test="url!=null and url!=''">
+			url = #{url},
+	</if>
+    <if test="level!=null and level!=''">
+			level = #{level},
+	</if>
+    <if test="createTime!=null and createTime!=''">
+			create_time = #{createTime},
+	</if>
+    <if test="createId!=null and createId!=''">
+			create_id = #{createId},
+	</if>
+    <if test="updateId!=null and updateId!=''">
+			update_id = #{updateId},
+	</if>
+    <if test="storeCode!=null and storeCode!=''">
+			store_code = #{storeCode},
+	</if>
+	
+      update_time=now()
+     
+    where id = #{id}
+  </update>
+  
+  <sql id="base_sql">
+      select id, name, parent_id, sort_no, url,level,create_time,update_time,create_id,update_id,store_code from t_store_auth_privilege 
+  </sql>
+  
+  
+  <select id="findAll" resultType="list" resultMap="StoreAuthPrivilegeResultMap">
+	<include refid="base_sql"></include>
+  </select>
+
+	<!-- 得到所有的父菜单列表（权限） -->
+  <select id="findAllFirst" resultType="list" resultMap="StoreAuthPrivilegeResultMap">
+		<![CDATA[
+			select id, name, parent_id,sort_no, url ,level from t_store_auth_privilege where level=1 order by sort_no 
+		 ]]>
+   </select>
+
+    <select id="findById" resultType="StoreAuthPrivilege" resultMap="StoreAuthPrivilegeResultMap">
+		<include refid="base_sql"></include>
+		 where id=#{id}
+	</select>
+	
+	<!-- 通过parentId得到子权限的名称 -->
+    <select id="findByParentId" resultType="list" resultMap="StoreAuthPrivilegeResultMap">
+		<include refid="base_sql"></include>
+		 where parent_id=#{parentId} order by sort_no 
+	</select>
+	
+    <select id="findFirstByStoreCode" resultType="list" resultMap="StoreAuthPrivilegeResultMap">
+		<include refid="base_sql"></include>
+		 where store_code = #{storeCode} and  level=1 order by sort_no 
+	</select>
+	
+	
+		<!-- 获得第一层的所有分类  level=1时，第二层为level=2 -->
+    <select id="findByLevel" resultType="list" resultMap="StoreAuthPrivilegeResultMap">
+			<include refid="base_sql"></include>
+		    where level=#{level} order by id 
+	</select>
+	
+	  <!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="StoreAuthPrivilegeResultMap" parameterType="Map" >
+	    <include refid="base_sql"></include>
+		<where>
+			<if test="name !=null and name !=''">
+	    	   AND  name LIKE "%"#{name}"%"  
+	        </if>
+			<if test="storeCode !=null and storeCode !=''">
+	    	   AND  store_code = #{storeCode}  
+	        </if>
+		</where>
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select 	 count(id)	from t_store_auth_privilege
+		<where>
+			<if test="name !=null and name !=''">
+	    	   AND  name LIKE "%"#{name}"%"  
+	        </if>
+	        <if test="storeCode !=null and storeCode !=''">
+	    	   AND  store_code = #{storeCode}  
+	        </if>
+		</where>
+	</select>
+	
+	
+	  <!-- 得到用户的第一层权限(id name url)，其中 level=1-->
+<!--     <select id="listParentPrivilegeByUserId"   resultType="list" resultMap="StoreAuthPrivilegeResultMap" parameterType="long"  >
+   <![CDATA[
+	select DISTINCT tap.id ,tap.name,tap.url from  t_store_auth_privilege tap where tap.id IN(
+           SELECT  DISTINCT  tarp.privilege_id from t_store_auth_role_privilege tarp
+          where tarp.role_id IN
+               (select DISTINCT taur.role_id  from t_store_auth_user_role taur  where taur.user_id=#{userId})
+            ) and tap.level=1 order by tap.sort_no 
+		 ]]>
+  </select> -->
+	
+	
+</mapper>

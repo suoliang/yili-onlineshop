@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+	<meta charset="utf-8">
+	<base target="_self"></base>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="renderer" content="webkit">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title></title>
+	<link rel="shortcut icon" href="css/images/logo.png"/>
+	<!-- 浏览器标签图标 -->
+	<link rel="stylesheet" href="media/css/bootstrap.min.css">
+	<script src="media/js/jquery-1.10.1.min.js"></script>
+	<script src="media/js/bootstrap.min.js"></script>
+	<style>
+	  body {background-color: #3d3d3d;}
+	  #push {width: 590px;margin: 80px auto 0;}
+	  #push legend ,#push label ,#push .help-block {color: #fff;}
+	  .push_select .controls {float: left;margin-left: 20px;*padding:0;}
+	  #push .input-xlarge {width:306px;}
+	  #push .push_button .btn {margin-right:20px;}
+	  .push_button {*margin-left:160px;}
+	</style>
+	</head>
+	<body>
+		<div class="container">
+			<div id="push">
+				<form class="form-horizontal" 360chrome_form_autofill="2">
+					<fieldset>
+						<div id="legend">
+							<legend>消息推送</legend>
+						</div>
+						<div class="control-group">
+							<!-- Text input-->
+							<label class="control-label" for="推送标题">推送标题</label>
+							<div class="controls">
+								<input class="input-xlarge" value="" type="text" placeholder="请输入推送标题">
+								<p class="help-block">
+									至少输入2个字符
+								</p>
+							</div>
+						</div>
+						<div class="control-group">
+							<!-- Textarea -->
+							<label class="control-label">推送内容</label>
+							<div class="controls">
+								<div class="textarea">
+									<textarea type="" class="input-xlarge"></textarea>
+								</div>
+							</div>
+						</div>
+						<div class="control-group push_select">
+							<!-- Select Basic -->
+							<label class="control-label">推送对象</label>
+							<div class="controls">
+								<select class="input-medium">
+									<option>Enter</option>
+									<option>Your</option>
+									<option>Options</option>
+									<option>Here!</option>
+								</select>
+							</div>
+							<div class="controls">
+								<select class="input-medium">
+									<option>Enter</option>
+									<option>Your</option>
+									<option>Options</option>
+									<option>Here!</option>
+								</select>
+							</div>
+						</div>
+						<div class="control-group">
+							<!-- Text input-->
+							<label class="control-label" for="input01">推送链接</label>
+							<div class="controls">
+								<input class="input-xlarge" value="" type="text" placeholder="请输入推送链接">
+								<p class="help-block">
+									格式：http://www.fushionbaby.com
+								</p>
+							</div>
+						</div>
+						<div class="control-group push_button">
+							<!-- Button -->
+							<div class="controls">
+								<button class="btn btn-primary btn-large">确定</button>
+								<button class="btn btn-large">取消</button>
+							</div>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>

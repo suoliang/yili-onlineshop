@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.sku.cms.dao.SkuCategoryBrandRelationDao">
+	<resultMap id="SkuCategoryBrandRelationMap" type="SkuCategoryBrandRelation">
+		<id column="id" property="id" />
+		<result column="category_code" property="categoryCode" />
+		<result column="brand_code" property="brandCode" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="store_code" property="storeCode" />
+	</resultMap>
+	<!-- 自动生成id策略 -->
+	<insert id="add" parameterType="SkuCategoryBrandRelation">
+		insert into t_sku_category_brand_relation(id,category_code,brand_code,create_time,update_time,store_code)
+		values(#{id},#{categoryCode},#{brandCode},#{createTime},#{updateTime},#{storeCode});
+	</insert>
+	<delete id="deleteById">
+		delete from t_sku_category_brand_relation where id = #{id}
+	</delete>
+	<update id="update" parameterType="SkuCategoryBrandRelation">
+		update t_sku_category_brand_relation
+		<set>
+			category_code = #{categoryCode},
+			brand_code = #{brandCode},
+			<if test="storeCode != null and storeCode != ''">
+		      store_code=#{storeCode}
+		    </if>
+		</set>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+	<select id="findById" resultType="list" resultMap="SkuCategoryBrandRelationMap" parameterType="java.lang.Long">
+		SELECT 
+			id,category_code,brand_code,create_time,update_time,store_code 
+		FROM 
+			t_sku_category_brand_relation
+		<where>
+			id = #{id}
+		</where>
+		
+	</select>
+	<select id="findByCategoryCode" resultType="list" resultMap="SkuCategoryBrandRelationMap" parameterType="java.lang.String">
+		SELECT 
+			id,category_code,brand_code,create_time,update_time,store_code 
+		FROM 
+			t_sku_category_brand_relation
+		<where>
+			category_code = #{categoryCode} and (store_code is null or store_code='' or store_code='999')
+		</where>
+	</select>
+	
+	<select id="findByCategorycodeAndBrandCode" resultMap="SkuCategoryBrandRelationMap">
+		SELECT 
+			id,category_code,brand_code,create_time,update_time,store_code
+		FROM 
+			t_sku_category_brand_relation
+		<where>
+			category_code =#{categoryCode} and brand_code = #{brandCode} and (store_code is null or store_code='' or store_code='999')
+		</where>
+	</select>
+	<select id="findByBrandCode" resultType="list" resultMap="SkuCategoryBrandRelationMap" parameterType="java.lang.String">
+		SELECT 
+			id,category_code,brand_code,create_time,update_time,store_code
+		FROM 
+			t_sku_category_brand_relation
+		<where>
+			brand_code = #{brandCode} and (store_code is null or store_code='' or store_code='999')
+		</where>
+	</select>
+	
+</mapper>

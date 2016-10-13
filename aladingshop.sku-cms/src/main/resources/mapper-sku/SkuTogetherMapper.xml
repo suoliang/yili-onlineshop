@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.sku.cms.dao.SkuTogetherDao">
+	<resultMap id="skuTogetherMap" type="skuTogether">
+		<id column="id" property="id" />
+		<result column="sku_code" property="skuCode"/>
+		<result column="sku_name" property="skuName"/>
+		<result column="province" property="province"/>
+		<result column="city" property="city"/>
+		<result column="district" property="district"/>
+		<result column="begin_time" property="beginTime"/>
+		<result column="end_time" property="endTime"/>
+		<result column="create_time" property="createTime"/>
+		<result column="create_id" property="createId"/>
+		<result column="update_time" property="updateTime"/>
+		<result column="update_id" property="updateId"/>
+	</resultMap>
+	<insert id="add" parameterType="SkuTogether" useGeneratedKeys="true" keyProperty="id">
+	
+		insert into 
+			t_sku_together(sku_code,sku_name,province,city,district,begin_time,
+			end_time,create_id,create_time,update_id,update_time)
+		values
+			(#{skuCode},#{skuName},#{province},#{city},#{district},#{beginTime},
+			#{endTime},#{createId},now(),#{updateId},#{updateTime}
+			)
+	</insert>
+	
+	<update id="updateBySkuCode" parameterType="SkuTogether">
+		update 
+			t_sku_together
+		set
+		    <if test="skuName != null and skuName !=''">
+				sku_name = #{skuName},
+			</if>
+			<if test="province != null and province !=''">
+				province = #{province},
+			</if>
+			<if test="city != null and city !=''">
+				city = #{city},
+			</if>
+			<if test="district != null and district !=''">
+				district = #{district},
+			</if>
+			<if test="beginTime != null and beginTime!=''">
+				begin_time = #{beginTime},
+			</if>
+			<if test="endTime != null and endTime !=''">
+				end_time = #{endTime},
+			</if>
+			<if test="createId != null and createId != ''">
+				create_id = #{createId},
+			</if>
+			<if test="updateId != null and updateId !=''">
+				update_id = #{updateId},
+			</if>
+			<if test="updateTime != null and updateTime !=''">
+				update_time = now() 
+			</if>
+		 where 
+			sku_code = #{skuCode}
+		
+	</update>
+	
+	<update id="updateById" parameterType="SkuTogether">
+		update 
+			t_sku_together
+		set
+			<if test="skuCode != null and skuCode !=''">
+				sku_code = #{skuCode},
+			</if>
+		    <if test="skuName != null and skuName !=''">
+				sku_name = #{skuName},
+			</if>
+			<if test="province != null and province !=''">
+				province = #{province},
+			</if>
+			<if test="city != null and city !=''">
+				city = #{city},
+			</if>
+			<if test="district != null and district !=''">
+				district = #{district},
+			</if>
+			<if test="beginTime != null and beginTime!=''">
+				begin_time = #{beginTime},
+			</if>
+			<if test="endTime != null and endTime !=''">
+				end_time = #{endTime},
+			</if>
+			<if test="createId != null and createId != ''">
+				create_id = #{createId},
+			</if>
+			<if test="updateId != null and updateId !=''">
+				update_id = #{updateId},
+			</if>
+			
+				update_time = now() 
+			
+		 where 
+			id = #{id}
+		
+	</update>
+		
+	<select id="findById" resultMap="skuTogetherMap" >
+		select 
+			*
+		from 
+			t_sku_together 
+		where id=#{id}
+	</select>
+	
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_sku_together
+		where id = #{id}
+	</delete>
+	
+	<select id="findBySkuCodeAndDistrict" resultMap="skuTogetherMap" resultType="list">
+		select 
+			*
+		from 
+			t_sku_together 
+		where sku_code=#{skuCode}
+		 and district=#{district}
+	</select>	
+	
+	<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="skuTogetherMap" parameterType="Map" >
+		select 
+			*
+		from 
+			t_sku_together 
+		<where>
+		
+			<if test="skuCode != null and skuCode !=''">
+				 and sku_code = #{skuCode}
+			</if>
+		    <if test="skuName != null and skuName !=''">
+				 and sku_name like "%"#{skuName}"%" 
+			</if>
+			<if test="province != null and province !=''">
+				 and province = #{province} 
+			</if>
+			<if test="city != null and city !=''">
+				 and city = #{city} 
+			</if>
+			<if test="district != null and district !=''">
+				 and district = #{district} 
+			</if>
+			<if test="beginTimeFrom != null and beginTimeFrom !=''">
+		    	<![CDATA[ and  begin_time>=#{beginTimeFrom}  ]]>
+		    </if>
+			<if test="beginTimeTo != null and beginTimeTo != ''">
+		    	<![CDATA[ and  begin_time<=#{beginTimeTo} ]]>
+		    </if>
+			<if test="endTimeFrom != null and endTimeFrom !=''">
+		    	<![CDATA[ and  end_time>=#{endTimeFrom}  ]]>
+		    </if>
+			<if test="endTimeTo != null and endTimeTo != ''">
+		    	<![CDATA[ and  end_time<=#{endTimeTo}  ]]>
+		    </if>
+				
+			
+			<if test="createId != null and createId != ''">
+				 and create_id = #{createId} 
+			</if>
+			<if test="updateId != null and updateId !=''">
+				 and update_id = #{updateId} 
+			</if>
+			<if test="updateTime != null and updateTime !=''">
+				 and update_time = #{updateTime} 
+			</if>
+			<if test="createTime != null and createTime !=''">
+				 and create_time = #{createTime} 
+			</if>
+		</where>
+		order by create_time desc
+		
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select 
+			count(1)
+		 
+			from 
+				t_sku_together 
+		<where>
+		
+			<if test="skuCode != null and skuCode !=''">
+				 and sku_code = #{skuCode}
+			</if>
+		    <if test="skuName != null and skuName !=''">
+				 and sku_name like "%"#{skuName}"%" 
+			</if>
+			<if test="province != null and province !=''">
+				 and province = #{province} 
+			</if>
+			<if test="city != null and city !=''">
+				 and city = #{city} 
+			</if>
+			<if test="district != null and district !=''">
+				 and district = #{district} 
+			</if>
+			<if test="beginTimeFrom != null and beginTimeFrom !=''">
+		    	<![CDATA[ and  begin_time>=#{beginTimeFrom}  ]]>
+		    </if>
+			<if test="beginTimeTo != null and beginTimeTo != ''">
+		    	<![CDATA[ and  begin_time<=#{beginTimeTo} ]]>
+		    </if>
+			<if test="endTimeFrom != null and endTimeFrom !=''">
+		    	<![CDATA[ and  end_time>=#{endTimeFrom}  ]]>
+		    </if>
+			<if test="endTimeTo != null and endTimeTo != ''">
+		    	<![CDATA[ and  end_time<=#{endTimeTo}  ]]>
+		    </if>
+				
+			
+			<if test="createId != null and createId != ''">
+				 and create_id = #{createId} 
+			</if>
+			<if test="updateId != null and updateId !=''">
+				 and update_id = #{updateId} 
+			</if>
+			<if test="updateTime != null and updateTime !=''">
+				 and update_time = #{updateTime} 
+			</if>
+			<if test="createTime != null and createTime !=''">
+				 and create_time = #{createTime} 
+			</if>
+		</where>
+	
+	</select>
+</mapper>

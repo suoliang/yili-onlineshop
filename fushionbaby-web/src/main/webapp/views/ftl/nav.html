@@ -1,0 +1,113 @@
+<!-- 右侧导航 开始 -->
+<div class="nav-sidebar">
+  <div class="sidebar-wrapper">
+    <ul class="sidebar-center">
+      <li class="sidebar-column sidebar-car">
+        <a href="car.html">
+          <span class="iconfont icar"></span>
+          <span class="sidebar-car-num">0</span>
+        </a>
+      </li>
+      <li class="sidebar-column wxi">
+        <span class="iconfont iwx"></span>
+        <div class="sc-letter">
+          <img src="images/erweima.jpg">
+          <p>关注微信</p>
+          <s></s>
+        </div>
+      </li>
+      <li class="sidebar-column kfi">
+        <div>
+          <span class="iconfont ikf"></span>
+          <div class="sc-tooltip">
+            <p>在线客服</p>
+            <s></s>
+          </div>
+        </div>
+      </li>
+      <li class="sidebar-column">
+        <a href="">
+          <span class="iconfont ihy"></span>
+          <div class="sc-tooltip">会员中心 <s></s></div>
+        </a>
+      </li>
+      <li class="sidebar-column">
+        <a href="persona-order.html">
+          <span class="iconfont isc"></span>
+          <div class="sc-tooltip">收藏夹 <s></s></div>
+        </a>
+      </li>
+    </ul>
+    <div class="gotop">
+      <div class="sc-tooltip">返回顶部 <s></s></div>
+      <div class="gotop-wrapper">
+        <div class="arrow-tips"></div>
+        <p>TOP</p>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 右侧导航 结束 -->
+
+<!-- 左侧导航 开始 -->
+<div id="left-nav">
+  <span class="left-nav-top"></span>
+  <span class="left-nav-t"></span>
+  <ul class="left-nav-list">
+    <li>
+      <a href="" target="_blank">海外同步</a>
+    </li>
+    <li>
+      <a href="" target="_blank">安全座椅</a>
+    </li>
+    <li>
+      <a href="" target="_blank">童车</a>
+    </li>
+    <li>
+      <a href="" target="_blank">洗护/纸尿裤</a>
+    </li>
+    <li>
+      <a href="" target="_blank">喂养用品</a>
+    </li>
+    <li>
+      <a href="" target="_blank">玩具</a>
+    </li>
+    <li>
+      <a href="" target="_blank">主题家具</a>
+    </li>
+    <li>
+      <a href="" target="_blank">服装</a>
+    </li>
+    <li>
+      <a href="" target="_blank">精选母婴</a>
+    </li>
+    <li>
+      <a href="" target="_blank">妈咪精选</a>
+    </li>
+  </ul>
+  <span class="left-nav-middle"></span>
+  <ul class="left-nav-code">
+    <li class="left-nav-code_1"></li>
+    <p>网站APP</p>
+    <li class="left-nav-code_2"></li>
+    <p>微信公众号</p>
+  </ul>
+  <span class="left-nav-bottom"></span>
+</div>
+<!-- 左侧导航 结束 -->
+<script>
+/*控制左侧导航位置*/
+$(window).load(function(){
+  var footer_T = $('.footer').offset().top;
+  var footer_H = $('.footer').outerHeight();
+  var footer_max_h = $('body').height()-$(window).height()-$('.footer').height();
+  $(window).scroll(function(){
+    $(window).scrollTop()>400?$(".left-nav-list,.left-nav-middle").fadeIn():$(".left-nav-list,.left-nav-middle").fadeOut();
+    if ($(window).scrollTop() >= footer_max_h) {
+      $('#left-nav').css({'bottom':$(window).scrollTop()-footer_max_h+20});
+    }else {
+      $('#left-nav').css({'bottom':'20px'});
+    }
+  })
+})
+</script>

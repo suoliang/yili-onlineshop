@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.member.dao.MemberSkuViewDao" >
+  <resultMap id="MemberSkuViewResultMap" type="MemberSkuView" >
+    <id column="id" property="id" />
+    <result column="create_time" property="createTime" />
+    <result column="ip" property="ip" />
+    <result column="login_name" property="loginName" />
+    <result column="sku_code" property="skuCode" />
+    <result column="source_code" property="sourceCode" />
+  </resultMap>
+  <insert id="add" parameterType="MemberSkuView" >
+    insert into t_member_sku_view (id, create_time, ip, 
+      login_name, sku_code, source_code)
+    values (#{id}, #{createTime}, #{ip}, 
+      #{loginName}, #{skuCode}, #{sourceCode})
+  </insert>
+  <delete id="deleteById" parameterType="java.lang.Long" >
+    delete from t_member_sku_view
+    where id = #{id}
+  </delete>
+  <update id="update" parameterType="MemberSkuView" >
+    update t_member_sku_view
+    set create_time = #{createTime},
+      ip = #{ip},
+      login_name = #{loginName},
+      sku_code = #{skuCode},
+      source_code = #{sourceCode}
+    where id = #{id}
+  </update>
+  <select id="findById" resultMap="MemberSkuViewResultMap" parameterType="java.lang.Long" >
+    select 
+    id, create_time, ip, login_name, sku_code, source_code
+    from t_member_sku_view
+    where id = #{id}
+  </select>
+  <select id="findAll" resultMap="MemberSkuViewResultMap" resultType="list" >
+    select 
+    id, create_time, ip, login_name, sku_code, source_code
+    from t_member_sku_view
+  </select>
+</mapper>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>选择优惠券</title>
+
+        <!-- 通用部分 开始 -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0,user-scalable=no">
+        <link rel="shortcut icon" href="images/favicon.ico" />
+        <link rel="stylesheet" href="css/style.min.css"><!-- 通用 CSS -->
+        <script src="farmwork/jquery/jquery-2.1.3.min.js"></script><!-- 通用jQuery JS -->
+        <script src="farmwork/velocity/velocity.min.js"></script><!-- velocity JS -->
+        <script src="farmwork/velocity/velocity.ui.min.js"></script><!-- velocity JS -->
+        <script src="js/min/public.min.js"></script><!-- 通用 public JS -->
+        <!-- 通用部分 结束 -->
+
+    </head>
+    <body id="coupon">
+
+        <div class="container">
+
+            <div class="head mB10">
+                <a href="javascript:history.go(-1)" class="a-left">
+                    <span class="back"></span>
+                </a>
+                <p>选择优惠券</p>
+            </div>
+
+            <div class="coupon-wrap fl wp100">
+                <ul>
+                    <!-- 未使用 -->
+                    <li class="">
+                        <h1>10</h1>
+                        <p>全场购物可用</p>
+                        <span>有效期：2015-10-01至2015-11-30</span>
+                    </li>
+                </ul>
+                <div class="tips" style="display:none">暂时没有阿拉丁优惠券哦！</div>
+            </div>
+
+        </div><!-- /.container -->
+
+        <script type="text/javascript">
+        $(document).ready(function() {
+            if (!$('.coupon-wrap').find('li').length) {
+                $('.tips').show();
+            };
+        });
+        </script>
+
+    </body>
+</html>

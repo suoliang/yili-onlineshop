@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.log.dao.LogWxCardVoucherDao">
+	<resultMap id="wxCardVoucherMap" type="LogWxCardVoucher">
+		<id column="id" property="id" />
+		<result column="code" property="code" />
+		<result column="card_id" property="cardId" />
+		<result column="order_id" property="orderId" />
+		<result column="reduce_cost" property="reduceCost" />
+		<result column="destroy_time" property="destroyTime" />
+		
+	</resultMap>
+	<insert id="add" parameterType="LogWxCardVoucher">
+		insert into t_log_wxcard_voucher(id,code,card_id,order_id,reduce_cost,destroy_time)
+		values(#{id},#{code},#{cardId},#{orderId},#{reduceCost},now()); 	
+	</insert>
+	<select id="getPageList" resultMap="wxCardVoucherMap" resultType="list" parameterType="Map">
+		select 	id,code,card_id,order_id,reduce_cost,destroy_time from t_log_wxcard_voucher
+		<where>
+			<if test="orderId!=null and orderId!=''">
+				order_id=#{orderId}
+			</if>
+			<if test="reduceCost!=null and reduceCost!=''">
+				reduce_cost=#{reduceCost}
+			</if>
+
+		<if test="useTimeFrom != null and useTimeFrom !=''">
+	    	<![CDATA[
+				and DATE_FORMAT(destroy_time,'%Y-%m-%d') >= DATE_FORMAT(#{useTimeFrom}, '%Y-%m-%d')
+			]]>
+	    </if>
+		<if test="useTimeTo != null and useTimeTo != ''">
+	    	<![CDATA[
+				and DATE_FORMAT(destroy_time,'%Y-%m-%d') <= DATE_FORMAT(#{useTimeTo}, '%Y-%m-%d')
+			]]>
+	    </if>
+		</where>
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+	
+	<select id="getTotal" resultType="java.lang.Integer" parameterType="Map">
+		select 	count(id) from t_log_wxcard_voucher
+		<where>
+			<if test="orderId!=null and orderId!=''">
+				order_id=#{orderId}
+			</if>
+			<if test="reduceCost!=null and reduceCost!=''">
+				reduce_cost=#{reduceCost}
+			</if>
+
+		<if test="useTimeFrom != null and useTimeFrom !=''">
+	    	<![CDATA[
+				and DATE_FORMAT(destroy_time,'%Y-%m-%d') >= DATE_FORMAT(#{useTimeFrom}, '%Y-%m-%d')
+			]]>
+	    </if>
+		<if test="useTimeTo != null and useTimeTo != ''">
+	    	<![CDATA[
+				and DATE_FORMAT(destroy_time,'%Y-%m-%d') <= DATE_FORMAT(#{useTimeTo}, '%Y-%m-%d')
+			]]>
+	    </if>
+		</where>
+	</select>
+</mapper>

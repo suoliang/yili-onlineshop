@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fushionbaby.order.dao.OrderTransDao">
+  <resultMap id="BaseResultMap" type="OrderTrans">
+    <id column="id"  property="id" />
+    <result column="member_id"  property="memberId" />
+    <result column="order_code"  property="orderCode" />
+    <result column="trans_status"  property="transStatus" />
+    <result column="trans_code"  property="transCode" />
+    <result column="trans_name"  property="transName" />
+    <result column="delivery_time" property="deliveryTime" />
+    <result column="send_date"  property="sendDate" />
+    <result column="create_time"  property="createTime" />
+    <result column="update_time"  property="updateTime" />
+    <result column="update_id"  property="updateId" />
+    <!-- 门店编号 -->
+    <result column="store_code" property="storeCode" />
+    
+  </resultMap>
+  <sql id="Base_Column_List">
+    id,member_id,order_code,trans_status,trans_code,trans_name,delivery_time,
+    send_date,create_time,update_time,update_id,store_code
+  </sql>
+  <!-- 用于测试 -->
+  <insert id="add" parameterType="OrderTrans">
+    insert into t_order_trans ( <include refid="Base_Column_List" />)
+    values (#{id},#{memberId}, #{orderCode}, #{transStatus}, #{transCode},#{transName},#{deliveryTime},
+    #{sendDate}, now(), #{updateTime}, #{updateId}, #{storeCode})
+  </insert>
+  
+  <select id="findByOrderCode" parameterType="String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_order_trans
+    where order_code = #{orderCode}
+  </select>
+  
+  <select id="findByOrderTransId" parameterType="long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_order_trans
+    where id = #{id}
+  </select>
+  
+  <update id="updateByMemberIdAndOrderCode" parameterType="OrderTrans">
+    update t_order_trans 
+    	set update_time = now()
+      <if test="transCode != null and transCode != ''">
+        ,trans_code = #{transCode}
+      </if>
+      <if test="transStatus != null and transStatus != ''">
+        ,trans_status = #{transStatus}
+      </if>
+      <if test="transName != null and transName != ''">
+        ,trans_name = #{transName}
+      </if>
+      <if test="deliveryTime!= null and deliveryTime != ''">
+        ,delivery_time = #{deliveryTime}
+      </if>
+      <if test="sendDate != null and sendDate != ''">
+        ,send_date = #{sendDate}
+      </if>
+      <if test="updateId != null and updateId != ''">
+        ,update_id = #{updateId}
+      </if>
+    where order_code = #{orderCode} 
+	    <if test="memberId != null and memberId != ''">
+	    	and member_id= #{memberId}
+	    </if>
+  </update>
+
+  <select id="findByMemberIdAndOrderCode" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_order_trans
+    where member_id = #{memberId} 
+   		 and order_code=#{orderCode}
+  </select>
+
+  <select id="findListByTransStatus"  parameterType="String" resultMap="BaseResultMap" resultType="list">
+    select 
+    <include refid="Base_Column_List" />
+    from t_order_trans 
+    where trans_status=#{transStatus}
+  </select>
+  
+  <delete id="deleteByOrderCodeAndMemberId">
+		delete from t_order_trans where order_code=#{orderCode} and member_id=#{memberId}
+  </delete>
+</mapper>

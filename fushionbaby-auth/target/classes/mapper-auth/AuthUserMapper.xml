@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.auth.dao.AuthUserDao" >
+  <resultMap id="AuthUserResultMap" type="AuthUser" >
+    <id column="id" property="id"  />
+    <result column="create_time" property="createTime"  />
+    <result column="email" property="email"  />
+    <result column="update_time" property="updateTime"/>
+    <result column="login_name" property="loginName"  />
+    <result column="memo" property="memo" />
+    <result column="password" property="password" />
+    <result column="phone" property="phone"  />
+    <result column="version" property="version"  />
+    <result column="status" property="status"/>
+    <result column="user_type" property="userType"/> 
+  </resultMap>
+
+<!-- 状态默认启用的 -->
+  <insert id="add" parameterType="AuthUser" >
+   	<!-- 获取数据库自动生成的主键 -->
+	<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+		SELECT LAST_INSERT_ID() AS ID    
+    </selectKey>
+    insert into 
+      t_auth_user 
+        (id,create_time, email, login_name, memo, password, phone, version,status,user_type )
+    values  
+    (#{id}, now(), #{email}, #{loginName}, #{memo}, #{password},  #{phone}, #{version}, 1, #{userType})
+  </insert>
+  <delete id="deleteById"  >
+    delete from t_auth_user
+    where id = #{id}
+  </delete> 
+  
+  <update id="update" parameterType="AuthUser" >
+    update 
+    	t_auth_user 
+    set
+       <if test="password!=null and password!=''">
+         password = #{password},
+       </if>
+       <if test="userType!=null and userType!=''">
+        user_type = #{userType},
+       </if>
+       <if test="email!=null and email!=''">
+        email = #{email},
+       </if>
+       <if test="memo!=null and memo!=''">
+        memo = #{memo},
+       </if>
+       <if test="phone!=null and phone!=''">
+        phone = #{phone},
+       </if>
+         update_time= now()
+    where 
+        id = #{id}
+  </update> 
+  <!-- 修改用户的状态 -->
+  <update id="updateStatus" parameterType="AuthUser" >
+    update 
+    	t_auth_user 
+    set 
+      	status=#{status}
+    where 
+      	id = #{id}
+  </update> 
+  
+<select id="findById" resultMap="AuthUserResultMap" parameterType="long"  >
+   <![CDATA[
+			select 
+			id, create_time, email,update_time,login_name, memo, password,phone,  version,status,user_type
+      from t_auth_user where id=#{id}
+		 ]]>
+  </select> 
+  <select id="findAll" resultMap="AuthUserResultMap" parameterType="list"  >
+   <![CDATA[
+			select 
+			id, create_time, email,update_time,login_name, memo, password,phone,version,status,user_type
+      from t_auth_user 
+		 ]]>
+  </select> 
+    <select id="findAuthUserByUserName" resultMap="AuthUserResultMap" parameterType="string"  >
+   <![CDATA[
+		select 
+			id, create_time, email,update_time,login_name, memo, password,phone, version,status,user_type
+      from t_auth_user where login_name=#{loginName} and status =1
+		 ]]>
+  </select>
+<!--判断用户是不是系统用户    系统用户的标识是user_type=1 -->
+    <select id="isSystemUser" resultMap="AuthUserResultMap" parameterType="long"  >
+   <![CDATA[
+		select 
+			id, create_time, email,update_time,login_name, memo, password,phone,  version,status,user_type
+      from t_auth_user where  user_type=1 and id=#{id} 
+		 ]]>
+  </select> 
+
+  <!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="AuthUserResultMap" parameterType="Map" >
+	    	select 
+			id, create_time, email, update_time, login_name, memo,
+			password,
+			phone, version, status, user_type 
+			from t_auth_user 
+		<where>
+			<if test="loginName !=null and loginName !=''">
+	    	   AND  login_name LIKE "%"#{loginName}"%"  
+	        </if>
+	        <if test="email !=null and email !=''">
+	    	   AND  email LiKE "%"#{email}"%"  
+	        </if>
+	        <if test="phone !=null and phone !=''">
+	    	   AND  phone LIKE "%"#{phone}"%"  
+	        </if>
+	        <if test="status !=null and status !=''">
+	    	   AND  status = #{status}  
+	        </if>
+	        <if test="includeIds !=null and includeIds !=''">
+	    	   AND  id in (${includeIds})  
+	        </if>
+		</where>
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select 
+			count(id)
+		from t_auth_user 
+		<where>
+			<if test="loginName !=null and loginName !=''">
+	    	   AND  login_name LIKE "%"#{loginName}"%"  
+	        </if>
+	        <if test="email !=null and email !=''">
+	    	   AND  email LiKE "%"#{email}"%"  
+	        </if>
+	        <if test="phone !=null and phone !=''">
+	    	   AND  phone LIKE "%"#{phone}"%"  
+	        </if>
+	        <if test="status !=null and status !=''">
+	    	   AND  status = #{status}  
+	        </if>
+	        <if test="includeIds !=null and includeIds !=''">
+	    	   AND  id in (${includeIds})  
+	        </if>
+		</where>
+	</select>
+	
+  
+</mapper>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fushionbaby.order.dao.OrderFinanceDao">
+  <resultMap id="BaseResultMap" type="OrderFinance">
+    <id column="id"  property="id" />
+    <result column="member_id"  property="memberId" />
+    <result column="order_code"  property="orderCode" />
+    <result column="finance_status"  property="financeStatus" />
+    <result column="payment_type"  property="paymentType" />
+    <result column="payment_total_actual"  property="paymentTotalActual" />
+    <result column="payment_complete_time"  property="paymentCompleteTime" />
+    <result column="create_time"  property="createTime" />
+    <result column="update_time"  property="updateTime" />
+    <result column="is_invoice"  property="isInvoice" />
+     <result column="invoice_type"  property="invoiceType" />
+    <result column="invoice_title"  property="invoiceTitle" />
+    <!-- 门店编号 -->
+    <result column="store_code" property="storeCode" />
+    
+    <result column="order_total_number"  property="orderTotalNumber" />
+    <result column="sales_total_money"  property="salesTotalMoney" />
+  </resultMap>
+  <sql id="Base_Column_List">
+   	select 
+	    id,member_id,order_code,finance_status,payment_type,payment_total_actual,
+	    payment_complete_time,create_time,update_time,is_invoice,
+	    invoice_type,invoice_title,store_code
+    from t_order_finance
+  </sql>
+
+	<sql id="orderFinance_where">
+	  	<where>
+	  		  <if test="memberId != null and memberId != ''">
+		       and member_id = #{memberId}
+		      </if>
+		      <if test="orderCode != null and orderCode != ''">
+		        and order_code = #{orderCode}
+		      </if>
+		      <if test="financeStatus != null and financeStatus != ''">
+		        and finance_status = #{financeStatus}
+		      </if>
+		      <if test="paymentType != null and paymentType != ''">
+		        and payment_type = #{paymentType}
+		      </if>
+		      <if test="paymentTotalActual != null and paymentTotalActual != ''">
+		        and payment_total_actual = #{paymentTotalActual}
+		      </if>
+		      <if test="paymentTotalActualFrom != null and paymentTotalActualFrom != ''">
+		        and payment_total_actual &gt;= #{paymentTotalActualFrom}
+		      </if>
+		      <if test="paymentTotalActualTo != null and paymentTotalActualTo != ''">
+		        and payment_total_actual &lt;= #{paymentTotalActualTo}
+		      </if>
+		      <if test="paymemtCompleteTimeFrom != null and paymemtCompleteTimeFrom !=''">
+			    	<![CDATA[
+						and DATE_FORMAT(payment_complete_time,'%Y-%m-%d %T') >= DATE_FORMAT(#{paymemtCompleteTimeFrom}, '%Y-%m-%d %T')
+					]]>
+			  </if>
+			  <if test="paymemtCompleteTimeTo != null and paymemtCompleteTimeTo != ''">
+			    	<![CDATA[
+						and DATE_FORMAT(payment_complete_time,'%Y-%m-%d %T') <= DATE_FORMAT(#{paymemtCompleteTimeTo}, '%Y-%m-%d %T')
+					]]>
+			  </if>
+		  
+	  	</where>
+	  </sql>
+
+  <select id="findByOrderCode" parameterType="String" resultMap="BaseResultMap">
+    <include refid="Base_Column_List" />
+    where order_code = #{orderCode}
+  </select>
+  
+  <select id="findByOrderFinanceId" parameterType="long" resultMap="BaseResultMap">
+    <include refid="Base_Column_List" />
+    where id = #{id}
+  </select>
+  
+  <update id="updateByMemberIdAndOrderCode" parameterType="OrderFinance">
+    update t_order_finance 
+    <set>
+      <if test="financeStatus != null and financeStatus != ''">
+        finance_status = #{financeStatus},
+      </if>
+      <if test="paymentType != null and paymentType != ''">
+        payment_type = #{paymentType},
+      </if>
+      <if test="paymentTotalActual != null and paymentTotalActual != ''">
+        payment_total_actual = #{paymentTotalActual},
+      </if>
+      <if test="paymentCompleteTime != null and paymentCompleteTime != ''">
+        payment_complete_time = #{paymentCompleteTime},
+      </if>
+      <if test="updateTime != null and updateTime != ''">
+        update_time = #{updateTime} 
+      </if>
+    </set>
+    where order_code = #{orderCode} 
+    	and member_id= #{memberId}
+  </update>
+
+  <select id="findByMemberIdAndOrderCode" resultMap="BaseResultMap">
+    <include refid="Base_Column_List" />
+    where member_id = #{memberId} 
+    and order_code=#{orderCode}
+  </select>
+
+  <select id="findListByFinanceStatus" parameterType="String" resultMap="BaseResultMap" resultType="list">
+    <include refid="Base_Column_List" />
+    where finance_status=#{financeStatus}
+  </select>
+  
+  <select id="findListByFinanceStatusAndLastPayTime" parameterType="Map" resultMap="BaseResultMap" resultType="list">
+    <include refid="Base_Column_List" />
+    where finance_status=#{financeStatus}
+    	AND DATE_FORMAT(payment_complete_time,'%Y-%m-%d') = DATE_FORMAT(#{paymentCompleteTime},'%Y-%m-%d')
+  </select>
+  
+  <select id="findListByPaymentType" parameterType="String" resultMap="BaseResultMap" resultType="list">
+    <include refid="Base_Column_List" />
+    where payment_type=#{paymentType}
+  </select>
+  
+  <select id="getOneDayCountByCreateTime" parameterType="Map" resultMap="BaseResultMap">
+    SELECT COUNT(id) as order_total_number ,SUM(payment_total_actual) as sales_total_money
+	  	FROM 
+	  		t_order_finance
+    where finance_status = 'y'
+    	<if test="createTime != null and createTime != ''">
+    		AND DATE_FORMAT(create_time,'%Y-%m-%d') = DATE_FORMAT(#{createTime},'%Y-%m-%d')
+      	</if>
+  </select>
+  
+  <select id="getBuyOverOneNumberByCreateTime" parameterType="Map" resultType="java.lang.Integer">
+   	SELECT COUNT(a) FROM 
+	  		(SELECT COUNT(s.member_id) a FROM t_order_finance s 
+			WHERE finance_status = 'y'  
+			<if test="createTime != null and createTime != ''">
+				<![CDATA[
+	    		AND create_time < DATE_FORMAT(#{createTime},'%Y-%m-%d')
+				]]>
+	      	</if>
+			GROUP BY member_id HAVING COUNT(member_id) > 1) AS m2 
+  </select>
+  
+  <!-- 分页条件查询 -->
+	<select id="findList" resultType="list" resultMap="BaseResultMap" parameterType="Map" >
+		<include refid="Base_Column_List"/>
+		<include refid="orderFinance_where"/>
+		 order by create_time DESC
+		<if test="start!=null and limit!=null">
+			limit #{start},#{limit}
+		</if>
+	</select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) 
+    from t_order_finance
+		<include refid="orderFinance_where"/>
+	</select>
+	
+	<delete id="deleteByOrderCodeAndMemberId">
+		delete from t_order_finance where order_code=#{orderCode} and member_id=#{memberId}
+	</delete>
+	
+</mapper>

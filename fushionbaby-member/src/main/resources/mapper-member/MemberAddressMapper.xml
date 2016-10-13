@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.member.dao.MemberAddressDao">
+
+	<resultMap id="MemberAddressResultMap" type="memberAddress">
+		<id column="id" property="id" />
+		<result column="abbreviation" property="abbreviation" />
+		<result column="address" property="address" />
+		<result column="city" property="city" />
+		<result column="contactor" property="contactor" />
+		<result column="country" property="country" />
+		<result column="create_time" property="createTime" />
+		<result column="district" property="district" />
+		<result column="gender" property="gender" />
+		<result column="mobile" property="mobile" />
+		<result column="province" property="province" />
+		<result column="telephone" property="telephone" />
+		<result column="version" property="version" />
+		<result column="zipcode" property="zipcode" />
+		<result column="member_id" property="memberId" />
+		<result column="email" property="email" />
+	</resultMap>
+	
+	<insert id="add" parameterType="memberAddress" useGeneratedKeys="true" keyProperty="id">
+	   <selectKey keyProperty="id" resultType="long" order="AFTER" >    
+           SELECT LAST_INSERT_ID() AS ID      
+        </selectKey>
+		insert into t_member_address (id,abbreviation, address,
+		city, contactor, country,
+		create_time, district, gender,
+		 mobile,
+		province, telephone, version,
+		zipcode, member_id, email
+		)
+		values 
+		(#{id},#{abbreviation}, #{address},
+		#{city}, #{contactor}, #{country},
+		now(), #{district}, #{gender},
+		 #{mobile},
+		#{province}, #{telephone}, now(),
+		#{zipcode}, #{memberId}, #{email}
+		)
+	</insert>
+	
+	<delete id="delete" parameterType="memberAddress">
+		delete from t_member_address
+		where id = #{id} and member_id = #{memberId} 
+	</delete>
+	
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_member_address
+		where id = #{id} 
+	</delete>
+	
+	<update id="update" parameterType="memberAddress">
+		update t_member_address
+		set version = now()
+		<if test="abbreviation !=null and abbreviation !=''">
+		   ,abbreviation = #{abbreviation}
+		</if>
+		<if test="address !=null and address !=''">
+		   ,address = #{address}
+		</if>
+		<if test="city !=null and city !=''">
+		    ,city = #{city}
+		</if>
+		<if test="contactor !=null and contactor !=''">
+		   ,contactor = #{contactor}
+		</if>
+		<if test="country !=null and country !=''">
+		    ,country = #{country}
+		</if>
+		<if test="district !=null and district !=''">
+		    ,district = #{district}
+		</if>
+		<if test="gender !=null and gender !=''">
+		    ,gender = #{gender}
+		</if>	
+		<if test="mobile !=null and mobile !=''">
+		    ,mobile = #{mobile}
+		</if>
+		<if test="province !=null and province !=''">
+		    ,province = #{province}
+		</if>
+		<if test="telephone !=null and telephone !=''">
+	       ,telephone = #{telephone}
+		</if>
+		<if test="zipcode !=null and zipcode !=''">
+		   ,zipcode = #{zipcode}
+		</if>
+		<if test="email !=null and email !=''">
+		   ,email = #{email}
+		</if>
+		where id = #{id} and member_id = #{memberId} 
+	</update>
+	
+	<sql id="member_address_column">
+	  select id, abbreviation, address, city, contactor, country, create_time,district, gender,
+		      mobile, province, telephone, version, zipcode, member_id,email
+	   from t_member_address
+	</sql>
+	
+	<select id="findById" resultMap="MemberAddressResultMap">
+		<include refid="member_address_column"/> where id = #{id}		
+	</select>
+	
+	<select id="findAll" resultType="list" resultMap="MemberAddressResultMap">
+	   <include refid="member_address_column"/> 
+	</select>
+	
+	
+	<sql id="member_address_where">
+	   <where>
+		  <if test="memberId !=null and memberId !=''">
+	         and member_id = #{memberId} 
+		  </if>
+		</where>
+	</sql>
+	
+	<select id="count" parameterType="java.util.Map" resultType="java.lang.Long">
+	    select count(1) from t_member_address
+	    <include refid="member_address_where"/> 
+	</select>
+	
+	<select id="getListPage" parameterType="java.util.Map" resultMap="MemberAddressResultMap">
+		<include refid="member_address_column"/>
+		<include refid="member_address_where"/>
+		order by create_time desc 
+		<if test="start!=null and limit!=null">
+			limit #{start},#{limit}
+		</if>
+	</select>
+	
+	<select id="getTotal" parameterType="java.util.Map" resultType="java.lang.Integer">
+	    SELECT COUNT(1) FROM (
+			SELECT t1.id,t1.address,t1.city,t1.contactor,t1.create_time,       
+			 t1.district,t1.mobile,t1.province,t1.telephone,t1.email,t2.city AS city2 FROM (
+				SELECT t1.id,t1.email, t1.contactor, t1.district, t1.city, t2.city AS province, address, create_time, mobile, telephone FROM
+ 				t_member_address t1 LEFT JOIN t_member_area_config t2 ON t1.province = t2.area_code)
+			t1 LEFT JOIN t_member_area_config t2 ON t1.city = t2.area_code
+		) t1 LEFT JOIN t_member_area_config t2 ON t1.district = t2.area_code
+	   <where>
+		  <if test="province !=null and province !=''">
+	         and province LIKE "%"#{province}"%" 
+		  </if>
+		  <if test="contactor !=null and contactor !=''">
+	         and contactor LIKE "%"#{contactor}"%" 
+		  </if>
+		  <if test="createTimeFrom != null and createTimeFrom != ''">
+				<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom},'%Y-%m-%d')
+				]]>
+			</if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+				<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo},'%Y-%m-%d')
+				]]>
+			</if>
+		</where>
+	    
+	</select>
+	
+	<select id="getPageList" parameterType="java.util.Map" resultMap="MemberAddressResultMap">
+		SELECT t1.email,t1.id, t1.contactor, province, t1.city2 AS city, t2.city AS district, address, create_time, mobile, telephone FROM (
+			SELECT t1.id,t1.address,t1.city,t1.contactor,t1.create_time, 
+			       t1.district,t1.mobile,t1.province,t1.telephone,t1.email, t2.city AS city2 FROM (
+				SELECT t1.id, t1.email,t1.contactor, t1.district, t1.city, t2.city AS province, address, create_time, mobile, telephone FROM
+ 					t_member_address t1 LEFT JOIN t_member_area_config t2 ON t1.province = t2.area_code)
+					t1 LEFT JOIN t_member_area_config t2 ON t1.city = t2.area_code
+				) t1 LEFT JOIN t_member_area_config t2 ON t1.district = t2.area_code
+				
+		<where>
+		  <if test="province !=null and province !=''">
+	         and province LIKE "%"#{province}"%" 
+		  </if>
+		  <if test="contactor !=null and contactor !=''">
+	         and contactor LIKE "%"#{contactor}"%"  
+		  </if>
+		  
+		  <if test="mobile !=null and mobile !='' ">
+		  	and mobile LIKE "%"#{mobile}"%"
+		  </if>
+		  
+		  <if test="createTimeFrom != null and createTimeFrom != ''">
+				<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom},'%Y-%m-%d')
+				]]>
+			</if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+				<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo},'%Y-%m-%d')
+				]]>
+			</if>
+		</where>
+		order by create_time desc
+		limit #{start},#{limit}
+	</select>	
+	
+	
+	
+	<select id="getAddressListByMemberId"  resultMap="MemberAddressResultMap" resultType="list" parameterType="java.lang.Long">
+		<include refid="member_address_column"/>
+		<where>
+	 	 <if test="memberId !=null and memberId !=''">
+	          member_id = #{memberId} 
+		 </if>
+		</where>
+		
+	</select>
+		
+</mapper>

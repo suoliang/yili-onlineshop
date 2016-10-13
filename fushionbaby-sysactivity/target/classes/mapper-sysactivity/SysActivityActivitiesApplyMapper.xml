@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.sysactivity.dao.SysActivityActivitiesApplyDao">
+	<resultMap id="SysActivitiesApplyResultMap" type="SysActivitiesApply">
+		<id column="id" property="id" />
+		<result column="member_id" property="memberId" />
+		<result column="activities_id" property="activitiesId" />
+		<result column="activities_name" property="activitiesName" />
+		<result column="apply_time" property="applyTime" />
+		<result column="apply_number" property="applyNumber" />
+		<result column="member_name" property="memberName" />
+		<result column="member_phone" property="memberPhone" />
+		<result column="is_touch" property="isTouch" />
+		<result column="source_code" property="sourceCode" />
+		<result column="is_ok" property="isOk" />
+	</resultMap>
+	<insert id="add" parameterType="SysActivitiesApply">
+		insert into t_sysactivity_activities_apply (id, member_id, activities_id,
+		activities_name, apply_time, apply_number,
+		member_name, member_phone, is_touch,
+		source_code, is_ok)
+		values (#{id}, #{memberId}, #{activitiesId},
+		#{activitiesName}, now(), #{applyNumber},
+		#{memberName}, #{memberPhone}, #{isTouch},
+		#{sourceCode}, #{isOk})
+	</insert>
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_sysactivity_activities_apply
+		where id = #{id}
+	</delete>
+	<update id="update" parameterType="SysActivitiesApply">
+		update t_sysactivity_activities_apply
+		set member_id = #{memberId},
+		activities_id = #{activitiesId},
+		activities_name = #{activitiesName},
+		apply_time = #{applyTime},
+		apply_number = #{applyNumber},
+		member_name = #{memberName},
+		member_phone = #{memberPhone},
+		is_touch = #{isTouch},
+		source_code = #{sourceCode},
+		is_ok = #{isOk}
+		where id = #{id}
+	</update>
+	
+	<update id="changeIsOk" parameterType="Map">
+		update t_sysactivity_activities_apply
+		set
+		      is_ok = #{isOk}
+		where id = #{id}
+	</update>
+		<update id="changeIsTouch" parameterType="Map">
+		update t_sysactivity_activities_apply
+		set
+		       is_touch = #{isTouch}
+		where id = #{id}
+	</update>
+	
+	<select id="findById" parameterType="java.lang.Long" resultMap="SysActivitiesApplyResultMap">
+		<![CDATA[
+			select 
+			id, member_id, activities_id, activities_name, apply_time, apply_number,
+			member_name,
+			member_phone, is_touch, source_code, is_ok 
+			from t_sysactivity_activities_apply 
+			where id = #{id}
+		]]>
+	</select>
+	<select id="findAll" resultMap="SysActivitiesApplyResultMap" resultType="list">
+		<![CDATA[
+			select 
+			id, member_id, activities_id, activities_name, apply_time, apply_number,
+			member_name,
+			member_phone, is_touch, source_code, is_ok 
+			from t_sysactivity_activities_apply 
+		]]>
+	</select>
+		<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="SysActivitiesApplyResultMap" parameterType="Map" >
+	    	select 
+			id, member_id, activities_id, activities_name, apply_time, apply_number,
+			member_name,
+			member_phone, is_touch, source_code, is_ok 
+			from t_sysactivity_activities_apply 
+		<where>
+			<if test="activitiesName !=null and activitiesName !=''">
+	    	   AND  activities_name LIKE "%"#{activitiesName}"%"  
+	        </if>
+	        <if test="memberName !=null and memberName !=''">
+	    	   AND  member_name  like "%"#{memberName}"%"  
+	        </if>
+		</where>
+		<![CDATA[
+			LIMIT #{start},#{limit}
+		]]>
+	</select>
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select 
+			count(id)
+		from 
+			t_sysactivity_activities_apply
+		<where>
+			<if test="activitiesName !=null and activitiesName !=''">
+	    	   AND  activities_name LIKE "%"#{activitiesName}"%"  
+	        </if>
+	        <if test="memberName !=null and memberName !=''">
+	    	   AND  member_name  like "%"#{memberName}"%"  
+	        </if>
+		</where>
+	</select>
+	
+	<select id="query" resultMap="SysActivitiesApplyResultMap">
+			select 
+			id, member_id, activities_id, activities_name, apply_time, apply_number,
+			member_name,
+			member_phone, is_touch, source_code, is_ok 
+			from t_sysactivity_activities_apply 
+			where member_id = #{memberId} and activities_id = #{activitiesId}
+	</select>
+</mapper>

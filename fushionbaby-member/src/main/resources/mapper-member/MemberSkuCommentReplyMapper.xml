@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.member.dao.MemberSkuCommentReplyDao">
+
+	<resultMap id="MemberSkuCommentReplyMap" type="memberSkuCommentReply">
+		<id column="id" property="id" />
+		<result column="comment_id" property="commentId" />
+		<result column="member_id" property="memberId" />
+		<result column="is_anonymous" property="isAnonymous" />
+		<result column="member_name" property="memberName" />
+		<result column="reply_content" property="replyContent" />
+		<result column="ip_address" property="ipAddress" />
+		<result column="status" property="status" />
+		<result column="source_code" property="sourceCode" />
+		<result column="create_time" property="createTime" />
+	</resultMap>
+	
+	<insert id="add" parameterType="memberSkuCommentReply">
+		<!-- 获取添加进数据库的id值 -->
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+		SELECT LAST_INSERT_ID() AS ID    
+		</selectKey>
+		insert into t_member_sku_comment_reply (id, comment_id, member_id,
+		is_anonymous, member_name, reply_content,
+		ip_address,
+		status, source_code, 
+		create_time)
+		values (#{id}, #{commentId}, #{memberId},
+		#{isAnonymous}, #{memberName},#{replyContent},
+		#{ipAddress}, 
+		#{status}, #{sourceCode}, 
+		now())
+	</insert>
+	
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_member_sku_comment_reply where id = #{id}		
+	</delete>
+	
+	<update id="update" parameterType="memberSkuCommentReply">
+		update t_member_sku_comment_reply
+		set 
+		<if test="isAnonymous !=null and isAnonymous !=''">
+		is_anonymous=#{isAnonymous},
+		</if>
+		<if test="replyContent !=null and replyContent !=''">
+		reply_content=#{replyContent},
+		</if>
+		<if test="ipAddress !=null and ipAddress !=''">
+		ip_address=#{ipAddress},
+		</if>
+		<if test="status !=null and status !=''">
+		status=#{status},
+		</if>
+		<if test="sourceCode !=null and sourceCode !=''">
+		source_code=#{sourceCode}
+		</if>
+		where id = #{id}
+	</update>
+	
+	
+	
+	<sql id="memberSkuCommentReply_column">
+	    select 
+	    id, comment_id, member_id,
+		is_anonymous, member_name, reply_content,
+		ip_address,
+		status, source_code, 
+		create_time 
+	    from t_member_sku_comment_reply
+	</sql>
+	
+	<select id="findById" resultMap="MemberSkuCommentReplyMap" parameterType="java.lang.Long">
+	   <include refid="memberSkuCommentReply_column"/>  where id = #{id}	   
+	</select>
+	  
+
+	<sql id="memberSkuCommentReply_where">
+	   <where>
+			<if test="commentId !=null and commentId !=''">
+	    	    AND comment_id = #{commentId}  
+		    </if>
+		    <if test="memberId !=null and memberId !=''">
+		    	AND member_id = #{memberId} 
+		    </if>
+		    <if test="isAnonymous !=null and isAnonymous !=''">
+		    	AND is_anonymous LIKE "%"#{isAnonymous}"%"  
+		    </if>
+		    <if test="memberName !=null and memberName !=''">
+		    	AND member_name = #{memberName} 
+		    </if>
+		     <if test="replyContent !=null and replyContent !=''">
+		    	AND reply_content = #{replyContent} 
+		    </if>
+		    <if test="ipAddress !=null and ipAddress !=''">
+		    	AND ip_address = #{ipAddress} 
+		    </if>
+		    <if test="status !=null and status !=''">
+		    	AND status = #{status} 
+		    </if>
+		    <if test="sourceCode !=null and sourceCode !=''">
+		    	AND source_code = #{sourceCode} 
+		    </if>
+		    <if test="createTimeFrom != null and createTimeFrom !=''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') >= DATE_FORMAT(#{createTimeFrom}, '%Y-%m-%d')
+				]]>
+		    </if>
+			<if test="createTimeTo != null and createTimeTo != ''">
+		    	<![CDATA[
+					and DATE_FORMAT(create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createTimeTo}, '%Y-%m-%d')
+				]]>
+		    </if>
+		    
+		    
+		</where>
+	</sql>
+	
+	<!-- 分页条件查询 -->
+	<select id="getListPage" resultType="list" resultMap="MemberSkuCommentReplyMap" parameterType="Map" >
+		<include refid="memberSkuCommentReply_column"/>
+		<include refid="memberSkuCommentReply_where"/>
+		<if test="start!=null and limit!=null">
+			order by create_time desc
+			limit #{start},#{limit}
+		</if>
+	</select>
+	
+	<!-- 查询该表的总数  -->
+	<select id="getTotal" parameterType="Map" resultType="java.lang.Integer">
+		select count(1) from t_member_sku_comment_reply
+		<include refid="memberSkuCommentReply_where"/>	
+		
+	</select>
+	
+	<select id="findByCommentId" resultType="list" resultMap="MemberSkuCommentReplyMap" parameterType="java.lang.Long">
+	   <include refid="memberSkuCommentReply_column"/>  where comment_id = #{commentId}	   
+	</select>
+	
+</mapper>

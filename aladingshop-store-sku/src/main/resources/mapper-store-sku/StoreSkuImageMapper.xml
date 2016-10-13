@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.store.sku.dao.StoreSkuImageDao">
+	<resultMap id="StoreSkuImageResultMap" type="StoreSkuImage">
+		<id column="id" property="id" />
+		<result column="store_code" property="storeCode" />
+		<result column="sku_code" property="skuCode" />
+		<result column="update_time" property="updateTime" />
+		<result column="update_id" property="updateId" />
+	</resultMap>
+	<sql id="StoreSkuImage_column">
+		id, store_code, sku_code,update_time,update_id 
+	   
+	</sql>
+	<insert id="add" parameterType="StoreSkuImage">
+		insert into 
+			t_store_sku_image
+		(id, store_code, sku_code ,update_time,update_id )
+	    values 
+	    (#{id},#{storeCode},#{skuCode},now(),#{updateId})
+	</insert>
+	
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_store_sku_image where id = #{id}
+	</delete>
+	<delete id="deleteByStoreCodeAndSkuCode">
+		delete from t_store_sku_image where store_code = #{storeCode} and sku_code=#{skuCode}
+	</delete>
+	
+	<update id="updateById">
+		update t_store_sku_image
+			set
+			<if test="storeCode!=null and storeCode!=''">
+			    store_code = #{storeCode}, 
+			</if>
+			<if test="skuCode!=null and skuCode!=''">
+			    sku_code=#{skuCode}, 
+			</if>
+			<if test="updateId!=null and updateId!=''">
+			    update_id = #{updateId} ,
+			</if>
+			
+			  update_time = now()  
+			
+		<where>
+			id = #{id} 
+		</where>
+	</update>
+	
+	<select id="findById" resultMap="StoreSkuImageResultMap" parameterType="java.lang.Long">
+		select  <include refid="StoreSkuImage_column"/> from t_store_sku_image where id = #{id}
+	</select>
+	<select id="findByStoreCodeAndSkuCode" resultMap="StoreSkuImageResultMap" >
+		select  <include refid="StoreSkuImage_column"/> from t_store_sku_image where store_code = #{storeCode} and sku_code=#{skuCode}
+	</select>
+	
+	
+</mapper>

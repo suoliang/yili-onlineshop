@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.payment.dao.PaymentAppAlabaoDao">
+	<resultMap id="PaymentAppAlabaoResultMap" type="PaymentAppAlabao">
+		<id column="id" property="id" />
+		<result column="order_code" property="orderCode" />
+		<result column="member_id" property="memberId" />
+		<result column="account" property="account" />
+		<result column="settle_amount" property="settleAmount" />
+		<result column="trade_time" property="tradeTime" />
+		<result column="order_des" property="orderDes" />
+		<result column="alabao_status" property="alabaoStatus" />
+		<result column="source_code" property="sourceCode" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="remote_addr" property="remoteAddr" />
+	</resultMap>
+	<sql id="PaymentAppAlabao_column">
+		select 
+	      id,order_code,member_id,account,settle_amount,trade_time,order_des,
+	      alabao_status,source_code,create_time,update_time,remote_addr
+	   from t_payment_app_alabao
+	</sql>
+	<insert id="add" parameterType="PaymentAppAlabao">
+		insert into 
+			t_payment_app_alabao
+		(id,order_code,member_id,account,settle_amount,trade_time,order_des,
+	      alabao_status,source_code,create_time,remote_addr)
+	    values 
+	    (#{id},#{orderCode},#{memberId},#{account},#{settleAmount},#{tradeTime},#{orderDes},
+	    #{alabaoStatus},#{sourceCode},now(),#{remoteAddr})
+	</insert>
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from t_payment_app_alabao where id = #{id}
+	</delete>
+	<update id="updateByMemberIdAndOrderCode">
+		update t_payment_app_alabao
+			set update_time = now()
+			<if test="account !=null and account !=''">
+			   , account = #{account}
+			</if>
+			<if test="settleAmount !=null and settleAmount !=''">
+			   , settle_amount = #{settleAmount}
+			</if>
+			<if test="tradeTime!=null and tradeTime!=''">
+			   , trade_time = #{tradeTime}
+			</if>
+			<if test="orderDes!=null and orderDes!=''">
+			   , order_des = #{orderDes}
+			</if>
+			<if test="alabaoStatus!=null and alabaoStatus!=''">
+			   , alabao_status = #{alabaoStatus}
+			</if>
+			<if test="sourceCode!=null and sourceCode!=''">
+			   , source_code = #{sourceCode}
+			</if>
+			<if test="remoteAddr!=null and remoteAddr!=''">
+			   , remote_addr = #{remoteAddr}
+			</if>
+		<where>
+			member_id = #{memberId} and order_code = #{orderCode}
+		</where>
+	</update>
+	<select id="getById" resultMap="PaymentAppAlabaoResultMap" parameterType="java.lang.Long">
+		<include refid="PaymentAppAlabao_column"/> where id = #{id}
+	</select>
+	<select id="getByMemberIdAndOrderCode" resultMap="PaymentAppAlabaoResultMap" >
+		<include refid="PaymentAppAlabao_column"/> 
+		where member_id = #{memberId} and order_code = #{orderCode}
+	</select>
+	
+	<delete id="deleteByOrderCodeAndMemberId">
+		delete from t_payment_app_alabao where member_id = #{memberId} and order_code = #{orderCode}
+	</delete>
+</mapper>

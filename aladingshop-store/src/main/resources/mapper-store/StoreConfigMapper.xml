@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aladingshop.store.dao.StoreConfigDao">
+	<resultMap id="StoreConfigMap" type="StoreConfig">
+		<id column="id" property="id" />
+		<result column="store_code" property="storeCode" />
+		<result column="business_start_time" property="businessStartTime" />
+		<result column="business_end_time" property="businessEndTime" />
+		<result column="freight_amount" property="freightAmount" />
+		<result column="free_freight_amount" property="freeFreightAmount" />
+		
+	</resultMap>
+	<sql id="StoreConfig_column">
+		id, store_code, business_start_time ,business_end_time,freight_amount,free_freight_amount
+	   
+	</sql>
+	<insert id="add" parameterType="StoreConfig">
+		insert into 
+			t_store_config
+		(id, store_code, business_start_time ,business_end_time,freight_amount,free_freight_amount)
+	    values 
+	    (#{id},#{storeCode},#{businessStartTime},#{businessEndTime},#{freightAmount},#{freeFreightAmount})
+	</insert>
+	
+	
+	
+	<update id="update" parameterType="StoreConfig">
+		update t_store_config
+			set
+		    store_code = #{storeCode}, 
+		    business_start_time = #{businessStartTime}, 
+		    business_end_time = #{businessEndTime}, 
+		    freight_amount = #{freightAmount}, 
+		    free_freight_amount = #{freeFreightAmount}
+		<where>
+			id = #{id}
+		</where>
+	</update>
+	
+	
+	<select id="findByStoreCode" resultMap="StoreConfigMap">
+		select  <include refid="StoreConfig_column"/> from t_store_config where store_code = #{storeCode}
+	</select>
+	
+
+
+	
+
+</mapper>

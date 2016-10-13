@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fushionbaby.log.dao.LogSoPaymentRecordDao" >
+  <resultMap id="LogSoPaymentRecordResultMap" type="LogSoPaymentRecord" >
+	    <id column="id" property="id" />
+	    <result column="member_id" property="memberId" />
+	    <result column="so_code" property="soCode" />
+	    <result column="payment_type" property="paymentType" />
+	    <result column="create_time" property="createTime" />
+  </resultMap>
+
+  <insert id="add" parameterType="LogSoPaymentRecord">
+    insert into 
+    	t_log_so_payment_record (id, member_id, so_code, payment_type, create_time )
+    values 
+    	(#{id}, #{memberId}, #{soCode}, #{paymentType}, now())
+  </insert>
+</mapper>

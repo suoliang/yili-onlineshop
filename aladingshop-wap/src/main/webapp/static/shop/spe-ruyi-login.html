@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>如意消费卡</title>
+        <!-- 通用部分 开始 -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0,user-scalable=no">
+        <link rel="shortcut icon" href="images/favicon.ico" />
+        <link rel="stylesheet" href="css/style.min.css"><!-- 通用 CSS -->
+        <script src="farmwork/jquery/jquery-2.1.3.min.js"></script><!-- 通用jQuery JS -->
+        <script src="farmwork/velocity/velocity.min.js"></script><!-- velocity JS -->
+        <script src="farmwork/velocity/velocity.ui.min.js"></script><!-- velocity JS -->
+        <script src="js/min/public.min.js"></script><!-- 通用 public JS -->
+        <!-- 通用部分 结束 -->
+    </head>
+    <body id="">
+
+        <div class="container">
+
+            <div class="head mB10">
+                <a href="javascript:history.go(-1)" class="a-left">
+                    <span class="back"></span>
+                </a>
+                <p>如意消费卡</p>
+                <a href="spe-ruyi-registering.html" class="a-right">
+                    <span class="">注册</span>
+                </a>
+            </div>
+
+            <form id="ruyiLoginForm" class="form-group">
+                <div class="input-group">
+                    <span class="phone"></span>
+                    <input name="userPhone" type="number" placeholder="请输入手机号码" autocomplete="off">
+                </div>
+                <div class="input-group">
+                    <span class="lock"></span>
+                    <input id="password" name="password" type="password" placeholder="请输入密码" autocomplete="off">
+                    <div class="ios-btn-wrap">
+                        <div class="ios-btn">
+                            <input type="checkbox">
+                            <i></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="btn-wrap">
+                    <button id="loginBtn" type="submit">登录</button>
+                </div>
+            </form>
+
+        </div><!-- /.container -->
+
+        <script src="farmwork/validate/jquery.validate.min.js"></script><!-- 表单验证 -->
+        <script type="text/javascript">
+            $(document).ready(function() {
+                /*表单验证*/
+                var validator = $('#ruyiLoginForm').validate({
+                    focusInvalid: false,
+                    rules: {
+                        userPhone: {
+                            required: true,
+                            rangelength: [11, 11]
+                        },
+                        password: {
+                            required: true,
+                            rangelength: [2, 10]
+                        }
+                    },
+                    messages: {
+                        userPhone: {
+                            required: "请填写手机号码！",
+                            rangelength: "请输入11位手机号码！"
+                        },
+                        password: {
+                            required: "请填写密码！",
+                            rangelength: "密码长度应该为2-10位！"
+                        }
+                    },
+                    submitHandler: function(form) {
+                        // 验证成功后操作
+                        console.log($(form).serialize());
+                        // form.submit();
+                        window.location.href = "spe-ruyi-main.html";
+                    },
+                });
+
+                $('#loginBtn').click(function(event) {
+                    $('input.error').parents('.input-group').velocity('callout.shake');
+                });
+
+                /*显示/隐藏密码*/
+                $('#ruyiLoginForm').find('.ios-btn-wrap').click(function() {
+                    var thisStatus = $(this).find('input').attr('checked');
+                    if (thisStatus) {
+                        $('#password').attr('type', 'text');
+                    } else {
+                        $('#password').attr('type', 'password');
+                    }
+                });
+
+            });
+        </script>
+
+    </body>
+</html>
