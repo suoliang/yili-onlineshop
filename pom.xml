@@ -1,0 +1,342 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.fushionbaby.parent</groupId>
+	<artifactId>fushionbaby-parent</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>fushionbaby-parent</name>
+	<url>http://maven.apache.org</url>
+
+	<modules>
+<!-- 	  	<module>fushionbaby-web</module> -->
+	  	<module>fushionbaby-core</module>
+	  	<module>fushionbaby-order</module>
+	  	<module>fushionbaby-common</module>
+	  	<!--module>fushionbaby-CMSManager</module-->
+	  	<!--module>fushionbaby-app</module -->
+	  	<module>fushionbaby-sms</module>
+		<module>fushionbaby-auth</module>
+		<module>fushionbaby-member</module>
+		<module>fushionbaby-sku</module>
+		
+		<module>fushionbaby-sysactivity</module>
+		<module>fushionbaby-sysmgr</module>
+		<module>fushionbaby-log</module> 
+		<module>fushionbaby-activity</module> 
+		<module>fushionbaby-facade</module> 
+		<module>fushionbaby-other</module>		
+		<!--module>fushionbaby-schedule</module--> 
+		<module>fushionbaby-cache</module>
+		<module>fushionbaby-statistics</module> 
+		<module>fushionbaby-payment</module> 
+		<!--module>fushionbaby-pay</module--> 
+		<module>fushionbaby-push</module> 
+		<module>fushionbaby-config</module> 
+		<module>aladingshop.sku-cms</module> 
+		<module>aladingshop-alabao</module>
+		<module>aladingshop-card</module>
+		<module>aladingshop-refund</module>
+		<module>aladingshop-store</module>
+		<module>store-auth</module>
+		<module>aladingshop-periodactivity</module>
+		<!--
+		<module>fushionbaby-OrderManager</module>
+		<module>aladingshop-sku-cms</module>-->
+		<module>aladingshop-wap</module>
+		<module>aladingshop-finance</module>
+	</modules>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<!-- junit -->
+		<junit.version>3.8.1</junit.version>
+		<!-- spring版本号 -->
+		<spring.version>3.2.4.RELEASE</spring.version>
+		<!-- mybatis版本号 -->
+		<mybatis.version>3.2.4</mybatis.version>
+		<!-- log4j日志文件管理包版本 -->
+		<slf4j.version>1.6.6</slf4j.version>
+		<log4j.version>1.2.16</log4j.version>
+		<spring-mybaits.version>1.2.2</spring-mybaits.version>
+		<!-- Mysql驱动包 -->
+		<mysql.version>5.1.18</mysql.version>
+		<!-- json -->
+		<json.version>1.9.13</json.version>
+		<!-- commons -->
+		<lang3.version>3.1</lang3.version>
+		<discovery.version>0.4</discovery.version>
+		<logging.version>1.1.1</logging.version>
+		<commons-fileupload.version>1.3.1</commons-fileupload.version>
+		
+		
+		<!-- memcached -->
+		<memcached.version>3.0.0</memcached.version>
+		<!-- javax -->
+		<javax.version>1.1</javax.version>
+		<servlet-api.version>3.0.1</servlet-api.version>
+		<!-- axis -->
+		<axis.version>1.4</axis.version>
+		<!-- wsdl4j -->
+		<wsdl4j.version>1.6.2</wsdl4j.version>
+		<!-- gson -->
+		<gson.version>2.2.4</gson.version>
+		<!-- jstl -->
+		<jstl.version>1.1.2</jstl.version>
+		<taglibs.version>1.1.2</taglibs.version>
+
+		<jsp.version>2.1</jsp.version>
+	</properties>
+	
+	
+	  	<distributionManagement>
+		<repository>
+			<id>Yili-maven-releases</id>
+			<name>Yili-maven-releases</name>
+			<url>http://192.168.1.39:8081/nexus/content/repositories/Yili-maven-releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>Yili-maven-snapshots</id>
+			<name>Yili-maven-snapshots</name>
+			<url>http://192.168.1.39:8081/nexus/content/repositories/Yili-maven-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement> 
+
+
+	<dependencyManagement>
+		<dependencies>
+
+			<!-- mail start -->
+			<dependency>
+				<groupId>javax.activation</groupId>
+				<artifactId>activation</artifactId>
+				<version>${javax.version}</version>
+			</dependency>
+			<!-- mail end -->
+	
+			<!-- spring核心包 -->
+			<!-- springframe start -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-web</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-oxm</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-tx</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-jdbc</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-webmvc</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-aop</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context-support</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-test</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-orm</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<!-- springframe end -->
+
+			<!-- commons -->
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>${lang3.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-discovery</groupId>
+				<artifactId>commons-discovery</artifactId>
+				<version>${discovery.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-logging</groupId>
+				<artifactId>commons-logging</artifactId>
+				<version>${logging.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>commons-fileupload</groupId>
+				<artifactId>commons-fileupload</artifactId>
+				<version>${commons-fileupload.version}</version>
+			</dependency>
+			
+			<!-- commons end -->
+
+			<!-- jstl -->
+			<dependency>
+				<groupId>jstl</groupId>
+				<artifactId>jstl</artifactId>
+				<version>${jstl.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>taglibs</groupId>
+				<artifactId>standard</artifactId>
+				<version>${taglibs.version}</version>
+			</dependency>
+
+			<!-- javax -->
+			<dependency>
+				<groupId>javax.xml</groupId>
+				<artifactId>jaxrpc</artifactId>
+				<version>${javax.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>${servlet-api.version}</version>
+			</dependency>
+
+			<!-- mybatis核心包 -->
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis</artifactId>
+				<version>${mybatis.version}</version>
+			</dependency>
+			<!-- mybatis/spring包 -->
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis-spring</artifactId>
+				<version>${spring-mybaits.version}</version>
+			</dependency>
+			<!-- mybaits end -->
+
+			<!-- mysql驱动包 -->
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>${mysql.version}</version>
+			</dependency>
+			<!-- junit测试包 -->
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.11</version>
+				<scope>test</scope>
+			</dependency>
+			<!-- 阿里巴巴数据源 包 -->
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>druid</artifactId>
+				<version>1.0.2</version>
+			</dependency>
+
+			<!-- json数据 -->
+			<dependency>
+				<groupId>org.codehaus.jackson</groupId>
+				<artifactId>jackson-mapper-asl</artifactId>
+				<version>${json.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.codehaus.jackson</groupId>
+				<artifactId>jackson-core-asl</artifactId>
+				<version>${json.version}</version>
+			</dependency>
+
+			<!-- 日志文件管理包 -->
+			<!-- log start -->
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>${log4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.axis</groupId>
+				<artifactId>axis</artifactId>
+				<version>${axis.version}</version>
+			</dependency>
+
+			<!-- memcached -->
+			<dependency>
+				<groupId>com.whalin</groupId>
+				<artifactId>Memcached-Java-Client</artifactId>
+				<version>${memcached.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>wsdl4j</groupId>
+				<artifactId>wsdl4j</artifactId>
+				<version>${wsdl4j.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.google.code.gson</groupId>
+				<artifactId>gson</artifactId>
+				<version>${gson.version}</version>
+			</dependency>
+			<!-- log end -->
+		</dependencies>
+	</dependencyManagement>
+	
+	<build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+				<version>2.5</version>
+                <configuration>
+                    <mainClass>HiveClient.java</mainClass> 
+                </configuration>
+            </plugin>
+		</plugins>
+	</build>
+</project>
