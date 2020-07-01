@@ -62,7 +62,7 @@
 		<log4j.version>1.2.16</log4j.version>
 		<spring-mybaits.version>1.2.2</spring-mybaits.version>
 		<!-- Mysql驱动包 -->
-		<mysql.version>5.1.18</mysql.version>
+		<mysql.version>8.0.16</mysql.version>
 		<!-- json -->
 		<json.version>1.9.13</json.version>
 		<!-- commons -->
