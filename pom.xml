@@ -54,7 +54,7 @@
 		<!-- junit -->
 		<junit.version>3.8.1</junit.version>
 		<!-- spring版本号 -->
-		<spring.version>3.2.4.RELEASE</spring.version>
+		<spring.version>5.2.20.RELEASE</spring.version>
 		<!-- mybatis版本号 -->
 		<mybatis.version>3.2.4</mybatis.version>
 		<!-- log4j日志文件管理包版本 -->
